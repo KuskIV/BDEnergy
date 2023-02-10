@@ -4,13 +4,13 @@ This folder contains test cases implemented in C++, utilizing multiple threads. 
 
 ---
 
-![Mandelbrot](test-cases\microbenchmarks\cpp\multi-thread\images\mandelbrot_0.png)
+![Mandelbrot](images\mandelbrot_0.png)
 
 [Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/mandelbrot-gpp-0.html)
 
 ---
 
-![Reverse Complement](test-cases\microbenchmarks\cpp\multi-thread\images\reverse-complement.png)
+![Reverse Complement](images\reverse-complement.png)
 
 [Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/revcomp-gpp-6.html)
 
