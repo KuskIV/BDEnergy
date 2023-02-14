@@ -3,6 +3,7 @@ using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,12 +23,18 @@ namespace BDEnergyFramework.Utils
             // Add some rows
             table.AddRow("Measurement Instruments", string.Join(',', config.MeasurementInstruments));
             table.AddRow("Measurements", config.RequiredMeasurements.ToString());
-            table.AddRow("Test Case Path", config.TestCasePath);
-            table.AddRow("Threads", config.ThreadsToExecuteOn == -1 ? "Not specified" : config.ThreadsToExecuteOn.ToString());
+            table.AddRow("Test Case Path", string.Join(',', config.TestCasePaths));
+            table.AddRow("Test Case Parameters", string.Join(',', config.TestCaseParameters));
+            table.AddRow("Threads", config.AllocatedCores == -1 ? "Not specified" : config.AllocatedCores.ToString());
 
-            if (config.ReqiresRestarts)
+            foreach (var key in config.AdditionalMetadata.Keys)
             {
-                table.AddRow("Measurements between restarts", config.SampelsBetweenRestart.ToString());
+                table.AddRow(key, config.AdditionalMetadata[key]);
+            }
+
+            if (config.RequiresRestarts)
+            {
+                table.AddRow("Measurements between restarts", config.MeasurementsBetweenRestarts.ToString());
             }
             else
             {
@@ -41,10 +48,17 @@ namespace BDEnergyFramework.Utils
         public static MeasurementCollectionConfiguration GetConfiguration(List<string> measuringInstruments)
         {
             var sampelsBetweenRestarts = -1;
-            var testCasePath = "";
-            
+
+            var testCasePaths = GetTestCasePaths();
+
+            var testCaseParameters = GetTestCaseParameters(testCasePaths);
+
+            // TODO: Allocated specific cores?
+
+            // TODO: Additional metadata?
+
             // measuring instruments
-            var selectedMeasuringInstruments = UIUtils.GetSelectedMeasuringInstruments(measuringInstruments);
+            var selectedMeasuringInstruments = GetSelectedMeasuringInstruments(measuringInstruments);
 
             // how many sampels?
             var requiredMeasurements = AnsiConsole.Ask<int>("How many [green]sampels are required[/]?");
@@ -52,11 +66,10 @@ namespace BDEnergyFramework.Utils
             // should it restart?
             if (AnsiConsole.Confirm("Should the test include restarts of the device?"))
             {
-                // how often should it restart?
-                sampelsBetweenRestarts = AnsiConsole.Ask<int>("How many sampels should be obtained between restarts?");
+                sampelsBetweenRestarts = GetSampelsBetweenRestarts();
             }
 
-            var p = AnsiConsole.Prompt(
+            var allocatedCores = AnsiConsole.Prompt(
                 new TextPrompt<int?>("[grey][[Optional]][/] How many [green]threads should the test case execute on?[/]?")
                     .DefaultValue(null)
                     .ShowDefaultValue(false));
@@ -64,9 +77,41 @@ namespace BDEnergyFramework.Utils
             return new MeasurementCollectionConfiguration(
                 MeasurementInstruments: selectedMeasuringInstruments,
                 RequiredMeasurements: requiredMeasurements,
-                SampelsBetweenRestart: sampelsBetweenRestarts,
-                TestCasePath: testCasePath,
-                ThreadsToExecuteOn:p ?? -1);
+                MeasurementsBetweenRestarts: sampelsBetweenRestarts,
+                TestCasePaths: testCasePaths,
+                AllocatedCores:allocatedCores ?? -1,
+                TestCaseParameters:testCaseParameters,
+                AdditionalMetadata: new Dictionary<string, string>());
+        }
+
+        private static int GetSampelsBetweenRestarts()
+        {
+            // how often should it restart?
+            return AnsiConsole.Ask<int>("How many sampels should be obtained between restarts?");
+        }
+
+        private static List<string> GetTestCaseParameters(List<string> testCasePaths)
+        {
+            var parameterForTestCases = new List<string>();
+
+            foreach ( var p in testCasePaths) 
+            { 
+                parameterForTestCases.Add(
+                    AnsiConsole.Ask<string>($"What are the [green]parameters[/] for the test case {p}?"));
+            }
+
+            return parameterForTestCases;
+        }
+
+        private static List<string> GetTestCasePaths()
+        {
+            var commaSeperatedPaths = AnsiConsole.Ask<string>("What are the [green]path[/] for the test case (comma seperated)?");
+
+            var paths = commaSeperatedPaths.Split(',').ToList();
+
+            paths.ForEach(x => x.Trim());
+
+            return paths;
         }
 
         public static void IntroduceFramework()

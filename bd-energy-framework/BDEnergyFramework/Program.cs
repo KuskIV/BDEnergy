@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BDEnergyFramework.Utils;
+using System.Text.Json;
 using Spectre.Console;
 
 var measuringInstruments = new List<string>() { "RAPL", "Intel Power Gadget", "E3" };

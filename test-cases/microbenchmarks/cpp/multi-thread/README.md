@@ -10,8 +10,14 @@ This folder contains test cases implemented in C++, utilizing multiple threads. 
 
 ---
 
-![Reverse Complement](images\reverse-complement.png)
+![Fasta](images\fasta.png)
 
-[Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/revcomp-gpp-6.html)
+[Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fasta-gpp-6.html)
+
+---
+
+![Fannkuch-Redux](images\fannkuch-redux.png)
+
+[Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fannkuchredux-gpp-5.html)
 
 ---
