@@ -1,6 +1,6 @@
 ﻿namespace BDEnergyFramework.Models
 {
-    public record MeasurementCollectionConfiguration(
+    public record MeasurementConfiguration(
         List<string> MeasurementInstruments,
         int RequiredMeasurements,
         int MeasurementsBetweenRestarts,

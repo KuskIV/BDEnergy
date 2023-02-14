@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "BDEnergyFramework": {
+      "commandName": "Project"
+    },
+    "JsonPathProfile": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\Mads Kusk\\git\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\ValidConfig.json\""
+    },
+    "JsonProfile": {
+      "commandName": "Project",
+      "commandLineArgs": "{\r\n  \"MeasurementInstruments\": [\"RAPL\", \"Intel Power Gadget\"],\r\n  \"RequiredMeasurements\": 12,\r\n  \"MeasurementsBetweenRestarts\": 23,\r\n  \"TestCasePaths\": [\"PATH1\", \" PATH2\"],\r\n  \"AllocatedCores\": 54,\r\n  \"TestCaseParameters\": [\"ARG1\", \"ARG2\"],\r\n  \"AdditionalMetadata\": {\r\n    \"Experiment\": 1,\r\n    \"ExperimentName\": \"EXPERIMENT_NAME\",\r\n    \"Compiler\": \"COMPILER_NAME\",\r\n    \"Language\": \"LANGUAGE\"\r\n  },\r\n  \"RequiresRestarts\": true\r\n}"
+    }
+  }
+}

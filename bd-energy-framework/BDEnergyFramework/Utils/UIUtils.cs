@@ -11,8 +11,10 @@ namespace BDEnergyFramework.Utils
 {
     internal class UIUtils
     {
-        public static void ShowMeasurementConfiguration(MeasurementCollectionConfiguration config)
+        public static void ShowMeasurementConfiguration(MeasurementConfiguration config)
         {
+            AnsiConsole.Write("Valid input. Parameters are as following:\n");
+
             // Create a table
             var table = new Table();
 
@@ -45,7 +47,7 @@ namespace BDEnergyFramework.Utils
             AnsiConsole.Write(table);
         }
 
-        public static MeasurementCollectionConfiguration GetConfiguration(List<string> measuringInstruments)
+        public static MeasurementConfiguration GetConfiguration(List<string> measuringInstruments)
         {
             var sampelsBetweenRestarts = -1;
 
@@ -74,7 +76,7 @@ namespace BDEnergyFramework.Utils
                     .DefaultValue(null)
                     .ShowDefaultValue(false));
 
-            return new MeasurementCollectionConfiguration(
+            return new MeasurementConfiguration(
                 MeasurementInstruments: selectedMeasuringInstruments,
                 RequiredMeasurements: requiredMeasurements,
                 MeasurementsBetweenRestarts: sampelsBetweenRestarts,
@@ -117,7 +119,7 @@ namespace BDEnergyFramework.Utils
         public static void IntroduceFramework()
         {
             AnsiConsole.Write(
-                new FigletText("DBEnergy Tool")
+                new FigletText("BDEnergy Tool")
                     .Centered()
                     .Color(Color.Red));
 
@@ -137,6 +139,22 @@ namespace BDEnergyFramework.Utils
                         "[grey](Press [blue]<space>[/] to toggle a measuring instrument, " +
                         "[green]<enter>[/] to accept)[/]")
                     .AddChoices(measuringInstruments));
+        }
+
+        internal static void PrintErrors(List<ValidationError> errors)
+        {
+            AnsiConsole.Write("Errors found in the input:\n");
+
+            foreach (var e in errors)
+            {
+                AnsiConsole.Write(" - " + e.Message + "\n");
+            }
+        }
+
+        internal static void EndFramework()
+        {
+            var rule = new Rule("[red]BDEnergy Framework is about to shut down[/]");
+            AnsiConsole.Write(rule);
         }
     }
 }

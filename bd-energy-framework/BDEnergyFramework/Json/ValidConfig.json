@@ -2,11 +2,11 @@
   "MeasurementInstruments": ["RAPL", "Intel Power Gadget"],
   "RequiredMeasurements": 12,
   "MeasurementsBetweenRestarts": 23,
-  "TestCasePaths": ["PATH1", " PATH2"],
+  "TestCasePaths": ["PATH1", "PATH2"],
   "AllocatedCores": 54,
   "TestCaseParameters": ["ARG1", "ARG2"],
   "AdditionalMetadata": {
-    "Experiment": 1,
+    "Experiment": "1",
     "ExperimentName": "EXPERIMENT_NAME",
     "Compiler": "COMPILER_NAME",
     "Language": "LANGUAGE"
