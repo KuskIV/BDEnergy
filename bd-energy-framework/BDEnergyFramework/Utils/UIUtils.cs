@@ -1,16 +1,44 @@
 ﻿using BDEnergyFramework.Models;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDEnergyFramework.Utils
 {
     internal class UIUtils
     {
+        private static readonly int DefaultMeasurementCount = 10;
+        private static readonly int DefaultAllocatedCores = -1;
+        private static readonly int DefaultBurnInPeriod = 0;
+        private static readonly int DefaultMeasurementsBetweenRestart = -1;
+        private static readonly int DefaultMinimumTemperature = -200;
+        private static readonly int DefaultMaximumTemperature = 200;
+
+        public static void IntroduceFramework()
+        {
+            AnsiConsole.Write(
+                new FigletText("BDEnergy Tool")
+                    .Centered()
+                    .Color(Color.Red));
+
+            var rule = new Rule();
+            AnsiConsole.Write(rule);
+        }
+
+        public static void PrintErrors(List<ValidationError> errors)
+        {
+            AnsiConsole.Write("Errors found in the input:\n");
+
+            foreach (var e in errors)
+            {
+                AnsiConsole.Write(" - " + e.Message + "\n");
+            }
+        }
+
+        public static void EndFramework()
+        {
+            var rule = new Rule("[red]BDEnergy Framework is about to shut down[/]");
+            AnsiConsole.Write(rule);
+        }
+
         public static void ShowMeasurementConfiguration(MeasurementConfiguration config)
         {
             AnsiConsole.Write("Valid input. Parameters are as following:\n");
@@ -28,6 +56,9 @@ namespace BDEnergyFramework.Utils
             table.AddRow("Test Case Path", string.Join(',', config.TestCasePaths));
             table.AddRow("Test Case Parameters", string.Join(',', config.TestCaseParameters));
             table.AddRow("Threads", config.AllocatedCores == -1 ? "Not specified" : config.AllocatedCores.ToString());
+            table.AddRow("Upload to DB", config.UploadToDatabase ? "Yes" : "No");
+            table.AddRow("Burn-in", config.BurnInPeriod.ToString());
+            table.AddRow("Temperature", "between" + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
 
             foreach (var key in config.AdditionalMetadata.Keys)
             {
@@ -47,43 +78,122 @@ namespace BDEnergyFramework.Utils
             AnsiConsole.Write(table);
         }
 
-        public static MeasurementConfiguration GetConfiguration(List<string> measuringInstruments)
+        public static MeasurementConfiguration GetConfiguration(List<EMeasuringInstrument> measuringInstruments)
         {
             var sampelsBetweenRestarts = -1;
 
             var testCasePaths = GetTestCasePaths();
-
             var testCaseParameters = GetTestCaseParameters(testCasePaths);
-
-            // TODO: Allocated specific cores?
-
-            // TODO: Additional metadata?
-
-            // measuring instruments
             var selectedMeasuringInstruments = GetSelectedMeasuringInstruments(measuringInstruments);
+            var uploadToDatabase = GetUploadToDatabase();
+            var disableWifi = GetDisableWifi();
 
-            // how many sampels?
-            var requiredMeasurements = AnsiConsole.Ask<int>("How many [green]sampels are required[/]?");
+            if (ShouldUseDefaults())
+            {
+                return GetDefaultConfiguration(testCasePaths, testCaseParameters, uploadToDatabase, selectedMeasuringInstruments, disableWifi);
+            }
 
-            // should it restart?
-            if (AnsiConsole.Confirm("Should the test include restarts of the device?"))
+            var burnInPeriod = GetBurnInPeriod();
+            int requiredMeasurements = GetMeasurementCount();
+
+            if (ShouldDutRestart())
             {
                 sampelsBetweenRestarts = GetSampelsBetweenRestarts();
             }
 
-            var allocatedCores = AnsiConsole.Prompt(
-                new TextPrompt<int?>("[grey][[Optional]][/] How many [green]threads should the test case execute on?[/]?")
-                    .DefaultValue(null)
-                    .ShowDefaultValue(false));
+            var minimumTemperature = GetMinimumTemperature();
+            var maximumTemperature = GetMaximumTemperature();
+            int? allocatedCores = GetAllocatedCores();
 
             return new MeasurementConfiguration(
-                MeasurementInstruments: selectedMeasuringInstruments,
+                MeasurementInstruments: Mapper.MapToMeasuringInstrumentEnum(selectedMeasuringInstruments),
                 RequiredMeasurements: requiredMeasurements,
                 MeasurementsBetweenRestarts: sampelsBetweenRestarts,
                 TestCasePaths: testCasePaths,
-                AllocatedCores:allocatedCores ?? -1,
-                TestCaseParameters:testCaseParameters,
+                AllocatedCores: ParseAllocatedCores(allocatedCores),
+                TestCaseParameters: testCaseParameters,
+                BurnInPeriod: burnInPeriod,
+                UploadToDatabase: uploadToDatabase,
+                MaximumTemperature: maximumTemperature,
+                MinimumTemperature: minimumTemperature,
+                DisableWifi:disableWifi,
                 AdditionalMetadata: new Dictionary<string, string>());
+        }
+
+        private static bool GetDisableWifi()
+        {
+            return AnsiConsole.Confirm("Should the WIFI be disabled during the measurements?");
+        }
+
+        private static bool ShouldDutRestart()
+        {
+            return AnsiConsole.Confirm("Should the test include restarts of the device?");
+        }
+
+        private static int ParseAllocatedCores(int? allocatedCores)
+        {
+            if (allocatedCores is int cores && cores > 0)
+            {
+                return cores;
+            }
+
+            return -1;
+        }
+
+        private static int? GetAllocatedCores()
+        {
+            return AnsiConsole.Prompt(
+                new TextPrompt<int?>("[grey][[Optional]][/] How many [green]threads should the test case execute on?[/]?")
+                    .DefaultValue(null)
+                    .ShowDefaultValue(false));
+        }
+
+        private static int GetMeasurementCount()
+        {
+            return AnsiConsole.Ask<int>("How many [green]sampels are required[/]?");
+        }
+
+        private static int GetMaximumTemperature()
+        {
+            return AnsiConsole.Ask<int>("What maximum temperature should the divice not get above?");
+
+        }
+
+        private static int GetMinimumTemperature()
+        {
+            return AnsiConsole.Ask<int>("What minimum temperature should the divice not get below?");
+        }
+
+        private static MeasurementConfiguration GetDefaultConfiguration(List<string> testCasePaths, List<string> testCaseParameters, bool uploadToDatabase, List<string> selectedMeasuringInstruments, bool disableWifi)
+        {
+            return new MeasurementConfiguration(
+                MeasurementInstruments: Mapper.MapToMeasuringInstrumentEnum(selectedMeasuringInstruments),
+                RequiredMeasurements: DefaultMeasurementCount,
+                MeasurementsBetweenRestarts: DefaultMeasurementsBetweenRestart,
+                TestCasePaths: testCasePaths,
+                AllocatedCores: DefaultAllocatedCores,
+                TestCaseParameters: testCaseParameters,
+                BurnInPeriod: DefaultBurnInPeriod,
+                UploadToDatabase: uploadToDatabase,
+                MinimumTemperature: DefaultMinimumTemperature,
+                MaximumTemperature: DefaultMaximumTemperature,
+                DisableWifi:disableWifi,
+                AdditionalMetadata: new Dictionary<string, string>());
+        }
+
+        private static bool ShouldUseDefaults()
+        {
+            return AnsiConsole.Confirm("Use default parameters?");
+        }
+
+        private static bool GetUploadToDatabase()
+        {
+            return AnsiConsole.Confirm("Should the results be uploaded to the database?");
+        }
+
+        private static int GetBurnInPeriod()
+        {
+            return AnsiConsole.Ask<int>("How many of the first sampels should be used as burn-in?");
         }
 
         private static int GetSampelsBetweenRestarts()
@@ -110,25 +220,17 @@ namespace BDEnergyFramework.Utils
             var commaSeperatedPaths = AnsiConsole.Ask<string>("What are the [green]path[/] for the test case (comma seperated)?");
 
             var paths = commaSeperatedPaths.Split(',').ToList();
-
-            paths.ForEach(x => x.Trim());
+            
+            paths = paths.Select(x => x.Trim()).ToList();
+            paths = paths.Select(x => x.Trim('"')).ToList();
 
             return paths;
         }
 
-        public static void IntroduceFramework()
+        private static List<string> GetSelectedMeasuringInstruments(List<EMeasuringInstrument> measuringInstrumentEnums)
         {
-            AnsiConsole.Write(
-                new FigletText("BDEnergy Tool")
-                    .Centered()
-                    .Color(Color.Red));
+            var measuringInstruments = Mapper.MapFromMeasuringInstrumentEnum(measuringInstrumentEnums);
 
-            var rule = new Rule();
-            AnsiConsole.Write(rule);
-        }
-
-        public static List<string> GetSelectedMeasuringInstruments(List<string> measuringInstruments)
-        {
             return AnsiConsole.Prompt(
                 new MultiSelectionPrompt<string>()
                     .Title("What [green]measuring instruments should be used?[/]?")
@@ -139,22 +241,6 @@ namespace BDEnergyFramework.Utils
                         "[grey](Press [blue]<space>[/] to toggle a measuring instrument, " +
                         "[green]<enter>[/] to accept)[/]")
                     .AddChoices(measuringInstruments));
-        }
-
-        internal static void PrintErrors(List<ValidationError> errors)
-        {
-            AnsiConsole.Write("Errors found in the input:\n");
-
-            foreach (var e in errors)
-            {
-                AnsiConsole.Write(" - " + e.Message + "\n");
-            }
-        }
-
-        internal static void EndFramework()
-        {
-            var rule = new Rule("[red]BDEnergy Framework is about to shut down[/]");
-            AnsiConsole.Write(rule);
         }
     }
 }

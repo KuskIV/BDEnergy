@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BDEnergyFramework.MeasuringInstruments;
+using BDEnergyFramework.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ namespace BDEnergyFramework.Utils
 {
     public static class MeasuringInstrumentUtils
     {
-        public static IMeasuringInstrument GetMeasuringInstrument(EMeasuringInstrument mi)
+        public static MeasuringInstrument GetMeasuringInstrument(EMeasuringInstrument mi)
         {
             switch (mi)
             {
@@ -23,17 +25,17 @@ namespace BDEnergyFramework.Utils
             }
         }
 
-        private static IMeasuringInstrument GetLibreHardwareMonitor()
+        private static MeasuringInstrument GetLibreHardwareMonitor()
         {
             throw new NotImplementedException();
         }
 
-        private static IMeasuringInstrument GetIntelPowerGadget()
+        private static MeasuringInstrument GetIntelPowerGadget()
         {
-            return new IntelPowerGadget();
+            return new IntelPowerGadget(EMeasuringInstrument.IPG);
         }
 
-        private static IMeasuringInstrument GetRapl()
+        private static MeasuringInstrument GetRapl()
         {
             throw new NotImplementedException();
         }

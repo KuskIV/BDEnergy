@@ -1,5 +1,6 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Services;
+using Spectre.Console;
 
 namespace BDEnergyFramework.Validators
 {
@@ -13,8 +14,24 @@ namespace BDEnergyFramework.Validators
             ValidateMeasurements(configuration, errors);
             ValidatePaths(configuration.TestCasePaths, errors);
             ValidateTestCases(configuration, errors);
+            ValidateTemperatures(configuration, errors);
 
             return !errors.Any();
+        }
+
+        private static void ValidateTemperatures(MeasurementConfiguration configuration, List<ValidationError> errors)
+        {
+            if (configuration.MinimumTemperature == configuration.MaximumTemperature)
+            {
+                errors.Add(
+                    new ValidationError($"The minimum temperature {(configuration.MinimumTemperature)} should not be equal to the maximum temperature ({configuration.MaximumTemperature})"));
+            }
+
+            if (configuration.MinimumTemperature > configuration.MaximumTemperature)
+            {
+                errors.Add(
+                    new ValidationError($"The minimum temperature {(configuration.MinimumTemperature)} should not be larger than the maximum temperature ({configuration.MaximumTemperature})"));
+            }
         }
 
         private static void ValidateTestCases(MeasurementConfiguration configuration, List<ValidationError> errors)
@@ -47,7 +64,7 @@ namespace BDEnergyFramework.Validators
                     continue;
                 }
 
-                if (p.Trim().ToLower().EndsWith(".exe"))
+                if (!IsExecutable(p))
                 {
                     errors.Add(
                         new ValidationError($"'{p}' is not an executable (.exe)"));
@@ -55,10 +72,17 @@ namespace BDEnergyFramework.Validators
             }
         }
 
+        private static bool IsExecutable(string p)
+        {
+            return p.Trim().ToLower().EndsWith(".exe");
+        }
+
         private static void ValidateMeasurements(MeasurementConfiguration configuration, List<ValidationError> errors)
         {
             int measurementsBetweenRestarts = configuration.MeasurementsBetweenRestarts;
             int measurements = configuration.RequiredMeasurements;
+            int burnin = configuration.RequiredMeasurements;
+
             if (measurementsBetweenRestarts > measurements)
             {
                 errors.Add(
@@ -66,7 +90,7 @@ namespace BDEnergyFramework.Validators
             }
         }
 
-        private static void ValidateMeasuringInstruments(IDutService dutService, List<string> measurementInstruments, List<ValidationError> errors)
+        private static void ValidateMeasuringInstruments(IDutService dutService, List<EMeasuringInstrument> measurementInstruments, List<ValidationError> errors)
         {
             foreach (var mi in measurementInstruments)
             {
@@ -78,7 +102,7 @@ namespace BDEnergyFramework.Validators
             }
         }
 
-        private static bool IsMeasuringInstrumentValid(IDutService dutService, string mi)
+        private static bool IsMeasuringInstrumentValid(IDutService dutService, EMeasuringInstrument mi)
         {
             return dutService.GetMeasuringInstruments().Any(x => mi == x);
         }

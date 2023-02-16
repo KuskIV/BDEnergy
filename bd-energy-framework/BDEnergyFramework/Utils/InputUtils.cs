@@ -1,5 +1,6 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Services;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,30 @@ using System.Threading.Tasks;
 
 namespace BDEnergyFramework.Utils
 {
-    public static class ConfigUtils
+    public static class InputUtils
     {
+        public static UserSecrets GetSecrets()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddUserSecrets<Program>()
+                .AddJsonFile("Secrets/appsettings.secrets.json", true)
+                .AddJsonFile("appsettings.json", true);
+
+            var configurationRoot = builder.Build();
+
+            var wifiAdapterName = configurationRoot.GetValue<string>("WifiAdapterName");
+            var machineName = configurationRoot.GetValue<string>("MachineName");
+
+            if (wifiAdapterName is string w && machineName is string m)
+            {
+                return new UserSecrets(
+                    WifiAdapterName:w,
+                    MachineName:m);
+            }
+
+            throw new ArgumentException($"Not all usesecrets are set: WifiAdapterName '{wifiAdapterName}', MachineName '{machineName}'");
+        }
+
         public static MeasurementConfiguration GetConfiguration(IDutService dutService)
         {
             var arguments = Environment.GetCommandLineArgs();

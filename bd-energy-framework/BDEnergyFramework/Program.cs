@@ -1,15 +1,24 @@
-﻿using BDEnergyFramework.Utils;
+﻿using BDEnergyFramework.Services;
+using BDEnergyFramework.Utils;
 using BDEnergyFramework.Validators;
+using Serilog;
 
-var dutService = DutUtils.GetDutService();
+var logger = InitializeLogger();
+var secrets = InputUtils.GetSecrets();
+
+var dutService = DutUtils.GetDutService(secrets);
+var measurementService = new MeasurementService(dutService, null, logger);
 
 UIUtils.IntroduceFramework();
 
-var config = ConfigUtils.GetConfiguration(dutService); // TODO: Consider burnin period as optional parameter
+var config = InputUtils.GetConfiguration(dutService);
 
 if (ConfigurationValidator.IsValid(config, dutService, out var errors))
 {
     UIUtils.ShowMeasurementConfiguration(config);
+
+    var measurements = measurementService.PerformMeasurement(config);
+
 
 }
 else
@@ -18,5 +27,13 @@ else
 }
 
 UIUtils.EndFramework();
+
+ILogger InitializeLogger()
+{
+    return new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .CreateLogger();
+}
 
 

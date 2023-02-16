@@ -1,12 +1,17 @@
 ﻿namespace BDEnergyFramework.Models
 {
     public record MeasurementConfiguration(
-        List<string> MeasurementInstruments,
+        List<EMeasuringInstrument> MeasurementInstruments,
         int RequiredMeasurements,
         int MeasurementsBetweenRestarts,
         List<string> TestCasePaths,
         int AllocatedCores,
         List<string> TestCaseParameters,
+        int BurnInPeriod,
+        bool UploadToDatabase,
+        bool DisableWifi,
+        int MinimumTemperature,
+        int MaximumTemperature,
         Dictionary<string, string> AdditionalMetadata)
     {
         public bool RequiresRestarts => MeasurementsBetweenRestarts > 0;

@@ -2,7 +2,10 @@
 {
     public interface IDutService
     {
-        List<string> GetMeasuringInstruments();
+        void DisableWifi();
+        void EnableWifi();
+        List<EMeasuringInstrument> GetMeasuringInstruments();
         string GetOperatingSystem();
+        double GetTemperature();
     }
 }

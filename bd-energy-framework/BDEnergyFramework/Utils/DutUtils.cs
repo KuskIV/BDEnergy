@@ -9,11 +9,13 @@ namespace BDEnergyFramework.Utils
 {
     public static class DutUtils
     {
-        public static IDutService GetDutService()
+        public static IDutService GetDutService(Models.UserSecrets secrets)
         {
             if (IsWindowsMachine())
             {
-                return new WindowsDesktopService();
+                var wifiService = new WifiService(secrets.WifiAdapterName);
+
+                return new WindowsDesktopService(wifiService);
             }
 
             throw new NotImplementedException($"The OS {Environment.OSVersion.Platform.ToString()} is not implemented");

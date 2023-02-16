@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDEnergyFramework
+namespace BDEnergyFramework.Models
 {
-    public class IntelPowerGadget : IMeasuringInstrument
+    public class TimeSeries
     {
+        public List<Sample> Sampels { get; set; }
+
     }
 }

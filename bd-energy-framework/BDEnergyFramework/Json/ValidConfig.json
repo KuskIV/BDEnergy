@@ -1,15 +1,20 @@
 {
-  "MeasurementInstruments": ["RAPL", "Intel Power Gadget"],
-  "RequiredMeasurements": 12,
-  "MeasurementsBetweenRestarts": 23,
-  "TestCasePaths": ["PATH1", "PATH2"],
-  "AllocatedCores": 54,
-  "TestCaseParameters": ["ARG1", "ARG2"],
+  "MeasurementInstruments": [ 2 ],
+  "RequiredMeasurements": 10,
+  "MeasurementsBetweenRestarts": -1,
+  "TestCasePaths": [ "C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe" ],
+  "AllocatedCores": -1,
+  "TestCaseParameters": [ "10" ],
   "AdditionalMetadata": {
     "Experiment": "1",
-    "ExperimentName": "EXPERIMENT_NAME",
-    "Compiler": "COMPILER_NAME",
-    "Language": "LANGUAGE"
+    "ExperimentName": "testing-phase",
+    "Compiler": "clang",
+    "Language": "c++"
   },
-  "RequiresRestarts": true
+  "RequiresRestarts": false,
+  "UploadResultsToDatabase": false,
+  "BurnInPeriod": 1,
+  "MinimumTemperature": 10,
+  "MaximumTemperature": 100,
+  "DisableWifi": false
 }
