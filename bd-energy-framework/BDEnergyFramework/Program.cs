@@ -1,12 +1,22 @@
-﻿// See https://aka.ms/new-console-template for more information
-using BDEnergyFramework.Utils;
-using Spectre.Console;
+﻿using BDEnergyFramework.Utils;
+using BDEnergyFramework.Validators;
 
-var measuringInstruments = new List<string>() { "RAPL", "Intel Power Gadget", "E3" };
+var dutService = DutUtils.GetDutService();
 
 UIUtils.IntroduceFramework();
 
-var config = UIUtils.GetConfiguration(measuringInstruments);
+var config = ConfigUtils.GetConfiguration(dutService); // TODO: Consider burnin period as optional parameter
 
-UIUtils.ShowMeasurementConfiguration(config);
+if (ConfigurationValidator.IsValid(config, dutService, out var errors))
+{
+    UIUtils.ShowMeasurementConfiguration(config);
+
+}
+else
+{
+    UIUtils.PrintErrors(errors);
+}
+
+UIUtils.EndFramework();
+
 

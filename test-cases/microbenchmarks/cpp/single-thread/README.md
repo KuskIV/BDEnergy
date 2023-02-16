@@ -4,12 +4,6 @@ This folder contains test cases implemented in C++, utilizing a single thread. A
 
 ---
 
-![Fasta](images\fasta.png)
-
-[Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/fasta-gpp-1.html)
-
----
-
 ![Nbody](images\nbody.png)
 
 [Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/nbody-gpp-3.html)
@@ -19,3 +13,5 @@ This folder contains test cases implemented in C++, utilizing a single thread. A
 ![Spectre Norm](images\spectral-norm.png)
 
 [Link](https://benchmarksgame-team.pages.debian.net/benchmarksgame/program/spectralnorm-gpp-1.html)
+
+---
