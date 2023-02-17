@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using OpenHardwareMonitor.Hardware;
 
 namespace BDEnergyFramework.Utils
 {
@@ -11,19 +8,27 @@ namespace BDEnergyFramework.Utils
     {
         public static double GetCpuTemperature()
         {
-            double temperature = 0;
+            Computer computer = new Computer();
+            computer.CPUEnabled = true;
 
-            var scope = new ManagementScope(@"\\.\root\WMI");
+            computer.Open();
+            float temperature = -1;
 
-            var query = new SelectQuery("SELECT * FROM MSAcpi_ThermalZoneTemperature");
-
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query))
+            foreach (var hardware in computer.Hardware)
             {
-                foreach (ManagementObject obj in searcher.Get())
+                if (hardware.HardwareType == HardwareType.CPU)
                 {
-                    temperature = Convert.ToDouble(obj["CurrentTemperature"].ToString()) / 10.0 - 273.15;
+                    hardware.Update();
+
+                    temperature = hardware.Sensors
+                        .Where(x => x.SensorType == SensorType.Temperature)
+                        .Select(x => (float)x.Value).Average();
+
+                    break;
                 }
             }
+
+            computer.Close();
 
             return temperature;
         }

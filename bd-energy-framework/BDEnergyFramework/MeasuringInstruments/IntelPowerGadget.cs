@@ -59,6 +59,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             var measurement = Mapper.Map(ipgData, startTime, endTime, elapsedMilliseconds);
             var timeSeries = Mapper.Map(igpTimeSeries);
 
+
             return (timeSeries, measurement);
         }
 

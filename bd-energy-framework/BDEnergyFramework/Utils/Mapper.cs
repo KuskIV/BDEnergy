@@ -23,7 +23,7 @@ namespace BDEnergyFramework.Utils
 
             timeSeries.Sampels = igpData.Select(x => Map(x)).ToList();
 
-            throw new NotImplementedException();
+            return timeSeries;
         }
 
         internal static List<EMeasuringInstrument> MapToMeasuringInstrumentEnum(List<string> measuringInstruments)

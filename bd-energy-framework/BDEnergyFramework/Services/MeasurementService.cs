@@ -140,7 +140,7 @@ namespace BDEnergyFramework.Services
             measurement.Measurements.Add(m);
         }
 
-        private static void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath)
+        private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath)
         {
             // TODO: allocated threads
 
@@ -148,9 +148,15 @@ namespace BDEnergyFramework.Services
             string parameters = testCaseParameter;
 
             Process process = new Process();
-            process.StartInfo.FileName = executablePath;
+            process.StartInfo.FileName = "\"" + executablePath + "\"";
             process.StartInfo.Arguments = parameters;
             process.Start();
+            process.WaitForExit();
+
+            // Get the exit code of the process
+            var exitCode = process.ExitCode;
+
+            _logger.Information($"Test case exited with exit code '{exitCode}'");
         }
 
         private MeasurementContext GetMeasurement(List<MeasurementContext> measurements, EMeasuringInstrument mi, string testCasePath, string testCaseParameter)

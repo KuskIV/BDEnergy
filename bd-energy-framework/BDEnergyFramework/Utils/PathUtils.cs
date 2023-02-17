@@ -16,9 +16,16 @@ namespace BDEnergyFramework.Utils
         {
 
             string fileName = GetFileName(date);
-            string root = GetPathForSource(mi.ToString());
+            string root = GetPathForSource(mi.ToString()).Replace("\\", "/");
 
-            return new StringBuilder().AppendFormat(@"{0}/{1}.csv", root, fileName).ToString();
+            if (!System.IO.Directory.Exists(root))
+            {
+                System.IO.Directory.CreateDirectory(root);
+            }
+
+            var path = new StringBuilder().AppendFormat(@"{0}/{1}.csv", root, fileName).ToString();
+
+            return path;
         }
 
         public static string GetFileName(DateTime date)
