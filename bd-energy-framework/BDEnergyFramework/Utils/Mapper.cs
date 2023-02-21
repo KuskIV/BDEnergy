@@ -13,7 +13,11 @@ namespace BDEnergyFramework.Utils
                 GpuEnergyInJoules = intelPowerGadgetData.CumulativeGtEnergyInJoules,
                 StartTime = startTime,
                 EndTime = endTime,
-                Duration = elapsedMilliseconds
+                Duration = elapsedMilliseconds,
+                AdditionalMetadata = new Dictionary<string, double>()
+                {
+
+                }
             };
         }
 
@@ -66,22 +70,24 @@ namespace BDEnergyFramework.Utils
         {
             return new Sample()
             {
-                Temperature = ts.PackageTemperature_0C,
-                ElapsedTime = ts.ElapsedTimesec,
-                Time = ts.SystemTime,
-                CpuUtilization = ts.CPUUtilization,
-                GpuUtilization = ts.GTUtilization,
-                CpuFrequencyMhz = ts.CPUFrequency_0MHz,
-                GpuFrequencyMhz = ts.GTFrequencyMHz,
-                ProcessorPower = ts.ProcessorPower_0Watt,
-                CumulativeProcessorEnergyInJoules = ts.CumulativeProcessorEnergy_0Joules,
-                DramEnergyInJoules = ts.CumulativeDRAMEnergy_0Joules,
-                GpuEnergyInJoules = ts.CumulativeGTEnergy_0Joules,
-                PackagePl1InWatt = ts.PackagePL1_0Watt,
-                PackagePl2InWatt = ts.PackagePL2_0Watt,
-                PackagePl4InWatt = ts.PackagePL4_0Watt,
-                PsysPl1InWatt = ts.PlatformPsysPL1_0Watt,
-                PsysPl2InWatt = ts.PlatformPsysPL2_0Watt,
+                PackageTemperature = float.Parse(ts.PackageTemperature_0C),
+                ElapsedTime = float.Parse(ts.ElapsedTimesec),
+                CpuUtilization = float.Parse(ts.CPUUtilization),
+                ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt),
+                DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules),
+                GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules),
+                ProcessorEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules),
+                AdditionalMetadata = new Dictionary<string, double>()
+                {
+                    { "GpuUtilization", float.Parse(ts.GTUtilization) },
+                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz) },
+                    { "GpuFrequencyMhz", ts.GTFrequencyMHz },
+                    { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt) },
+                    { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt) },
+                    { "PackagePl4InWatt", float.Parse(ts.PackagePL4_0Watt) },
+                    { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt) },
+                    { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt) }
+                },
             };
         }
     }

@@ -27,7 +27,7 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetLibreHardwareMonitor()
         {
-            throw new NotImplementedException();
+            return new HardwareMonitor(EMeasuringInstrument.LHM);
         }
 
         private static MeasuringInstrument GetIntelPowerGadget()

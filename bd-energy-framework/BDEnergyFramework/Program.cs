@@ -19,7 +19,7 @@ if (ConfigurationValidator.IsValid(config, dutService, out var errors))
 
     var measurements = measurementService.PerformMeasurement(config);
 
-
+    UIUtils.ShowMeasurements(measurements);
 }
 else
 {

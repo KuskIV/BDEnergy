@@ -1,6 +1,6 @@
 {
-  "MeasurementInstruments": [ 2 ],
-  "RequiredMeasurements": 10,
+  "MeasurementInstruments": [ 2, 3 ],
+  "RequiredMeasurements": 2,
   "MeasurementsBetweenRestarts": -1,
   "TestCasePaths": [ "C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe" ],
   "AllocatedCores": -1,
@@ -13,7 +13,7 @@
   },
   "RequiresRestarts": false,
   "UploadResultsToDatabase": false,
-  "BurnInPeriod": 1,
+  "BurnInPeriod": 0,
   "MinimumTemperature": 10,
   "MaximumTemperature": 100,
   "DisableWifi": false

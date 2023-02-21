@@ -28,6 +28,11 @@ namespace BDEnergyFramework.Utils
             return path;
         }
 
+        public static string GetFilenameFromPath(string path)
+        {
+            return Path.GetFileName(path);
+        }
+
         public static string GetFileName(DateTime date)
         {
             return date.ToString("yyyy-MM-dd-hh-mm-ss");

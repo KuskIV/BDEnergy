@@ -32,6 +32,8 @@ namespace BDEnergyFramework.Services
 
             do
             {
+                IntroduceMeasurement(config, measurements, burninApplied);
+
                 if (CpuTooHotOrCold(config))
                 {
                     Cooldown(config);
@@ -59,6 +61,30 @@ namespace BDEnergyFramework.Services
             return measurements;
         }
 
+        private void IntroduceMeasurement(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
+        {
+            if (burninApplied)
+            {
+                _logger.Information("Performing measurement {cur}/{max}",
+                    GetCurrentCount(measurements), config.RequiredMeasurements);
+            }
+            else
+            {
+                _logger.Information("Performing burnin {cur}/{max}",
+                    GetCurrentCount(measurements), config.RequiredMeasurements);
+            }
+        }
+
+        private object GetCurrentCount(List<MeasurementContext> measurements)
+        {
+            if (!measurements.Any())
+            {
+                return 1;
+            }
+
+            return measurements.First().Measurements.Count() + 1;
+        }
+
         private void PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements)
         {
             foreach (var mi in config.MeasurementInstruments)
@@ -68,7 +94,8 @@ namespace BDEnergyFramework.Services
                     var testCasePath = tc.First;
                     var testCaseParameter = tc.Second;
 
-                    _logger.Information($"About to perform measurements using '{mi}' with input '{testCasePath} {testCaseParameter}'");
+                    _logger.Information("About to perform measurements using '{mi}' with input '{p} {testCaseParameter}'",
+                        mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter);
 
                     SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath);
 
@@ -81,7 +108,7 @@ namespace BDEnergyFramework.Services
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
         {
-            return measurements.All(x => x.Measurements.Count() > config.BurnInPeriod);
+            return measurements.All(x => x.Measurements.Count() >= config.BurnInPeriod);
         }
 
         private void Cooldown(MeasurementConfiguration config)
@@ -102,7 +129,8 @@ namespace BDEnergyFramework.Services
 
             if (tooHotOrCold)
             {
-                _logger.Information($"The temperature ({temperature}) is not between the accepted range between {config.MinimumTemperature} and {config.MaximumTemperature}");
+                _logger.Information("The temperature ({temperature}) is not between the accepted range between {minTemp} and {maxTemp}",
+                    temperature, config.MinimumTemperature, config.MaximumTemperature);
             }
 
             return tooHotOrCold;
@@ -110,12 +138,12 @@ namespace BDEnergyFramework.Services
 
         private bool EnoughMeasurements(List<MeasurementContext> measurements, MeasurementConfiguration config, bool burninApplied)
         {
-            if (burninApplied)
+            if (!burninApplied)
             {
                 return false;
             }
 
-            return measurements.All(x => x.Measurements.Count > config.RequiredMeasurements);
+            return measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
         private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements)
@@ -156,7 +184,8 @@ namespace BDEnergyFramework.Services
             // Get the exit code of the process
             var exitCode = process.ExitCode;
 
-            _logger.Information($"Test case exited with exit code '{exitCode}'");
+            _logger.Information("Test case '{tc}' exited with exit code '{exitCode}'",
+                PathUtils.GetFilenameFromPath(testCasePath), exitCode);
         }
 
         private MeasurementContext GetMeasurement(List<MeasurementContext> measurements, EMeasuringInstrument mi, string testCasePath, string testCaseParameter)

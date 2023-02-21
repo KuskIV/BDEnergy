@@ -1,10 +1,10 @@
 \paragraph{Running Average Power Limit}
 Intel's RAPL is the most commonly seen software-based measuring instrument seen in the literature. It uses MSRs and Hardware performance counters to calculate how much energy the processor uses. RAPL has previously only been directly accessible on Linux and Mac, and therefore our previous work we only used it on Linux. Where we found that RAPL had a correlation of 0.81 with our ground truth on Linux.\cite{biksbois}
+
 \paragraph{Intel Power Gadget}
 IPG is a software tool created by Intel, which can estimate the power of Intel processors. It contains a command line version called Powerlog
 
-It uses the same hardware counters and MSRs as RAPL does
-We found that IPG had a correlation of 0.78 with our ground truth on Windows.\cite{biksbois}
+It uses the same hardware counters and MSRs as RAPL does. We found that IPG had a correlation of 0.78 with our ground truth on Windows.\cite{biksbois}
 
 %% Sources saying IPG uses RAPL:
 % https://firefox-source-docs.mozilla.org/performance/intel_power_gadget.html
@@ -17,5 +17,6 @@ We found that IPG had a correlation of 0.78 with our ground truth on Windows.\ci
 \paragraph{Libre Hardware Monitor}
 
 We found that LHM had a correlation of 0.76 with our ground truth on Windows.\cite{biksbois}
+
 \paragraph{AC Current Clamp}
 

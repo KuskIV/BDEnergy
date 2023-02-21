@@ -29,8 +29,17 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         [DllImport("EnergyLib64.dll", CharSet = CharSet.Unicode)]
         private static extern bool StopLog();
+        
         public IntelPowerGadget(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
+            /*
+             * 
+             * Fatal error. System.AccessViolationException: 
+             * Attempted to read or write protected memory. 
+             * This is often an indication that other memory is corrupt.
+             * 
+             */
+
             Initialise();
         }
 

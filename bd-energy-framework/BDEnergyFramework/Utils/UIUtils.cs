@@ -58,7 +58,7 @@ namespace BDEnergyFramework.Utils
             table.AddRow("Threads", config.AllocatedCores == -1 ? "Not specified" : config.AllocatedCores.ToString());
             table.AddRow("Upload to DB", config.UploadToDatabase ? "Yes" : "No");
             table.AddRow("Burn-in", config.BurnInPeriod.ToString());
-            table.AddRow("Temperature", "between" + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
+            table.AddRow("PackageTemperature", "between" + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
 
             foreach (var key in config.AdditionalMetadata.Keys)
             {
@@ -241,6 +241,36 @@ namespace BDEnergyFramework.Utils
                         "[grey](Press [blue]<space>[/] to toggle a measuring instrument, " +
                         "[green]<enter>[/] to accept)[/]")
                     .AddChoices(measuringInstruments));
+        }
+
+        internal static void ShowMeasurements(List<MeasurementContext> measurements)
+        {
+            AnsiConsole.Write("The results are as following:\n");
+
+            foreach (var m in measurements)
+            {
+                ShowMeasurement(m);
+            }
+        }
+
+        private static void ShowMeasurement(MeasurementContext measurement)
+        {
+            var table = new Table();
+
+            table.AddColumn("Name");
+            table.AddColumn(new TableColumn("Value").Centered());
+
+            table.AddRow("Test case", PathUtils.GetFilenameFromPath(measurement.TestCase));
+            table.AddRow("Parameters", measurement.Parameter);
+            table.AddRow("Measurement instrument", measurement.MeasurementInstrument.ToString());
+            table.AddRow("Measurements", measurement.Measurements.Count().ToString());
+            table.AddRow("Dram Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.DramEnergyInJoules).ToList()));
+            table.AddRow("GPU Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.GpuEnergyInJoules).ToList()));
+            table.AddRow("CPU Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.ProcessorEnergyInJoules).ToList()));
+            table.AddRow("Duration (s)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.Duration).ToList()));
+
+
+            AnsiConsole.Write(table);
         }
     }
 }
