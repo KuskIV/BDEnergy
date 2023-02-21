@@ -905,3 +905,4 @@ dkms.conf
 *.exe
 *.out
 *.app
+article/.vscode/settings.json
