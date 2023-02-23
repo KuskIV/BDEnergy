@@ -1,7 +1,7 @@
 $username = $env:USERNAME
-$document = $enc:DOCUMENT
-Write-Host $document
-$chromePath = "C:\Users\${username}\chromium\src"
+$documentsPath = Join-Path $env:USERPROFILE "Documents"
+Write-Host $documentsPath
+$chromePath = $documentsPath+"\chromium\src"
 $currPath = Get-Location
 
 if (!(Test-Path -Path $chromePath)) 
@@ -21,3 +21,4 @@ Write-Host "Starting Chromeium Compilation"
 gn gen out/Default
 autoninja -C out\Default chrome
 Set-Location $currPath
+exit
