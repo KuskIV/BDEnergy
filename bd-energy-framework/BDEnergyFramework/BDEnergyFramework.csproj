@@ -34,11 +34,4 @@
     </None>
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <ProjectReference Include="..\LibreHardwareMonitor\LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj">
-      <Project>{32df6396-4686-4d5e-93ca-28301f70b56b}</Project>
-      <Name>LibreHardwareMonitorLib</Name>
-    </ProjectReference>
-  </ItemGroup>-->
-
 </Project>

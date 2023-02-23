@@ -1,18 +1,13 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Utils;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Timer = System.Timers.Timer;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
     public class MeasuringInstrument
     {
-        private System.Timers.Timer _timer;
-        private readonly int _milisecondsBetweenSampels = 100;
+        private Timer _timer;
+        private readonly int _milisecondsBetweenSampels = 200;
         private readonly EMeasuringInstrument _measuringInstrument;
 
         public MeasuringInstrument(EMeasuringInstrument measuringInstrument)
@@ -30,8 +25,6 @@ namespace BDEnergyFramework.MeasuringInstruments
             var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, startTime);
 
             return ParseData(path, startTime, endTime, elapsedMilliseconds);
-
-
         }
 
         public void Start(DateTime date)
@@ -40,7 +33,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             StartMeasuringInstruments(path);
 
-            _timer = new System.Timers.Timer(_milisecondsBetweenSampels);
+            _timer = new Timer(_milisecondsBetweenSampels);
             _timer.Elapsed += PerformMeasuring;
             _timer.Enabled = true;
         }

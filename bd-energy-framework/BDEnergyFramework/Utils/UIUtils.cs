@@ -245,11 +245,18 @@ namespace BDEnergyFramework.Utils
 
         internal static void ShowMeasurements(List<MeasurementContext> measurements)
         {
-            AnsiConsole.Write("The results are as following:\n");
-
-            foreach (var m in measurements)
+            if (!measurements.Any())
             {
-                ShowMeasurement(m);
+                AnsiConsole.Write("No results found.\n");
+            }
+            else
+            {
+                AnsiConsole.Write("The results are as following:\n");
+
+                foreach (var m in measurements)
+                {
+                    ShowMeasurement(m);
+                }
             }
         }
 

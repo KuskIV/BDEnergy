@@ -30,6 +30,12 @@ namespace BDEnergyFramework.Services
 
             SetupMeasuringInstruments(config.MeasurementInstruments);
 
+            if (!_measuringInstruments.Any())
+            {
+                _logger.Information("No measuring instruments were setup. Try again.");
+                return new List<MeasurementContext>();
+            }
+
             do
             {
                 IntroduceMeasurement(config, measurements, burninApplied);
@@ -71,7 +77,7 @@ namespace BDEnergyFramework.Services
             else
             {
                 _logger.Information("Performing burnin {cur}/{max}",
-                    GetCurrentCount(measurements), config.RequiredMeasurements);
+                    GetCurrentCount(measurements), config.BurnInPeriod);
             }
         }
 
@@ -143,7 +149,7 @@ namespace BDEnergyFramework.Services
                 return false;
             }
 
-            return measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
+            return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
         private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements)

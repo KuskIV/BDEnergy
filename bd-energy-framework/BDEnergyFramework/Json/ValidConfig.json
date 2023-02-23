@@ -13,7 +13,7 @@
   },
   "RequiresRestarts": false,
   "UploadResultsToDatabase": false,
-  "BurnInPeriod": 0,
+  "BurnInPeriod": 2,
   "MinimumTemperature": 10,
   "MaximumTemperature": 100,
   "DisableWifi": false

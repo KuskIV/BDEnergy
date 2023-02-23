@@ -71,7 +71,7 @@ namespace BDEnergyFramework.Utils
             {
                 return JsonSerializer.Deserialize<MeasurementConfiguration>(input);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
