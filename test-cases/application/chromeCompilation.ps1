@@ -11,9 +11,9 @@ if (!(Test-Path -Path $chromePath))
 }
 Set-Location $chromePath
 
-if (!(Test-Path -Path $chromePath+"\out"))
+if (!(Test-Path -Path "\out"))
 {
-    Remove-Item -Path $chromePath"\out" -Recurse -Force
+    Remove-Item -Path "\out" -Recurse -Force
     Write-Host "Old compilation removed"
 }
 
