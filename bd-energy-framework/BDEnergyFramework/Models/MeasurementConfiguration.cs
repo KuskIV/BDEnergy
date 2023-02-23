@@ -5,7 +5,7 @@
         int RequiredMeasurements,
         int MeasurementsBetweenRestarts,
         List<string> TestCasePaths,
-        int AllocatedCores,
+        List<int> AllocatedCores,
         List<string> TestCaseParameters,
         int BurnInPeriod,
         bool UploadToDatabase,

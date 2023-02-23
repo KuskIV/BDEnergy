@@ -6,7 +6,7 @@ namespace BDEnergyFramework.Utils
     internal class UIUtils
     {
         private static readonly int DefaultMeasurementCount = 10;
-        private static readonly int DefaultAllocatedCores = -1;
+        private static readonly List<int> DefaultAllocatedCores = new List<int>();
         private static readonly int DefaultBurnInPeriod = 0;
         private static readonly int DefaultMeasurementsBetweenRestart = -1;
         private static readonly int DefaultMinimumTemperature = -200;
@@ -55,7 +55,7 @@ namespace BDEnergyFramework.Utils
             table.AddRow("Measurements", config.RequiredMeasurements.ToString());
             table.AddRow("Test Case Path", string.Join(',', config.TestCasePaths));
             table.AddRow("Test Case Parameters", string.Join(',', config.TestCaseParameters));
-            table.AddRow("Threads", config.AllocatedCores == -1 ? "Not specified" : config.AllocatedCores.ToString());
+            table.AddRow("Allocated cores", !config.AllocatedCores.Any() ? "Not specified" : string.Join(',', config.AllocatedCores));
             table.AddRow("Upload to DB", config.UploadToDatabase ? "Yes" : "No");
             table.AddRow("Burn-in", config.BurnInPeriod.ToString());
             table.AddRow("PackageTemperature", "between" + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
@@ -103,7 +103,7 @@ namespace BDEnergyFramework.Utils
 
             var minimumTemperature = GetMinimumTemperature();
             var maximumTemperature = GetMaximumTemperature();
-            int? allocatedCores = GetAllocatedCores();
+            var allocatedCores = GetAllocatedCores();
 
             return new MeasurementConfiguration(
                 MeasurementInstruments: Mapper.MapToMeasuringInstrumentEnum(selectedMeasuringInstruments),
@@ -130,22 +130,23 @@ namespace BDEnergyFramework.Utils
             return AnsiConsole.Confirm("Should the test include restarts of the device?");
         }
 
-        private static int ParseAllocatedCores(int? allocatedCores)
+        private static List<int> ParseAllocatedCores(string allocatedCores)
         {
-            if (allocatedCores is int cores && cores > 0)
+            if (allocatedCores.ToLower() == "all")
             {
-                return cores;
+                return new List<int>();
             }
 
-            return -1;
+            var cores = allocatedCores.Split(',');
+            
+            return cores.Select(x => int.Parse(x.Trim())).ToList();
         }
 
-        private static int? GetAllocatedCores()
+        private static string GetAllocatedCores()
         {
             return AnsiConsole.Prompt(
-                new TextPrompt<int?>("[grey][[Optional]][/] How many [green]threads should the test case execute on?[/]?")
-                    .DefaultValue(null)
-                    .ShowDefaultValue(false));
+                new TextPrompt<string>("[grey][[Optional]][/] What cores should the test case execute on (comma seperated)?")
+                    .DefaultValue("All"));
         }
 
         private static int GetMeasurementCount()
@@ -245,11 +246,18 @@ namespace BDEnergyFramework.Utils
 
         internal static void ShowMeasurements(List<MeasurementContext> measurements)
         {
-            AnsiConsole.Write("The results are as following:\n");
-
-            foreach (var m in measurements)
+            if (!measurements.Any())
             {
-                ShowMeasurement(m);
+                AnsiConsole.Write("No results found.\n");
+            }
+            else
+            {
+                AnsiConsole.Write("The results are as following:\n");
+
+                foreach (var m in measurements)
+                {
+                    ShowMeasurement(m);
+                }
             }
         }
 

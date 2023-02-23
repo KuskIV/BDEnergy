@@ -28,6 +28,8 @@ else
 
 UIUtils.EndFramework();
 
+Console.Read();
+
 ILogger InitializeLogger()
 {
     return new LoggerConfiguration()

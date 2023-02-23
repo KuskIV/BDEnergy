@@ -1,10 +1,12 @@
 {
-  "MeasurementInstruments": [ 2, 3 ],
+  "MeasurementInstruments": [ 2 ],
   "RequiredMeasurements": 2,
   "MeasurementsBetweenRestarts": -1,
   "TestCasePaths": [ "C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe" ],
-  "AllocatedCores": -1,
-  "TestCaseParameters": [ "10" ],
+  "AllocatedCores": [
+    0, 1
+  ],
+  "TestCaseParameters": [ "12" ],
   "AdditionalMetadata": {
     "Experiment": "1",
     "ExperimentName": "testing-phase",

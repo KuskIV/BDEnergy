@@ -1,19 +1,13 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Utils;
 using OpenHardwareMonitor.Hardware;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
     internal class HardwareMonitor : MeasuringInstrument, IDisposable
     {
-        private readonly Computer _computer;
+        private Computer _computer;
 
         private TimeSeries _timeSeries= new TimeSeries();
         private DateTime _startTime;
@@ -21,31 +15,36 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         public HardwareMonitor(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
-            _computer = new Computer();
-            _computer.CPUEnabled = true;
-            _computer.Open();
+
         }
 
         internal override void StartMeasuringInstruments(string path)
         {
+            _computer = new Computer()
+            {
+                CPUEnabled = true,
+                MainboardEnabled = true,
+                RAMEnabled = true,
+                GPUEnabled = true,
+            };
+
+            _computer.Open();
+
             _timeSeries = new TimeSeries();
             _startTime = DateTime.UtcNow;
         }
 
         internal override void StopMeasuringInstrument()
         {
+            _computer.Close();
             // Do nothing
         }
 
         internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds)
         {
-            var (totalDramJoules, avgDramJoules) = GetEnergyTotalJoules(_timeSeries.Sampels.Select(x => x.DramEnergyInJoules).ToList(), elapsedMilliseconds);
-            var (totalGpuJoules, avgGpuJoules) = GetEnergyTotalJoules(_timeSeries.Sampels.Select(x => x.GpuEnergyInJoules).ToList(), elapsedMilliseconds);
-            var (totalCpuJoules, avgCpuJoules) = GetEnergyTotalJoules(_timeSeries.Sampels.Select(x => x.ProcessorEnergyInJoules).ToList(), elapsedMilliseconds);
-
-            //var totalDramJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.DramEnergyInJoules).ToList(), elapsedMilliseconds);
-            //var totalGpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.GpuEnergyInJoules).ToList(), elapsedMilliseconds);
-            //var totalCpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.ProcessorEnergyInJoules).ToList(), elapsedMilliseconds);
+            var totalDramJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.DramEnergyInJoules).ToList(), elapsedMilliseconds);
+            var totalGpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.GpuEnergyInJoules).ToList(), elapsedMilliseconds);
+            var totalCpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.ProcessorEnergyInJoules).ToList(), elapsedMilliseconds);
 
             var measurement = new Measurement()
             {
@@ -55,12 +54,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 DramEnergyInJoules = totalDramJoules,
                 ProcessorEnergyInJoules = totalCpuJoules,
                 GpuEnergyInJoules = totalGpuJoules,
-                AdditionalMetadata = new Dictionary<string, double>()
-                {
-                    { "AvgDramJoules", avgDramJoules },
-                    { "AvgGpuJoules", avgGpuJoules },
-                    { "AvgCpuJoules", avgCpuJoules },
-                }
+                AdditionalMetadata = new Dictionary<string, double>() { }
             };
 
             return (_timeSeries, measurement);
@@ -88,7 +82,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 additionalMetadata.Add(c.core, c.value);
             }
 
-            additionalMetadata.Add("Powe CPU Cores", corePower);
+            additionalMetadata.Add("Power CPU Cores", corePower);
 
             
             _timeSeries.Sampels.Add(
@@ -213,7 +207,8 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             foreach (var hardware in _computer.Hardware)
             {
-                //hardware.Update();
+                hardware.Update();
+
                 foreach (var sensor in hardware.Sensors)
                 {
                     try

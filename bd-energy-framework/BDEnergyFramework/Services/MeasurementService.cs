@@ -30,6 +30,12 @@ namespace BDEnergyFramework.Services
 
             SetupMeasuringInstruments(config.MeasurementInstruments);
 
+            if (!_measuringInstruments.Any())
+            {
+                _logger.Information("No measuring instruments were setup. Try again.");
+                return new List<MeasurementContext>();
+            }
+
             do
             {
                 IntroduceMeasurement(config, measurements, burninApplied);
@@ -71,7 +77,7 @@ namespace BDEnergyFramework.Services
             else
             {
                 _logger.Information("Performing burnin {cur}/{max}",
-                    GetCurrentCount(measurements), config.RequiredMeasurements);
+                    GetCurrentCount(measurements), config.BurnInPeriod);
             }
         }
 
@@ -99,7 +105,7 @@ namespace BDEnergyFramework.Services
 
                     SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath);
 
-                    Measure(mi, testCaseParameter, testCasePath, measurements);
+                    Measure(mi, testCaseParameter, testCasePath, measurements, config.AllocatedCores);
 
                     EndMeasurement(config);
                 }
@@ -143,10 +149,10 @@ namespace BDEnergyFramework.Services
                 return false;
             }
 
-            return measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
+            return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements)
+        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores)
         {
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter);
@@ -156,7 +162,7 @@ namespace BDEnergyFramework.Services
 
             measuringInstrument.Start(startTime);
             
-            ExecuteTestCaseWithParameters(testCaseParameter, testCasePath);
+            ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores);
 
             measuringInstrument.Stop(startTime);
             stopWatch.Stop();
@@ -168,17 +174,23 @@ namespace BDEnergyFramework.Services
             measurement.Measurements.Add(m);
         }
 
-        private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath)
+        private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores)
         {
             // TODO: allocated threads
+            var executablePath = testCasePath;
+            var parameters = testCaseParameter;
 
-            string executablePath = testCasePath;
-            string parameters = testCaseParameter;
-
-            Process process = new Process();
+            var process = new Process();
             process.StartInfo.FileName = "\"" + executablePath + "\"";
             process.StartInfo.Arguments = parameters;
             process.Start();
+
+            if (enabledCores.Any())
+            {
+                var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
+                process.ProcessorAffinity = processorAffinity;
+            }
+
             process.WaitForExit();
 
             // Get the exit code of the process

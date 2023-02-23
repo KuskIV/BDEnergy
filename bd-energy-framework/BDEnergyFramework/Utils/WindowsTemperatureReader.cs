@@ -1,5 +1,7 @@
 ﻿
 
+
+
 using OpenHardwareMonitor.Hardware;
 
 namespace BDEnergyFramework.Utils
@@ -8,11 +10,11 @@ namespace BDEnergyFramework.Utils
     {
         public static double GetCpuTemperature()
         {
-            Computer computer = new Computer();
+            var computer = new Computer();
             computer.CPUEnabled = true;
 
             computer.Open();
-            float temperature = -1;
+            var temperature = -1f;
 
             foreach (var hardware in computer.Hardware)
             {
