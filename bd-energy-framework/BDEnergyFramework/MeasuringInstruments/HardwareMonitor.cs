@@ -44,7 +44,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         {
             var totalDramJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.DramEnergyInJoules).ToList(), elapsedMilliseconds);
             var totalGpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.GpuEnergyInJoules).ToList(), elapsedMilliseconds);
-            var totalCpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.ProcessorEnergyInJoules).ToList(), elapsedMilliseconds);
+            var totalCpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.CpuEnergyInJoules).ToList(), elapsedMilliseconds);
 
             var measurement = new Measurement()
             {
@@ -95,7 +95,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                     CpuUtilization = totalCpuLoad,
                     DramEnergyInJoules = dramEnergyInJoules,
                     AdditionalMetadata = additionalMetadata,
-                    ProcessorEnergyInJoules = processorPower,
+                    CpuEnergyInJoules = processorPower,
                 });
         }
 

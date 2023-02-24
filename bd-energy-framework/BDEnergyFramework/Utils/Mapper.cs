@@ -76,7 +76,7 @@ namespace BDEnergyFramework.Utils
                 ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt),
                 DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules),
                 GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules),
-                ProcessorEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules),
+                CpuEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules),
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
                     { "GpuUtilization", float.Parse(ts.GTUtilization) },

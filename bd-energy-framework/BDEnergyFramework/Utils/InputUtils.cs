@@ -35,7 +35,7 @@ namespace BDEnergyFramework.Utils
             throw new ArgumentException($"Not all usesecrets are set: WifiAdapterName '{wifiAdapterName}', MachineName '{machineName}'");
         }
 
-        public static MeasurementConfiguration GetConfiguration(IDutService dutService)
+        public static List<MeasurementConfiguration> GetConfigurations(IDutService dutService)
         {
             var arguments = Environment.GetCommandLineArgs();
             var measuringInstruments = dutService.GetMeasuringInstruments();
@@ -60,16 +60,16 @@ namespace BDEnergyFramework.Utils
             throw new ArgumentException($"The parameter {input} is invalid. It should be a path to a valid json.");
         }
 
-        private static MeasurementConfiguration SerializeInputToConfiguration(string input)
+        private static List<MeasurementConfiguration> SerializeInputToConfiguration(string input)
         {
-            if (HasInvalidStart(input) || HasInvalidEnd(input))
+            if (!HasValidStart(input) || !HasValidEnd(input))
             {
                 throw new ArgumentException("The input content is not a valid json.");
             }
 
             try
             {
-                return JsonSerializer.Deserialize<MeasurementConfiguration>(input);
+                return JsonSerializer.Deserialize<List<MeasurementConfiguration>>(input);
             }
             catch (Exception)
             {
@@ -77,21 +77,21 @@ namespace BDEnergyFramework.Utils
             }
         }
 
-        private static bool HasInvalidEnd(string input)
+        private static bool HasValidEnd(string input)
         {
-            var endsWithBracket = input.Trim().EndsWith('}');
+            var endsWithBracket = input.Trim().EndsWith(']');
 
-            return !endsWithBracket;
+            return endsWithBracket;
         }
 
-        private static bool HasInvalidStart(string input)
+        private static bool HasValidStart(string input)
         {
-            var startWithBracket = input.Trim().StartsWith('{');
+            var startWithCurleyBracket = input.Trim().StartsWith('[');
 
-            return !startWithBracket;
+            return startWithCurleyBracket;
         }
 
-        private static MeasurementConfiguration SerializeContentToConfiguration(string path)
+        private static List<MeasurementConfiguration> SerializeContentToConfiguration(string path)
         {
             var content = System.IO.File.ReadAllText(path);
 

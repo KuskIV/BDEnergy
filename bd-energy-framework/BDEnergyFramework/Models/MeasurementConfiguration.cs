@@ -3,7 +3,6 @@
     public record MeasurementConfiguration(
         List<EMeasuringInstrument> MeasurementInstruments,
         int RequiredMeasurements,
-        int MeasurementsBetweenRestarts,
         List<string> TestCasePaths,
         List<int> AllocatedCores,
         List<string> TestCaseParameters,
@@ -12,8 +11,12 @@
         bool DisableWifi,
         int MinimumTemperature,
         int MaximumTemperature,
-        Dictionary<string, string> AdditionalMetadata)
-    {
-        public bool RequiresRestarts => MeasurementsBetweenRestarts > 0;
-    }
+        int ExperimentNumber,
+        string ExperimentName,
+        string Threads,
+        string TestCaseType,
+        string Compliler,
+        string Optimizations,
+        string Language,
+        Dictionary<string, string> AdditionalMetadata);
 }

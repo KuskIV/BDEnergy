@@ -8,9 +8,15 @@ namespace BDEnergyFramework.Utils
         private static readonly int DefaultMeasurementCount = 10;
         private static readonly List<int> DefaultAllocatedCores = new List<int>();
         private static readonly int DefaultBurnInPeriod = 0;
-        private static readonly int DefaultMeasurementsBetweenRestart = -1;
         private static readonly int DefaultMinimumTemperature = -200;
         private static readonly int DefaultMaximumTemperature = 200;
+        private static readonly int DefaultExperimentNumber = 0;
+        private static readonly string DefaultExperimentName = "experiment";
+        private static readonly string DefaultThreads = "unspecified";
+        private static readonly string DefaultTestCaseType = "unspecified";
+        private static readonly string DefaultCompliler = "unspecified";
+        private static readonly string DefaultOptimizatinos = "unspecified";
+        private static readonly string DefaultLanguage = "unspecified";
 
         public static void IntroduceFramework()
         {
@@ -58,27 +64,17 @@ namespace BDEnergyFramework.Utils
             table.AddRow("Allocated cores", !config.AllocatedCores.Any() ? "Not specified" : string.Join(',', config.AllocatedCores));
             table.AddRow("Upload to DB", config.UploadToDatabase ? "Yes" : "No");
             table.AddRow("Burn-in", config.BurnInPeriod.ToString());
-            table.AddRow("PackageTemperature", "between" + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
+            table.AddRow("PackageTemperature", "between " + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
 
             foreach (var key in config.AdditionalMetadata.Keys)
             {
                 table.AddRow(key, config.AdditionalMetadata[key]);
             }
 
-            if (config.RequiresRestarts)
-            {
-                table.AddRow("Measurements between restarts", config.MeasurementsBetweenRestarts.ToString());
-            }
-            else
-            {
-                table.AddRow("Device Restarts", "No");
-
-            }
-
             AnsiConsole.Write(table);
         }
 
-        public static MeasurementConfiguration GetConfiguration(List<EMeasuringInstrument> measuringInstruments)
+        public static List<MeasurementConfiguration> GetConfiguration(List<EMeasuringInstrument> measuringInstruments)
         {
             var sampelsBetweenRestarts = -1;
 
@@ -96,19 +92,13 @@ namespace BDEnergyFramework.Utils
             var burnInPeriod = GetBurnInPeriod();
             int requiredMeasurements = GetMeasurementCount();
 
-            if (ShouldDutRestart())
-            {
-                sampelsBetweenRestarts = GetSampelsBetweenRestarts();
-            }
-
             var minimumTemperature = GetMinimumTemperature();
             var maximumTemperature = GetMaximumTemperature();
             var allocatedCores = GetAllocatedCores();
 
-            return new MeasurementConfiguration(
+            var config =  new MeasurementConfiguration(
                 MeasurementInstruments: Mapper.MapToMeasuringInstrumentEnum(selectedMeasuringInstruments),
                 RequiredMeasurements: requiredMeasurements,
-                MeasurementsBetweenRestarts: sampelsBetweenRestarts,
                 TestCasePaths: testCasePaths,
                 AllocatedCores: ParseAllocatedCores(allocatedCores),
                 TestCaseParameters: testCaseParameters,
@@ -116,18 +106,23 @@ namespace BDEnergyFramework.Utils
                 UploadToDatabase: uploadToDatabase,
                 MaximumTemperature: maximumTemperature,
                 MinimumTemperature: minimumTemperature,
-                DisableWifi:disableWifi,
+                DisableWifi: disableWifi,
+                ExperimentName: DefaultExperimentName,
+                ExperimentNumber : DefaultExperimentNumber,
+                Threads:DefaultThreads,
+                TestCaseType:DefaultTestCaseType,
+                Compliler:DefaultCompliler,
+                Optimizations:DefaultOptimizatinos,
+                Language:DefaultLanguage,
                 AdditionalMetadata: new Dictionary<string, string>());
+
+            return new List<MeasurementConfiguration>() { config };
+
         }
 
         private static bool GetDisableWifi()
         {
             return AnsiConsole.Confirm("Should the WIFI be disabled during the measurements?");
-        }
-
-        private static bool ShouldDutRestart()
-        {
-            return AnsiConsole.Confirm("Should the test include restarts of the device?");
         }
 
         private static List<int> ParseAllocatedCores(string allocatedCores)
@@ -165,12 +160,11 @@ namespace BDEnergyFramework.Utils
             return AnsiConsole.Ask<int>("What minimum temperature should the divice not get below?");
         }
 
-        private static MeasurementConfiguration GetDefaultConfiguration(List<string> testCasePaths, List<string> testCaseParameters, bool uploadToDatabase, List<string> selectedMeasuringInstruments, bool disableWifi)
+        private static List<MeasurementConfiguration> GetDefaultConfiguration(List<string> testCasePaths, List<string> testCaseParameters, bool uploadToDatabase, List<string> selectedMeasuringInstruments, bool disableWifi)
         {
-            return new MeasurementConfiguration(
+            var defaultConfig =  new MeasurementConfiguration(
                 MeasurementInstruments: Mapper.MapToMeasuringInstrumentEnum(selectedMeasuringInstruments),
                 RequiredMeasurements: DefaultMeasurementCount,
-                MeasurementsBetweenRestarts: DefaultMeasurementsBetweenRestart,
                 TestCasePaths: testCasePaths,
                 AllocatedCores: DefaultAllocatedCores,
                 TestCaseParameters: testCaseParameters,
@@ -179,7 +173,16 @@ namespace BDEnergyFramework.Utils
                 MinimumTemperature: DefaultMinimumTemperature,
                 MaximumTemperature: DefaultMaximumTemperature,
                 DisableWifi:disableWifi,
+                ExperimentName: DefaultExperimentName,
+                ExperimentNumber: DefaultExperimentNumber,
+                Threads: DefaultThreads,
+                TestCaseType: DefaultTestCaseType,
+                Compliler: DefaultCompliler,
+                Optimizations: DefaultOptimizatinos,
+                Language: DefaultLanguage,
                 AdditionalMetadata: new Dictionary<string, string>());
+
+            return new List<MeasurementConfiguration>() { defaultConfig };
         }
 
         private static bool ShouldUseDefaults()
@@ -195,12 +198,6 @@ namespace BDEnergyFramework.Utils
         private static int GetBurnInPeriod()
         {
             return AnsiConsole.Ask<int>("How many of the first sampels should be used as burn-in?");
-        }
-
-        private static int GetSampelsBetweenRestarts()
-        {
-            // how often should it restart?
-            return AnsiConsole.Ask<int>("How many sampels should be obtained between restarts?");
         }
 
         private static List<string> GetTestCaseParameters(List<string> testCasePaths)

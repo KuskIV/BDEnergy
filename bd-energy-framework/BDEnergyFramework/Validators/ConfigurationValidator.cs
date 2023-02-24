@@ -6,15 +6,17 @@ namespace BDEnergyFramework.Validators
 {
     public static class ConfigurationValidator
     {
-        public static bool IsValid(MeasurementConfiguration configuration, IDutService dutService, out List<ValidationError> errors)
+        public static bool IsValid(List<MeasurementConfiguration> configuration, IDutService dutService, out List<ValidationError> errors)
         {
             errors = new List<ValidationError>();
 
-            ValidateMeasuringInstruments(dutService, configuration.MeasurementInstruments, errors);
-            ValidateMeasurements(configuration, errors);
-            ValidatePaths(configuration.TestCasePaths, errors);
-            ValidateTestCases(configuration, errors);
-            ValidateTemperatures(configuration, errors);
+            foreach(var c in configuration)
+            {
+                ValidateMeasuringInstruments(dutService, c.MeasurementInstruments, errors);
+                ValidatePaths(c.TestCasePaths, errors);
+                ValidateTestCases(c, errors);
+                ValidateTemperatures(c, errors);
+            }
 
             return !errors.Any();
         }
@@ -75,19 +77,6 @@ namespace BDEnergyFramework.Validators
         private static bool IsExecutable(string p)
         {
             return p.Trim().ToLower().EndsWith(".exe");
-        }
-
-        private static void ValidateMeasurements(MeasurementConfiguration configuration, List<ValidationError> errors)
-        {
-            int measurementsBetweenRestarts = configuration.MeasurementsBetweenRestarts;
-            int measurements = configuration.RequiredMeasurements;
-            int burnin = configuration.RequiredMeasurements;
-
-            if (measurementsBetweenRestarts > measurements)
-            {
-                errors.Add(
-                    new ValidationError($"Measurements between restart ({measurementsBetweenRestarts}) cannot exceed measurements ({measurements})"));
-            }
         }
 
         private static void ValidateMeasuringInstruments(IDutService dutService, List<EMeasuringInstrument> measurementInstruments, List<ValidationError> errors)

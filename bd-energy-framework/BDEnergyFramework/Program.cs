@@ -7,19 +7,23 @@ var logger = InitializeLogger();
 var secrets = InputUtils.GetSecrets();
 
 var dutService = DutUtils.GetDutService(secrets);
-var measurementService = new MeasurementService(dutService, null, logger);
 
 UIUtils.IntroduceFramework();
 
-var config = InputUtils.GetConfiguration(dutService);
+var configs = InputUtils.GetConfigurations(dutService);
 
-if (ConfigurationValidator.IsValid(config, dutService, out var errors))
+if (ConfigurationValidator.IsValid(configs, dutService, out var errors))
 {
-    UIUtils.ShowMeasurementConfiguration(config);
+    foreach (var c in configs)
+    {
+        var measurementService = new MeasurementService(dutService, null, logger);
+        
+        UIUtils.ShowMeasurementConfiguration(c);
 
-    var measurements = measurementService.PerformMeasurement(config);
+        var measurements = measurementService.PerformMeasurement(c);
 
-    UIUtils.ShowMeasurements(measurements);
+        UIUtils.ShowMeasurements(measurements);
+    }
 }
 else
 {
@@ -28,6 +32,7 @@ else
 
 UIUtils.EndFramework();
 
+Console.WriteLine("Press any key to close...");
 Console.Read();
 
 ILogger InitializeLogger()

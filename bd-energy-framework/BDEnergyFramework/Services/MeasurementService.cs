@@ -100,7 +100,7 @@ namespace BDEnergyFramework.Services
                     var testCasePath = tc.First;
                     var testCaseParameter = tc.Second;
 
-                    _logger.Information("About to perform measurements using '{mi}' with input '{p} {testCaseParameter}'",
+                    _logger.Information("Executing and measuring using '{mi}' with input '{p} {testCaseParameter}'",
                         mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter);
 
                     SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath);
@@ -176,14 +176,16 @@ namespace BDEnergyFramework.Services
 
         private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores)
         {
-            // TODO: allocated threads
             var executablePath = testCasePath;
             var parameters = testCaseParameter;
 
             var process = new Process();
             process.StartInfo.FileName = "\"" + executablePath + "\"";
             process.StartInfo.Arguments = parameters;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
             process.Start();
+            process.PriorityClass= ProcessPriorityClass.High;
 
             if (enabledCores.Any())
             {

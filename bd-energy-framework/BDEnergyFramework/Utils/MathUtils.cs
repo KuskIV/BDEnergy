@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BDEnergyFramework.Utils
+﻿namespace BDEnergyFramework.Utils
 {
     internal static class MathUtils
     {
@@ -17,7 +11,8 @@ namespace BDEnergyFramework.Utils
             var avg = values.Average();
             var std = GetStd(values);
 
-            return $"min: {Math.Round(min, _digits)}, max: {Math.Round(max, _digits)}, avg: {Math.Round(avg, _digits)}, std: {Math.Round(std, _digits)}";
+            //return $"min: {Math.Round(min, _digits)}, max: {Math.Round(max, _digits)}, avg: {Math.Round(avg, _digits)}, std: {Math.Round(std, _digits)}";
+            return $"avg: {Math.Round(avg, _digits)} +/- {Math.Round(std, _digits)}, between {Math.Round(min, _digits)} and {Math.Round(max, _digits)}";
         }
 
         public static string GetMinMaxAvgStdAsString(List<long> values)
