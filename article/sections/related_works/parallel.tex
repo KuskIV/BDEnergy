@@ -1,3 +1,7 @@
 \subsection{Parallel Software}
 
-In the work by Abdelhafez et al.\cite{abdelhafez2019}, the energy consumption for sequential and parallel genetic algorithms are explored, where one research question aims to explore the impact on the energy consumption when using a variable number of cores.
+In the work by Abdelhafez et al.\cite{abdelhafez2019}, the energy consumption for sequential and parallel genetic algorithms are explored, where one research question aims to explore the impact on the energy consumption when using a variable number of cores. In this study they find that a larger number of cores in the execution pool results in a lower running time an energy consumption, and concludes that parallelism can help reduce the energy consumption. Parallelisms ability to reduce the energy consumption is argued to be due to the large number of cores working to solve the problem simultaneously, where the combination of more cores, more parallel operations per time unit will require less energy.
+
+When considering parallel software, the work by Abdelhafez et al.\cite{abdelhafez2019} also find asynchronous implementations to use less energy. The reason for this is because there are no idle cores waiting for data in asynchronous implementations, while in synchronous implementations cores can be blocked during runtime, while waiting for responses from other cores. 
+
+% RAPL, C++, 30 runs
