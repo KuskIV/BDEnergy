@@ -3,7 +3,7 @@
 Research questions:
 
 \begin{itemize}
-    \item How does the compiler, temperature and background process impact the energy consumption?
+    %\item How does the compiler, temperature and background process impact the energy consumption?
     \item What is the best measuring instrument for Windows? %% omformuler, måske kritere for at vælge hvad der er bedst i de forskellige situationer. fx hw måling er gode men svære at sætte op, e3 kræver tingene køre i længere tid osv.
     \item \textit{How well does microbenchmarks represent a realistic usecase compared to macrobenchmarks?}
     \item How does parallelism affect the energy consumption
@@ -15,7 +15,7 @@ Research questions:
 Hypothsis:
 
 \begin{itemize}
-    \item The expectation for the compilers are that the performance and energy consumption will be similar, but with some deviations. Resulting from the individual compilers implementation.
+    \item The expectation when using different compilers is that the energy consumption of the code will be similar, but with some deviations. Resulting from the individual compilers implementation.
     \item The expectation for the temperature is that it in itself would not effect the performance unless the cpu starts to thermal throttle. Though the heat of the cpu is directly related to the electrical resistance meaning that it would be less efficient in terms of joule per computation.
     \item We do not expect the background process to have a large impact on the energy consumption, this mostly because the non-essential background process are executed rarely and for very brief durations. We do expect that the results will become more consistent without 
     \item We know that IPG and LHW are very similar and we expect Windows RAPL driver to be similar as well.
