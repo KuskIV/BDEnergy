@@ -1,4 +1,5 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
 using OpenHardwareMonitor.Hardware;
 using System.Timers;
@@ -16,6 +17,11 @@ namespace BDEnergyFramework.MeasuringInstruments
         public HardwareMonitor(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
 
+        }
+
+        internal override int GetMilisecondsBetweenSampels()
+        {
+            return 1000;
         }
 
         internal override void StartMeasuringInstruments(string path)
@@ -40,7 +46,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             // Do nothing
         }
 
-        internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds)
+        internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             var totalDramJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.DramEnergyInJoules).ToList(), elapsedMilliseconds);
             var totalGpuJoules = CalculateEnergy(_timeSeries.Sampels.Select(x => x.GpuEnergyInJoules).ToList(), elapsedMilliseconds);
@@ -52,8 +58,11 @@ namespace BDEnergyFramework.MeasuringInstruments
                 EndTime = endTime,
                 Duration = elapsedMilliseconds,
                 DramEnergyInJoules = totalDramJoules,
-                ProcessorEnergyInJoules = totalCpuJoules,
+                CpuEnergyInJoules = totalCpuJoules,
                 GpuEnergyInJoules = totalGpuJoules,
+                StartTemperature = startTemperature,
+                EndTemperature = endTemperature,
+                Iteration = iteration,
                 AdditionalMetadata = new Dictionary<string, double>() { }
             };
 
@@ -215,7 +224,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                     {
                         if (sensor.Value is float value)
                         {
-                            _cpuValues.Add((sensor.SensorType, sensor.Name), value);
+                            UpsertValue(value, sensor);
                         }
                     }
                     catch (Exception e)
@@ -224,6 +233,11 @@ namespace BDEnergyFramework.MeasuringInstruments
                     }
                 }
             }
+        }
+
+        private void UpsertValue(float value, ISensor sensor)
+        {
+            _cpuValues.Add((sensor.SensorType, sensor.Name), value);
         }
     }
 }

@@ -1,19 +1,24 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Internal;
+using Microsoft.VisualBasic;
 
 namespace BDEnergyFramework.Utils
 {
     public static class Mapper
     {
-        internal static Measurement Map(IntelPowerGadgetData intelPowerGadgetData, DateTime startTime, DateTime endTime, long elapsedMilliseconds)
+        internal static Measurement Map(IntelPowerGadgetData intelPowerGadgetData, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             return new Measurement()
             {
                 DramEnergyInJoules = intelPowerGadgetData.CumulativeDramEnergyInJoules,
-                ProcessorEnergyInJoules = intelPowerGadgetData.CumulativeProcessorEnergyInJoules,
+                CpuEnergyInJoules = intelPowerGadgetData.CumulativeProcessorEnergyInJoules,
                 GpuEnergyInJoules = intelPowerGadgetData.CumulativeGtEnergyInJoules,
                 StartTime = startTime,
                 EndTime = endTime,
                 Duration = elapsedMilliseconds,
+                StartTemperature = startTemperature,
+                EndTemperature = endTemperature,
+                Iteration = iteration,
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
 
@@ -88,6 +93,64 @@ namespace BDEnergyFramework.Utils
                     { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt) },
                     { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt) }
                 },
+            };
+        }
+
+        internal static Configuration Map(MeasurementConfiguration config)
+        {
+            return new Configuration()
+            {
+                AllocatedCores = config.AllocatedCores,
+                Burnin = config.BurnInPeriod,
+                MaximumTemperature = config.MaximumTemperature,
+                MinimumTemperature = config.MinimumTemperature,
+            };
+        }
+
+        internal static TestCase Map(MeasurementConfiguration config, string testCasePath, string parameter)
+        {
+            var testCaseName = PathUtils.GetFilenameFromPath(testCasePath);
+
+            return new TestCase()
+            {
+                Compiler = config.Compiler,
+                Language = config.Language,
+                Name= testCaseName,
+                Optimizations= config.Optimizations,
+                Parameter = parameter,
+                TestCaseSize = config.TestCaseType,
+                ConcurrencyLimit = config.ConcurrencyLimit,
+            };
+        }
+
+        internal static DeviceUnderTest Map(MeasurementConfiguration configId, string machineName)
+        {
+            return new DeviceUnderTest()
+            {
+                Name = machineName,
+                Os = DutUtils.GetOperatingSystem()
+            };
+        }
+
+        internal static MeasurementInstrument Map(EMeasuringInstrument measurementInstrument)
+        {
+            return new MeasurementInstrument()
+            {
+                Name = measurementInstrument.ToString()
+            };
+        }
+
+        internal static MeasurementCollection Map(int configId, int testCaseId, int dutId, int measurementInstrumentId, MeasurementConfiguration config)
+        {
+            return new MeasurementCollection()
+            {
+                CollectionName = config.ExperimentName,
+                CollectionNumber = config.ExperimentNumber,
+                TestCaseId= testCaseId,
+                DutId= dutId,
+                ConfigurationId= configId,
+                MeasurementInstrumentId= measurementInstrumentId,
+                AdditionalMetadata= config.AdditionalMetadata,
             };
         }
     }

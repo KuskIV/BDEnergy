@@ -8,5 +8,6 @@ namespace BDEnergyFramework.Models
 {
     public record UserSecrets(
         string MachineName,
-        string WifiAdapterName);
+        string WifiAdapterName,
+        string ConnectionString);
 }

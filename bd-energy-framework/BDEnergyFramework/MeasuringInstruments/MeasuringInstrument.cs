@@ -1,5 +1,7 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
+using Org.BouncyCastle.Asn1.Mozilla;
 using Timer = System.Timers.Timer;
 
 namespace BDEnergyFramework.MeasuringInstruments
@@ -7,7 +9,7 @@ namespace BDEnergyFramework.MeasuringInstruments
     public class MeasuringInstrument
     {
         private Timer _timer;
-        private readonly int _milisecondsBetweenSampels = 200;
+        private readonly int _milisecondsBetweenSampels = 100;
         private readonly EMeasuringInstrument _measuringInstrument;
 
         public MeasuringInstrument(EMeasuringInstrument measuringInstrument)
@@ -20,11 +22,16 @@ namespace BDEnergyFramework.MeasuringInstruments
             return _measuringInstrument;
         }
 
-        public (TimeSeries, Measurement) GetMeasurement(DateTime startTime, DateTime endTime, long elapsedMilliseconds)
+        internal virtual int GetMilisecondsBetweenSampels()
+        {
+            return _milisecondsBetweenSampels;
+        }
+
+        public (TimeSeries, Measurement) GetMeasurement(DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, startTime);
 
-            return ParseData(path, startTime, endTime, elapsedMilliseconds);
+            return ParseData(path, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
         }
 
         public void Start(DateTime date)
@@ -33,7 +40,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             StartMeasuringInstruments(path);
 
-            _timer = new Timer(_milisecondsBetweenSampels);
+            _timer = new Timer(GetMilisecondsBetweenSampels());
             _timer.Elapsed += PerformMeasuring;
             _timer.Enabled = true;
         }
@@ -45,7 +52,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             StopMeasuringInstrument();
         }
 
-        internal virtual (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds)
+        internal virtual (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             throw new NotImplementedException();
         }

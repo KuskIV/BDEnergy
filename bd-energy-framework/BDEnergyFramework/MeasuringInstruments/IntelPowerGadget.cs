@@ -1,4 +1,5 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Parsers;
 using BDEnergyFramework.Utils;
 using CsvHelper;
@@ -61,11 +62,11 @@ namespace BDEnergyFramework.MeasuringInstruments
             EnsureSuccess(success);
         }
 
-        internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds)
+        internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             var (ipgData, igpTimeSeries) = IntelPowerGadgetParser.Parse(path);
 
-            var measurement = Mapper.Map(ipgData, startTime, endTime, elapsedMilliseconds);
+            var measurement = Mapper.Map(ipgData, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
             var timeSeries = Mapper.Map(igpTimeSeries);
 
 

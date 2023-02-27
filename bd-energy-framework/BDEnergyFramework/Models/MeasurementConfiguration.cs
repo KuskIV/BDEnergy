@@ -13,9 +13,9 @@
         int MaximumTemperature,
         int ExperimentNumber,
         string ExperimentName,
-        string Threads,
+        string ConcurrencyLimit,
         string TestCaseType,
-        string Compliler,
+        string Compiler,
         string Optimizations,
         string Language,
         Dictionary<string, string> AdditionalMetadata);

@@ -3,10 +3,11 @@ CREATE TABLE Configuration (
   MinimumTemperature INT,
   MaximumTemperature INT,
   Burnin INT,
-  AllocatedCores JSON
+  AllocatedCores JSON,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
+
 
 CREATE TABLE TestCase(
   Id INT NOT NULL AUTO_INCREMENT,
@@ -18,7 +19,7 @@ CREATE TABLE TestCase(
   Parameter VARCHAR(100),
   Threads VARCHAR(100),
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 
 CREATE TABLE DeviceUnderTest(
@@ -26,57 +27,58 @@ CREATE TABLE DeviceUnderTest(
   Name VARCHAR(100),
   Os VARCHAR(100),
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 
-CREATE TABLE MeasurementInstrument(
+CREATE TABLE MeasuringInstrument(
   Id INT NOT NULL AUTO_INCREMENT,
   Name VARCHAR(100),
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 
-CREATE TABLE MeasurementCollection(
+CREATE TABLE MeasuringCollection(
   Id INT NOT NULL AUTO_INCREMENT,
   Name VARCHAR(100),
-  Iteration INT,
   ConfigurationId INT,
   TestCaseId INT,
   DutId INT,
   MeasuringInstrumentId INT,
-  AdditionalMetadata INT,
+  AdditionalMetadata JSON,
+  CollectionNumber INT,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 
 CREATE TABLE Sample(
   Id INT NOT NULL AUTO_INCREMENT,
   CollectionId INT,
-  PackageTemperature DECIMAL,
-  ElapsedTime DECIMAL,
-  ProcessorPowerInWatt DECIMAL,
-  DramEnergyInJoules DECIMAL,
-  GpuEnergyInJoules DECIMAL,
-  CpuEnergyInJoules DECIMAL,
-  CpuUtilization DECIMAL,
+  PackageTemperature DOUBLE,
+  ElapsedTime DOUBLE,
+  ProcessorPowerInWatt DOUBLE,
+  DramEnergyInJoules DOUBLE,
+  GpuEnergyInJoules DOUBLE,
+  CpuEnergyInJoules DOUBLE,
+  CpuUtilization DOUBLE,
   AdditionalMetadata JSON,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 
 CREATE TABLE Measurement(
   Id INT NOT NULL AUTO_INCREMENT,
+  Iteration INT,
   CollectionId INT,
-  PackageTemperatureBegin DECIMAL,
-  PackageTemperatureEnd DECIMAL,
-  Duration DECIMAL,
-  DramEnergyInJoules DECIMAL,
-  GpuEnergyInJoules DECIMAL,
-  CpuEnergyInJoules DECIMAL,
-  BeginTime DateTime
-  EndTime DateTime
+  PackageTemperatureBegin DOUBLE,
+  PackageTemperatureEnd DOUBLE,
+  Duration DOUBLE,
+  DramEnergyInJoules DOUBLE,
+  GpuEnergyInJoules DOUBLE,
+  CpuEnergyInJoules DOUBLE,
+  BeginTime TIMESTAMP,
+  EndTime TIMESTAMP,
   AdditionalMetadata JSON,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (Id)
 );
 

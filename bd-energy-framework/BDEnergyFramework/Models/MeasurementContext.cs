@@ -1,4 +1,6 @@
-﻿namespace BDEnergyFramework.Models
+﻿using BDEnergyFramework.Models.Internal;
+
+namespace BDEnergyFramework.Models
 {
     public class MeasurementContext
     {

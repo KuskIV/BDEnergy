@@ -24,15 +24,17 @@ namespace BDEnergyFramework.Utils
 
             var wifiAdapterName = configurationRoot.GetValue<string>("WifiAdapterName");
             var machineName = configurationRoot.GetValue<string>("MachineName");
+            var connectionString = configurationRoot.GetValue<string>("ConnectionString");
 
-            if (wifiAdapterName is string w && machineName is string m)
+            if (wifiAdapterName is string w && machineName is string m && connectionString is string c)
             {
                 return new UserSecrets(
                     WifiAdapterName:w,
-                    MachineName:m);
+                    MachineName:m,
+                    ConnectionString:c);
             }
 
-            throw new ArgumentException($"Not all usesecrets are set: WifiAdapterName '{wifiAdapterName}', MachineName '{machineName}'");
+            throw new ArgumentException($"Not all usesecrets are set: WifiAdapterName '{wifiAdapterName}', MachineName '{machineName}', ConnectionString '{connectionString}'");
         }
 
         public static List<MeasurementConfiguration> GetConfigurations(IDutService dutService)
@@ -42,7 +44,8 @@ namespace BDEnergyFramework.Utils
 
             if (arguments.Count() == 1)
             {
-                return UIUtils.GetConfiguration(measuringInstruments);
+                return UIUtils.PromtForInput();
+                //return UIUtils.GetConfiguration(measuringInstruments);
             }
 
             if (arguments.Count() > 2)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,11 @@ namespace BDEnergyFramework.Utils
             }
 
             throw new NotImplementedException($"The OS {Environment.OSVersion.Platform.ToString()} is not implemented");
+        }
+
+        public static string GetOperatingSystem()
+        {
+            return Environment.OSVersion.Platform.ToString();
         }
 
         private static bool IsWindowsMachine()

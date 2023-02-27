@@ -1,4 +1,4 @@
-﻿namespace BDEnergyFramework.Models
+﻿namespace BDEnergyFramework.Models.Internal
 {
     public class Sample
     {

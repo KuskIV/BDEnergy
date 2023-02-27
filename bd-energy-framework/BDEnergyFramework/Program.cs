@@ -1,10 +1,13 @@
-﻿using BDEnergyFramework.Services;
+﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Services;
 using BDEnergyFramework.Utils;
 using BDEnergyFramework.Validators;
 using Serilog;
+using System.Data;
 
 var logger = InitializeLogger();
 var secrets = InputUtils.GetSecrets();
+var dbConnectionFactory = GetDbConnectionFactory(secrets);
 
 var dutService = DutUtils.GetDutService(secrets);
 
@@ -16,7 +19,7 @@ if (ConfigurationValidator.IsValid(configs, dutService, out var errors))
 {
     foreach (var c in configs)
     {
-        var measurementService = new MeasurementService(dutService, null, logger);
+        var measurementService = new MeasurementService(dutService, dbConnectionFactory, logger, secrets.MachineName);
         
         UIUtils.ShowMeasurementConfiguration(c);
 
@@ -41,6 +44,16 @@ ILogger InitializeLogger()
     .MinimumLevel.Debug()
     .WriteTo.Console()
     .CreateLogger();
+}
+
+Func<IDbConnection> GetDbConnectionFactory(UserSecrets secrets)
+{
+    var connectionString = secrets.ConnectionString;
+    return () => {
+        var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+        con.Open();
+        return con;
+    };
 }
 
 

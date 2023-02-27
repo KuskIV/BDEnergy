@@ -1,5 +1,6 @@
 ﻿using BDEnergyFramework.Models;
 using Spectre.Console;
+using Spectre.Console.Json;
 
 namespace BDEnergyFramework.Utils
 {
@@ -11,8 +12,8 @@ namespace BDEnergyFramework.Utils
         private static readonly int DefaultMinimumTemperature = -200;
         private static readonly int DefaultMaximumTemperature = 200;
         private static readonly int DefaultExperimentNumber = 0;
-        private static readonly string DefaultExperimentName = "experiment";
-        private static readonly string DefaultThreads = "unspecified";
+        private static readonly string DefaultExperimentName = "EXPERIMENT_NAME";
+        private static readonly string DefaultThreads = "";
         private static readonly string DefaultTestCaseType = "unspecified";
         private static readonly string DefaultCompliler = "unspecified";
         private static readonly string DefaultOptimizatinos = "unspecified";
@@ -27,6 +28,28 @@ namespace BDEnergyFramework.Utils
 
             var rule = new Rule();
             AnsiConsole.Write(rule);
+        }
+
+        public static List<MeasurementConfiguration> PromtForInput()
+        {
+            var defaultContext = GetDefaultConfiguration(
+                new List<string>() { "PATH" },
+                new List<string>() { "Parameter" },
+                false,
+                new List<string>() { "Intel Power Gadget" },
+                false);
+
+            var json = new JsonText(
+                System.Text.Json.JsonSerializer.Serialize(defaultContext));
+
+            AnsiConsole.Write(
+                new Panel(json)
+                    .Header("Please provide a path to a JSON of the following format as parameter")
+                    .Collapse()
+                    .RoundedBorder()
+                    .BorderColor(Color.Yellow));
+
+            return new List<MeasurementConfiguration>();
         }
 
         public static void PrintErrors(List<ValidationError> errors)
@@ -53,7 +76,7 @@ namespace BDEnergyFramework.Utils
             var table = new Table();
 
             // Add some columns
-            table.AddColumn("Name");
+            table.AddColumn("CollectionName");
             table.AddColumn(new TableColumn("Value").Centered());
 
             // Add some rows
@@ -109,9 +132,9 @@ namespace BDEnergyFramework.Utils
                 DisableWifi: disableWifi,
                 ExperimentName: DefaultExperimentName,
                 ExperimentNumber : DefaultExperimentNumber,
-                Threads:DefaultThreads,
+                ConcurrencyLimit:DefaultThreads,
                 TestCaseType:DefaultTestCaseType,
-                Compliler:DefaultCompliler,
+                Compiler:DefaultCompliler,
                 Optimizations:DefaultOptimizatinos,
                 Language:DefaultLanguage,
                 AdditionalMetadata: new Dictionary<string, string>());
@@ -175,9 +198,9 @@ namespace BDEnergyFramework.Utils
                 DisableWifi:disableWifi,
                 ExperimentName: DefaultExperimentName,
                 ExperimentNumber: DefaultExperimentNumber,
-                Threads: DefaultThreads,
+                ConcurrencyLimit: DefaultThreads,
                 TestCaseType: DefaultTestCaseType,
-                Compliler: DefaultCompliler,
+                Compiler: DefaultCompliler,
                 Optimizations: DefaultOptimizatinos,
                 Language: DefaultLanguage,
                 AdditionalMetadata: new Dictionary<string, string>());
@@ -262,7 +285,7 @@ namespace BDEnergyFramework.Utils
         {
             var table = new Table();
 
-            table.AddColumn("Name");
+            table.AddColumn("CollectionName");
             table.AddColumn(new TableColumn("Value").Centered());
 
             table.AddRow("Test case", PathUtils.GetFilenameFromPath(measurement.TestCase));
@@ -271,7 +294,7 @@ namespace BDEnergyFramework.Utils
             table.AddRow("Measurements", measurement.Measurements.Count().ToString());
             table.AddRow("Dram Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.DramEnergyInJoules).ToList()));
             table.AddRow("GPU Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.GpuEnergyInJoules).ToList()));
-            table.AddRow("CPU Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.ProcessorEnergyInJoules).ToList()));
+            table.AddRow("CPU Energy (j)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.CpuEnergyInJoules).ToList()));
             table.AddRow("Duration (s)", MathUtils.GetMinMaxAvgStdAsString(measurement.Measurements.Select(x => x.Duration).ToList()));
 
 

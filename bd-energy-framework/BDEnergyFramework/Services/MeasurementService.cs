@@ -3,6 +3,9 @@ using BDEnergyFramework.Models;
 using BDEnergyFramework.Services.Repositories;
 using BDEnergyFramework.Utils;
 using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
+using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using ILogger = Serilog.ILogger;
@@ -12,15 +15,25 @@ namespace BDEnergyFramework.Services
     public class MeasurementService : IMeasurementService
     {
         private readonly IDutService _dutService;
-        private readonly Func<DbConnection> _dbFactory;
+        private readonly Func<IDbConnection> _dbFactory;
         private readonly ILogger _logger;
+        private readonly string _machineName;
+        private readonly RetryPolicy _retryPolicy;
         private List<MeasuringInstrument> _measuringInstruments = new List<MeasuringInstrument>();
 
-        public MeasurementService(IDutService dutService, Func<DbConnection> dbFactory, ILogger logger)
+        public MeasurementService(IDutService dutService, Func<IDbConnection> dbFactory, ILogger logger, string machineName)
         {
             _dutService = dutService;
             _dbFactory = dbFactory;
             _logger = logger;
+            _machineName = machineName;
+            _retryPolicy = Policy
+                .Handle<AccessViolationException>()
+                .Retry(3, (exception, retryCount) =>
+                {
+                    _logger.Warning("Exception of type {type} occured with message '{msg}'. Retrying... (attempt: {a})", exception.GetType(), exception.Message, retryCount);
+                    //SetupMeasuringInstruments(config.MeasurementInstruments);
+                });
         }
 
         public List<MeasurementContext> PerformMeasurement(MeasurementConfiguration config)
@@ -45,7 +58,9 @@ namespace BDEnergyFramework.Services
                     Cooldown(config);
                 }
 
-                PerformMeasurementsForAllConfigs(config, measurements);
+                //PerformMeasurementsForAllConfigs(config, measurements);
+                _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements));
+
 
                 if (!burninApplied && IsBurnInCountAchieved(measurements, config))
                 {
@@ -53,16 +68,17 @@ namespace BDEnergyFramework.Services
                     burninApplied = true;
                 }
 
+                if (burninApplied && config.UploadToDatabase)
+                {
+                    _logger.Information("Initializing db connection");
+                    var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+                    repository.InsertLastMeasurements(measurements, config, _machineName);
+                    repository.Dispose();
+                }
+
 
             } while (!EnoughMeasurements(measurements, config, burninApplied));
-
-            if (config.UploadToDatabase)
-            {
-                _logger.Information("Initializing db connection");
-                var repository = new MeasurementRepository();
-
-                repository.InsertMeasurements(measurements);
-            }
 
             return measurements;
         }
@@ -157,6 +173,7 @@ namespace BDEnergyFramework.Services
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter);
 
+            var startTemperature = _dutService.GetTemperature();
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
@@ -167,11 +184,21 @@ namespace BDEnergyFramework.Services
             measuringInstrument.Stop(startTime);
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
+            var endTemperature = _dutService.GetTemperature();
+            var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter);
 
-            var (ts, m) = measuringInstrument.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds);
+            var (ts, m) = measuringInstrument.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration);
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
+        }
+
+        private int GetIteration(List<MeasurementContext> measurement, EMeasuringInstrument mi, string testCasePath, string testCaseParameter)
+        {
+            return measurement.Where(x => 
+                    x.MeasurementInstrument == mi && 
+                    x.TestCase == testCasePath && 
+                    x.Parameter == testCaseParameter).First().Measurements.Count();
         }
 
         private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores)
