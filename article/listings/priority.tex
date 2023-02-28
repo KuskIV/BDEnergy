@@ -1,0 +1,23 @@
+\begin{lstlisting}[
+  style=csharp_style,
+  language=C, 
+  caption={An example of how to set priorities for a process in C\#},
+  label={lst:priority}]
+void ExecuteWithPriority(string path)
+{
+  var process = new Process();
+  process.StartInfo.FileName = path
+  process.Start();
+
+  // Set priority class for process
+  process.PriorityClass = 
+    ProcessPriorityClass.High;
+    
+   // Set priority level for threads
+  foreach (var t in process.Threads)
+  {
+    thread.PriorityLevel =
+      ThreadPriorityLevel.Highest;
+  }
+}
+\end{lstlisting}

@@ -7,5 +7,6 @@
         List<EMeasuringInstrument> GetMeasuringInstruments();
         string GetOperatingSystem();
         double GetTemperature();
+        void StopBackgroundProcesses();
     }
 }

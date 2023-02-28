@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cake.Powershell" Version="2.0.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="LibreHardwareMonitorLibCore" Version="1.0.3" />

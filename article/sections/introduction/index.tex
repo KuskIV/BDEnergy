@@ -5,21 +5,21 @@ Research questions:
 \begin{itemize}
     %\item How does the compiler, temperature and background process impact the energy consumption?
     \item What is the best measuring instrument for Windows? %% omformuler, måske kritere for at vælge hvad der er bedst i de forskellige situationer. fx hw måling er gode men svære at sætte op, e3 kræver tingene køre i længere tid osv.
-    \item \textit{How well does microbenchmarks represent a realistic usecase compared to macrobenchmarks?}
+    % \item \textit{How well does microbenchmarks represent a realistic usecase compared to macrobenchmarks?}
     \item How does parallelism affect the energy consumption
     \item How does P-cores and E-cores affect the execution of parallelism in a process, versus only P-Cores?
-    \item \textit{How can measuring instruments be calibrated to better fit a ground truth}
+    % \item \textit{How can measuring instruments be calibrated to better fit a ground truth}
 \end{itemize}
 
 
-Hypothsis:
+% Hypothsis:
 
-\begin{itemize}
-    \item The expectation when using different compilers is that the energy consumption of the code will be similar, but with some deviations. Resulting from the individual compilers implementation.
-    \item The expectation for the temperature is that it in itself would not effect the performance unless the cpu starts to thermal throttle. Though the heat of the cpu is directly related to the electrical resistance meaning that it would be less efficient in terms of joule per computation.
-    \item We do not expect the background process to have a large impact on the energy consumption, this mostly because the non-essential background process are executed rarely and for very brief durations. We do expect that the results will become more consistent without 
-    \item We know that IPG and LHW are very similar and we expect Windows RAPL driver to be similar as well.
-    \item We expect that using parallelism there is not a correlation between execution time and energy consumption.
-    \item We expect if we can get the right thread to run on a E core that it could improve energy consumption slightly depending on the size of the benchmark. Where the larger the benchmark the bigger the improvement in energy consumption. % If we can control which core threads are executed on, then we expect that we can decrease enery consumption.
-    \item We expect the calibration to be very situation specific, where the calibration might improve the measurements in some cases, but not in others.
-\end{itemize}
+% \begin{itemize}
+%     \item The expectation when using different compilers is that the energy consumption of the code will be similar, but with some deviations. Resulting from the individual compilers implementation.
+%     \item The expectation for the temperature is that it in itself would not effect the performance unless the cpu starts to thermal throttle. Though the heat of the cpu is directly related to the electrical resistance meaning that it would be less efficient in terms of joule per computation.
+%     \item We do not expect the background process to have a large impact on the energy consumption, this mostly because the non-essential background process are executed rarely and for very brief durations. We do expect that the results will become more consistent without 
+%     \item We know that IPG and LHW are very similar and we expect Windows RAPL driver to be similar as well.
+%     \item We expect that using parallelism there is not a correlation between execution time and energy consumption.
+%     \item We expect if we can get the right thread to run on a E core that it could improve energy consumption slightly depending on the size of the benchmark. Where the larger the benchmark the bigger the improvement in energy consumption. % If we can control which core threads are executed on, then we expect that we can decrease enery consumption.
+%     \item We expect the calibration to be very situation specific, where the calibration might improve the measurements in some cases, but not in others.
+% \end{itemize}

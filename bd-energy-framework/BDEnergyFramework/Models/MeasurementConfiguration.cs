@@ -18,5 +18,6 @@
         string Compiler,
         string Optimizations,
         string Language,
+        bool StopBackgroundProcesses,
         Dictionary<string, string> AdditionalMetadata);
 }
