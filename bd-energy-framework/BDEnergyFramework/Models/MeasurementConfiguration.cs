@@ -4,7 +4,7 @@
         List<EMeasuringInstrument> MeasurementInstruments,
         int RequiredMeasurements,
         List<string> TestCasePaths,
-        List<int> AllocatedCores,
+        List<List<int>> AllocatedCores,
         List<string> TestCaseParameters,
         int BurnInPeriod,
         bool UploadToDatabase,

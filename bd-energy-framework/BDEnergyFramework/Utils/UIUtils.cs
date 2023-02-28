@@ -7,7 +7,7 @@ namespace BDEnergyFramework.Utils
     internal class UIUtils
     {
         private static readonly int DefaultMeasurementCount = 10;
-        private static readonly List<int> DefaultAllocatedCores = new List<int>();
+        private static readonly List<List<int>> DefaultAllocatedCores = new List<List<int>>();
         private static readonly int DefaultBurnInPeriod = 0;
         private static readonly int DefaultMinimumTemperature = -200;
         private static readonly int DefaultMaximumTemperature = 200;
@@ -79,12 +79,14 @@ namespace BDEnergyFramework.Utils
             table.AddColumn("CollectionName");
             table.AddColumn(new TableColumn("Value").Centered());
 
+            var cores = string.Join(',', config.AllocatedCores.Select(x => "(" + string.Join(',', x) + ")"));
+
             // Add some rows
             table.AddRow("Measurement Instruments", string.Join(',', config.MeasurementInstruments));
             table.AddRow("Measurements", config.RequiredMeasurements.ToString());
             table.AddRow("Test Case Path", string.Join(',', config.TestCasePaths));
             table.AddRow("Test Case Parameters", string.Join(',', config.TestCaseParameters));
-            table.AddRow("Allocated cores", !config.AllocatedCores.Any() ? "Not specified" : string.Join(',', config.AllocatedCores));
+            table.AddRow("Allocated cores", !config.AllocatedCores.Any() ? "Not specified" : cores);
             table.AddRow("Upload to DB", config.UploadToDatabase ? "Yes" : "No");
             table.AddRow("Burn-in", config.BurnInPeriod.ToString());
             table.AddRow("PackageTemperature", "between " + config.MinimumTemperature.ToString() + " and " + config.MaximumTemperature.ToString());
@@ -137,6 +139,7 @@ namespace BDEnergyFramework.Utils
                 Compiler:DefaultCompliler,
                 Optimizations:DefaultOptimizatinos,
                 Language:DefaultLanguage,
+                StopBackgroundProcesses:false,
                 AdditionalMetadata: new Dictionary<string, string>());
 
             return new List<MeasurementConfiguration>() { config };
@@ -148,16 +151,19 @@ namespace BDEnergyFramework.Utils
             return AnsiConsole.Confirm("Should the WIFI be disabled during the measurements?");
         }
 
-        private static List<int> ParseAllocatedCores(string allocatedCores)
+        private static List<List<int>> ParseAllocatedCores(string allocatedCores)
         {
             if (allocatedCores.ToLower() == "all")
             {
-                return new List<int>();
+                return new List<List<int>>();
             }
 
             var cores = allocatedCores.Split(',');
-            
-            return cores.Select(x => int.Parse(x.Trim())).ToList();
+
+            return new List<List<int>>()
+            {
+                cores.Select(x => int.Parse(x.Trim())).ToList()
+            };
         }
 
         private static string GetAllocatedCores()
@@ -203,6 +209,7 @@ namespace BDEnergyFramework.Utils
                 Compiler: DefaultCompliler,
                 Optimizations: DefaultOptimizatinos,
                 Language: DefaultLanguage,
+                StopBackgroundProcesses:false,
                 AdditionalMetadata: new Dictionary<string, string>());
 
             return new List<MeasurementConfiguration>() { defaultConfig };

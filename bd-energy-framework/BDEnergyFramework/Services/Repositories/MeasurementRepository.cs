@@ -13,6 +13,7 @@ using Polly.Retry;
 using System.Text.Json;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Org.BouncyCastle.Math.EC;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace BDEnergyFramework.Services.Repositories
 {
@@ -260,6 +261,14 @@ namespace BDEnergyFramework.Services.Repositories
         {
             var query = "INSERT INTO Sample(CollectionId, PackageTemperature, ElapsedTime, ProcessorPowerInWatt, DramEnergyInJoules, GpuEnergyInJoules, CpuEnergyInJoules, CpuUtilization, AdditionalMetadata) " +
                 "VALUES(@collectionid, @packageTemperature, @elapsedTime, @processorPowerInWatt, @dramEnergyInJoules, @gpuEnergyInJoules, @cpuEnergyInJoules, @cpuUtilization, @additionalMetadata)";
+
+            var keys = t.AdditionalMetadata.Where(x => x.Value.ToString() == "NaN").Select(y => y.Key);
+
+            foreach (var key in keys)
+            {
+                t.AdditionalMetadata.Remove(key);
+                t.AdditionalMetadata.Add(key, -1);
+            }
 
             _retryPolicy.Execute(() => _connection.Execute(query, new 
             {

@@ -96,11 +96,11 @@ namespace BDEnergyFramework.Utils
             };
         }
 
-        internal static Configuration Map(MeasurementConfiguration config)
+        internal static Configuration Map(MeasurementConfiguration config, List<int> allocatedCores)
         {
             return new Configuration()
             {
-                AllocatedCores = config.AllocatedCores,
+                AllocatedCores = allocatedCores,
                 Burnin = config.BurnInPeriod,
                 MaximumTemperature = config.MaximumTemperature,
                 MinimumTemperature = config.MinimumTemperature,

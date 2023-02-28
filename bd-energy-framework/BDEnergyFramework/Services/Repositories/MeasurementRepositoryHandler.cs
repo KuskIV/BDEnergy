@@ -39,7 +39,7 @@ namespace BDEnergyFramework.Services.Repositories
                 var timeSeries = m.TimeSeries.Last();
                 var measurement = m.Measurements.Last();
 
-                var configId = GetConfigId(config);
+                var configId = GetConfigId(config, m.AllocatedCores);
                 var testCaseId = GetTestCaseId(config, m.TestCase, m.Parameter);
                 var dutId = GetDutId(config, machineName);
                 var measurementInstrumentId = GetMeasurementInstrumentId(config, m.MeasurementInstrument);
@@ -168,9 +168,9 @@ namespace BDEnergyFramework.Services.Repositories
             return dtoTestCase.Id;
         }
 
-        private int GetConfigId(MeasurementConfiguration measurementConfiguration)
+        private int GetConfigId(MeasurementConfiguration measurementConfiguration, List<int> allocatedCores)
         {
-            var configuration = Mapper.Map(measurementConfiguration);
+            var configuration = Mapper.Map(measurementConfiguration, allocatedCores);
 
             if (!_repository.ConfigExists(configuration))
             {
