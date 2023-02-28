@@ -5,3 +5,16 @@ In \cite{abdelhafez2019}, the energy consumption for sequential and parallel gen
 When considering parallel software, \cite{abdelhafez2019} also find asynchronous implementations to use less energy. The reason for this is because there are no idle cores waiting for data in asynchronous implementations, while in synchronous implementations cores can be blocked during runtime, while waiting for responses from other cores. 
 
 % RAPL, C++, 30 runs
+
+In \cite{Lindholt}, the behavior of parallel applications and the relationship between execution time and energy consumption are explored. They test four different language constructs which can be used to implement parallelism in C\#. Furthermore, they use varying amounts of threads and a sample of micro- and macro-benchmarks. \cite{Lindholt}
+
+They found that workload size has a large influence on running time and energy efficiency and that a threshold limit for the workload must be reached for there to be improvements when changing a sequential program into a parallel one.  Additionally, it was found that execution time and energy consumption of parallel benchmarks do not always correlate.  Comparing micro- and macro-benchmarks the findings remain consistent, although the impact becomes low for the macrobenchmarks due to their being an overall larger energy consumption. Furthermore, they have included some recommendations, which should be considered:\cite{Lindholt}
+
+\begin{itemize}
+    \item Shield cores: Avoid unintended threads running on the cores used in the benchmarking
+    \item PowerUp: Can be used to ensure that benchmark is not optimized away during compilation
+    \item Static clock: Make the clock rate  of the CPU as static as possible
+    \item Interrupt request: Avoid interrupt requests being sent to cores used in the benchmarking 
+    \item Turn off CPU turbo boost
+    \item Turn off hyperthreading
+\end{itemize}
