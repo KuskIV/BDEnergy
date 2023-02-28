@@ -1,9 +1,9 @@
 \subsection{CPU Affinity}
 
-Affinity is a feature in operating systems that enables processes to be bound to specific cores or CPUs in a multi-core processor. In operating systems, jobs and threads are constantly rescheduled for optimal system performance, which means that the same proccess can be assigned to diffrent cores of the CPU. Processor affinity allows applications to bind or unbind a process to a specific core or range of cores/CPUs. When a process is pinned to a core, the OS ensures it only executes on the assigned core(s) or CPU(s) each time it is scheduled.\cite{affinity}
+Affinity is a feature in operating systems(OSs) that enables processes to be bound to specific cores in a multi-core processor. In OSs, jobs and threads are constantly rescheduled for optimal system performance, which means that the same process can be assigned to different cores of the CPU. Processor affinity allows applications to bind or unbind a process to a specific core or range of cores/CPUs. When a process is pinned to a core, the OS ensures it only executes on the assigned core(s) or CPU(s) each time it is scheduled.\cite{affinity}
 
 \input{listings/affinity.tex}
 
-Processor affinity is particularly useful for scaling performance on multiple core processor architectures that share the same global memory and have local caches (UMA Architecture). Processor affinity is also useful for this study, as this allows the framework to assign single or a set of cores and threads to a process.\cite{affinity}\newline
+Processor affinity is particularly useful for scaling performance on multi-core processor architectures that share the same global memory and have local caches referred to as the Uniform memory access architecture. Processor affinity is also useful for this study, as this allows the framework to assign a single or a set of cores and threads to a process.\cite{affinity}\newline
 
 An example of how affinity can be set for a process in C\# can be seen in \cref{lst:affinity}. When setting the affinity for the processor, the input is a bitmask, where each bit represents a CPU core. In \cref{lst:affinity}, the process is thus allowed to execute in core \#0 and \#1.

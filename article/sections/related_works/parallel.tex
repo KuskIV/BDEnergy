@@ -1,10 +1,23 @@
 \subsection{Parallel Software}
 
-In \cite{abdelhafez2019}, the energy consumption for sequential and parallel genetic algorithms are explored, where one research question aims to explore the impact on the energy consumption when using a variable number of cores. In this study they find that a larger number of cores in the execution pool results in a lower running time an energy consumption, and concludes that parallelism can help reduce the energy consumption. Parallelisms ability to reduce the energy consumption is argued to be due to the large number of cores working to solve the problem simultaneously, where the combination of more cores, more parallel operations per time unit will require less energy.
+In \cite{abdelhafez2019}, the energy consumption for sequential and parallel genetic algorithms is explored, where one research question aims to explore the impact on energy consumption when using different numbers of cores. They find that a larger number of cores in the execution pool results in a lower running time and energy consumption, and conclude that parallelism can help reduce energy consumption. Parallelism's ability to reduce energy consumption is argued to be due to the large number of cores working to solve the problem simultaneously, where the combination of more cores, and more parallel operations per time unit will require less energy.
 
-When considering parallel software, \cite{abdelhafez2019} also find asynchronous implementations to use less energy. The reason for this is because there are no idle cores waiting for data in asynchronous implementations, while in synchronous implementations cores can be blocked during runtime, while waiting for responses from other cores. 
+When considering parallel software, \cite{abdelhafez2019} also find asynchronous implementations to use less energy, because there are no idle cores waiting for data in asynchronous implementations, while in synchronous implementations cores can be blocked during runtime, while waiting for responses from other cores. 
 
 % RAPL, C++, 30 runs
+
+In \cite{Pinto2014}, three different thread management constructs from Java are explored and analyzed regarding energy consumption.
+%, explicit thread creation, fixed-size thread pooling, and work stealing, from Java, are analyzed regarding energy consumption. Furthermore, the three aspects: the number of threads, task division strategy, and characteristics of the data.\cite{Pinto2014}
+
+They found a relationship between energy consumption and the number of threads used which was that generally energy consumption increased as the number of threads increased and then at some point the energy consumption starts to decrease as the number of threads start to approach the number of cores in the CPU. However, the peak of this energy consumption is application dependent.\cite{Pinto2014}
+
+They found that in eight out of nine benchmarks, there was a decrease in execution time going from sequential execution on one thread to using multiple threads. However, it should be noted that four of their benchmarks are embarrassingly Parallel whereas only one is embarrassingly serial. However decreased execution time does not necessarily mean decreased energy consumption, because in six out of nine benchmarks the lowest energy consumption was found in the sequential version using one thread.\cite{Pinto2014}
+
+Furthermore, they investigated the energy-performance trade-off using the Energy-Delay-Product (EDP), which is the product between energy consumption and execution time. Using EDP they generally found parallel execution to be more favorable however depending on the benchmark increasing the number of threads may not be aligned with an improvement of EDP.
+
+% This website says that EDP is not adequate https://greensoftware.foundation/articles/gps-up-a-better-metric-for-comparing-software-energy-efficiency
+
+
 
 In \cite{Lindholt}, the behavior of parallel applications and the relationship between execution time and energy consumption are explored. They test four different language constructs which can be used to implement parallelism in C\#. Furthermore, they use varying amounts of threads and a sample of micro- and macro-benchmarks. \cite{Lindholt}
 
