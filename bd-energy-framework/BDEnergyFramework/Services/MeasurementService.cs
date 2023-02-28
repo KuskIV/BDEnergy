@@ -86,6 +86,7 @@ namespace BDEnergyFramework.Services
                     {
                         _logger.Information("About to enable wifi");
                         _dutService.EnableWifi();
+                        _logger.Information("Successfully enabled wifi");
                     }
 
                     _logger.Information("Initializing db connection");
@@ -142,8 +143,6 @@ namespace BDEnergyFramework.Services
                         SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
 
                         Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores);
-
-                        EndMeasurement(config);
                     }
                 }
             }
@@ -212,6 +211,8 @@ namespace BDEnergyFramework.Services
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
+
+            _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
         }
 
         private int GetIteration(List<MeasurementContext> measurement, EMeasuringInstrument mi, string testCasePath, string testCaseParameter)
@@ -284,18 +285,6 @@ namespace BDEnergyFramework.Services
             {
                 measuremetns.Add(
                     new MeasurementContext(testCasePath, testCaseParameter, mi, allocatedCores));
-            }
-        }
-
-        private void EndMeasurement(MeasurementConfiguration config)
-        {
-            if (config.DisableWifi)
-            {
-                _logger.Information("About to enable wifi");
-
-                _dutService.EnableWifi();
-                
-                _logger.Information("Wifi successfully enabled");
             }
         }
 
