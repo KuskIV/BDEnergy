@@ -1,0 +1,23 @@
+[
+  {
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 3,
+    "TestCasePaths": [ "C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe" ],
+    "AllocatedCores": [ 0, 1, 4 ],
+    "TestCaseParameters": [ "11" ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 2,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 100,
+    "DisableWifi": true,
+    "ExperimentNumber": -1,
+    "ExperimentName": "testing-phase",
+    "ConcurrencyLimit": "multi-thread",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "clang",
+    "Optimizations": "None",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  }
+]
