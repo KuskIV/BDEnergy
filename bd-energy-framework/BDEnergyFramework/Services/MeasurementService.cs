@@ -43,6 +43,11 @@ namespace BDEnergyFramework.Services
 
             SetupMeasuringInstruments(config.MeasurementInstruments);
 
+            if (config.StopBackgroundProcesses)
+            {
+                _dutService.StopBackgroundProcesses();
+            }
+
             if (!_measuringInstruments.Any())
             {
                 _logger.Information("No measuring instruments were setup. Try again.");
@@ -213,6 +218,14 @@ namespace BDEnergyFramework.Services
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
             process.PriorityClass= ProcessPriorityClass.High;
+
+            //if (DutUtils.IsWindows())
+            //{
+                //foreach (ProcessThread thread in process.Threads)
+                //{
+                //    thread.PriorityLevel = ThreadPriorityLevel.Highest;
+                //}
+            //}
 
             if (enabledCores.Any())
             {

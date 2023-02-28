@@ -1,19 +1,43 @@
 ﻿using BDEnergyFramework.Utils;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
+using ILogger = Serilog.ILogger;
 
 namespace BDEnergyFramework.Services
 {
     public class WindowsDesktopService : IDutService, IDisposable
     {
         private readonly IWifiService _wifiService;
+        private readonly ILogger _logger;
 
-        public WindowsDesktopService(IWifiService wifiService)
+        public WindowsDesktopService(IWifiService wifiService, ILogger logger)
         {
             _wifiService = wifiService;
+            _logger = logger;
+        }
+
+        public void StopBackgroundProcesses()
+        {
+            _logger.Information("About to disable background processes");
+            var ps = PowerShell.Create();
+
+            foreach (var process in WindowsProcessesToStop())
+            {
+                try
+                {
+                    ps.AddCommand("Stop-Process").AddParameter("Name", process);
+                    ps.Invoke();
+                }
+                catch (Exception)
+                {
+                    _logger.Warning("Unable to stop process '{name}'. Will continue...", process);
+                }
+            }
         }
 
         public string GetOperatingSystem()
@@ -48,6 +72,21 @@ namespace BDEnergyFramework.Services
         public double GetTemperature()
         {
             return WindowsTemperatureReader.GetCpuTemperature();
+        }
+
+        private static List<string> WindowsProcessesToStop()
+        {
+            return new List<string>()
+            {
+                "AsusUpdateCheck",
+                "AsusDownLoadLicense",
+                "msedge",
+                "OneDrive",
+                "GitHubDesktop",
+                "Microsoft.Photos",
+                "SkypeApp",
+                "SkypeBackgroundHost",
+            };
         }
     }
 }

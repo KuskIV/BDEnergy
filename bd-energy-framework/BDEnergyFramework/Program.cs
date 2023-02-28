@@ -9,7 +9,7 @@ var logger = InitializeLogger();
 var secrets = InputUtils.GetSecrets();
 var dbConnectionFactory = GetDbConnectionFactory(secrets);
 
-var dutService = DutUtils.GetDutService(secrets);
+var dutService = DutUtils.GetDutService(secrets, logger);
 
 UIUtils.IntroduceFramework();
 

@@ -17,6 +17,7 @@
     "Compiler": "clang",
     "Optimizations": "None",
     "Language": "c++",
+    "StopBackgroundProcesses" : false,
     "AdditionalMetadata": {}
   }
 ]
