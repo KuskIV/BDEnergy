@@ -6,9 +6,16 @@ When considering parallel software, \cite{abdelhafez2019} also find asynchronous
 
 % RAPL, C++, 30 runs
 
-In \cite{Pinto2014}, three thread management constructs, explicit thread creation, fixed-size thread pooling and work stealing, from Java are analyzed in regards to energy consumption. Furthermore the three aspects, number of threads, task division strategy and characteristics of the data. 
+In \cite{Pinto2014}, three different thread management constructs from Java are explored and analyzed regarding energy consumption.
+%, explicit thread creation, fixed-size thread pooling, and work stealing, from Java, are analyzed regarding energy consumption. Furthermore, the three aspects: the number of threads, task division strategy, and characteristics of the data.\cite{Pinto2014}
 
-They found that in 8 our of 9 benchmarks there was an decrease in execution time going from sequential execution on one thread to using multiple threads. However it should be noted that four of their benchmarks are embarrassingly Parallel where as only one is embarrassingly serial. However decreased execution time does not necessarily mean decreased energy consumption.
+They found a relationship between energy consumption and the number of threads used which was that generally energy consumption increased as the number of threads increased and then at some point the energy consumption starts to decrease as the number of threads start to approach the number of cores in the CPU. However, the peak of this energy consumption is application dependent.\cite{Pinto2014}
+
+They found that in eight out of nine benchmarks, there was a decrease in execution time going from sequential execution on one thread to using multiple threads. However, it should be noted that four of their benchmarks are embarrassingly Parallel whereas only one is embarrassingly serial. However decreased execution time does not necessarily mean decreased energy consumption, because in six out of nine benchmarks the lowest energy consumption was found in the sequential version using one thread.\cite{Pinto2014}
+
+Furthermore, they investigated the energy-performance trade-off using the Energy-Delay-Product (EDP), which is the product between energy consumption and execution time. Using EDP they generally found parallel execution to be more favorable however depending on the benchmark increasing the number of threads may not be aligned with an improvement of EDP.
+
+% This website says that EDP is not adequate https://greensoftware.foundation/articles/gps-up-a-better-metric-for-comparing-software-energy-efficiency
 
 
 
