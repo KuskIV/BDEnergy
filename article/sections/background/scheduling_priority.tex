@@ -1,0 +1,15 @@
+\subsection{Scheduling Priority}
+
+When scheduling threads on Windows, it is done based on each threads scheduling priority and the priority class of the process.  For the priority class of the process, the value can be either \texttt{IDLE}, \texttt{BELOW NORMAL} \texttt{NORMAL}, \texttt{ABOVE NORMAL}, \texttt{HIGH} or \texttt{REALTIME}, where the default is \texttt{NORMAL}. It is noted that \texttt{HIGH} priority should be used with care, as other threads in the system will not get any processor time while that process is running. If a process needs \texttt{HIGH} priority, it is recommended to raise the priority class temporarily. For the \texttt{REALTIME} priority class, this should only be used for application that "talk" to hardware directly, as this class will interrupt threads managing mouse input, keyboard inputs, ect.\cite{priority}\newline
+
+For the priority level, the levels can be either \texttt{IDLE}, \texttt{LOWEST}, \texttt{BELOW NORMAL}, \texttt{NORMAL}, \texttt{ABOVE NORMAL}, \texttt{HIGHEST} and \texttt{TIME CRITICAL}, where the default is \texttt{NORMAL}. A typical strategy is to increase the level for input threads for applications to ensure they are responsive, and to decrease the level for background processes, meaning they can be interrupted as needed.\cite{priority}
+
+The scheduling priority is assigned to each thread as a value from zero to 31, where this value is called the base priority. The base priority is decided using both the thread priority level and the priority class, and can be found in \cite{priority}. When assigning a base priority where both the priority class and thread priority are the default values, e.i.\texttt{NORMAL}, the base priority is $8$.\cite{priority}\newline
+
+The idea of the different priority is to treat threads with the same priority equally, by assigning time slices to each thread in a round-robin fashion, starting with the highest priority. In the case of none of the highest priority threads being ready to run, the lower priority threads will be assign time slices. The lower priority threads will then execute until a higher-priority thread is available, in which case the system will assign a full time slice to the thread, and stop to execute the lower priority threads, without time to finish using its time slice.\cite{priority}
+
+\input{listings/priority.tex}
+
+A thing to note is that when setting priority class and priority level for a process through C\#, the priority class is supported for both Windows and Linux, while the priority level is only supported for Windows. An example of how both the priority class and priority level can be set for a process and its threads can be seen in \cref{lst:priority}
+
+
