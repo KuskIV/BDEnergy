@@ -6,6 +6,12 @@ When considering parallel software, \cite{abdelhafez2019} also find asynchronous
 
 % RAPL, C++, 30 runs
 
+In \cite{Pinto2014}, three thread management constructs, explicit thread creation, fixed-size thread pooling and work stealing, from Java are analyzed in regards to energy consumption. Furthermore the three aspects, number of threads, task division strategy and characteristics of the data. 
+
+They found that in 8 our of 9 benchmarks there was an decrease in execution time going from sequential execution on one thread to using multiple threads. However it should be noted that four of their benchmarks are embarrassingly Parallel where as only one is embarrassingly serial. However decreased execution time does not necessarily mean decreased energy consumption.
+
+
+
 In \cite{Lindholt}, the behavior of parallel applications and the relationship between execution time and energy consumption are explored. They test four different language constructs which can be used to implement parallelism in C\#. Furthermore, they use varying amounts of threads and a sample of micro- and macro-benchmarks. \cite{Lindholt}
 
 They found that workload size has a large influence on running time and energy efficiency and that a threshold limit for the workload must be reached for there to be improvements when changing a sequential program into a parallel one.  Additionally, it was found that execution time and energy consumption of parallel benchmarks do not always correlate.  Comparing micro- and macro-benchmarks the findings remain consistent, although the impact becomes low for the macrobenchmarks due to their being an overall larger energy consumption. Furthermore, they have included some recommendations, which should be considered:\cite{Lindholt}
