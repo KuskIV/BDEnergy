@@ -63,6 +63,12 @@ namespace BDEnergyFramework.Services
                     Cooldown(config);
                 }
 
+                if (config.DisableWifi)
+                {
+                    _logger.Information("About to disable wifi");
+                    _dutService.DisableWifi();
+                }
+
                 //PerformMeasurementsForAllConfigs(config, measurements);
                 _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements));
 
@@ -76,6 +82,12 @@ namespace BDEnergyFramework.Services
 
                 if (burninApplied && config.UploadToDatabase)
                 {
+                    if (config.DisableWifi)
+                    {
+                        _logger.Information("About to enable wifi");
+                        _dutService.EnableWifi();
+                    }
+
                     _logger.Information("Initializing db connection");
                     var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
 
@@ -272,12 +284,6 @@ namespace BDEnergyFramework.Services
             {
                 measuremetns.Add(
                     new MeasurementContext(testCasePath, testCaseParameter, mi, allocatedCores));
-            }
-
-            if (config.DisableWifi)
-            {
-                _logger.Information("About to disable wifi");
-                _dutService.DisableWifi();
             }
         }
 
