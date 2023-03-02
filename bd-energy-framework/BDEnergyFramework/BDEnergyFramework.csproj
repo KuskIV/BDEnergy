@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Json\0th-exp-config\" />
+    <Folder Include="Json\WorkstationOne\0th-exp-config\" />
     <Folder Include="Secrets\" />
     <Folder Include="SQL\" />
   </ItemGroup>

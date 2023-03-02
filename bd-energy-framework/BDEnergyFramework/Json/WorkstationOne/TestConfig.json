@@ -1,0 +1,46 @@
+[
+  {
+    "MeasurementInstruments": [ 2, 3 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\nbody.exe",
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\spectral-norm.exe"
+    ],
+    "AllocatedCores": [
+      [ 0 ],
+      [ 1 ],
+      [ 2 ],
+      [ 3 ],
+      [ 4 ],
+      [ 5 ],
+      [ 6 ],
+      [ 7 ],
+      [ 8 ],
+      [ 9 ],
+      [ 10 ],
+      [ 11 ],
+      [ 12 ],
+      [ 13 ],
+      [ 14 ],
+      [ 15 ]
+    ],
+    "TestCaseParameters": [
+      "50000000",
+      "5500"
+    ],
+    "UploadToDatabase": false,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-single-threaded-micro-benchmark-on-all-one-core-at-a-time",
+    "ConcurrencyLimit": "single-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "None",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  }
+]
