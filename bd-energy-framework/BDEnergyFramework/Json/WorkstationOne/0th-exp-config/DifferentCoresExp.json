@@ -38,7 +38,7 @@
     "ConcurrencyLimit": "single-threaded",
     "TestCaseType": "microbenchmarks",
     "Compiler": "intel-one-api",
-    "Optimizations": "None",
+    "Optimizations": "-openmp",
     "Language": "c++",
     "StopBackgroundProcesses": true,
     "AdditionalMetadata": {}

@@ -23,7 +23,7 @@
     "ConcurrencyLimit": "multi-threaded",
     "TestCaseType": "microbenchmarks",
     "Compiler": "clang",
-    "Optimizations": "None",
+    "Optimizations": "-openmp",
     "Language": "c++",
     "StopBackgroundProcesses": true,
     "AdditionalMetadata": {}

@@ -1,4 +1,4 @@
-\subsection{Scheduling Priority}
+\subsection{Scheduling Priority}\label{subsec:scheduling}
 
 When scheduling threads on Windows, it is done based on each thread's scheduling priority level and the priority class of the process.  For the priority class of the process, the value can be either \texttt{IDLE}, \texttt{BELOW NORMAL} \texttt{NORMAL}, \texttt{ABOVE NORMAL}, \texttt{HIGH} or \texttt{REALTIME}, where the default is \texttt{NORMAL}. It is noted that \texttt{HIGH} priority should be used with care, as other threads in the system will not get any processor time while that process is running. If a process needs \texttt{HIGH} priority, it is recommended to raise the priority class temporarily. For the \texttt{REALTIME} priority class, this should only be used for applications that "talk" to hardware directly, as this class will interrupt threads managing mouse input, keyboard inputs, ect.\cite{priority}\newline
 
