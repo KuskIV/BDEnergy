@@ -16,7 +16,7 @@ set paths=%cpp_single_folder% %cpp_multi_folder%
 for %%p in (%paths%) do (
     del /Q /S %%p\%msvc_folder%\*.*
     for %%f in (%%p\*.cpp) do (
-        cl /EHsc %%f /Fo%%p\%msvc_folder%\%%~nf.obj /Fe%%p\%msvc_folder%\%%~nf.exe
+        cl /EHsc /openmp:llvm  %%f /Fo%%p\%msvc_folder%\%%~nf.obj /Fe%%p\%msvc_folder%\%%~nf.exe
     )
 )
 

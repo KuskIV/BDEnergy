@@ -16,7 +16,7 @@ set paths=%cpp_single_folder% %cpp_multi_folder%
 for %%p in (%paths%) do (
     del /Q /S %%p\%intel_folder%\*.*
     for %%f in (%%p\*.cpp) do (
-        icx -o %%p\%intel_folder%\%%~nf %%f
+        icx -openmp -o %%p\%intel_folder%\%%~nf %%f
     )
 )
 

@@ -15,7 +15,7 @@ set paths=%cpp_single_folder% %cpp_multi_folder%
 for %%p in (%paths%) do (
     del /Q /S %%p\%min_gw_folder%\*.*
     for %%f in (%%p\*.cpp) do (
-        g++ %%f -o %%p\%min_gw_folder%\%%~nf
+        g++ -fopenmp %%f -o %%p\%min_gw_folder%\%%~nf
     )
 )
 

@@ -197,3 +197,16 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
+// int main()
+// {
+//     const auto numberOfCpuCores = std::thread::hardware_concurrency();
+//     std::cout << "Number of CPU cores: " << numberOfCpuCores << std::endl;
+    
+//     for (int i = 0; i < numberOfCpuCores; ++i)
+//     {
+//         std::cout << "Core " << i << std::endl;
+//     }
+    
+//     return 0;
+// }

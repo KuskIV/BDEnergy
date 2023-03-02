@@ -15,7 +15,7 @@ set paths=%cpp_single_folder% %cpp_multi_folder%
 for %%p in (%paths%) do (
     del /Q /S %%p\%clang_folder%\*.*
     for %%f in (%%p\*.cpp) do (
-        clang++ %%f -o %%p\%clang_folder%\%%~nf.exe
+        clang++ -fopenmp %%f -o %%p\%clang_folder%\%%~nf.exe
     )
 )
 
