@@ -177,9 +177,14 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         private double GetCpuValue(SensorType sensor, string name)
         {
-            if (_cpuValues.TryGetValue(GenerateKey(sensor, name), out var value))
+            var key = GenerateKey(sensor, name);
+
+            lock (_cpuValues)
             {
-                return value;
+                if (_cpuValues.TryGetValue(key, out var value))
+                {
+                    return value;
+                }
             }
 
             throw new ArgumentException($"Unable to get values for {sensor}, {name}");
@@ -212,24 +217,27 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         private void UpdateCpuValues()
         {
-            _cpuValues = new Dictionary<(SensorType sensorType, string name), float>();
-
-            foreach (var hardware in _computer.Hardware)
+            lock (_cpuValues)
             {
-                hardware.Update();
+                _cpuValues = new Dictionary<(SensorType sensorType, string name), float>();
 
-                foreach (var sensor in hardware.Sensors)
+                foreach (var hardware in _computer.Hardware)
                 {
-                    try
+                    hardware.Update();
+
+                    foreach (var sensor in hardware.Sensors)
                     {
-                        if (sensor.Value is float value)
+                        try
                         {
-                            UpsertValue(value, sensor);
+                            if (sensor.Value is float value)
+                            {
+                                UpsertValue(value, sensor);
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
                     }
                 }
             }
