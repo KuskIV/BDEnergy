@@ -21,7 +21,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override int GetMilisecondsBetweenSampels()
         {
-            return 1000;
+            return 100;
         }
 
         internal override void StartMeasuringInstruments(string path)
@@ -137,7 +137,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             double durationInSeconds = durationInMilliseconds / 1000.0;
 
             // Calculate the average power in watts
-            double averagePower = wattMeasurements.Average();
+            double averagePower = wattMeasurements.Average(); // TODO: Empty list, System.InvalidOperationException
 
             // Calculate the energy used in joules using the formula: energy = power * time
             double energyInJoules = averagePower * durationInSeconds;

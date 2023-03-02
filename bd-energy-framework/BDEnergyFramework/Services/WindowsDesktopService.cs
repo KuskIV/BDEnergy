@@ -86,6 +86,12 @@ namespace BDEnergyFramework.Services
                 "Microsoft.Photos",
                 "SkypeApp",
                 "SkypeBackgroundHost",
+                "SystemSettings",
+                "TextInputHost",
+                "msedge",
+                "phoneexperiencehost",
+                "runtimebroker",
+                "searchapp",
             };
         }
     }
