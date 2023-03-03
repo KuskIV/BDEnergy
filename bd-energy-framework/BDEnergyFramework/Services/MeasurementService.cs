@@ -130,20 +130,30 @@ namespace BDEnergyFramework.Services
             {
                 foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
                 {
+                    if (!config.AllocatedCores.Any())
+                    {
+                        PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>());
+                    }
+
                     foreach (var allocatedCores in config.AllocatedCores)
                     {
-                        var testCasePath = tc.First;
-                        var testCaseParameter = tc.Second;
-
-                        _logger.Information("Executing and measuring using '{mi}' with input '{p} {testCaseParameter}', cores {cores}",
-                            mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
-
-                        SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
-
-                        Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores);
+                        PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores);
                     }
                 }
             }
+        }
+
+        private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, EMeasuringInstrument mi, (string First, string Second) tc, List<int> allocatedCores)
+        {
+            var testCasePath = tc.First;
+            var testCaseParameter = tc.Second;
+
+            _logger.Information("Executing and measuring using '{mi}' with input '{p} {testCaseParameter}', cores {cores}",
+                mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
+
+            SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
+
+            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores);
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -256,14 +266,14 @@ namespace BDEnergyFramework.Services
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
-            //process.PriorityClass= ProcessPriorityClass.High;
+            process.PriorityClass = ProcessPriorityClass.High;
 
             //if (DutUtils.IsWindows())
             //{
-                //foreach (ProcessThread thread in process.Threads)
-                //{
-                //    thread.PriorityLevel = ThreadPriorityLevel.Highest;
-                //}
+            //foreach (ProcessThread thread in process.Threads)
+            //{
+            //    thread.PriorityLevel = ThreadPriorityLevel.Highest;
+            //}
             //}
 
             if (enabledCores.Any())
