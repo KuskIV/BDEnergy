@@ -3,7 +3,6 @@ using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
 using System.Data;
-using ZstdNet;
 using ILogger = Serilog.ILogger;
 
 namespace BDEnergyFramework.Services.Repositories
@@ -28,7 +27,7 @@ namespace BDEnergyFramework.Services.Repositories
         internal void InsertLastMeasurements(List<MeasurementContext> measurements, MeasurementConfiguration config, string machineName)
         {
             var insertCount = 0;
-            var maxCount = measurements.Count + 1;
+            var maxCount = measurements.Count;
             
             foreach (var m in measurements)
             {
@@ -120,17 +119,18 @@ namespace BDEnergyFramework.Services.Repositories
 
         private int GetDutId(MeasurementConfiguration configId, string machineName)
         {
-            var dut = Mapper.Map(configId, machineName);
+            var env = DutUtils.GetEnv();
+            var dut = Mapper.MapToDut(configId, machineName, env);
 
             if (!_repository.DutExists(dut))
             {
-                _logger.Debug("Inserting new dut '{name}' '{os}'", dut.Name, dut.Os);
+                _logger.Debug("Inserting new dut '{name}' '{os}' '{env}'", dut.Name, dut.Os, dut.Env);
 
                 _repository.InsertDut(dut);
             }
             else
             {
-                _logger.Debug("DUT '{name}' '{os}' already existed", dut.Name, dut.Os);
+                _logger.Debug("DUT '{name}' '{os}' '{env}' already existed", dut.Name, dut.Os, dut.Env);
             }
 
             _logger.Debug("Requesting DUT...");

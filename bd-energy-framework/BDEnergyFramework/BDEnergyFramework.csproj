@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="AdminLibrary">
+      <HintPath>..\..\AdminLibrary\AdminLibrary\bin\Debug\net6.0\AdminLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="LibreHardwareMonitorLib">
       <HintPath>..\..\..\..\Documents\LibreHardwareMonitor\LibreHardwareMonitorLib.dll</HintPath>
     </Reference>

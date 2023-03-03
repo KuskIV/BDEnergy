@@ -10,5 +10,6 @@ namespace BDEnergyFramework.Models.Internal
     {
         public string Name { get; set; }
         public string Os { get; set; }
+        public string Env { get; set; }
     }
 }

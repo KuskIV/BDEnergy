@@ -29,6 +29,15 @@ namespace BDEnergyFramework.Utils
             return Environment.OSVersion.Platform.ToString();
         }
 
+        public static string GetEnv()
+        {
+#if DEBUG
+            return "DEV";
+#else
+            return "PROD";
+#endif
+        }
+
         internal static bool IsWindows()
         {
             return IsWindowsMachine();

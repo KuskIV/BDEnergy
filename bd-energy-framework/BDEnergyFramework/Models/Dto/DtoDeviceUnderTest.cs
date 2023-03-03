@@ -11,5 +11,6 @@ namespace BDEnergyFramework.Models.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public string Os { get; set; }
+        public string  Env { get; set; }
     }
 }

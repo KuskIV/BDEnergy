@@ -123,12 +123,13 @@ namespace BDEnergyFramework.Utils
             };
         }
 
-        internal static DeviceUnderTest Map(MeasurementConfiguration configId, string machineName)
+        internal static DeviceUnderTest MapToDut(MeasurementConfiguration configId, string machineName, string env)
         {
             return new DeviceUnderTest()
             {
                 Name = machineName,
-                Os = DutUtils.GetOperatingSystem()
+                Os = DutUtils.GetOperatingSystem(),
+                Env = env,
             };
         }
 

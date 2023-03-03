@@ -7,6 +7,7 @@
         List<EMeasuringInstrument> GetMeasuringInstruments();
         string GetOperatingSystem();
         double GetTemperature();
+        bool IsAdmin();
         void StopBackgroundProcesses();
     }
 }

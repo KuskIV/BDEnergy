@@ -61,12 +61,14 @@ namespace BDEnergyFramework.Services.Repositories
         {
             var query = "SELECT COUNT(*) FROM DeviceUnderTest WHERE " +
                 "Name = @name AND " +
-                "Os = @os";
+                "Os = @os AND " +
+                "Env = @env";
 
             var response = _retryPolicy.Execute(() => _connection.ExecuteScalar<int>(query, new
             {
                 name=dut.Name.ToLower(),
-                os=dut.Os.ToLower()
+                os=dut.Os.ToLower(),
+                env=dut.Env.ToLower(),
             }));
 
             return response > 0;
@@ -96,12 +98,14 @@ namespace BDEnergyFramework.Services.Repositories
         {
             var query = "SELECT * FROM DeviceUnderTest WHERE " +
                 "Name = @name AND " +
-                "Os = @os ";
+                "Os = @os AND " +
+                "Env = @env";
 
             return _retryPolicy.Execute(() => _connection.QueryFirst<DtoDeviceUnderTest>(query, new
             {
                 name=dut.Name.ToLower(),
-                os = dut.Os.ToLower()
+                os = dut.Os.ToLower(),
+                env=dut.Env.ToLower(),
             }));
         }
 
@@ -181,13 +185,14 @@ namespace BDEnergyFramework.Services.Repositories
 
         public void InsertDut(DeviceUnderTest dut)
         {
-            var query = "INSERT INTO DeviceUnderTest(Name, Os) " +
-                "VALUES(@name, @os)";
+            var query = "INSERT INTO DeviceUnderTest(Name, Os, Env) " +
+                "VALUES(@name, @os, @env)";
 
             _retryPolicy.Execute(() => _connection.Execute(query, new
             {
                 name=dut.Name.ToLower(),
                 os=dut.Os.ToLower(),
+                env=dut.Env.ToLower(),
             }));
         }
 

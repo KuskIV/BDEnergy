@@ -58,10 +58,10 @@ namespace BDEnergyFramework.Services
             {
                 IntroduceMeasurement(config, measurements, burninApplied);
 
-                if (CpuTooHotOrCold(config))
-                {
-                    Cooldown(config);
-                }
+                //if (CpuTooHotOrCold(config))
+                //{
+                //    Cooldown(config);
+                //}
 
                 if (config.DisableWifi)
                 {
@@ -71,14 +71,6 @@ namespace BDEnergyFramework.Services
 
                 //PerformMeasurementsForAllConfigs(config, measurements);
                 _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements));
-
-
-                if (!burninApplied && IsBurnInCountAchieved(measurements, config))
-                {
-                    measurements = new List<MeasurementContext>();
-
-                    burninApplied = true;
-                }
 
                 if (burninApplied && config.UploadToDatabase)
                 {
@@ -96,6 +88,12 @@ namespace BDEnergyFramework.Services
                     repository.Dispose();
                 }
 
+                if (!burninApplied && IsBurnInCountAchieved(measurements, config))
+                {
+                    measurements = new List<MeasurementContext>();
+
+                    burninApplied = true;
+                }
 
             } while (!EnoughMeasurements(measurements, config, burninApplied));
 
@@ -190,6 +188,19 @@ namespace BDEnergyFramework.Services
 
         private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores)
         {
+            if (mi == EMeasuringInstrument.IPG && _dutService.IsAdmin())
+            {
+                _logger.Error("When measuring using {mi}, please do not elevate the framework", Utils.MeasuringInstruments.IntelPowerGadget);
+                throw new Exception();
+            }
+
+            if (mi == EMeasuringInstrument.LHM && !_dutService.IsAdmin())
+            {
+                _logger.Error("When measuring using {mi}, please elevate the framework", Utils.MeasuringInstruments.LibreHardwareMonitor);
+                throw new Exception();
+            }
+
+
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
@@ -205,9 +216,15 @@ namespace BDEnergyFramework.Services
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
             var endTemperature = _dutService.GetTemperature();
-            var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter);
+            var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
             var (ts, m) = measuringInstrument.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration);
+
+            if (ts.Sampels.Any() && m.StartTemperature == -1)
+            {
+                m.StartTemperature = ts.Sampels.First().PackageTemperature;
+                m.EndTemperature = ts.Sampels.Last().PackageTemperature;
+            }
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
@@ -215,12 +232,17 @@ namespace BDEnergyFramework.Services
             _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
         }
 
-        private int GetIteration(List<MeasurementContext> measurement, EMeasuringInstrument mi, string testCasePath, string testCaseParameter)
+        private int GetIteration(List<MeasurementContext> measurement, EMeasuringInstrument mi, string testCasePath, string testCaseParameter, List<int> enabledCores)
         {
-            return measurement.Where(x => 
+            var m = measurement.Where(x => 
                     x.MeasurementInstrument == mi && 
                     x.TestCase == testCasePath && 
-                    x.Parameter == testCaseParameter).First().Measurements.Count();
+                    x.Parameter == testCaseParameter &&
+                    x.AllocatedCores.Count() == enabledCores.Count() &&
+                    x.AllocatedCores.All(x => enabledCores.Contains(x)) &&
+                    enabledCores.All(y => x.AllocatedCores.Contains(y)));
+
+            return m.First().Measurements.Count() + 1;
         }
 
         private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores)

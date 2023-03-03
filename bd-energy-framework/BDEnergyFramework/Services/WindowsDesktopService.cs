@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using ILogger = Serilog.ILogger;
@@ -64,6 +65,15 @@ namespace BDEnergyFramework.Services
             _wifiService.EnableWifi();
         }
 
+        public bool IsAdmin()
+        {
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                return principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+        }
+
         public void Dispose()
         {
             EnableWifi();
@@ -71,7 +81,7 @@ namespace BDEnergyFramework.Services
 
         public double GetTemperature()
         {
-            return WindowsTemperatureReader.GetCpuTemperature();
+            return -1;
         }
 
         private static List<string> WindowsProcessesToStop()
