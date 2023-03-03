@@ -22,6 +22,7 @@
     <PackageReference Include="Serilog" Version="2.12.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Spectre.Console" Version="0.46.0" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.46.0" />
     <PackageReference Include="Spectre.Console.Json" Version="0.46.0" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
@@ -34,6 +35,9 @@
 
   <ItemGroup>
     <None Update="EnergyLib64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCoresExp.json">

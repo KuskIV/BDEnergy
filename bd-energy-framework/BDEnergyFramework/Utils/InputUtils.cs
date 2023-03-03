@@ -37,37 +37,48 @@ namespace BDEnergyFramework.Utils
             throw new ArgumentException($"Not all usesecrets are set: WifiAdapterName '{wifiAdapterName}', MachineName '{machineName}', ConnectionString '{connectionString}'");
         }
 
-        public static List<MeasurementConfiguration> GetConfigurations(IDutService dutService)
+        public static List<MeasurementConfiguration> GetConfigurations(IDutService dutService, BdFramework.CommandSettings settings)
         {
-            var arguments = Environment.GetCommandLineArgs();
-            var measuringInstruments = dutService.GetMeasuringInstruments();
-
-            if (arguments.Count() == 1)
+            if (settings.Configuration is string config && InputIsValidPath(config))
             {
-                return UIUtils.PromtForInput();
-                //return UIUtils.GetConfiguration(measuringInstruments);
+                return SerializeContentToConfiguration(config);
             }
 
-            if (arguments.Count() > 2)
+            if (settings.TestCasePath is string testCasePath)
             {
-                throw new ArgumentException("The framework can only be called with one parameter");
+                string defaultJsonPath = GetDefaultJsonPath();
+
+                if (InputIsValidPath(defaultJsonPath))
+                {
+                    var configurations = SerializeContentToConfiguration(defaultJsonPath);
+
+                    configurations.ForEach(x => x.TestCasePaths = new List<string>() { testCasePath });
+                    configurations.ForEach(x => x.TestCaseParameters = new List<string>() { settings.TestCaseParameter });
+
+                    return configurations;
+                }
+                else
+                {
+                    throw new ArgumentException("The default configuration either did not exist or is not valid format.");
+                }
             }
 
-            var input = arguments.Last();
+            throw new ArgumentException($"Please provide either a valid '--testCasePath' (optional with '--testCaseParameter') or a '--config'");
+        }
 
-            if (InputIsValidPath(input))
-            {
-                return SerializeContentToConfiguration(input);
-            }
-
-            throw new ArgumentException($"The parameter {input} is invalid. It should be a path to a valid json.");
+        private static string GetDefaultJsonPath()
+        {
+            var currentDir = Environment.ProcessPath;
+            var dir = Path.GetDirectoryName(currentDir);
+            var defaultJsonPath = Path.Combine(dir, "Json/default.json");
+            return defaultJsonPath;
         }
 
         private static List<MeasurementConfiguration> SerializeInputToConfiguration(string input)
         {
             if (!HasValidStart(input) || !HasValidEnd(input))
             {
-                throw new ArgumentException("The input content is not a valid json.");
+                throw new ArgumentException("The input content is not currentDir valid json.");
             }
 
             try
@@ -105,7 +116,7 @@ namespace BDEnergyFramework.Utils
         {
             if (Directory.Exists(input))
             {
-                throw new ArgumentException("The input should be a Json file or Json path, not a directory");
+                throw new ArgumentException("The input should be currentDir Json file or Json path, not currentDir directory");
             }
 
             if (!File.Exists(input))
@@ -115,7 +126,7 @@ namespace BDEnergyFramework.Utils
 
             if (!input.ToLower().EndsWith(".json"))
             {
-                throw new ArgumentException("The input file should be a json file");
+                throw new ArgumentException("The input file should be currentDir json file");
             }
 
             return true;

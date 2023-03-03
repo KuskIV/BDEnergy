@@ -10,6 +10,14 @@
     "WorkstationOneTest": {
       "commandName": "Project",
       "commandLineArgs": "\"C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationOne\\TestConfig.json\""
+    },
+    "MhkConfigPath": {
+      "commandName": "Project",
+      "commandLineArgs": "--config \"C:\\Users\\Mads Kusk\\git\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\MHK\\MhkValidConfig.json\""
+    },
+    "MhkTestCasePath": {
+      "commandName": "Project",
+      "commandLineArgs": "--testCasePath \"C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe\" --testCaseParameter 12"
     }
   }
 }

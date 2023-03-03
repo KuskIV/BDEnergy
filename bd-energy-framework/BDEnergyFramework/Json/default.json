@@ -1,0 +1,21 @@
+[
+  {
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 10,
+    "AllocatedCores": [],
+    "UploadToDatabase": false,
+    "BurnInPeriod": 0,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 100,
+    "DisableWifi": false,
+    "ExperimentNumber": -1,
+    "ExperimentName": "unspecified",
+    "ConcurrencyLimit": "unspecified",
+    "TestCaseType": "unspecified",
+    "Compiler": "unspecified",
+    "Optimizations": "unspecified",
+    "Language": "unspecified",
+    "StopBackgroundProcesses": false,
+    "AdditionalMetadata": {}
+  }
+]
