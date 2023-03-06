@@ -1,1 +1,13 @@
 \subsection{CPU States}\label{subsec:cpustates}
+
+This section provides an overview of CPU-states, which are a crucial aspect of energy management in computer systems. The information presented in this section draws heavily from Intel \cite{CIntel} and the further explanation from HardwareSecrets \cite{CHard}. The concept of CPU-states is concerned with how a system manages its energy consumption during different operational conditions.
+
+The C-states are a crucial aspect of CPU-states, as they dictate the extent to which a system shuts down various components of the CPU to conserve energy. The C0 state represents the normal operation of a computer under load. As the system moves from C0 to C10, progressively more components of the CPU are shut down until, in C10, the CPU is almost entirely inactive. It is important to note that the number of C-states supported may vary depending on the CPU and motherboard in use.
+
+In addition to C-states, there are other states such as CC-states (Core C-states), PC-states (Package C-states), Thread C-states, and Hyper-Thread C-states. However, information on these states is limited. Enhanced C-states (C1E), which can shut down more components of the CPU than C0 but not as much as the next C-state, are also present in some CPUs.
+
+P-states are used only during C0 state and determine the frequency of the CPU under load, thereby managing its energy consumption. S-states (Sleep State), on the other hand, control how the system uses energy on a larger scale by determining whether the system is sleeping or not. All C-states occur within S0, with deeper states of sleep such as Sleep and Hibernation being defined by increments.
+
+The G-states (Global-States) define the overall state of the system. G0 represents a working computer where C-states, P-states, and S0 states can occur, while G3 represents a completely shut-down system.
+
+In the context of the present study, C-states can largely effect the results of the experiments.
