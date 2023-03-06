@@ -1,8 +1,8 @@
 \paragraph{Sample size:}
-We need to know if we have enough measurements to be within our desired margin of error and margin of error. In our previous work we used Cochran's formula to calculate how many measurement were needed. However after doing the Shapiro-Wilk test we discovered that some of our test case measurement do not follow a normal distribution. Therefore Cochran's formula should not be used. We are therefore going to take another approach in this work. There is still going to be an initial experiment, were 30 measurements will be collected which will then be used to decide whether more measurements are needed. Then we need to decide how to determine if 30 measurements is good enough.
+We need to know if we have enough measurements to be within our desired margin of error and margin of error. In \cite{biksbois} we used Cochran's formula to calculate how many measurement were needed. However after doing the Shapiro-Wilk test we discovered that some of our test case measurement do not follow a normal distribution. Therefore Cochran's formula should not be used. We are therefore going to take another approach in this work. There is still going to be an initial experiment, were 30 measurements will be collected which will then be used to decide whether more measurements are needed. Then we need to decide how to determine if 30 measurements is good enough.
 
 % Confidence interval = 2* margin of error
-\paragraph{Margin of error:} 
+\paragraph{Margin of error:} As the sample size increases, the Central limit theorem (CLT) states that the distribution of sample means approaches a normal distribution, irrespective of the underlying distribution of the population. Therefore we can calculate the margin of error using the z-score to determine whether we are within our desired margin of error. If we are not, then further samples should be acquired.
 
 \paragraph{Bootstraping:}
 
