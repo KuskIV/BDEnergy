@@ -1,6 +1,6 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe",
@@ -10,7 +10,8 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000"
+      "16000",
+      ""
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
@@ -28,7 +29,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
@@ -38,7 +39,8 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000"
+      "16000",
+      ""
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
@@ -56,7 +58,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\min-gw\\fannkuch-redux.exe",
@@ -66,7 +68,8 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000"
+      "16000",
+      ""
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
@@ -84,7 +87,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe",
@@ -94,7 +97,8 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000"
+      "16000",
+      ""
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
