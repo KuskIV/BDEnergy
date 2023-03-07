@@ -1,16 +1,18 @@
 ﻿using BDEnergyFramework.MeasuringInstruments;
 using BDEnergyFramework.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ILogger = Serilog.ILogger;
 
 namespace BDEnergyFramework.Utils
 {
     public static class MeasuringInstrumentUtils
     {
-        public static MeasuringInstrument GetMeasuringInstrument(EMeasuringInstrument mi)
+        public static MeasuringInstrument GetMeasuringInstrument(EMeasuringInstrument mi, ILogger logger)
         {
             switch (mi)
             {
@@ -19,15 +21,15 @@ namespace BDEnergyFramework.Utils
                 case EMeasuringInstrument.IPG:
                     return GetIntelPowerGadget();
                 case EMeasuringInstrument.LHM:
-                    return GetLibreHardwareMonitor();
+                    return GetLibreHardwareMonitor(logger);
                 default:
                     throw new NotImplementedException($"'{mi}' is not implemented");
             }
         }
 
-        private static MeasuringInstrument GetLibreHardwareMonitor()
+        private static MeasuringInstrument GetLibreHardwareMonitor(ILogger logger)
         {
-            return new HardwareMonitor(EMeasuringInstrument.LHM);
+            return new HardwareMonitor(EMeasuringInstrument.LHM, logger);
         }
 
         private static MeasuringInstrument GetIntelPowerGadget()

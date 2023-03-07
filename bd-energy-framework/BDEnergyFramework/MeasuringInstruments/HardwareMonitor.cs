@@ -1,8 +1,10 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
+using Microsoft.Extensions.Logging;
 using OpenHardwareMonitor.Hardware;
 using System.Timers;
+using ILogger = Serilog.ILogger;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -14,14 +16,16 @@ namespace BDEnergyFramework.MeasuringInstruments
         private DateTime _startTime;
         private Dictionary<(SensorType sensorType, string name), float> _cpuValues = new Dictionary<(SensorType sensorType, string name), float>();
 
-        public HardwareMonitor(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
-        {
+        public ILogger _logger { get; }
 
+        public HardwareMonitor(EMeasuringInstrument measuringInstrument, ILogger logger) : base(measuringInstrument)
+        {
+            _logger = logger;
         }
 
         internal override int GetMilisecondsBetweenSampels()
         {
-            return 500;
+            return 100;
         }
 
         internal override void StartMeasuringInstruments(string path)
@@ -71,10 +75,10 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
         {
-            UpdateCpuValues();
+            //UpdateCpuValues();
 
             var elapesTime = (DateTime.UtcNow - _startTime).TotalMilliseconds / 1000;
-            var gpuEnergyInJoules = GetGpuEnergy();
+            var gpuEnergyInJoules = GetGpuEnergy(update:true);
             var packageTemperature = GetPackageTemperature();
             var processorPower = GetPackagePower();
             var corePower = GetCorePower();
@@ -145,9 +149,9 @@ namespace BDEnergyFramework.MeasuringInstruments
             return energyInJoules;
         }
 
-        private double GetGpuEnergy()
+        private double GetGpuEnergy(bool update=false)
         {
-            return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuGraphics);
+            return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuGraphics, update:update);
         }
 
         private double GetPackageTemperature()
@@ -175,19 +179,32 @@ namespace BDEnergyFramework.MeasuringInstruments
             return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuDram);
         }
 
-        private double GetCpuValue(SensorType sensor, string name)
+        private double GetCpuValue(SensorType sensor, string name, bool update=false)
         {
-            var key = GenerateKey(sensor, name);
-
-            lock (_cpuValues)
+            if (TryGetCpuValue(sensor, name, out var value, update))
             {
-                if (_cpuValues.TryGetValue(key, out var value))
-                {
-                    return value;
-                }
+                return value;
             }
 
-            throw new ArgumentException($"Unable to get values for {sensor}, {name}");
+            _logger.Debug("Unable to get cpu value for sensor '{sensor}', name '{name}'", sensor, name);
+
+            return -1;
+
+            //throw new ArgumentException($"Value for sensor '{sensor}', name '{name}' does not exists");
+
+            //return GetCpuValue(sensor, name);
+
+            //var key = GenerateKey(sensor, name);
+
+            //lock (_cpuValues)
+            //{
+            //    if (_cpuValues.TryGetValue(key, out var value))
+            //    {
+            //        return value;
+            //    }
+            //}
+
+            //throw new ArgumentException($"Unable to get values for {sensor}, {name}");
         }
 
         private List<(string core, double value)> GetCpuCoreValues(SensorType sensor)
@@ -195,52 +212,90 @@ namespace BDEnergyFramework.MeasuringInstruments
             var cpuValues = new List<(string core, double value)>();
             var core = 1;
 
-            while (_cpuValues.TryGetValue(GenerateKey(sensor, core), out var value))
+            var valueExists = true;
+
+            while (valueExists)
             {
-                cpuValues.Add(($"{sensor} {HardwareMonitorNames.GetCpuCore(core)}", value));
+                var name = HardwareMonitorNames.GetCpuCore(core);
+
+                valueExists = TryGetCpuValue(sensor, name, out var cpuValue);
+                cpuValues.Add(($"{sensor} {name}", cpuValue));
+
 
                 core++;
             }
 
+
+            //while (_cpuValues.TryGetValue(GenerateKey(sensor, core), out var value))
+            //{
+            //    cpuValues.Add(($"{sensor} {HardwareMonitorNames.GetCpuCore(core)}", value));
+
+            //    core++;
+            //}
+
             return cpuValues;
         }
 
-        private (SensorType sensorType, string name) GenerateKey(SensorType sensor, int core)
-        {
-            return (sensor, HardwareMonitorNames.GetCpuCore(core));
-        }
+        //private (SensorType sensorType, string name) GenerateKey(SensorType sensor, int core)
+        //{
+        //    return (sensor, HardwareMonitorNames.GetCpuCore(core));
+        //}
 
-        private (SensorType sensorType, string name) GenerateKey(SensorType sensor, string name)
-        {
-            return (sensor, name);
-        }
+        //private (SensorType sensorType, string name) GenerateKey(SensorType sensor, string name)
+        //{
+        //    return (sensor, name);
+        //}
 
-        private void UpdateCpuValues()
+        private bool TryGetCpuValue(SensorType sensorType, string name, out float cpuValue, bool update = false)
         {
-            lock (_cpuValues)
+            cpuValue = -1;
+
+            foreach (var hardware in _computer.Hardware)
             {
-                _cpuValues = new Dictionary<(SensorType sensorType, string name), float>();
-
-                foreach (var hardware in _computer.Hardware)
+                if (update)
                 {
                     hardware.Update();
+                }
 
-                    foreach (var sensor in hardware.Sensors)
+                foreach (var sensor in hardware.Sensors)
+                {
+                    if (sensor.SensorType == sensorType && sensor.Name == name)
                     {
-                        try
-                        {
-                            if (sensor.Value is float value)
-                            {
-                                _cpuValues.Add((sensor.SensorType, sensor.Name), value);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            throw;
-                        }
+                        cpuValue = sensor.Value is float value ? value : -1;
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
+
+        //private void UpdateCpuValues()
+        //{
+        //    lock (_cpuValues)
+        //    {
+        //        _cpuValues = new Dictionary<(SensorType sensorType, string name), float>();
+
+        //        foreach (var hardware in _computer.Hardware)
+        //        {
+        //            hardware.Update();
+
+        //            foreach (var sensor in hardware.Sensors)
+        //            {
+        //                try
+        //                {
+        //                    if (sensor.Value is float value)
+        //                    {
+        //                        _cpuValues.Add((sensor.SensorType, sensor.Name), value);
+        //                    }
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    throw;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

@@ -281,7 +281,7 @@ namespace BDEnergyFramework.Services
                 var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
                 process.ProcessorAffinity = processorAffinity;
             }
-
+            var output = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
 
             // Get the exit code of the process
@@ -308,7 +308,7 @@ namespace BDEnergyFramework.Services
 
         private void SetupMeasuringInstruments(List<EMeasuringInstrument> measurementInstruments)
         {
-            _measuringInstruments = measurementInstruments.Select(x => MeasuringInstrumentUtils.GetMeasuringInstrument(x)).ToList();
+            _measuringInstruments = measurementInstruments.Select(x => MeasuringInstrumentUtils.GetMeasuringInstrument(x, _logger)).ToList();
         }
 
         private void SetupMeasurement(MeasurementConfiguration config, List<MeasurementContext> measuremetns, EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<int> allocatedCores)

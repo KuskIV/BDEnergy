@@ -1,13 +1,13 @@
 [
   {
-    "MeasurementInstruments": [ 2, 3 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe"
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe"
     ],
     "AllocatedCores": [ ],
     "TestCaseParameters": [
-      "12"
+      "16000"
     ],
     "UploadToDatabase": false,
     "BurnInPeriod": 1,
