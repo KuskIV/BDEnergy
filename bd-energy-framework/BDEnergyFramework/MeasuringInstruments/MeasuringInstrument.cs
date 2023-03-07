@@ -49,8 +49,6 @@ namespace BDEnergyFramework.MeasuringInstruments
         {
             _timer.Enabled = false;
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
-
             StopMeasuringInstrument();
         }
 

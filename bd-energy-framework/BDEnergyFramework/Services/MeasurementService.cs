@@ -266,7 +266,7 @@ namespace BDEnergyFramework.Services
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
-            process.PriorityClass = ProcessPriorityClass.High;
+            //process.PriorityClass = ProcessPriorityClass.High;
 
             //if (DutUtils.IsWindows())
             //{

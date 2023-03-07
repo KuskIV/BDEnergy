@@ -21,7 +21,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override int GetMilisecondsBetweenSampels()
         {
-            return 333;
+            return 500;
         }
 
         internal override void StartMeasuringInstruments(string path)
@@ -231,7 +231,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                         {
                             if (sensor.Value is float value)
                             {
-                                UpsertValue(value, sensor);
+                                _cpuValues.Add((sensor.SensorType, sensor.Name), value);
                             }
                         }
                         catch (Exception e)
@@ -241,11 +241,6 @@ namespace BDEnergyFramework.MeasuringInstruments
                     }
                 }
             }
-        }
-
-        private void UpsertValue(float value, ISensor sensor)
-        {
-            _cpuValues.Add((sensor.SensorType, sensor.Name), value);
         }
     }
 }
