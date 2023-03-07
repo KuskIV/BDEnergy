@@ -155,9 +155,9 @@ int main(int argc, char **argv)
     int64_t maxFlips = 0, checksum = 0;
 
     // Iterate over each block.
-    #pragma omp parallel for \
-        reduction(max:maxFlips) \
-        reduction(+:checksum)
+    #pragma omp parallel for //\
+        // reduction(max:maxFlips) \
+        // reduction(+:checksum)
 
     for (int64_t blockStart = 0;
          blockStart < fact[n]; 

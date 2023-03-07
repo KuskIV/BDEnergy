@@ -43,7 +43,13 @@
     <None Update="Json\default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExpLHM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCoresExp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationOne\TestConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Secrets\appsettings.secrets.json">
