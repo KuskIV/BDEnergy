@@ -14,6 +14,7 @@ using System.Text.Json;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Org.BouncyCastle.Math.EC;
 using Microsoft.AspNetCore.Components.Web;
+using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.Services.Repositories
 {
@@ -138,11 +139,13 @@ namespace BDEnergyFramework.Services.Repositories
         public DtoMeasurementInstrument GetMeasuringInstrument(MeasurementInstrument measuringInstrument)
         {
             var query = "SELECT * FROM MeasuringInstrument WHERE " +
-                "Name = @name";
+                "Name = @name AND " +
+                "SampleRate = @sampleRate";
 
             return _retryPolicy.Execute(() => _connection.QueryFirst<DtoMeasurementInstrument>(query, new
             {
                 name=measuringInstrument.Name.ToLower(),
+                sampleRate=measuringInstrument.SamplesRate
             }));
         }
 
@@ -234,14 +237,15 @@ namespace BDEnergyFramework.Services.Repositories
             }));
         }
 
-        public void InsertMeasuringInstrument(EMeasuringInstrument measurementInstrument)
+        public void InsertMeasuringInstrument(MeasurementInstrument mi)
         {
-            var query = "INSERT INTO MeasuringInstrument(Name) " +
-                "VALUES(@name)";
+            var query = "INSERT INTO MeasuringInstrument(Name, SampleRate) " +
+                "VALUES(@name, @sampleRate)";
 
             _retryPolicy.Execute(() => _connection.Execute(query, new
             {
-                name = measurementInstrument.ToString()
+                name = mi.Name.ToString().ToLower(),
+                sampleRate = mi.SamplesRate
             }));
         }
 
@@ -318,15 +322,17 @@ namespace BDEnergyFramework.Services.Repositories
             return response > 0;
         }
 
-        public bool MeasuringInstrumentExists(EMeasuringInstrument measurementInstrument)
+        public bool MeasuringInstrumentExists(MeasurementInstrument mi)
         {
             var query = "SELECT COUNT(*) FROM MeasuringInstrument WHERE " +
-                "Name=@name";
+                "Name=@name AND " +
+                "SampleRate = @sampleRate";
 
             var response = _retryPolicy.Execute(() => _connection.ExecuteScalar<int>(query,
                 new
                 {
-                    name=measurementInstrument.ToString().ToLower()
+                    name=mi.Name.ToString().ToLower(),
+                    sampleRate = mi.SamplesRate,
                 }));
 
             return response > 0;
@@ -356,6 +362,18 @@ namespace BDEnergyFramework.Services.Repositories
                 }));
 
             return response > 0;
+        }
+
+        internal IEnumerable<Measurement> GetMeasurements(int measurementCollection)
+        {
+            var query = "SELECT * FROM Measurement WHERE CollectionId = @id";
+
+            var response = _retryPolicy.Execute(() => _connection.Query<DtoMeasurement>(query, new
+            {
+                id = measurementCollection
+            }));
+
+            return Mapper.Map(response);
         }
     }
 }

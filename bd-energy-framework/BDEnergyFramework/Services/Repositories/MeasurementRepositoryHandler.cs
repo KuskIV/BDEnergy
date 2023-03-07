@@ -24,7 +24,7 @@ namespace BDEnergyFramework.Services.Repositories
             _repository.Dispose();
         }
 
-        internal void InsertLastMeasurements(List<MeasurementContext> measurements, MeasurementConfiguration config, string machineName)
+        internal void InsertLastMeasurements(List<MeasurementContext> measurements, MeasurementConfiguration config, string machineName, Dictionary<EMeasuringInstrument, int> sampleRates)
         {
             var insertCount = 0;
             var maxCount = measurements.Count;
@@ -37,11 +37,12 @@ namespace BDEnergyFramework.Services.Repositories
 
                 var timeSeries = m.TimeSeries.Last();
                 var measurement = m.Measurements.Last();
+                var sampleRate = sampleRates[m.MeasurementInstrument];
 
                 var configId = GetConfigId(config, m.AllocatedCores);
                 var testCaseId = GetTestCaseId(config, m.TestCase, m.Parameter);
                 var dutId = GetDutId(config, machineName);
-                var measurementInstrumentId = GetMeasurementInstrumentId(config, m.MeasurementInstrument);
+                var measurementInstrumentId = GetMeasurementInstrumentId(config, m.MeasurementInstrument, sampleRate);
 
                 var collectionId = GetMeasurementCollectionId(
                     configId, testCaseId, dutId, measurementInstrumentId, config);
@@ -93,15 +94,15 @@ namespace BDEnergyFramework.Services.Repositories
             return dtoMeasurementCollection.Id;
         }
 
-        private int GetMeasurementInstrumentId(MeasurementConfiguration config, EMeasuringInstrument measurementInstrument)
+        private int GetMeasurementInstrumentId(MeasurementConfiguration config, EMeasuringInstrument measurementInstrument, int sampleRate)
         {
-            var measuringInstrument = Mapper.Map(measurementInstrument);
+            var measuringInstrument = Mapper.Map(measurementInstrument, sampleRate);
 
-            if (!_repository.MeasuringInstrumentExists(measurementInstrument))
+            if (!_repository.MeasuringInstrumentExists(measuringInstrument))
             {
                 _logger.Debug("Inserting new measurement instrument '{name}'", measurementInstrument);
 
-                _repository.InsertMeasuringInstrument(measurementInstrument);
+                _repository.InsertMeasuringInstrument(measuringInstrument);
             }
             else
             {
@@ -189,6 +190,48 @@ namespace BDEnergyFramework.Services.Repositories
             _logger.Debug("Successfully fetched config with id {id}", dtoConfig.Id);
 
             return dtoConfig.Id;
+        }
+
+        internal IEnumerable<MeasurementContext> GetMeasurements(EMeasuringInstrument mi, int sampleRate, string testCaseName, string parameter, MeasurementConfiguration config, string machineName)
+        {
+            var measurements = new List<MeasurementContext>();
+
+            var dut = GetDutId(config, machineName);
+            var measurementInstrument = GetMeasurementInstrumentId(config, mi, sampleRate);
+            var testCase = GetTestCaseId(config, testCaseName, parameter);
+
+            if (!config.AllocatedCores.Any())
+            {
+                var measurement = new MeasurementContext(testCaseName, parameter, mi, new List<int>());
+
+                measurement.Measurements.AddRange(
+                    GetMeasurements(config, dut, measurementInstrument, testCase, new List<int>())
+                    );
+
+                measurements.Add(measurement);
+            }
+
+            foreach (var allocatedCore in config.AllocatedCores)
+            {
+                var measurement = new MeasurementContext(testCaseName, parameter, mi, allocatedCore);
+
+                measurement.Measurements.AddRange(
+                    GetMeasurements(config, dut, measurementInstrument, testCase, allocatedCore)
+                    );
+
+                measurements.Add(measurement);
+            }
+
+            return measurements;
+        }
+
+        private IEnumerable<Measurement> GetMeasurements(MeasurementConfiguration config, int dut, int measurementInstrument, int testCase, List<int> allocatedCore)
+        {
+            var configuration = GetConfigId(config, allocatedCore);
+
+            var measurementCollection = GetMeasurementCollectionId(configuration, testCase, dut, measurementInstrument, config);
+
+            return _repository.GetMeasurements(measurementCollection);
         }
     }
 }

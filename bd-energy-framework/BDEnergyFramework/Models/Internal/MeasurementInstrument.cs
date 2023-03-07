@@ -9,5 +9,6 @@ namespace BDEnergyFramework.Models.Internal
     public class MeasurementInstrument
     {
         public string Name { get; set; }
+        public int SamplesRate { get; set; }
     }
 }

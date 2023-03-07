@@ -9,7 +9,7 @@
     "TestCaseParameters": [
       "16000"
     ],
-    "UploadToDatabase": false,
+    "UploadToDatabase": true,
     "BurnInPeriod": 1,
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,

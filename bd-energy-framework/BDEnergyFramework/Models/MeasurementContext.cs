@@ -1,4 +1,5 @@
 ﻿using BDEnergyFramework.Models.Internal;
+using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.Models
 {
@@ -8,8 +9,13 @@ namespace BDEnergyFramework.Models
         {
             Parameter  = parameter;
             MeasurementInstrument = measurementInstrument;
-            TestCase = testCase;
+            TestCase = PathUtils.GetFilenameFromPath(testCase);
             AllocatedCores = allocatedCores;
+        }
+
+        public MeasurementContext()
+        {
+            
         }
 
         public List<int> AllocatedCores { get; set; }

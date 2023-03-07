@@ -81,7 +81,8 @@ namespace BDEnergyFramework.Services
 
         public double GetTemperature()
         {
-            return -1;
+            return WindowsTemperatureReader.GetCpuTemperature();
+            //return -1;
         }
 
         private static List<string> WindowsProcessesToStop()

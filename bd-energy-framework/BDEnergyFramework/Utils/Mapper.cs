@@ -1,6 +1,8 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using Microsoft.VisualBasic;
+using System.Runtime.CompilerServices;
 
 namespace BDEnergyFramework.Utils
 {
@@ -133,11 +135,12 @@ namespace BDEnergyFramework.Utils
             };
         }
 
-        internal static MeasurementInstrument Map(EMeasuringInstrument measurementInstrument)
+        internal static MeasurementInstrument Map(EMeasuringInstrument measurementInstrument, int sampleRate)
         {
             return new MeasurementInstrument()
             {
-                Name = measurementInstrument.ToString()
+                Name = measurementInstrument.ToString(),
+                SamplesRate = sampleRate,
             };
         }
 
@@ -152,6 +155,28 @@ namespace BDEnergyFramework.Utils
                 ConfigurationId= configId,
                 MeasurementInstrumentId= measurementInstrumentId,
                 AdditionalMetadata= config.AdditionalMetadata,
+            };
+        }
+
+        internal static IEnumerable<Measurement> Map(IEnumerable<DtoMeasurement> response)
+        {
+            return response.Select(x => Map(x));
+        }
+
+        private static Measurement Map(DtoMeasurement x)
+        {
+            return new Measurement()
+            {
+                CpuEnergyInJoules = (double)x.CpuEnergyInJoules,
+                DramEnergyInJoules = (double)x.DramEnergyInJoules,
+                Duration = (long)x.Duration,
+                AdditionalMetadata = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, double>>(x.AdditionalMetadata),
+                EndTemperature = (double)x.PackageTemperatureEnd,
+                EndTime = x.EndTime,
+                GpuEnergyInJoules = (double)x.GpuEnergyInJoules,
+                Iteration = x.Iteration,
+                StartTemperature = (double)x.PackageTemperatureBegin,
+                StartTime = x.BeginTime
             };
         }
     }

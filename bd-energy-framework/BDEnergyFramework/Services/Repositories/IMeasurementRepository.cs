@@ -18,11 +18,11 @@ namespace BDEnergyFramework.Services.Repositories
         void InsertDut(DeviceUnderTest dut);
         void InsertMeasurement(Measurement m, int collectionId);
         void InsertMeasurementCollection(MeasurementCollection mc);
-        void InsertMeasuringInstrument(EMeasuringInstrument measurementInstrument);
+        void InsertMeasuringInstrument(MeasurementInstrument measurementInstrument);
         void InsertTestCase(TestCase tc);
         void InsertTimeseries(Sample t, int collectionId);
         bool MeasurementCollectionExists(MeasurementCollection mc);
-        bool MeasuringInstrumentExists(EMeasuringInstrument measurementInstrument);
+        bool MeasuringInstrumentExists(MeasurementInstrument mi);
         bool TestCaseExists(TestCase testCase);
     }
 }

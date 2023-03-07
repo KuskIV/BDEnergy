@@ -42,6 +42,12 @@ namespace BDEnergyFramework.Services
             var burninApplied = config.BurnInPeriod <= 0 ? true : false;
 
             SetupMeasuringInstruments(config.MeasurementInstruments);
+            var sampleRates = GetSampleRates();
+
+            if (burninApplied)
+            {
+                measurements = InitializeMeasurements(config, _machineName, sampleRates);
+            }
 
             if (config.StopBackgroundProcesses)
             {
@@ -58,10 +64,10 @@ namespace BDEnergyFramework.Services
             {
                 IntroduceMeasurement(config, measurements, burninApplied);
 
-                //if (CpuTooHotOrCold(config))
-                //{
-                //    Cooldown(config);
-                //}
+                if (CpuTooHotOrCold(config))
+                {
+                    Cooldown(config);
+                }
 
                 if (config.DisableWifi)
                 {
@@ -84,13 +90,13 @@ namespace BDEnergyFramework.Services
                     _logger.Information("Initializing db connection");
                     var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
 
-                    repository.InsertLastMeasurements(measurements, config, _machineName);
+                    repository.InsertLastMeasurements(measurements, config, _machineName, sampleRates);
                     repository.Dispose();
                 }
 
                 if (!burninApplied && IsBurnInCountAchieved(measurements, config))
                 {
-                    measurements = new List<MeasurementContext>();
+                    measurements = InitializeMeasurements(config, _machineName, sampleRates);
 
                     burninApplied = true;
                 }
@@ -98,6 +104,40 @@ namespace BDEnergyFramework.Services
             } while (!EnoughMeasurements(measurements, config, burninApplied));
 
             return measurements;
+        }
+
+        private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName, Dictionary<EMeasuringInstrument, int> sampleRates)
+        {
+            _dutService.EnableWifi();
+
+            var measurements = new List<MeasurementContext>();
+            _logger.Information("Initializing db connection");
+            var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+
+            foreach (var mi in config.MeasurementInstruments)
+            {
+                var sampleRate = sampleRates[mi];
+
+                foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
+                {
+                    var testCase = PathUtils.GetFilenameFromPath(tc.First);
+                    var parameter = tc.Second;
+
+                    measurements.AddRange(
+                        repository.GetMeasurements(mi, sampleRate, testCase, parameter, config, machineName)
+                        );
+                }
+            }
+
+            repository.Dispose();
+            return measurements;
+        }
+
+
+        private Dictionary<EMeasuringInstrument, int> GetSampleRates()
+        {
+            return _measuringInstruments.ToDictionary(x => x.GetName(), y => y.GetMilisecondsBetweenSampels());
         }
 
         private void IntroduceMeasurement(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
@@ -198,19 +238,6 @@ namespace BDEnergyFramework.Services
 
         private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores)
         {
-            if (mi == EMeasuringInstrument.IPG && _dutService.IsAdmin())
-            {
-                _logger.Error("When measuring using {mi}, please do not elevate the framework", Utils.MeasuringInstruments.IntelPowerGadget);
-                throw new Exception();
-            }
-
-            if (mi == EMeasuringInstrument.LHM && !_dutService.IsAdmin())
-            {
-                _logger.Error("When measuring using {mi}, please elevate the framework", Utils.MeasuringInstruments.LibreHardwareMonitor);
-                throw new Exception();
-            }
-
-
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
@@ -230,11 +257,11 @@ namespace BDEnergyFramework.Services
 
             var (ts, m) = measuringInstrument.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration);
 
-            if (ts.Sampels.Any() && m.StartTemperature == -1)
-            {
-                m.StartTemperature = ts.Sampels.First().PackageTemperature;
-                m.EndTemperature = ts.Sampels.Last().PackageTemperature;
-            }
+            //if (ts.Sampels.Any() && m.StartTemperature == -1)
+            //{
+            //    m.StartTemperature = ts.Sampels.First().PackageTemperature;
+            //    m.EndTemperature = ts.Sampels.Last().PackageTemperature;
+            //}
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
@@ -246,7 +273,7 @@ namespace BDEnergyFramework.Services
         {
             var m = measurement.Where(x => 
                     x.MeasurementInstrument == mi && 
-                    x.TestCase == testCasePath && 
+                    x.TestCase == PathUtils.GetFilenameFromPath(testCasePath) && 
                     x.Parameter == testCaseParameter &&
                     x.AllocatedCores.Count() == enabledCores.Count() &&
                     x.AllocatedCores.All(x => enabledCores.Contains(x)) &&
@@ -295,7 +322,7 @@ namespace BDEnergyFramework.Services
         {
             return measurements.First(x =>
                 x.Parameter == testCaseParameter &&
-                x.TestCase == testCasePath &&
+                x.TestCase == PathUtils.GetFilenameFromPath(testCasePath) &&
                 x.MeasurementInstrument == mi &&
                 x.AllocatedCores.Count() == enabledCores.Count() &&
                 x.AllocatedCores.All(y => enabledCores.Contains(y)));
@@ -324,7 +351,7 @@ namespace BDEnergyFramework.Services
         {
             return measuremetns.Any(
                             x => x.Parameter == testCaseParameter &&
-                            x.TestCase == testCasePath && 
+                            x.TestCase == PathUtils.GetFilenameFromPath(testCasePath) && 
                             x.MeasurementInstrument == mi &&
                             x.AllocatedCores.Count() == allocatedCores.Count() &&
                             x.AllocatedCores.All(y => allocatedCores.Contains(y)));
