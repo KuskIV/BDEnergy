@@ -9,7 +9,7 @@
     },
     "WorkstationOneTest": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationOne\\TestConfig.json\""
+      "commandLineArgs": "--config \"C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationOne\\TestConfig.json\""
     },
     "MhkConfigPath": {
       "commandName": "Project",
