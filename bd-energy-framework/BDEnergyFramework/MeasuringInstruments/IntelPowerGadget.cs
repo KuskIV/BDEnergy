@@ -87,9 +87,9 @@ namespace BDEnergyFramework.MeasuringInstruments
             }
         }
 
-        internal override int GetMilisecondsBetweenSampels()
-        {
-            return 500;
-        }
+        //internal override int GetMilisecondsBetweenSampels()
+        //{
+        //    return 100;
+        //}
     }
 }

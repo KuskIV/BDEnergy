@@ -247,7 +247,7 @@ namespace BDEnergyFramework.Services
 
             measuringInstrument.Start(startTime);
             
-            ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores);
+            ProcessUtils.ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores, _logger);
 
             measuringInstrument.Stop(startTime);
             stopWatch.Stop();
@@ -282,41 +282,7 @@ namespace BDEnergyFramework.Services
             return m.First().Measurements.Count() + 1;
         }
 
-        private void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores)
-        {
-            var executablePath = testCasePath;
-            var parameters = testCaseParameter;
 
-            var process = new Process();
-            process.StartInfo.FileName = "\"" + executablePath + "\"";
-            process.StartInfo.Arguments = parameters;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.Start();
-            //process.PriorityClass = ProcessPriorityClass.High;
-
-            //if (DutUtils.IsWindows())
-            //{
-            //foreach (ProcessThread thread in process.Threads)
-            //{
-            //    thread.PriorityLevel = ThreadPriorityLevel.Highest;
-            //}
-            //}
-
-            if (enabledCores.Any())
-            {
-                var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
-                process.ProcessorAffinity = processorAffinity;
-            }
-            var output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            // Get the exit code of the process
-            var exitCode = process.ExitCode;
-
-            _logger.Information("Test case '{tc}' exited with exit code '{exitCode}'",
-                PathUtils.GetFilenameFromPath(testCasePath), exitCode);
-        }
 
         private MeasurementContext GetMeasurement(List<MeasurementContext> measurements, EMeasuringInstrument mi, string testCasePath, string testCaseParameter, List<int> enabledCores)
         {
