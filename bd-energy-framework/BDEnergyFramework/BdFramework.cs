@@ -20,6 +20,8 @@ namespace BDEnergyFramework
     {
         public override int Execute([NotNull] CommandContext context, [NotNull] CommandSettings settings)
         {
+            ProcessUtils.AssignPriorityToFramework();
+
             var logger = InitializeLogger();
             var secrets = InputUtils.GetSecrets();
             var dbConnectionFactory = GetDbConnectionFactory(secrets);

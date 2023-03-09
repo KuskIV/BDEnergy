@@ -86,10 +86,5 @@ namespace BDEnergyFramework.MeasuringInstruments
                 throw new Exception($"IntelPowerGadget failed to {callerName}");
             }
         }
-
-        //internal override int GetMilisecondsBetweenSampels()
-        //{
-        //    return 500;
-        //}
     }
 }
