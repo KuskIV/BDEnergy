@@ -1,0 +1,27 @@
+\subsection{Intel CPUs}
+This section will cover some relevant knowledge about intel cpus and cpus in general.
+
+\paragraph{Performance and Efficiency cores}
+In the past the CPU architecture x86 has had a core layout comprised of identical cores, disregarding the silicon lottery. However, the ARM architecture introduced the big.LITTLE layout in 2011\cite{ARM2011origin}. It is an architecture that utilizes two types of cores, a set for maximum energy efficiency and a set for maximum computer performance.\cite{ARMWhatIsIt}. Intel introduced a hybrid architecture in 2021\cite{Intel2021Alder} codenamed Alder lake, which is similar to ARM's big.LITTLE architecture. Alder lake also has two types of cores: performance cores (P-cores) and efficiency cores (E-cores). These types of cores are optimized for different tasks. P-cores function as standard CPU cores, which focus on maximizing performance. In contrast, the E-cores are designed to maximize performance per watt and are intended to handle smaller non-time critical jobs, such as background services\cite{rotem2022intel}.
+
+\paragraph{CPU States}\label{subsec:cpustates}
+
+This section provides an overview of CPU-states, which are a crucial aspect of energy management in computer systems. The information presented in this section draws  from Intel \cite{CIntel} and  HardwareSecrets \cite{CHard}. The concept of CPU-states is concerned with how a system manages its energy consumption during different operational conditions.
+
+The C-states are a crucial aspect of CPU-states, as they dictate the extent to which a system shuts down various components of the CPU to conserve energy. The C0 state represents the normal operation of a computer under load. As the system moves from C0 to C10 \cite{biksbois}, progressively more components of the CPU are shut down until, in C10, the CPU is almost entirely inactive. It is important to note that the number of C-states supported may vary depending on the CPU and motherboard in use, in \cite{biksbois} the workstation used supported from C0 to C10 states.
+
+Another thing that can control the performance of CPU i P-states. P-states are used only during C0 state and determine the frequency of the CPU under load, thereby managing its energy consumption.
+%  S-states (Sleep State), on the other hand, control how the system uses energy on a larger scale by determining whether the system is sleeping or not. All C-states occur within S0, with deeper states of sleep such as Sleep and Hibernation being defined by increments.
+
+
+
+% In addition to C-states, there are other states such as CC-states (Core C-states), PC-states (Package C-states), Thread C-states, and Hyper-Thread C-states. However, information on these states is limited. Enhanced C-states (C1E), which can shut down more components of the CPU than C0 but not as much as the next C-state, are also present in some CPUs.
+
+
+
+% The G-states (Global-States) define the overall state of the system. G0 represents a working computer where C-states, P-states, and S0 states can occur, while G3 represents a completely shut-down system.
+
+In this study the C-states can have a large impact on the energy consumption of the test cases, especially the idle case as was found in \cite{biksbois}.
+
+\paragraph{Disabling C-States}
+In order to achieve a consistent performance during testing, it is necessary to completely disable C-states on the computer by modifying several BIOS settings. Merely deactivating the C-states option does not suffice, since the CPU still has the ability to switch to different P-states, which can lead to frequency fluctuations. To address this, the Intel SpeedStep\cite{IntelSpeedStep} feature, which regulates the P-state of the CPU, must also be disabled, as it can result in frequency changes. Furthermore, the Intel Speed Shift\cite{IntelSpeedShift} capability, which allows the hardware to control the P-state instead of the operating system, should also be disabled. These measures ensure a stable CPU frequency and optimal performance.
