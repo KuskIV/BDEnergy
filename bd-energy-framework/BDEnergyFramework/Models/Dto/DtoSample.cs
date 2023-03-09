@@ -18,5 +18,6 @@ namespace BDEnergyFramework.Models.Dto
         public decimal CpuEnergyInJoules { get; set; }
         public decimal CpuUtilization { get; set; }
         public Dictionary<string, string> AdditionalMetadata { get; set; }
+        public int MeasurementId { get; set; }
     }
 }

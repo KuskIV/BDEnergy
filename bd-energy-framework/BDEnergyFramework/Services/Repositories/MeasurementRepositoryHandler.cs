@@ -47,10 +47,16 @@ namespace BDEnergyFramework.Services.Repositories
                 var collectionId = GetMeasurementCollectionId(
                     configId, testCaseId, dutId, measurementInstrumentId, config);
 
-                InsertTimeSeries(timeSeries, collectionId);
                 InsertMeasurement(measurement, collectionId);
+                var measurementId = GetMeasurementId(measurement, collectionId);
+                InsertTimeSeries(timeSeries, collectionId, measurementId);
 
             }
+        }
+
+        private int GetMeasurementId(Measurement measurement, int collectionId)
+        {
+            return _repository.GetMeasurementId(measurement, collectionId);
         }
 
         private void InsertMeasurement(Measurement measurement, int collectionId)
@@ -60,13 +66,13 @@ namespace BDEnergyFramework.Services.Repositories
             _repository.InsertMeasurement(measurement, collectionId);
         }
 
-        private void InsertTimeSeries(TimeSeries timeSeries, int collectionId)
+        private void InsertTimeSeries(TimeSeries timeSeries, int collectionId, int measurementId)
         {
             _logger.Debug("Inserting timeseries with {p} points", timeSeries.Sampels.Count());
 
             foreach (var t in timeSeries.Sampels)
             {
-                _repository.InsertTimeseries(t, collectionId);
+                _repository.InsertTimeseries(t, collectionId, measurementId);
             }
         }
 

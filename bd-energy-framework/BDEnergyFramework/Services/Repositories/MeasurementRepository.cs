@@ -1,19 +1,10 @@
-﻿using BDEnergyFramework.Models;
-using BDEnergyFramework.Models.Dto;
+﻿using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using Dapper;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
 using System.Text.Json;
-using static Org.BouncyCastle.Math.EC.ECCurve;
-using Org.BouncyCastle.Math.EC;
-using Microsoft.AspNetCore.Components.Web;
 using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.Services.Repositories
@@ -266,10 +257,10 @@ namespace BDEnergyFramework.Services.Repositories
             }));
         }
 
-        public void InsertTimeseries(Sample t, int collectionId)
+        public void InsertTimeseries(Sample t, int collectionId, int measurementId)
         {
-            var query = "INSERT INTO Sample(CollectionId, PackageTemperature, ElapsedTime, ProcessorPowerInWatt, DramEnergyInJoules, GpuEnergyInJoules, CpuEnergyInJoules, CpuUtilization, AdditionalMetadata) " +
-                "VALUES(@collectionid, @packageTemperature, @elapsedTime, @processorPowerInWatt, @dramEnergyInJoules, @gpuEnergyInJoules, @cpuEnergyInJoules, @cpuUtilization, @additionalMetadata)";
+            var query = "INSERT INTO Sample(CollectionId, PackageTemperature, ElapsedTime, ProcessorPowerInWatt, DramEnergyInJoules, GpuEnergyInJoules, CpuEnergyInJoules, CpuUtilization, AdditionalMetadata, MeasurementId) " +
+                "VALUES(@collectionid, @packageTemperature, @elapsedTime, @processorPowerInWatt, @dramEnergyInJoules, @gpuEnergyInJoules, @cpuEnergyInJoules, @cpuUtilization, @additionalMetadata, @measurementId)";
 
             var keys = t.AdditionalMetadata.Where(x => x.Value.ToString() == "NaN").Select(y => y.Key);
 
@@ -290,6 +281,7 @@ namespace BDEnergyFramework.Services.Repositories
                 cpuEnergyInJoules=t.CpuEnergyInJoules,
                 cpuUtilization=t.CpuUtilization,
                 additionalMetadata=JsonSerializer.Serialize(t.AdditionalMetadata),
+                measurementId=measurementId
             }));
         }
 
@@ -374,6 +366,21 @@ namespace BDEnergyFramework.Services.Repositories
             }));
 
             return Mapper.Map(response);
+        }
+
+        internal int GetMeasurementId(Measurement measurement, int collectionId)
+        {
+            var query = "SELECT * FROM Measurement WHERE CollectionId = @id AND " +
+                "BeginTime BETWEEN @beginStart and @beginEnd ";
+
+            var response = _retryPolicy.Execute(() => _connection.QueryFirst<DtoMeasurement>(query, new
+            {
+                id = collectionId,
+                beginStart = measurement.StartTime.AddSeconds(-4).ToString("yyyy-MM-dd HH:mm:ss"),
+                beginEnd = measurement.StartTime.AddSeconds(4).ToString("yyyy-MM-dd HH:mm:ss"),
+            }));
+
+            return response.Id;
         }
     }
 }
