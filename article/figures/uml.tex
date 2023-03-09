@@ -1,80 +1,74 @@
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
-        % \begin{object}[text width=4 cm]{TestCase}{0 ,1}
-        %     \attribute{TestCaseId : INT}
-        %     \attribute{Name : VARCHAR}
-        %     \attribute{Language : VARCHAR}
-        % \end{object}
-        % \begin{object}[text width=4 cm]{Dut}{10,1}
-        %     \attribute{DutId : INT}
-        %     \attribute{Name : VARCHAR}
-        %     \attribute{OS : VARCHAR}
-        %     \attribute{Version : INT}
-        % \end{object}
-        % \begin{object}[text width=4 cm]{Run}{5,5}
-        %     \attribute{RunId : INT}
-        %     \attribute{DutId : INT}
-        %     \attribute{TestCaseId : INT}
-        %     \attribute{Value : VARCHAR}
-        % \end{object}
-        % \begin{object}[text width = 4 cm]{MeasuringInstrument}{5,1}
-        %     \attribute{InstrumentId : INT}
-        %     \attribute{Name : VARCHAR}
-        % \end{object}
-        % \begin{object}{Measurement}{6.5,-2.5}
-        %     \attribute{MeasurementId : INT}
-        %     \attribute{ConfigId : INT}
-        %     \attribute{InstrumentId : INT}
-        %     \attribute{DutId : INT}
-        %     \attribute{TestCaseId : INT}
-        %     \attribute{Runs : INT}
-        %     \attribute{Iteration : INT}
-        %     \attribute{FirstMeasuring : VARCHAR}
-        %     \attribute{StartTime : DATETIME(6)}
-        %     \attribute{EndTime : DATETIME(6)}
-        % \end{object}
-        % \begin{object}[text width=4 cm]{RawData}{0, -10}
-        %     \attribute{RawDataId : INT}
-        %     \attribute{MeasurementId : INT}
-        %     \attribute{Value : VARCHAR}
-        %     \attribute{Time : DATETIME(6)}
-        % \end{object}
-        % \begin{object}[text width=4 cm]{TimeSeries}{0, -4.5}
-        %     \attribute{TimeSeriesId : INT}
-        %     \attribute{MeasurementId : INT}
-        %     \attribute{Value : VARCHAR}
-        %     \attribute{Time : DATETIME(6)}
-        % \end{object}
-        % \begin{object}[text width = 4 cm]{Configuration}{5,-10}
-        %     \attribute{ConfigurationId : INT}
-        %     \attribute{MinTemp : INT}
-        %     \attribute{MaxTemp : INT}
-        %     \attribute{Between : INT}
-        %     \attribute{Duration : INT}
-        %     \attribute{MinBattery : INT}
-        %     \attribute{MaxBattery : INT}
-        %     \attribute{Version : INT}
-        % \end{object}
-        % \begin{object}[text width = 4 cm]{Environment}{10, -10}
-        %     \attribute{EnvironmentId : INT}
-        %     \attribute{MeasurementId : INT}
-        %     \attribute{Time : DATETIME(6)}
-        %     \attribute{Name : VARCHAR}
-        %     \attribute{Value : INT}
-        %     \attribute{Type : VARCHAR}
-        % \end{object}
+        \begin{object}[text width=4cm]{MeasuringInstrument}{0,0}
+            \attribute{Id : INT}
+            \attribute{Name : VARCHAR}
+            \attribute{SampleRate : INT}
+        \end{object}
+        \begin{object}[text width=4 cm]{Configuration}{4.7 ,0}
+            \attribute{Id : INT}
+            \attribute{MinTemperature : INT}
+            \attribute{MaxTemperature : INT}
+            \attribute{Burnin : INT}
+            \attribute{AllocatedCores : JSON}
+        \end{object}
+        \begin{object}[text width=5cm]{TestCase}{10,0}
+            \attribute{Id : INT}
+            \attribute{Name : VARCHAR}
+            \attribute{Compiler : VARCHAR}
+            \attribute{Optimizations : VARCHAR}
+            \attribute{TestCaseSize : VARCHAR}
+            \attribute{Parameter : VARCHAR}
+            \attribute{Threads : VARCHAR}
+        \end{object}
+        \begin{object}[text width=4cm]{DeviceUnderTest}{10.5,-4}
+            \attribute{Id : INT}
+            \attribute{Name : VARCHAR}
+            \attribute{Os : VARCHAR}
+            \attribute{Env : VARCHAR}
+        \end{object}
+        \begin{object}[text width=7cm]{MeasurementCollection}{3,-5}
+            \attribute{Id : INT}
+            \attribute{Name : VARCHAR}
+            \attribute{CollectionNumber : INT}
+            \attribute{ConfigId : INT}
+            \attribute{TestCaseId : INT}
+            \attribute{MeasurementInstrumentId : INT}
+            \attribute{AdditionalMetadata : JSON}
+        \end{object}
+        \begin{object}[text width=7cm]{Measurement}{1.5,-11}
+            \attribute{Id : INT}
+            \attribute{Iteration : INT}
+            \attribute{CollectionId : INT}
+            \attribute{PackageTemperatureBegin : DOUBLE}
+            \attribute{PackageTemperatureEnd : DOUBLE}
+            \attribute{Duration : INT}
+            \attribute{DramEnergyInJoules : DOUBLE}
+            \attribute{CpuEnergyInJoules : DOUBLE}
+            \attribute{GpuEnergyInJoules : DOUBLE}
+            \attribute{BeginTime : TIMESTAMP}
+            \attribute{EndTime : TIMESTAMP}
+            \attribute{AdditionalMetadata : JSON}
+        \end{object}
+        \begin{object}[text width=7cm]{Sample}{9,-11}
+            \attribute{Id : INT}
+            \attribute{CollectionId : INT}
+            \attribute{PackageTemperature : DOUBLE}
+            \attribute{ElapsedTime : DOUBLE}
+            \attribute{ProcessorPowerInWatt : DOUBLE}
+            \attribute{DramEnergyInJoules : DOUBLE}
+            \attribute{CpuEnergyInJoules : DOUBLE}
+            \attribute{CpuUtilization : DOUBLE}
+            \attribute{AdditionalMetadata : JSON}
+        \end{object}
         
-        % \association{Run}{}{0..*}{TestCase}{}{1}
-        % \association{Run}{}{0..*}{Dut}{}{1}
-        % \association{Measurement}{}{0..*}{Dut}{}{1}
-        % \association{Measurement}{}{0..*}{MeasuringInstrument}{}{1}
-        % \association{Measurement}{}{0..*}{Dut}{}{1}
-        % \association{Measurement}{}{1}{RawData}{}{1}
-        % \association{Measurement}{}{1}{TimeSeries}{}{1}
-        % \association{Measurement}{}{0..*}{Configuration}{}{1}
-        % \association{Measurement}{}{0..*}{Environment}{}{0..*}
-        % \association{Measurement}{}{0..*}{TestCase}{}{1}
+        \association{MeasuringInstrument}{}{0..*}{MeasurementCollection}{}{1}
+        \association{Configuration}{}{0..*}{MeasurementCollection}{}{1}
+        \association{TestCase}{}{0..*}{MeasurementCollection}{}{1}
+        \association{DeviceUnderTest}{}{0..*}{MeasurementCollection}{}{1}
+        \association{MeasurementCollection}{}{1}{Measurement}{}{1..*}
+        \association{MeasurementCollection}{}{1}{Sample}{}{1..*}
     \end{tikzpicture}
     \caption{An UML diagram representing the tables in the SQL database} \label{fig:uml_diagram}
 \end{figure}

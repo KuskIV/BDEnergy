@@ -108,6 +108,11 @@ namespace BDEnergyFramework.Services
 
         private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName, Dictionary<EMeasuringInstrument, int> sampleRates)
         {
+            if (!config.UploadToDatabase)
+            {
+                return new List<MeasurementContext>();
+            }
+
             _dutService.EnableWifi();
 
             var measurements = new List<MeasurementContext>();
