@@ -1,4 +1,5 @@
 ﻿using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.Mozilla;
 using RaspberryEnergyProcessing.Model;
 using RaspberryPiCommunication;
+using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -62,10 +64,6 @@ namespace BDEnergyFramework.MeasuringInstruments
             }
         }
 
-        internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
-        {
-            return base.ParseData(path, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
-        }
 
         private async Task SetValues(Modes mode)
         {
@@ -118,8 +116,18 @@ namespace BDEnergyFramework.MeasuringInstruments
             }
         }
 
-        public async Task FetchResults(string key) 
+        internal override (TimeSeries, Models.Internal.Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
+            var results = FetchResults(path);
+            TimeSeries timeseries = results.Item1;
+            Models.Internal.Measurement measurement = results.Item2;
+            measurement.Iteration= iteration;
+            return (timeseries, measurement);
+        }
+        public (TimeSeries, Models.Internal.Measurement) FetchResults(string key) 
+        {
+            TimeSeries timeSeries = new TimeSeries();
+            Models.Internal.Measurement measurement = new();
             using (MySqlConnection connection = new MySqlConnection(config["ConnectionStrings:MySqlConnection"]))
             {
                 connection.Open();
@@ -134,11 +142,30 @@ namespace BDEnergyFramework.MeasuringInstruments
                     {
                         while (reader.Read())
                         {
-                            // process each row
+                            List<DtoDataPoint> dataPoints = JsonConvert.DeserializeObject<List<DtoDataPoint>>((string)reader[3]);//Time_Series
+                            DateTime StartTime = DateTime.Parse((string)reader[0]); //Start_Time
+                            DateTime EndTime = DateTime.Parse((string)reader[1]);
+                            foreach (var point in dataPoints)
+                            {
+                                TimeSpan elapsedTime = (point.Time - StartTime);
+                                timeSeries.Sampels.Add(new Sample()
+                                {
+                                    ElapsedTime = elapsedTime.TotalMilliseconds,
+                                    CpuEnergyInJoules = point.C1TrueRMS
+                                });
+                            }
+                            measurement.StartTime = StartTime;
+                            measurement.EndTime = EndTime;
+                            measurement.CpuEnergyInJoules = (double)reader[4];
+                            measurement.Duration = (long)reader[7];
+                            measurement.AdditionalMetadata.Add("Min", (double)reader[5]);
+                            measurement.AdditionalMetadata.Add("Max", (double)reader[6]);
+
                         }
                     }
                 }
             }
+            return (timeSeries, measurement);
 
         }
     }
