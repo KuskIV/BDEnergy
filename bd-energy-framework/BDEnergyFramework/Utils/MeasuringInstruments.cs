@@ -11,5 +11,6 @@ namespace BDEnergyFramework.Utils
         public const string IntelPowerGadget = "Intel Power Gadget";
         public const string LibreHardwareMonitor = "Libre Hardware Monitor";
         public const string RAPL = "RAPL";
+        public const string CLAMP = "Clamp";
     }
 }

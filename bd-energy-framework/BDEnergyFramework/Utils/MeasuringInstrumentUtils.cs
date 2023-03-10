@@ -22,9 +22,16 @@ namespace BDEnergyFramework.Utils
                     return GetIntelPowerGadget();
                 case EMeasuringInstrument.LHM:
                     return GetLibreHardwareMonitor(logger);
+                case EMeasuringInstrument.CLAMP:
+                    return GetClamp();
                 default:
                     throw new NotImplementedException($"'{mi}' is not implemented");
             }
+        }
+
+        private static MeasuringInstrument GetClamp()
+        {
+            return new Clamp(EMeasuringInstrument.CLAMP);
         }
 
         private static MeasuringInstrument GetLibreHardwareMonitor(ILogger logger)

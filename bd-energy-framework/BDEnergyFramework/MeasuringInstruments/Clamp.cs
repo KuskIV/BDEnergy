@@ -65,13 +65,14 @@ namespace BDEnergyFramework.MeasuringInstruments
         }
 
 
-        private async Task SetValues(Modes mode)
+        public async Task SetValues(Modes mode) 
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string url = $"{baseUrl}api/updatestatus?id={_deviceString}&mode={mode}";
-                HttpResponseMessage response = await client.GetAsync(url);
-            }
+            string url = $"{baseUrl}api/updatestatus?id={_deviceString}&mode={(int)mode}";
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<bool> GetStarted()
