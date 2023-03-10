@@ -44,6 +44,11 @@ namespace BDEnergyFramework.MeasuringInstruments
             Initialise();
         }
 
+        internal override int GetMilisecondsBetweenSampels()
+        {
+            return 250;
+        }
+
         internal override void StopMeasuringInstrument()
         {
             var success = StopLog();

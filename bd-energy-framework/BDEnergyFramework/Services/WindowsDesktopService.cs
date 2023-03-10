@@ -51,7 +51,8 @@ namespace BDEnergyFramework.Services
             return new List<EMeasuringInstrument>()
             {
                 EMeasuringInstrument.IPG,
-                EMeasuringInstrument.LHM
+                EMeasuringInstrument.LHM,
+                EMeasuringInstrument.CLAMP
             };
         }
 

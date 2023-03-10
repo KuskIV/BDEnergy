@@ -3,7 +3,8 @@
     Unknown,
     RAPL,
     IPG,
-    LHM
+    LHM,
+    CLAMP
 }
 
 
