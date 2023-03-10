@@ -37,7 +37,7 @@
             \attribute{MeasurementInstrumentId : INT}
             \attribute{AdditionalMetadata : JSON}
         \end{object}
-        \begin{object}[text width=7cm]{Measurement}{1.5,-11}
+        \begin{object}[text width=6cm]{Measurement}{1.5,-11}
             \attribute{Id : INT}
             \attribute{Iteration : INT}
             \attribute{CollectionId : INT}
@@ -51,7 +51,7 @@
             \attribute{EndTime : TIMESTAMP}
             \attribute{AdditionalMetadata : JSON}
         \end{object}
-        \begin{object}[text width=7cm]{Sample}{9,-11}
+        \begin{object}[text width=5cm]{Sample}{9,-11}
             \attribute{Id : INT}
             \attribute{CollectionId : INT}
             \attribute{PackageTemperature : DOUBLE}
@@ -69,6 +69,7 @@
         \association{DeviceUnderTest}{}{0..*}{MeasurementCollection}{}{1}
         \association{MeasurementCollection}{}{1}{Measurement}{}{1..*}
         \association{MeasurementCollection}{}{1}{Sample}{}{1..*}
+        \association{Measurement}{}{1}{Sample}{}{1..*}
     \end{tikzpicture}
     \caption{An UML diagram representing the tables in the SQL database} \label{fig:uml_diagram}
 \end{figure}
