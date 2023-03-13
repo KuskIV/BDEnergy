@@ -1,6 +1,7 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
+using Microsoft.VisualBasic;
 using Org.BouncyCastle.Asn1.Mozilla;
 using Timer = System.Timers.Timer;
 
@@ -39,9 +40,9 @@ namespace BDEnergyFramework.MeasuringInstruments
             return ParseData(path, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
         }
 
-        public void Start(DateTime date)
+        public void Start()
         {
-            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, date);
+            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, DateTime.UtcNow);
 
             StartMeasuringInstruments(path);
 
