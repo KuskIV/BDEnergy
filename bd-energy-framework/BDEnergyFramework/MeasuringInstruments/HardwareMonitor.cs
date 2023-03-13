@@ -24,7 +24,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override int GetMilisecondsBetweenSampels()
         {
-            return 250;
+            return 100;
         }
 
         internal override void StartMeasuringInstruments(string path)

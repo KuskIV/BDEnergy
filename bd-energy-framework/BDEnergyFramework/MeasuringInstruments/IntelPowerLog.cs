@@ -2,6 +2,7 @@
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Parsers;
 using BDEnergyFramework.Utils;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,7 +62,11 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StartMeasuringInstruments(string path)
         {
-            Process.Start(IntelPowerGadgetPath);
+            var igpProcess = Process.Start(IntelPowerGadgetPath);
+            igpProcess.StartInfo.FileName = IntelPowerGadgetPath;
+            var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int>() { 4, 5, 6, 7 });
+            igpProcess.ProcessorAffinity = processorAffinity;
+
             Thread.Sleep(TimeSpan.FromSeconds(2));
             Process.Start(IntelPowerGadgetPath, "-start");
         }
