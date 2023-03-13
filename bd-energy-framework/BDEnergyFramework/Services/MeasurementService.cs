@@ -1,8 +1,10 @@
 ﻿using BDEnergyFramework.MeasuringInstruments;
 using BDEnergyFramework.Models;
+using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Services.Repositories;
 using BDEnergyFramework.Utils;
 using Microsoft.Extensions.Logging;
+using Mysqlx.Resultset;
 using Polly;
 using Polly.Retry;
 using System.Data;
@@ -20,6 +22,7 @@ namespace BDEnergyFramework.Services
         private readonly string _machineName;
         private readonly RetryPolicy _retryPolicy;
         private List<MeasuringInstrument> _measuringInstruments = new List<MeasuringInstrument>();
+        private Dictionary<EMeasuringInstrument, int> _sampleRates;
 
         public MeasurementService(IDutService dutService, Func<IDbConnection> dbFactory, ILogger logger, string machineName)
         {
@@ -41,12 +44,11 @@ namespace BDEnergyFramework.Services
             var measurements = new List<MeasurementContext>();
             var burninApplied = config.BurnInPeriod <= 0 ? true : false;
 
-            SetupMeasuringInstruments(config.MeasurementInstruments);
-            var sampleRates = GetSampleRates();
 
             if (burninApplied)
             {
-                measurements = InitializeMeasurements(config, _machineName, sampleRates);
+
+                measurements = InitializeMeasurements(config, _machineName);
             }
 
             if (config.StopBackgroundProcesses)
@@ -54,7 +56,7 @@ namespace BDEnergyFramework.Services
                 _dutService.StopBackgroundProcesses();
             }
 
-            if (!_measuringInstruments.Any())
+            if (burninApplied && !_measuringInstruments.Any())
             {
                 _logger.Information("No measuring instruments were setup. Try again.");
                 return new List<MeasurementContext>();
@@ -76,7 +78,7 @@ namespace BDEnergyFramework.Services
                 }
 
                 //PerformMeasurementsForAllConfigs(config, measurements);
-                _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements));
+                _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements, burninApplied));
 
                 if (burninApplied && config.UploadToDatabase)
                 {
@@ -90,13 +92,13 @@ namespace BDEnergyFramework.Services
                     _logger.Information("Initializing db connection");
                     var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
 
-                    repository.InsertLastMeasurements(measurements, config, _machineName, sampleRates);
+                    repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
                     repository.Dispose();
                 }
 
                 if (!burninApplied && IsBurnInCountAchieved(measurements, config))
                 {
-                    measurements = InitializeMeasurements(config, _machineName, sampleRates);
+                    measurements = InitializeMeasurements(config, _machineName);
 
                     burninApplied = true;
                 }
@@ -106,8 +108,12 @@ namespace BDEnergyFramework.Services
             return measurements;
         }
 
-        private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName, Dictionary<EMeasuringInstrument, int> sampleRates)
+        private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName)
         {
+            _logger.Information("About to initialize measuring instruments");
+            SetupMeasuringInstruments(config.MeasurementInstruments);
+            _sampleRates = GetSampleRates();
+
             if (!config.UploadToDatabase)
             {
                 return new List<MeasurementContext>();
@@ -122,7 +128,7 @@ namespace BDEnergyFramework.Services
 
             foreach (var mi in config.MeasurementInstruments)
             {
-                var sampleRate = sampleRates[mi];
+                var sampleRate = _sampleRates[mi];
 
                 foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
                 {
@@ -159,7 +165,7 @@ namespace BDEnergyFramework.Services
             }
         }
 
-        private object GetCurrentCount(List<MeasurementContext> measurements)
+        private int GetCurrentCount(List<MeasurementContext> measurements)
         {
             if (!measurements.Any())
             {
@@ -169,7 +175,7 @@ namespace BDEnergyFramework.Services
             return measurements.First().Measurements.Count() + 1;
         }
 
-        private void PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements)
+        private void PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
         {
             foreach (var mi in config.MeasurementInstruments)
             {
@@ -177,18 +183,18 @@ namespace BDEnergyFramework.Services
                 {
                     if (!config.AllocatedCores.Any())
                     {
-                        PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>());
+                        PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>(), burninApplied);
                     }
 
                     foreach (var allocatedCores in config.AllocatedCores)
                     {
-                        PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores);
+                        PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores, burninApplied);
                     }
                 }
             }
         }
 
-        private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, EMeasuringInstrument mi, (string First, string Second) tc, List<int> allocatedCores)
+        private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, EMeasuringInstrument mi, (string First, string Second) tc, List<int> allocatedCores, bool burninApplied)
         {
             var testCasePath = tc.First;
             var testCaseParameter = tc.Second;
@@ -198,7 +204,7 @@ namespace BDEnergyFramework.Services
 
             SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores);
+            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied);
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -241,7 +247,7 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores)
+        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied)
         {
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
@@ -250,28 +256,67 @@ namespace BDEnergyFramework.Services
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
-            measuringInstrument.Start(startTime);
-            
+            StartMeasuringInstrument(burninApplied, measuringInstrument, startTime);
+
             ProcessUtils.ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores, _logger);
 
-            measuringInstrument.Stop(startTime);
+            StopMeasuringInstrument(burninApplied, measuringInstrument, startTime);
+
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
             var endTemperature = _dutService.GetTemperature();
             var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
-            var (ts, m) = measuringInstrument.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration);
-
-            //if (ts.Sampels.Any() && m.StartTemperature == -1)
-            //{
-            //    m.StartTemperature = ts.Sampels.First().PackageTemperature;
-            //    m.EndTemperature = ts.Sampels.Last().PackageTemperature;
-            //}
+            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration);
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
 
             _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
+        }
+
+        private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration)
+        {
+            if (measuringInstrument is MeasuringInstrument mi)
+            {
+                return mi.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration, burninApplied);
+            }
+
+            return (new TimeSeries(), new Measurement());
+        }
+
+        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime startTime)
+        {
+            if (!burninApplied)
+            {
+                return;
+            }
+
+            if (measuringInstrument is MeasuringInstrument mi)
+            {
+                mi.Start(startTime);
+            }
+            else
+            {
+                _logger.Warning("Measuring instrument was null when starting measuring");
+            }
+        }
+
+        private void StopMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime startTime)
+        {
+            if (!burninApplied)
+            {
+                return;
+            }
+
+            if (measuringInstrument is MeasuringInstrument mi)
+            {
+                mi.Stop(startTime);
+            }
+            else
+            {
+                _logger.Warning("Measuring instrument was null when starting measuring");
+            }
         }
 
         private int GetIteration(List<MeasurementContext> measurement, EMeasuringInstrument mi, string testCasePath, string testCaseParameter, List<int> enabledCores)
@@ -299,9 +344,9 @@ namespace BDEnergyFramework.Services
                 x.AllocatedCores.All(y => enabledCores.Contains(y)));
         }
 
-        private MeasuringInstrument GetMeasuringInstrument(EMeasuringInstrument mi)
+        private MeasuringInstrument? GetMeasuringInstrument(EMeasuringInstrument mi)
         {
-            return _measuringInstruments.First(x => x.GetName() == mi);
+            return _measuringInstruments.FirstOrDefault(x => x.GetName() == mi);
         }
 
         private void SetupMeasuringInstruments(List<EMeasuringInstrument> measurementInstruments)
