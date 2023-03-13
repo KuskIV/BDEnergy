@@ -40,6 +40,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StopMeasuringInstrument()
         {
+            Thread.Sleep(TimeSpan.FromSeconds(11));
         }
 
         internal override (TimeSeries, Models.Internal.Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
