@@ -5,7 +5,7 @@ IConfiguration config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .Build();
 
-string BasePath = "C:\\Users\\Jeppe\\Desktop\\Scope";
+string BasePath = "/home/rsp/Desktop/Scope";
 FileHandler fileHandler = new FileHandler(BasePath);
 DatabaseHandler databaseHandler = new DatabaseHandler(config["ConnectionStrings:MySqlConnection"]);
 while (true) 
