@@ -65,7 +65,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             measurement.Iteration= iteration;
             return (timeSeries, measurement);
         }
-        public List<DtoDataPoint> FetchResults(string key, DateTime startTime, DateTime endTime) 
+        public List<DtoDataPoint> FetchResults(string key, DateTime startTime, DateTime endTime)
         {
             List<DtoDataPoint> points = new List<DtoDataPoint>();
             using (MySqlConnection connection = new MySqlConnection(config["ConnectionStrings:MySqlConnection"]))
@@ -84,7 +84,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    points.Add(new DtoDataPoint 
+                    points.Add(new DtoDataPoint
                     {
                         C1ACRMS = (double)reader[2],
                         C1TrueRMS = (double)reader[1],
@@ -93,10 +93,16 @@ namespace BDEnergyFramework.MeasuringInstruments
                 }
                 reader.Close();
 
-                connection.Close();
-            }
-            return points;
+                if (points.Count == 0)
+                {
+                    throw new Exception("No data points were found for the specified time range.");
+                }
 
+                connection.Close();
+
+                return points;
+
+            }
         }
         private double ConvertToJoule(double measurement) 
         {
