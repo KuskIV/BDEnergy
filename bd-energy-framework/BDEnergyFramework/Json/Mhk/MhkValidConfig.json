@@ -6,8 +6,9 @@
       "C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe"
     ],
     "AllocatedCores": [
+      [0, 1]
     ],
-    "TestCaseParameters": [ "8000" ],
+    "TestCaseParameters": [ "5000" ],
     "UploadToDatabase": true,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,

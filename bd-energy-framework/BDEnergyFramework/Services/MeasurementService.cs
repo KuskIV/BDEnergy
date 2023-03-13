@@ -248,14 +248,15 @@ namespace BDEnergyFramework.Services
 
             var startTemperature = _dutService.GetTemperature();
             var startTime = DateTime.UtcNow;
-            var stopWatch = Stopwatch.StartNew();
 
             measuringInstrument.Start(startTime);
+            var stopWatch = Stopwatch.StartNew();
             
             ProcessUtils.ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores, _logger);
 
-            measuringInstrument.Stop(startTime);
             stopWatch.Stop();
+            measuringInstrument.Stop(startTime);
+            
             var endTime = DateTime.UtcNow;
             var endTemperature = _dutService.GetTemperature();
             var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);

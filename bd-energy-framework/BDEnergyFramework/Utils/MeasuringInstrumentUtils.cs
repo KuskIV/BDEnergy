@@ -41,7 +41,8 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetIntelPowerGadget()
         {
-            return new IntelPowerGadget(EMeasuringInstrument.IPG);
+            return new IntelPowerLog(EMeasuringInstrument.IPG);
+            //return new IntelPowerGadget(EMeasuringInstrument.IPG);
         }
 
         private static MeasuringInstrument GetRapl()
