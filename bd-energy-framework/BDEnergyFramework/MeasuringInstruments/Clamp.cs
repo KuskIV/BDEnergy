@@ -104,25 +104,3 @@ namespace BDEnergyFramework.MeasuringInstruments
         }
     }
 }
-//while (reader.Read())
-//{
-//    List<DtoDataPoint> dataPoints = JsonConvert.DeserializeObject<List<DtoDataPoint>>((string)reader[3]);//Time_Series
-//    DateTime StartTime = DateTime.Parse((string)reader[0]); //Start_Time
-//    DateTime EndTime = DateTime.Parse((string)reader[1]);
-//    foreach (var point in dataPoints)
-//    {
-//        TimeSpan elapsedTime = (point.Time - StartTime);
-//        timeSeries.Sampels.Add(new Sample()
-//        {
-//            ElapsedTime = elapsedTime.TotalMilliseconds,
-//            CpuEnergyInJoules = point.C1TrueRMS
-//        });
-//    }
-//    measurement.StartTime = StartTime;
-//    measurement.EndTime = EndTime;
-//    measurement.CpuEnergyInJoules = (double)reader[4];
-//    measurement.Duration = (long)reader[7];
-//    measurement.AdditionalMetadata.Add("Min", (double)reader[5]);
-//    measurement.AdditionalMetadata.Add("Max", (double)reader[6]);
-
-//}
