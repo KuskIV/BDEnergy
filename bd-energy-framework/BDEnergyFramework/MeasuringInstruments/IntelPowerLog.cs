@@ -44,7 +44,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             var relevantPaths = Directory.GetFiles(ipgPath)
                 .Where(x => x.Contains("PwrData"))
-                .Where(y => File.GetLastWriteTimeUtc(y) > startTime.AddSeconds(-5) && File.GetLastWriteTimeUtc(y) < endTime.AddSeconds(5))
+                .Where(y => File.GetLastWriteTimeUtc(y) > startTime && File.GetLastWriteTimeUtc(y) < endTime)
                 .ToList();
 
             if (relevantPaths.Count() == 1)
@@ -63,9 +63,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         internal override void StartMeasuringInstruments(string path)
         {
             var igpProcess = Process.Start(IntelPowerGadgetPath);
-            igpProcess.StartInfo.FileName = IntelPowerGadgetPath;
-            var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int>() { 4, 5, 6, 7 });
-            igpProcess.ProcessorAffinity = processorAffinity;
+            igpProcess.PriorityClass = ProcessPriorityClass.High;
 
             Thread.Sleep(TimeSpan.FromSeconds(2));
             Process.Start(IntelPowerGadgetPath, "-start");
