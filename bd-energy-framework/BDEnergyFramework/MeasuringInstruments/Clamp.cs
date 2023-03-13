@@ -44,7 +44,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override (TimeSeries, Models.Internal.Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
-            var results = FetchResults(path);
+            var results = FetchResults(path, startTime,endTime);
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
             foreach (var item in results)
