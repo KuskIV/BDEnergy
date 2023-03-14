@@ -57,25 +57,5 @@ namespace RspMeasuringDevice
         {
             return files;
         }
-
-        public DateTime GetStartTime()
-        {
-            return startTime;
-        }
-
-        public DateTime GetEndTime()
-        {
-            return endTime;
-        }
-
-
-        private bool CheckFileTime(string file)
-        {
-            string fileNameWithExtension = Path.GetFileName(file);
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithExtension);
-            string format = "yyyy-MM-ddTHH-mm-ss-fffZ"; // specify the custom format string
-            DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture);
-            return fileTime.AddSeconds(-10) < endTime;
-        }
     }
 }

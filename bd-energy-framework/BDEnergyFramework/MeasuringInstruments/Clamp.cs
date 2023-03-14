@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace BDEnergyFramework.MeasuringInstruments
@@ -31,6 +32,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         {
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
+                .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
         }
 
@@ -40,7 +42,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StopMeasuringInstrument()
         {
-            Thread.Sleep(TimeSpan.FromSeconds(11));
+            Thread.Sleep(TimeSpan.FromSeconds(15));
         }
 
         internal override (TimeSeries, Models.Internal.Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
@@ -53,7 +55,13 @@ namespace BDEnergyFramework.MeasuringInstruments
                 timeSeries.Sampels.Add(new Sample
                 {
                     CpuEnergyInJoules = ConvertToJoule(item.C1TrueRMS),
-                    ElapsedTime = (double)(item.Time-startTime).TotalMilliseconds
+                    ElapsedTime = (double)(item.Time-startTime).TotalMilliseconds,
+                    AdditionalMetadata = new Dictionary<string, double>(),
+                    CpuUtilization = 0,
+                    DramEnergyInJoules = 0,
+                    GpuEnergyInJoules= 0,
+                    PackageTemperature = 0,
+                    ProcessorPowerWatt = 0,
                 });
             }
             var resJ = results.Select(x => ConvertToJoule(x.C1TrueRMS));
@@ -69,7 +77,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         public List<DtoDataPoint> FetchResults(string key, DateTime startTime, DateTime endTime)
         {
             List<DtoDataPoint> points = new List<DtoDataPoint>();
-            using (MySqlConnection connection = new MySqlConnection(config["ConnectionStrings:MySqlConnection"]))
+            using (MySqlConnection connection = new MySqlConnection(config["MySqlConnection"]))
             {
                 connection.Open();
 
@@ -108,6 +116,11 @@ namespace BDEnergyFramework.MeasuringInstruments
         private double ConvertToJoule(double measurement) 
         {
             return measurement * 1 * 230;
+        }
+
+        internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
+        {
+            // do nothing
         }
     }
 }

@@ -253,19 +253,21 @@ namespace BDEnergyFramework.Services
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
             var startTemperature = _dutService.GetTemperature();
-            var startTime = DateTime.UtcNow;
 
-            StartMeasuringInstrument(burninApplied, measuringInstrument, startTime);
+            StartMeasuringInstrument(burninApplied, measuringInstrument);
+            var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
             ProcessUtils.ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores, _logger);
 
             stopWatch.Stop();
+            var endTime = DateTime.UtcNow;
             StopMeasuringInstrument(burninApplied, measuringInstrument, startTime);
 
-            var endTime = DateTime.UtcNow;
             var endTemperature = _dutService.GetTemperature();
             var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
+
+            _dutService.EnableWifi(); // TODO: only enable once
 
             var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration);
 
@@ -285,7 +287,7 @@ namespace BDEnergyFramework.Services
             return (new TimeSeries(), new Measurement());
         }
 
-        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime startTime)
+        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument)
         {
             if (!burninApplied)
             {
@@ -294,7 +296,7 @@ namespace BDEnergyFramework.Services
 
             if (measuringInstrument is MeasuringInstrument mi)
             {
-                mi.Start(startTime);
+                mi.Start();
             }
             else
             {

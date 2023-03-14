@@ -38,7 +38,7 @@ namespace RspMeasuringDevice
                     MySqlCommand command = new MySqlCommand(insertQuery, connection);
                     command.Parameters.AddWithValue("@double1", measurement.C1TrueRMS);
                     command.Parameters.AddWithValue("@double2", measurement.C1ACRMS);
-                    command.Parameters.AddWithValue("@timestamp", measurement.time);
+                    command.Parameters.AddWithValue("@timestamp", measurement.time.ToUniversalTime());
                     int rowsAffected = command.ExecuteNonQuery();
                 }
             }

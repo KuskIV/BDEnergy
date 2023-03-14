@@ -274,7 +274,7 @@ namespace BDEnergyFramework.Services.Repositories
             {
                 collectionid=collectionId,
                 packageTemperature=t.PackageTemperature,
-                elapsedTime=t.ElapsedTime,
+                elapsedTime=t.ElapsedTime,  
                 processorPowerInWatt=t.ProcessorPowerWatt,
                 dramEnergyInJoules=t.DramEnergyInJoules,
                 gpuEnergyInJoules=t.GpuEnergyInJoules,
