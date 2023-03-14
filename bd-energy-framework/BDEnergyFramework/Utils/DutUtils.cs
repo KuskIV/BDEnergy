@@ -55,7 +55,7 @@ namespace BDEnergyFramework.Utils
             return Environment.OSVersion.Platform == PlatformID.Win32NT;
         }
         
-        private static bool IsLinuxMachine()
+        public static bool IsLinuxMachine()
         {
             return Environment.OSVersion.Platform == PlatformID.Unix;
         }

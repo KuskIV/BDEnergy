@@ -4,7 +4,7 @@ namespace BDEnergyFramework.Utils;
 
 public static class LinuxUtils
 {
-    public static long ExecuteCommandGetOutputAsSudo(string filename, string argument)
+    public static string ExecuteCommandGetOutputAsSudo(string filename, string argument)
     {
         var proc = new Process
         {
@@ -28,7 +28,12 @@ public static class LinuxUtils
 
         proc.WaitForExit();
 
-        return long.Parse(output.Trim());
+        return output.Trim();
+    }
+    
+    public static long ExecuteCommandGetLongOutputAsSudo(string filename, string argument)
+    {
+        return long.Parse(ExecuteCommandGetOutputAsSudo(filename, argument));
     }
 
     public static void ExecuteCommandAsSudo(string command, string argument)

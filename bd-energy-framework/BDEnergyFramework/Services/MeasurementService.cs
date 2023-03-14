@@ -252,13 +252,15 @@ namespace BDEnergyFramework.Services
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
+            var testCase = GetTestCase();
+            
             var startTemperature = _dutService.GetTemperature();
 
             StartMeasuringInstrument(burninApplied, measuringInstrument);
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
-            ProcessUtils.ExecuteTestCaseWithParameters(testCaseParameter, testCasePath, enabledCores, _logger);
+            testCase(testCaseParameter, testCasePath, enabledCores, _logger);
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
@@ -275,6 +277,21 @@ namespace BDEnergyFramework.Services
             measurement.Measurements.Add(m);
 
             _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
+        }
+
+        private static Action<string, string, List<int>, ILogger> GetTestCase()
+        {
+            if (DutUtils.IsWindows())
+            {
+                return ProcessUtils.ExecuteWindowsTestCaseWithParameters;
+            }
+
+            if (DutUtils.IsLinuxMachine())
+            {
+                return ProcessUtils.ExecuteLinuxTestCaseWithParameters;
+            }
+
+            throw new Exception("OS not implemented, and cannot execute a test case");
         }
 
         private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration)

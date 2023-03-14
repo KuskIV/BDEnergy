@@ -10,7 +10,7 @@ namespace BDEnergyFramework.MeasuringInstruments
     public class MeasuringInstrument
     {
         private Timer _timer;
-        private readonly int _milisecondsBetweenSampels = 100;
+        private readonly int _milisecondsBetweenSampels = 500;
         private readonly EMeasuringInstrument _measuringInstrument;
 
         public MeasuringInstrument(EMeasuringInstrument measuringInstrument)

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using ILogger = Serilog.ILogger;
@@ -14,10 +15,10 @@ namespace BDEnergyFramework.Utils
         public static void AssignPriorityToFramework()
         {
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            process.PriorityClass = System.Diagnostics.ProcessPriorityClass.High;
+            // process.PriorityClass = System.Diagnostics.ProcessPriorityClass.High; // TODO: do this
         }
 
-        public static void ExecuteTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores, ILogger logger)
+        public static void ExecuteWindowsTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores, ILogger logger)
         {
             var executablePath = testCasePath;
             var parameters = testCaseParameter;
@@ -37,6 +38,43 @@ namespace BDEnergyFramework.Utils
             //    thread.PriorityLevel = ThreadPriorityLevel.Highest;
             //}
             //}
+
+            if (enabledCores.Any())
+            {
+                var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
+                process.ProcessorAffinity = processorAffinity;
+            }
+            var output = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+
+            // Get the exit code of the process
+            var exitCode = process.ExitCode;
+
+            logger.Information("Test case '{tc}' exited with exit code '{exitCode}'",
+                PathUtils.GetFilenameFromPath(testCasePath), exitCode);
+        }
+        
+        public static void ExecuteLinuxTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores, ILogger logger)
+        {
+            var executablePath = testCasePath;
+            var parameters = testCaseParameter;
+
+            var process = new Process()
+            {
+                // StartInfo = new ProcessStartInfo("sudo", executablePath)
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = "sudo",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    Arguments = string.Format("{0} {1}", testCasePath, testCaseParameter),
+                }
+            };
+            // process.StartInfo.Arguments = parameters;
+            // process.StartInfo.UseShellExecute = false;
+            // process.StartInfo.RedirectStandardOutput = true;
+            process.Start();
+            process.PriorityClass = ProcessPriorityClass.High;
 
             if (enabledCores.Any())
             {

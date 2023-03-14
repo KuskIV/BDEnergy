@@ -1,5 +1,6 @@
 ﻿using BDEnergyFramework.Models;
 using BDEnergyFramework.Services;
+using BDEnergyFramework.Utils;
 using Spectre.Console;
 
 namespace BDEnergyFramework.Validators
@@ -66,7 +67,7 @@ namespace BDEnergyFramework.Validators
                     continue;
                 }
 
-                if (!IsExecutable(p))
+                if (DutUtils.IsWindows() && !IsExecutable(p))
                 {
                     errors.Add(
                         new ValidationError($"'{p}' is not an executable (.exe)"));

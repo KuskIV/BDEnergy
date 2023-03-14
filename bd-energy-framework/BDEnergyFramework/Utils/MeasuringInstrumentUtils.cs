@@ -47,7 +47,7 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetRapl()
         {
-            throw new NotImplementedException();
+            return new Rapl(EMeasuringInstrument.RAPL);
         }
     }
 }

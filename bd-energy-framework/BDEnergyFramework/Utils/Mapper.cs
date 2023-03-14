@@ -179,5 +179,26 @@ namespace BDEnergyFramework.Utils
                 StartTime = x.BeginTime
             };
         }
+
+        public static Sample MapToTimeSeries(Dictionary<string, double> data)
+        {
+            return new Sample()
+            {
+                DramEnergyInJoules = data["dram"],
+                ElapsedTime = data["elapsed"],
+                CpuEnergyInJoules = data["package-0"],
+                GpuEnergyInJoules = data["uncore"],
+                PackageTemperature = 0,
+                CpuUtilization = 0,
+                ProcessorPowerWatt = 0,
+                AdditionalMetadata = new Dictionary<string, double>()
+                {
+                    { "total_dram",  data["running_dram"] },
+                    { "total_core",  data["running_core"] },
+                    { "total_uncore",  data["running_uncore"] },
+                    { "total_package",  data["running_package-0"] },
+                }
+            };
+        }
     }
 }
