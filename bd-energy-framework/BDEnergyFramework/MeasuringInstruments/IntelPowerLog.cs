@@ -40,11 +40,12 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         private static string GetIpgPath(DateTime startTime, DateTime endTime)
         {
+            Thread.Sleep(TimeSpan.FromSeconds(1));
             var ipgPath = PathUtils.DataFolderPath;
 
             var relevantPaths = Directory.GetFiles(ipgPath)
                 .Where(x => x.Contains("PwrData"))
-                .Where(y => File.GetLastWriteTimeUtc(y) > startTime && File.GetLastWriteTimeUtc(y) < endTime)
+                .Where(y => File.GetLastWriteTimeUtc(y) > startTime && File.GetLastWriteTimeUtc(y) < endTime.AddSeconds(1))
                 .ToList();
 
             if (relevantPaths.Count() == 1)

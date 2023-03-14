@@ -1,34 +1,5 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 4 ],
-    "RequiredMeasurements": 30,
-    "TestCasePaths": [
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe",
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\mandelbrot.exe",
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\idle-case.exe"
-    ],
-    "AllocatedCores": [],
-    "TestCaseParameters": [
-      "12",
-      "16000",
-      ""
-    ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 1,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": true,
-    "ExperimentNumber": 1,
-    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
-    "ConcurrencyLimit": "multi-threaded",
-    "TestCaseType": "microbenchmarks",
-    "Compiler": "msvc",
-    "Optimizations": "-openmp",
-    "Language": "c++",
-    "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {}
-  },
-  {
     "MeasurementInstruments": [ 2 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [

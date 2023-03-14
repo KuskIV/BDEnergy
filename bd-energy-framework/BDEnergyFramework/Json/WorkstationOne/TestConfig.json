@@ -1,6 +1,6 @@
 [
   {
-    "MeasurementInstruments": [ 4 ],
+    "MeasurementInstruments": [ 2 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
@@ -9,7 +9,7 @@
       [1,2,3,4]
     ],
     "TestCaseParameters": [
-      "10"
+      "12"
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 0,
