@@ -7,6 +7,12 @@
 bd-energy-framework/BDEnergyFramework/Secrets/*
 analytics/secrets/*
 *.out
+test-cases/microbenchmarks/cpp/multi-thread/clang/*
+test-cases/microbenchmarks/cpp/single-thread/clang/*
+test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/*
+test-cases/microbenchmarks/cpp/single-thread/intel-one-api/*
+test-cases/microbenchmarks/cpp/multi-thread/min-gw/*
+test-cases/microbenchmarks/cpp/single-thread/min-gw/*
 
 # User-specific files
 *.rsuser
