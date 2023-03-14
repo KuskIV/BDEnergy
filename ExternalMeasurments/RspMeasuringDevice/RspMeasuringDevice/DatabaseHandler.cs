@@ -48,7 +48,7 @@ namespace RspMeasuringDevice
             }
             finally
             {
-                Console.WriteLine("File succesfully uploaded");
+                Console.WriteLine($"File succesfully uploaded at {DateTime.UtcNow.ToUniversalTime()}");
             }
         }
 

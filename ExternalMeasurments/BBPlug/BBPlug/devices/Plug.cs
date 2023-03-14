@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -72,22 +73,31 @@ namespace BBPlug.devices
         {
             var url = $"http://{ip}/?m=1";
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument htmlDoc = web.Load(url);
-            string document = htmlDoc.DocumentNode.InnerHtml;
-            PlugStatus plugStatus = new PlugStatus()
+            try
             {
-                Voltage = ReadVoltage(document),
-                Current = ReadCurrent(document),
-                Power = ReadPower(document),
-                ApparentPower = ReadApparentPower(document),
-                ReactivePower = ReadReactivePower(document),
-                PowerFactor = ReadPowerFactor(document),
-                EnergyToday = ReadEnergyToday(document),
-                EnergyYesterday = ReadEnergyYesterday(document),
-                EnergyEnergyTotal = ReadEnergyTotal(document),
-                On = ReadState(htmlDoc)
-            };
-            return plugStatus;
+                HtmlDocument htmlDoc = web.Load(url);
+                string document = htmlDoc.DocumentNode.InnerHtml;
+                PlugStatus plugStatus = new PlugStatus()
+                {
+                    Voltage = ReadVoltage(document),
+                    Current = ReadCurrent(document),
+                    Power = ReadPower(document),
+                    ApparentPower = ReadApparentPower(document),
+                    ReactivePower = ReadReactivePower(document),
+                    PowerFactor = ReadPowerFactor(document),
+                    EnergyToday = ReadEnergyToday(document),
+                    EnergyYesterday = ReadEnergyYesterday(document),
+                    EnergyEnergyTotal = ReadEnergyTotal(document),
+                    On = ReadState(htmlDoc)
+                };
+                return plugStatus;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred: {ex.Message}");
+                Thread.Sleep(TimeSpan.FromSeconds(30));
+            }
+            return null;
         }
 
         private float ValueReader(string val, string document)

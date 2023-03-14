@@ -4,7 +4,8 @@
     RAPL,
     IPG,
     LHM,
-    CLAMP
+    CLAMP,
+    PLUG
 }
 
 
