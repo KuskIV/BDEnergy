@@ -910,3 +910,6 @@ dkms.conf
 *.out
 *.app
 article/.vscode/settings.json
+bd-energy-framework/.idea/.idea.bd-energy-framework/.idea/encodings.xml
+bd-energy-framework/.idea/.idea.bd-energy-framework/.idea/indexLayout.xml
+bd-energy-framework/.idea/.idea.bd-energy-framework/.idea/vcs.xml
