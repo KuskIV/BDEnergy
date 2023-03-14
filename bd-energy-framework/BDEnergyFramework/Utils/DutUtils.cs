@@ -12,6 +12,8 @@ namespace BDEnergyFramework.Utils
 {
     public static class DutUtils
     {
+        public const string WorkstationOne = "WorkstationOne";
+        
         public static IDutService GetDutService(Models.UserSecrets secrets, ILogger logger)
         {
             if (IsWindowsMachine())
@@ -19,6 +21,11 @@ namespace BDEnergyFramework.Utils
                 var wifiService = new WifiService(secrets.WifiAdapterName);
 
                 return new WindowsDesktopService(wifiService, logger);
+            }
+
+            if (IsLinuxMachine())
+            {
+                return new LinuxDesktopService(secrets.MachineName);
             }
 
             throw new NotImplementedException($"The OS {Environment.OSVersion.Platform.ToString()} is not implemented");
@@ -46,6 +53,11 @@ namespace BDEnergyFramework.Utils
         private static bool IsWindowsMachine()
         {
             return Environment.OSVersion.Platform == PlatformID.Win32NT;
+        }
+        
+        private static bool IsLinuxMachine()
+        {
+            return Environment.OSVersion.Platform == PlatformID.Unix;
         }
     }
 }
