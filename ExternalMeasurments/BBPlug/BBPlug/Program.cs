@@ -15,7 +15,15 @@ while (true)
     databaseHandler.ÓpenConnection();
 	foreach (var plug in plugs)
 	{
-        databaseHandler.InsertResults(plug.Status, plug.ip);
+        var plugState = plug.Status;
+        if (plugState != null) 
+        {
+            databaseHandler.InsertResults(plugState, plug.ip);
+        }
+        else
+        {
+            continue;
+        }
 	}
     databaseHandler.CloseConnection();
     Thread.Sleep(TimeSpan.FromSeconds(1));

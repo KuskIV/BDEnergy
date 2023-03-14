@@ -7,6 +7,7 @@ using System.Text.Json;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 using BBPlug.models;
+using System.Net.NetworkInformation;
 
 namespace RspMeasuringDevice
 {
@@ -29,6 +30,7 @@ namespace RspMeasuringDevice
         {
             connection.Close();
         }
+
         public void InsertResults(PlugStatus result, string ip)
         {
             try
