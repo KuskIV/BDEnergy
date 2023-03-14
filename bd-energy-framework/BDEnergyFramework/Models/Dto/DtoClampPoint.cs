@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BDEnergyFramework.Models.Dto
 {
-    public class DtoDataPoint
+    public class DtoClampPoint
     {
         public double C1TrueRMS { get; set; }
         public double C1ACRMS { get; set; }
