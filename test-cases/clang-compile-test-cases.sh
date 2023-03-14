@@ -18,7 +18,7 @@ paths="$cpp_multi_folder"
 for p in $paths; do
   rm -rf "$p/$clang_folder/*"
   for f in $p/*.cpp; do
-    clang++ -fopenmp "$f" -o "$p/$clang_folder/$(basename ${f%.*}).exe"
+    clang++ -fopenmp "$f" -o "$p/$clang_folder/$(basename ${f%.*})"
   done
 done
 
@@ -27,6 +27,6 @@ paths="$cpp_single_folder"
 for p in $paths; do
   rm -rf "$p/$clang_folder/*"
   for f in $p/*.cpp; do
-    clang++ "$f" -o "$p/$clang_folder/$(basename ${f%.*}).exe"
+    clang++ "$f" -o "$p/$clang_folder/$(basename ${f%.*})"
   done
 done
