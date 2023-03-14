@@ -6,6 +6,7 @@
 # Secrets
 bd-energy-framework/BDEnergyFramework/Secrets/*
 analytics/secrets/*
+*.out
 
 # User-specific files
 *.rsuser
