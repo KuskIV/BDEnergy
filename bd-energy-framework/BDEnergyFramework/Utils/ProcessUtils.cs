@@ -15,7 +15,11 @@ namespace BDEnergyFramework.Utils
         public static void AssignPriorityToFramework()
         {
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            // process.PriorityClass = System.Diagnostics.ProcessPriorityClass.High; // TODO: do this
+
+            if (DutUtils.IsWindows())
+            {
+                process.PriorityClass = System.Diagnostics.ProcessPriorityClass.High; // TODO: do this
+            }
         }
 
         public static void ExecuteWindowsTestCaseWithParameters(string testCaseParameter, string testCasePath, List<int> enabledCores, ILogger logger)
@@ -58,23 +62,30 @@ namespace BDEnergyFramework.Utils
         {
             var executablePath = testCasePath;
             var parameters = testCaseParameter;
-
-            var process = new Process()
-            {
-                // StartInfo = new ProcessStartInfo("sudo", executablePath)
-                StartInfo = new ProcessStartInfo()
-                {
-                    FileName = "sudo",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    Arguments = string.Format("{0} {1}", testCasePath, testCaseParameter),
-                }
-            };
-            // process.StartInfo.Arguments = parameters;
-            // process.StartInfo.UseShellExecute = false;
-            // process.StartInfo.RedirectStandardOutput = true;
+            
+            var process = new Process();
+            process.StartInfo.FileName = executablePath;
+            process.StartInfo.Arguments = parameters;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
             process.Start();
-            process.PriorityClass = ProcessPriorityClass.High;
+
+            // var process = new Process()
+            // {
+            //     // StartInfo = new ProcessStartInfo("sudo", executablePath)
+            //     StartInfo = new ProcessStartInfo()
+            //     {
+            //         FileName = "sudo",
+            //         UseShellExecute = false,
+            //         RedirectStandardOutput = true,
+            //         Arguments = string.Format("{0} {1}", testCasePath, testCaseParameter),
+            //     }
+            // };
+            // // process.StartInfo.Arguments = parameters;
+            // // process.StartInfo.UseShellExecute = false;
+            // // process.StartInfo.RedirectStandardOutput = true;
+            // process.Start();
+            // process.PriorityClass = ProcessPriorityClass.High;
 
             if (enabledCores.Any())
             {

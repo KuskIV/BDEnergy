@@ -13,12 +13,12 @@ public class LinuxDesktopService : IDutService
     
     public void DisableWifi()
     {
-        LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi off");
+        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "enp0s31f6 down");
     }
 
     public void EnableWifi()
     {
-        LinuxUtils.ExecuteCommand("/bin/nmcli", "radio wifi on");
+        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "enp0s31f6 up");
     }
 
     public List<EMeasuringInstrument> GetMeasuringInstruments()

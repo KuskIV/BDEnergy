@@ -1,0 +1,176 @@
+﻿[
+  {
+    "MeasurementInstruments": [ 1 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "clang",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 1 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 1 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "min-gw",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "clang",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 30,
+    "TestCasePaths": [
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/fannkuch-redux",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/mandelbrot",
+      "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "min-gw",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  }
+]

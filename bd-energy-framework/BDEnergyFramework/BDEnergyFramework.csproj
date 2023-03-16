@@ -67,6 +67,9 @@
     <None Update="Json\WorkstationOne\LinuxTestConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersRapl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
