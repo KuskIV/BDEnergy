@@ -1,0 +1,27 @@
+[
+  {
+    "MeasurementInstruments": [ 5 ],
+    "RequiredMeasurements": 1,
+    "TestCasePaths": [
+      "C:\\Github reps\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
+    ],
+    "AllocatedCores": [
+      [0, 1]
+    ],
+    "TestCaseParameters": [ "10" ],
+    "UploadToDatabase": false,
+    "BurnInPeriod": 0,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 100,
+    "DisableWifi": false,
+    "ExperimentNumber": 0,
+    "ExperimentName": "testing-phase",
+    "ConcurrencyLimit": "multi-thread",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "msvc",
+    "Optimizations": "openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses" : false,
+    "AdditionalMetadata": {}
+  }
+]

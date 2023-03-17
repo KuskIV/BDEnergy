@@ -43,6 +43,9 @@
     <None Update="Json\default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Json\JJBP\MhkValidConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Json\Mhk\MhkValidConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -59,6 +62,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Json\WorkstationOne\TestConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="scaphandre.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Secrets\appsettings.secrets.json">

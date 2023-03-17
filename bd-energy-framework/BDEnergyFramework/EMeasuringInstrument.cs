@@ -5,7 +5,8 @@
     IPG,
     LHM,
     CLAMP,
-    PLUG
+    PLUG,
+    SCAPHANDRE
 }
 
 

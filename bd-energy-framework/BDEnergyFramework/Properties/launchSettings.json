@@ -22,6 +22,10 @@
     "MhkTestCasePath": {
       "commandName": "Project",
       "commandLineArgs": "--testCasePath \"C:\\Users\\Mads Kusk\\git\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe\" --testCaseParameter 12"
+    },
+    "JjbpConfig": {
+      "commandName": "Project",
+      "commandLineArgs": "--config \"C:\\Github reps\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\JJBP\\JjbpValidConfig.json\""
     }
   }
 }
