@@ -1,6 +1,6 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 1 ],
+    "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/fannkuch-redux",
@@ -29,7 +29,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 1 ],
+    "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/fannkuch-redux",
@@ -58,7 +58,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 1 ],
+    "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/fannkuch-redux",
@@ -86,8 +86,9 @@
     "StopBackgroundProcesses": true,
     "AdditionalMetadata": {}
   },
+  
   {
-    "MeasurementInstruments": [ 4 ],
+    "MeasurementInstruments": [ 1 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/fannkuch-redux",
@@ -116,7 +117,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 4 ],
+    "MeasurementInstruments": [ 1 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/fannkuch-redux",
@@ -145,7 +146,7 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 4 ],
+    "MeasurementInstruments": [ 1 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/min-gw/fannkuch-redux",

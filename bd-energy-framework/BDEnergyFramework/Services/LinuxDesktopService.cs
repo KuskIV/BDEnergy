@@ -1,3 +1,4 @@
+using System.Net;
 using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.Services;
@@ -19,6 +20,11 @@ public class LinuxDesktopService : IDutService
     public void EnableWifi()
     {
         LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "enp0s31f6 up");
+        
+        while (!PingGoogleSuccessfully())
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+        }
     }
 
     public List<EMeasuringInstrument> GetMeasuringInstruments()
@@ -59,5 +65,21 @@ public class LinuxDesktopService : IDutService
     public void StopBackgroundProcesses()
     {
         // Do nothing
+    }
+    
+    private bool PingGoogleSuccessfully()
+    {
+        try
+        {
+            using (var client = new WebClient())
+            using (var stream = client.OpenRead("http://www.google.com"))
+            {
+                return true;
+            }
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

@@ -154,6 +154,11 @@ namespace BDEnergyFramework.Services.Repositories
         {
             var testCase = Mapper.Map(config, testCasePath, parameter);
 
+            if (!testCase.Name.EndsWith(".exe"))
+            {
+                testCase.Name = testCase.Name + ".exe";
+            }
+            
             if (!_repository.TestCaseExists(testCase))
             {
                 _logger.Debug("Inserting new test case '{tc} {parameter}'", testCase.Name, testCase.Parameter);

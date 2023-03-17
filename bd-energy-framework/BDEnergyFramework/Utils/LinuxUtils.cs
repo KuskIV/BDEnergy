@@ -11,7 +11,7 @@ public static class LinuxUtils
             StartInfo = new ProcessStartInfo
             {
                 FileName = "/bin/bash", //"/bin/cat",
-                Arguments = string.Format("-c \"sudo {0} {1}\"", filename, argument), //argument, //"/sys/class/power_supply/BAT1/capacity",
+                Arguments = string.Format("-c \"sudo {0} {1}\"", filename, argument),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 CreateNoWindow = true
