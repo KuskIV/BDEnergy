@@ -273,7 +273,7 @@ namespace BDEnergyFramework.Services
 
             _dutService.EnableWifi(); // TODO: only enable once
 
-            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration);
+            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration, fileCreatingTime);
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
@@ -296,11 +296,11 @@ namespace BDEnergyFramework.Services
             throw new Exception("OS not implemented, and cannot execute a test case");
         }
 
-        private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration)
+        private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration, DateTime fileCreatingTime)
         {
             if (measuringInstrument is MeasuringInstrument mi)
             {
-                return mi.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration, burninApplied);
+                return mi.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration, burninApplied, fileCreatingTime);
             }
 
             return (new TimeSeries(), new Measurement());
