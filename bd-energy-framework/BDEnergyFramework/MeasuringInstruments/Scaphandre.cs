@@ -2,6 +2,7 @@
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Parsers;
 using BDEnergyFramework.Utils;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Asn1.X509;
@@ -20,6 +21,11 @@ using Measurement = BDEnergyFramework.Models.Internal.Measurement;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
+    /// <summary>
+    /// PC needs to be in testmode for scaphandre to work. 
+    /// run in admin and then restart pc.
+    /// bcdedit.exe -set TESTSIGNING ON
+    /// </summary>
     internal class Scaphandre : MeasuringInstrument
     {
         private  int sampleRate = 100000000; //100000000 = 100ms
@@ -37,12 +43,10 @@ namespace BDEnergyFramework.MeasuringInstruments
             string jsonPath = Path.ChangeExtension(path, "json");
             var cpuWatts = GetHostWatts(jsonPath);
             var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
-            // "C:/Users/Jamie/Documents/10-experiment-data/SCAPHANDRE/2023-03-17-09-18-41.json"
 
 
             // Parse the JSON file and get the process consumption for each measurement
             var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath);
-            //Console.WriteLine(processConsumptionPerMeasurement.ToString());
 
             // Calculate the total consumption for individual process
             var totalProcessConsumption = GetTotalProcessConsumption(processConsumptionPerMeasurement);
@@ -120,11 +124,9 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StartMeasuringInstruments(string path)
         {
-            //Console.WriteLine(path);
+            
             string jsonPath = Path.ChangeExtension(path, "json");
-            //Console.WriteLine(jsonPath);
 
-            // TODO: less hardcoded path
             if (File.Exists(@"scaphandre.exe"))
             {
                 //string nullDevicePath = Environment.OSVersion.Platform == PlatformID.Win32NT ? "NUL" : "/dev/null";
@@ -155,9 +157,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 scapProcess.BeginOutputReadLine();
                 scapProcess.BeginErrorReadLine();
 
-                // Wait for the process to exit or perform any necessary actions
-                // ...
-                //Thread.Sleep(1000);
+                
                 scapProcess.CancelOutputRead();
                 scapProcess.CancelErrorRead();
                 
@@ -276,7 +276,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             double durationInSeconds = durationInMilliseconds / 1000.0;
 
             // Calculate the average power in watts
-            double averagePower = wattMeasurements.Average(); // TODO: Empty list, System.InvalidOperationException
+            double averagePower = wattMeasurements.Average();
 
             // Calculate the energy used in joules using the formula: energy = power * time
             double totalEnergyInJoules = averagePower * durationInSeconds;
@@ -306,6 +306,6 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             return totalEnergyInJoules;
         }
-        
+
     }
 }
