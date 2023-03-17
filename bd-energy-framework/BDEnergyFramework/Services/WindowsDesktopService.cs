@@ -52,7 +52,8 @@ namespace BDEnergyFramework.Services
             {
                 EMeasuringInstrument.IPG,
                 EMeasuringInstrument.LHM,
-                EMeasuringInstrument.CLAMP
+                EMeasuringInstrument.CLAMP,
+                EMeasuringInstrument.SCAPHANDRE
             };
         }
 

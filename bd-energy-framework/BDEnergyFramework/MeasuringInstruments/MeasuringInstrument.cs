@@ -28,21 +28,21 @@ namespace BDEnergyFramework.MeasuringInstruments
             return _milisecondsBetweenSampels;
         }
 
-        public (TimeSeries, Measurement) GetMeasurement(DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration, bool burninApplied)
+        public (TimeSeries, Measurement) GetMeasurement(DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration, bool burninApplied, DateTime fileCreatingTime)
         {
             if (!burninApplied)
             {
                 return (new TimeSeries(), new Measurement());
             }
 
-            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, startTime);
+            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, fileCreatingTime);
 
             return ParseData(path, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
         }
 
-        public void Start()
+        public void Start(DateTime fileCreatingTime)
         {
-            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, DateTime.UtcNow);
+            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, fileCreatingTime);
 
             StartMeasuringInstruments(path);
 

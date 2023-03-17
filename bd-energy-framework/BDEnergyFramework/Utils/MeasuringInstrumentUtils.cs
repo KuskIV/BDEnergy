@@ -24,9 +24,16 @@ namespace BDEnergyFramework.Utils
                     return GetLibreHardwareMonitor(logger);
                 case EMeasuringInstrument.CLAMP:
                     return GetClamp();
+                case EMeasuringInstrument.SCAPHANDRE:
+                    return GetScaphandre();
                 default:
                     throw new NotImplementedException($"'{mi}' is not implemented");
             }
+        }
+
+        private static MeasuringInstrument GetScaphandre()
+        {
+            return new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
         }
 
         private static MeasuringInstrument GetClamp()

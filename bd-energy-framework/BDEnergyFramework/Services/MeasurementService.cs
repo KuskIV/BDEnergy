@@ -77,7 +77,6 @@ namespace BDEnergyFramework.Services
                     _dutService.DisableWifi();
                 }
 
-                //PerformMeasurementsForAllConfigs(config, measurements);
                 _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements, burninApplied));
 
                 if (burninApplied && config.UploadToDatabase)
@@ -124,6 +123,7 @@ namespace BDEnergyFramework.Services
             var measurements = new List<MeasurementContext>();
             _logger.Information("Initializing db connection");
             var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
 
 
             foreach (var mi in config.MeasurementInstruments)
@@ -256,7 +256,9 @@ namespace BDEnergyFramework.Services
             
             var startTemperature = _dutService.GetTemperature();
 
-            StartMeasuringInstrument(burninApplied, measuringInstrument);
+            var fileCreatingTime = DateTime.UtcNow;
+
+            StartMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
@@ -264,14 +266,14 @@ namespace BDEnergyFramework.Services
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
-            StopMeasuringInstrument(burninApplied, measuringInstrument, startTime);
+            StopMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
 
             var endTemperature = _dutService.GetTemperature();
             var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
             _dutService.EnableWifi(); // TODO: only enable once
 
-            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration);
+            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration, fileCreatingTime);
 
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
@@ -294,17 +296,17 @@ namespace BDEnergyFramework.Services
             throw new Exception("OS not implemented, and cannot execute a test case");
         }
 
-        private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration)
+        private static (TimeSeries, Measurement) GetMeasurings(bool burninApplied, MeasuringInstrument? measuringInstrument, double startTemperature, DateTime startTime, Stopwatch stopWatch, DateTime endTime, double endTemperature, int iteration, DateTime fileCreatingTime)
         {
             if (measuringInstrument is MeasuringInstrument mi)
             {
-                return mi.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration, burninApplied);
+                return mi.GetMeasurement(startTime, endTime, stopWatch.ElapsedMilliseconds, startTemperature, endTemperature, iteration, burninApplied, fileCreatingTime);
             }
 
             return (new TimeSeries(), new Measurement());
         }
 
-        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument)
+        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime fileCreatingTime)
         {
             if (!burninApplied)
             {
@@ -313,7 +315,7 @@ namespace BDEnergyFramework.Services
 
             if (measuringInstrument is MeasuringInstrument mi)
             {
-                mi.Start();
+                mi.Start(fileCreatingTime);
             }
             else
             {
