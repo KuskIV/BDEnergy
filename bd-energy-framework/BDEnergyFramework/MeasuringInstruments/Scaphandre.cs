@@ -20,9 +20,9 @@ using Measurement = BDEnergyFramework.Models.Internal.Measurement;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
-    internal class Scaphandre : MeasuringInstrument, IDisposable
+    internal class Scaphandre : MeasuringInstrument
     {
-        private  int sampleRate = 100000000;
+        private  int sampleRate = 100000000; //100000000 = 100ms
 
         //private string jsonPath = @"c:\Measuring instrument\scaphandre-main\target\release\report.json";
         public Scaphandre(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
@@ -34,17 +34,18 @@ namespace BDEnergyFramework.MeasuringInstruments
         }
         internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
-            var cpuWatts = GetHostWatts(path);
-            var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
             string jsonPath = Path.ChangeExtension(path, "json");
+            var cpuWatts = GetHostWatts(jsonPath);
+            var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
+            // "C:/Users/Jamie/Documents/10-experiment-data/SCAPHANDRE/2023-03-17-09-18-41.json"
 
 
             // Parse the JSON file and get the process consumption for each measurement
-            var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath, 10);
+            var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath);
             //Console.WriteLine(processConsumptionPerMeasurement.ToString());
 
-            // Calculate the total consumption for the top 10 processes
-            var totalProcessConsumption = GetTotalProcessConsumption(processConsumptionPerMeasurement, 10);
+            // Calculate the total consumption for individual process
+            var totalProcessConsumption = GetTotalProcessConsumption(processConsumptionPerMeasurement);
 
 
             // Measurement contains to total joules over the whole test case measurement
@@ -113,28 +114,34 @@ namespace BDEnergyFramework.MeasuringInstruments
             return (timeSeries, measurement);
         }
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
-        {
+        { 
+            // Do nothing
         }
 
         internal override void StartMeasuringInstruments(string path)
         {
             //Console.WriteLine(path);
             string jsonPath = Path.ChangeExtension(path, "json");
-            Console.WriteLine(jsonPath);
+            //Console.WriteLine(jsonPath);
 
             // TODO: less hardcoded path
             if (File.Exists(@"scaphandre.exe"))
             {
-                string nullDevicePath = Environment.OSVersion.Platform == PlatformID.Win32NT ? "NUL" : "/dev/null";
+                //string nullDevicePath = Environment.OSVersion.Platform == PlatformID.Win32NT ? "NUL" : "/dev/null";
+                //string scaphandreExecutable = Environment.OSVersion.Platform == PlatformID.Win32NT ? "scaphandre.exe" : "scaphandre";
+
+                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
                 var startInfo = new ProcessStartInfo
                 {
                     CreateNoWindow = false,
                     FileName = @"scaphandre.exe",
+                    //FileName = scaphandreExecutable,
                     //Arguments = $"json -t 5 -n 100000000 -f report.json", // -t measuring time, -n sample rate 100000000 = 100 ms, -f save to file.
                     //Arguments = $"json -n {sampleRate} -f report.json",
                     Arguments = $"json -n {sampleRate} -f {jsonPath}",
                     UseShellExecute = false,
-                    WorkingDirectory = @"C:\Measuring instrument", /// NOT correct, but might not be used
+                    WorkingDirectory = appDirectory,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     StandardOutputEncoding = Encoding.UTF8,
@@ -150,7 +157,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
                 // Wait for the process to exit or perform any necessary actions
                 // ...
-
+                //Thread.Sleep(1000);
                 scapProcess.CancelOutputRead();
                 scapProcess.CancelErrorRead();
                 
@@ -172,9 +179,8 @@ namespace BDEnergyFramework.MeasuringInstruments
             //Console.WriteLine("Scaphandre killed");
         }
 
-        public List<double> GetHostWatts(string path)
+        public List<double> GetHostWatts(string jsonPath)
         {
-            string jsonPath = Path.ChangeExtension(path, "json");
 
             var json = File.ReadAllText(jsonPath);
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
@@ -204,12 +210,13 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         // Get energy consumption for individual processes.
         // Modify to only get for programs in the test case folder.
-        public List<Dictionary<string, double>> GetProcessEnergyConsumptionPerMeasurement(string jsonPath, int topN = 10)
+        public List<Dictionary<string, double>> GetProcessEnergyConsumptionPerMeasurement(string jsonPath)
         {
             var json = File.ReadAllText(jsonPath);
             var jsonArray = JArray.Parse(json);
             var processConsumptionPerMeasurement = new List<Dictionary<string, double>>();
-            string folderToMatch = "BDEnergy\\test-cases";
+            string folderToMatch = Path.Combine("BDEnergy", "test-cases"); // should work on Linux
+
 
             using (JsonTextReader reader = new JsonTextReader(new StringReader(json)))
             {
@@ -238,7 +245,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             }
         }
 
-        public Dictionary<string, double> GetTotalProcessConsumption(List<Dictionary<string, double>> processConsumptionPerMeasurement, int topN = 10)
+        public Dictionary<string, double> GetTotalProcessConsumption(List<Dictionary<string, double>> processConsumptionPerMeasurement)
         {
             var totalConsumption = new Dictionary<string, double>();
 
@@ -259,7 +266,6 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             return totalConsumption
                 .OrderByDescending(kv => kv.Value)
-                .Take(topN)
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
@@ -300,11 +306,6 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             return totalEnergyInJoules;
         }
-
-
-
-        public void Dispose()
-        {
-        }
+        
     }
 }

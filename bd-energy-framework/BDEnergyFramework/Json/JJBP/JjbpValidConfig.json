@@ -1,7 +1,7 @@
 [
   {
-    "MeasurementInstruments": [ 5 ],
-    "RequiredMeasurements": 1,
+    "MeasurementInstruments": [ 6 ],
+    "RequiredMeasurements": 10,
     "TestCasePaths": [
       "C:\\Github reps\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
     ],
