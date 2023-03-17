@@ -40,9 +40,9 @@ namespace BDEnergyFramework.MeasuringInstruments
             return ParseData(path, startTime, endTime, elapsedMilliseconds, startTemperature, endTemperature, iteration);
         }
 
-        public void Start()
+        public void Start(DateTime fileCreatingTime)
         {
-            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, DateTime.UtcNow);
+            var path = PathUtils.GetResultPathForMeasuringInstrument(_measuringInstrument, fileCreatingTime);
 
             StartMeasuringInstruments(path);
 

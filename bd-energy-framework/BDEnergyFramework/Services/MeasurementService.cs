@@ -77,7 +77,6 @@ namespace BDEnergyFramework.Services
                     _dutService.DisableWifi();
                 }
 
-                //PerformMeasurementsForAllConfigs(config, measurements);
                 _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements, burninApplied));
 
                 if (burninApplied && config.UploadToDatabase)
@@ -124,6 +123,7 @@ namespace BDEnergyFramework.Services
             var measurements = new List<MeasurementContext>();
             _logger.Information("Initializing db connection");
             var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
 
 
             foreach (var mi in config.MeasurementInstruments)
@@ -256,7 +256,9 @@ namespace BDEnergyFramework.Services
             
             var startTemperature = _dutService.GetTemperature();
 
-            StartMeasuringInstrument(burninApplied, measuringInstrument);
+            var fileCreatingTime = DateTime.UtcNow;
+
+            StartMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
@@ -264,7 +266,7 @@ namespace BDEnergyFramework.Services
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
-            StopMeasuringInstrument(burninApplied, measuringInstrument, startTime);
+            StopMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
 
             var endTemperature = _dutService.GetTemperature();
             var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
@@ -304,7 +306,7 @@ namespace BDEnergyFramework.Services
             return (new TimeSeries(), new Measurement());
         }
 
-        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument)
+        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime fileCreatingTime)
         {
             if (!burninApplied)
             {
@@ -313,7 +315,7 @@ namespace BDEnergyFramework.Services
 
             if (measuringInstrument is MeasuringInstrument mi)
             {
-                mi.Start();
+                mi.Start(fileCreatingTime);
             }
             else
             {
