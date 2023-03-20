@@ -262,6 +262,8 @@ namespace BDEnergyFramework.Services
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
+           //Thread.Sleep(1000);
+
             testCase(testCaseParameter, testCasePath, enabledCores, _logger);
 
             stopWatch.Stop();
