@@ -1,4 +1,4 @@
-\section{The Database}
+\section{The Database}\label{app:database}
 
 In \cite{biksbois}, a MySQL database was used to store the measurements made by the different measuring instruments. In this work, a similar database will be used, with some modifications made because the focus of this work is different to \cite{biksbois}. The design of the database can be seen in \cref{fig:uml_diagram}, where the \texttt{MeasurementCollection} table defines under what circumstances the measurements were made under. This includes what measuring instrument was used, what test case was running, what DUT the measurements were made on and whether or not there was a burn-in period ect. Compared to \cite{biksbois}, a few extra columns has been added to \texttt{TestCase}, as more focus is on the test cases used in this work, compared to \cite{biksbois}. This includes metadata like compiler, optimizations, and parameters used.
 
