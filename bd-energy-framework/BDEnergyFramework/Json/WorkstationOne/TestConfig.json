@@ -1,6 +1,6 @@
 [
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 5 ],
     "RequiredMeasurements": 100,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe"

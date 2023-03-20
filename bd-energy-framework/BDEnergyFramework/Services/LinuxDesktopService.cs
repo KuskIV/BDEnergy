@@ -32,7 +32,8 @@ public class LinuxDesktopService : IDutService
         return new List<EMeasuringInstrument>()
         {
             EMeasuringInstrument.RAPL,
-            EMeasuringInstrument.CLAMP
+            EMeasuringInstrument.CLAMP,
+            EMeasuringInstrument.PLUG
         };
     }
 

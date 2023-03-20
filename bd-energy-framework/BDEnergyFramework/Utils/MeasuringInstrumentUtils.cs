@@ -26,9 +26,16 @@ namespace BDEnergyFramework.Utils
                     return GetClamp();
                 case EMeasuringInstrument.SCAPHANDRE:
                     return GetScaphandre();
+                case EMeasuringInstrument.PLUG:
+                    return GetPlug();
                 default:
                     throw new NotImplementedException($"'{mi}' is not implemented");
             }
+        }
+
+        private static MeasuringInstrument GetPlug()
+        {
+            return new Plug(EMeasuringInstrument.PLUG);
         }
 
         private static MeasuringInstrument GetScaphandre()

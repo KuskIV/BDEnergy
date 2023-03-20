@@ -49,16 +49,10 @@
     <None Update="Json\Mhk\MhkValidConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExp.json">
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentMeasuringInstrumentExpWindow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExpScapandre.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExpIGP.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExpLHM.json">
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersExpWindows.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCoresExp.json">
@@ -76,7 +70,7 @@
     <None Update="Json\WorkstationOne\LinuxTestConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersRapl.json">
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

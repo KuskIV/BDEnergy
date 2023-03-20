@@ -1,7 +1,7 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 6 ],
-    "RequiredMeasurements": 30,
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 550,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe",
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe",
@@ -29,8 +29,8 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 6 ],
-    "RequiredMeasurements": 30,
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 550,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
@@ -58,8 +58,8 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 6 ],
-    "RequiredMeasurements": 30,
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 550,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\min-gw\\fannkuch-redux.exe",
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\min-gw\\mandelbrot.exe",
@@ -87,8 +87,8 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 6 ],
-    "RequiredMeasurements": 30,
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 550,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe",
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\mandelbrot.exe",
