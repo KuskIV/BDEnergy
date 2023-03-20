@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Measurement = BDEnergyFramework.Models.Internal.Measurement;
+using ProcessorAffinityGenerator = BDEnergyFramework.Utils.ProcessorAffinityGenerator;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -29,6 +30,8 @@ namespace BDEnergyFramework.MeasuringInstruments
     internal class Scaphandre : MeasuringInstrument
     {
         private  int sampleRate = 100000000; //100000000 = 100ms
+
+        int disregardedMeasurement = 0;
 
         //private string jsonPath = @"c:\Measuring instrument\scaphandre-main\target\release\report.json";
         public Scaphandre(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
@@ -42,7 +45,81 @@ namespace BDEnergyFramework.MeasuringInstruments
         {
             string jsonPath = Path.ChangeExtension(path, "json");
             var cpuWatts = GetHostWatts(jsonPath);
-            var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
+
+            
+
+            // TODO handle empty TimeSeries and Measurement in calling method.
+            if(cpuWatts == null)
+            {
+                Console.WriteLine("json was not created. \n  Disregarding measurement: " + ++disregardedMeasurement);
+                return (new TimeSeries(), new Measurement());
+            }
+            else
+            {
+                var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
+
+
+                // Parse the JSON file and get the process consumption for each measurement
+                var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath);
+
+                // Calculate the total consumption for individual process
+                var totalProcessConsumption = GetTotalProcessConsumption(processConsumptionPerMeasurement);
+
+
+                // Measurement contains to total joules over the whole test case measurement
+                var measurement = new Measurement()
+                {
+
+                    DramEnergyInJoules = 0,
+                    CpuEnergyInJoules = totalCpuJoules,
+                    GpuEnergyInJoules = 0,
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    StartTemperature = startTemperature,
+                    EndTemperature = endTemperature,
+                    Iteration = iteration,
+                    Duration = elapsedMilliseconds,
+                    // Include data from individual processes
+                    AdditionalMetadata = totalProcessConsumption
+                };
+
+                // Timeseries should have a timeseries of each measurement within the measurement for the whole test case.
+                // Timeseries consists of Sample
+                var samples = new List<Sample>();
+
+                for (int i = 0; i < cpuWatts.Count; i++)
+                {
+                    var watt = cpuWatts[i];
+
+                    var sample = new Sample()
+                    {
+                        CpuEnergyInJoules = ConvertWattToJoules(watt),
+                        PackageTemperature = 0,
+                        ElapsedTime = 0,
+                        ProcessorPowerWatt = 0,
+                        DramEnergyInJoules = 0,
+                        GpuEnergyInJoules = 0,
+                        CpuUtilization = 0,
+                        // Include data from individual processes
+                        AdditionalMetadata = processConsumptionPerMeasurement[i]
+                    };
+
+                    samples.Add(sample);
+                }
+
+                var timeSeries = new TimeSeries()
+                {
+                    Sampels = samples
+                };
+
+                int dataPointCount = timeSeries.Sampels.Count();
+                Console.WriteLine("Datapoints in timeseries: " + dataPointCount.ToString());
+
+                return (timeSeries, measurement);
+            }
+
+
+           /* var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
 
 
             // Parse the JSON file and get the process consumption for each measurement
@@ -99,23 +176,25 @@ namespace BDEnergyFramework.MeasuringInstruments
             };
 
             // Sort the timeseries data based on consumption in descending order
-            
 
-           /* // Get the top consumer
-            var topConsumer = totalProcessConsumption.FirstOrDefault();
 
-            // Print  the top consumer
-            if (!topConsumer.Equals(default(KeyValuePair<string, double>)))
-            {
-                Console.WriteLine($"Top consumer: {topConsumer.Key}");
-                Console.WriteLine($"Total Consumption: {topConsumer.Value}");
-            }
-            else
-            {
-                Console.WriteLine("No data available.");
-            }*/
+            *//* // Get the top consumer
+             var topConsumer = totalProcessConsumption.FirstOrDefault();
 
-            return (timeSeries, measurement);
+             // Print  the top consumer
+             if (!topConsumer.Equals(default(KeyValuePair<string, double>)))
+             {
+                 Console.WriteLine($"Top consumer: {topConsumer.Key}");
+                 Console.WriteLine($"Total Consumption: {topConsumer.Value}");
+             }
+             else
+             {
+                 Console.WriteLine("No data available.");
+             }*//*
+            int dataPointCount = timeSeries.Sampels.Count();
+            Console.WriteLine("Datapoints in timeseries: " + dataPointCount.ToString());
+
+            return (timeSeries, measurement);*/
         }
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
         { 
@@ -154,13 +233,21 @@ namespace BDEnergyFramework.MeasuringInstruments
                 scapProcess.ErrorDataReceived += (sender, e) => { /* Discard error */ };
 
                 scapProcess.Start();
+                //var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int> { 5 });
+                //scapProcess.ProcessorAffinity = processorAffinity;
+                scapProcess.PriorityClass = ProcessPriorityClass.High;
+
+                // Either:
+                // scapProcess.PrioirtyClass high and process.PrioroityCLass off in ProcessUtils
+                // resevere scapProcess for 1 core and not run test case on that core.
+
                 scapProcess.BeginOutputReadLine();
                 scapProcess.BeginErrorReadLine();
 
-                
+
                 scapProcess.CancelOutputRead();
                 scapProcess.CancelErrorRead();
-                
+
             }
             else
             {
@@ -182,6 +269,10 @@ namespace BDEnergyFramework.MeasuringInstruments
         public List<double> GetHostWatts(string jsonPath)
         {
 
+            if (!File.Exists(jsonPath))
+            {
+                return null;
+            }
             var json = File.ReadAllText(jsonPath);
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
             var hostConsumption = new List<double>();
