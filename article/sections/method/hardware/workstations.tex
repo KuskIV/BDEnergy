@@ -1,4 +1,7 @@
 \subsection{Device Under Tests}
 Two workstations are used as DUTs in the experiments. This was chosen to enable comparison between a CPU with and without P- and E-cores. In \cref {tab:DUT1,tab:DUT2} the specifications for the two workstations can be seen. They will be referred to as DUT 1 and DUT 2. 
+
 \input{sections/method/hardware/tables/workstation1.tex}
 \input{sections/method/hardware/tables/workstation2.tex}
+
+When running experiments on both DUTs, the recommendations presented in \cite{Lindholt2022} were followed. This included that the wifi is disabled during execution, CPU turbo boost and hyperthreading is disabled. Lastly, the CPU is set to static, which is achieved when disabling the C-states within the CPU.

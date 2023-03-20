@@ -1,5 +1,18 @@
-\subsection{Experiment One}
+\subsection{Experiment One}\label{subsec:exp_one}
 
 In the first experiment, \textbf{RQ1} will be explored. This experiment will be using both multi core test cases presented in \cref{subsec:test_cases} and the measurements will be performed using IPG. IPG was chosen as this was deemed the best measuring instrument in \cite{biksbois}, where it was also observed how IPG and LHM made similar measurements. Given the point of this experiment is to find the best compiler, the expectations would be that a similar conclusion would be made if multiple measuring instruments were used.  
 
-\input{sections/experiments/experiment-1/best-compiler.tex}
+\paragraph{Initial Measurements}: As was presented in \cref{subsec:cochran}, Cochrans formula is used to ensure confidence in the measurements made. The initial measurements will be measurements made to gain insight into how many measurements are required, before making more measurements if required. The number chosen for the initial measurements is 30, as according to the central limit theorem, a sample size of minimum 30 is usually enough to ensure that teh sampling distribution of the sample mean is approximately normal, regardless of the underlying distribution of the population.\cite{central-limit-theorem}. In this experiment, both the framework, test case and measuring instruments process priority class will be set to \texttt{High}.
+
+\input{tables/experiment-1/initial-measurements-compilers.tex}
+
+After 30 measurements, the status can be seen in \cref{tab:initial-measurements}, where it can be seen how the required samples varies between compilers and test cases. When comparing between test cases, Mandelbrot deviates less compared to Fannkuch Redux, where Mandelbrot requires as little as $3$ samples, while Fannkuch Redux requires up to $62.086$. Given these results, more measurements are required. When analyzing the 30 measurements, Intel's OneApi had the lowest energy consumption. Because of this, for the next step $550$ measurements were made.
+
+\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_energy_consumption.tex}
+
+
+\paragraph{Results}: After 550 measurements were obtained, the reported values by Cochrans formula still indicates that MSVC, MinGW and Clang needs more measurements. When looking at the results for Fannkuch Redux in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-energy_consumption} and \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}, and for Mandelbrot in \cref{app:exp_one}, Intel's OneApi has the lowest dynamic energy consumption and total energy consumption for both test. Clang deviates the most in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}, and could with more measurements get a lower dynamic energy consumption than OneApi, but given the time it would take to test this, it was deemed irrelevant.
+
+In this first experiment it can thus be concluded that the different compilers has a huge impact on both the energy consumption but also how many measurements are required to be confident in the results. In the end, Intel's OneApi had the lowest energy consumption, and will be used going forward.
+
+\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_dynamic_energy_consumption.tex}

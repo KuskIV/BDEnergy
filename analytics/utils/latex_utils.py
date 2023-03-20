@@ -83,7 +83,7 @@ def get_boxplot_template(
     caption,
     labels,
 ):
-    return """\\begin{{figure}}
+    return """\\begin{{figure}}[H]
     \\centering
     \\begin{{tikzpicture}}[]
         \\pgfplotsset{{
