@@ -1,4 +1,5 @@
-﻿using BDEnergyFramework.MeasuringInstruments;
+﻿using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.MeasuringInstruments;
 using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Services.Repositories;
@@ -181,14 +182,21 @@ namespace BDEnergyFramework.Services
             {
                 foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
                 {
-                    if (!config.AllocatedCores.Any())
+                    try
                     {
-                        PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>(), burninApplied);
-                    }
+                        if (!config.AllocatedCores.Any())
+                        {
+                            PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>(), burninApplied);
+                        }
 
-                    foreach (var allocatedCores in config.AllocatedCores)
+                        foreach (var allocatedCores in config.AllocatedCores)
+                        {
+                            PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores, burninApplied);
+                        }
+                    }
+                    catch (IntelPowerGadgetFileNotFoundException)
                     {
-                        PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores, burninApplied);
+                        _logger.Warning("Unable to find ipg file. Moving on...");
                     }
                 }
             }

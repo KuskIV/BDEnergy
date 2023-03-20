@@ -147,29 +147,23 @@ namespace BDEnergyFramework.MeasuringInstruments
                     Arguments = $"json -n {sampleRate} -f {jsonPath}",
                     UseShellExecute = false,
                     WorkingDirectory = appDirectory,
-                    RedirectStandardOutput = true,
+                    //RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    StandardOutputEncoding = Encoding.UTF8,
+                    //StandardOutputEncoding = Encoding.UTF8,
                     StandardErrorEncoding = Encoding.UTF8,
+
                 };
                 var scapProcess = new Process { StartInfo = startInfo };
-                scapProcess.OutputDataReceived += (sender, e) => { /* Discard output */ };
+                //scapProcess.OutputDataReceived += (sender, e) => { /* Discard output */ };
                 scapProcess.ErrorDataReceived += (sender, e) => { /* Discard error */ };
 
                 scapProcess.Start();
-                //var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int> { 5 });
-                //scapProcess.ProcessorAffinity = processorAffinity;
                 scapProcess.PriorityClass = ProcessPriorityClass.High;
-
-                // Either:
-                // scapProcess.PrioirtyClass high and process.PrioroityCLass off in ProcessUtils
-                // resevere scapProcess for 1 core and not run test case on that core.
-
-                scapProcess.BeginOutputReadLine();
+                //scapProcess.BeginOutputReadLine();
                 scapProcess.BeginErrorReadLine();
 
-
-                scapProcess.CancelOutputRead();
+                
+                //scapProcess.CancelOutputRead();
                 scapProcess.CancelErrorRead();
 
             }

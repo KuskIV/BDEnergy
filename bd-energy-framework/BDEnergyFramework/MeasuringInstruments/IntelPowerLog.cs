@@ -1,4 +1,5 @@
-﻿using BDEnergyFramework.Models;
+﻿using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Parsers;
 using BDEnergyFramework.Utils;
@@ -28,6 +29,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
+            Thread.Sleep(TimeSpan.FromSeconds(2));
             string ipgPath = GetIpgPath(startTime, endTime);
 
             var (ipgData, igpTimeSeries) = IntelPowerGadgetParser.Parse(ipgPath);
@@ -45,7 +47,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             var relevantPaths = Directory.GetFiles(ipgPath)
                 .Where(x => x.Contains("PwrData"))
-                .Where(y => File.GetLastWriteTimeUtc(y) > startTime && File.GetLastWriteTimeUtc(y) < endTime.AddSeconds(1))
+                .Where(y => File.GetLastWriteTimeUtc(y) > startTime.AddSeconds(-2) && File.GetLastWriteTimeUtc(y) < endTime.AddSeconds(2))
                 .ToList();
 
             if (relevantPaths.Count() == 1)
@@ -53,7 +55,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 return relevantPaths.First();
             }
 
-            throw new ArgumentException($"{relevantPaths.Count()} ipg paths were found, only 1 required.");
+            throw new IntelPowerGadgetFileNotFoundException();
         }
 
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)

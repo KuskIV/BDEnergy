@@ -1,43 +1,16 @@
 [
   {
     "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 30,
-    "TestCasePaths": [
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
-    ],
-    "AllocatedCores": [
-      [1,2,3,4]
-    ],
-    "TestCaseParameters": [
-      "12"
-    ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 0,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": true,
-    "ExperimentNumber": 1,
-    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
-    "ConcurrencyLimit": "multi-threaded",
-    "TestCaseType": "microbenchmarks",
-    "Compiler": "msvc",
-    "Optimizations": "-openmp",
-    "Language": "c++",
-    "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {}
-  },
-  {
-    "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 30,
+    "RequiredMeasurements": 100,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe"
     ],
-    "AllocatedCores": [ [ 0, 1, 2, 3 ] ],
+    "AllocatedCores": [ [1,2,3] ],
     "TestCaseParameters": [
-      "10000"
+      "4000"
     ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 1,
+    "UploadToDatabase": false,
+    "BurnInPeriod": 0,
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,
     "DisableWifi": false,
