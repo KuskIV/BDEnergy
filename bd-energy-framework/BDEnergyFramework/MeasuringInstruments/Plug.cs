@@ -26,12 +26,6 @@ namespace BDEnergyFramework.MeasuringInstruments
                 .Build();
             machineName = Environment.MachineName;
         }
-
-        internal override int GetMilisecondsBetweenSampels()
-        {
-            return 200;
-        }
-
         internal override void StartMeasuringInstruments(string path)
         {
         }
@@ -45,11 +39,12 @@ namespace BDEnergyFramework.MeasuringInstruments
             var results = FetchResults(path, startTime, endTime);
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
+            double avgRate = (results.Count / (elapsedMilliseconds/1000));
             foreach (var item in results)
             {
                 timeSeries.Sampels.Add(new Sample
                 {
-                    CpuEnergyInJoules = ConvertWattToJoules(item.Watt),
+                    CpuEnergyInJoules = item.Watt/avgRate,
                     ElapsedTime = (double)(item.Time - startTime).TotalMilliseconds,
                     AdditionalMetadata = new Dictionary<string, double>(),
                     CpuUtilization = 0,
@@ -59,13 +54,13 @@ namespace BDEnergyFramework.MeasuringInstruments
                     ProcessorPowerWatt = 0,
                 });
             }
-            var resJ = results.Select(x => x.Watt);
+            var resJ = results.Select(x => x.Watt/ avgRate);
             measurement.StartTime = startTime;
             measurement.EndTime = endTime;
-            measurement.CpuEnergyInJoules = CalculateTotalEnergyInJoules((List<double>)resJ);
+            measurement.CpuEnergyInJoules = resJ.Sum();
             measurement.Duration = elapsedMilliseconds;
-            measurement.AdditionalMetadata.Add("Min", ConvertWattToJoules(resJ.Min()));
-            measurement.AdditionalMetadata.Add("Max", ConvertWattToJoules((resJ.Max())));
+            measurement.AdditionalMetadata.Add("Min", resJ.Min());
+            measurement.AdditionalMetadata.Add("Max", resJ.Max());
             measurement.Iteration = iteration;
             return (timeSeries, measurement);
         }
