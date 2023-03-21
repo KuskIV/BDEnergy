@@ -8,11 +8,11 @@ In the first experiment, \textbf{RQ1} will be explored. This experiment will be 
 
 After 30 measurements, the status can be seen in \cref{tab:initial-measurements}, where it can be seen how the required samples varies between compilers and test cases. When comparing between test cases, Mandelbrot deviates less compared to Fannkuch Redux, where Mandelbrot requires as little as $3$ samples, while Fannkuch Redux requires up to $62.086$. Given these results, more measurements are required. When analyzing the 30 measurements, Intel's OneApi had the lowest energy consumption. Because of this, for the next step $550$ measurements were made.
 
-%\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_energy_consumption.tex}
+\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_energy_consumption.tex}
 
 
 \paragraph{Results}: After 550 measurements were obtained, the reported values by Cochrans formula still indicates that MSVC, MinGW and Clang needs more measurements. When looking at the results for Fannkuch Redux in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-energy_consumption} and \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}, and for Mandelbrot in \cref{app:exp_one}, Intel's OneApi has the lowest dynamic energy consumption and total energy consumption for both test. Clang deviates the most in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}, and could with more measurements get a lower dynamic energy consumption than OneApi, but given the time it would take to test this, it was deemed irrelevant.
 
 In this first experiment it can thus be concluded that the different compilers has a huge impact on both the energy consumption but also how many measurements are required to be confident in the results. In the end, Intel's OneApi had the lowest energy consumption, and will be used going forward.
 
-%\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_dynamic_energy_consumption.tex}
+\input{tables/results/1/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux.exe/workstationone/clang-intel-one-api-min-gw-msvc/cpu_dynamic_energy_consumption.tex}
