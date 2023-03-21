@@ -26,6 +26,12 @@ namespace BDEnergyFramework.MeasuringInstruments
                 .Build();
             machineName = Environment.MachineName;
         }
+
+        internal override int GetMilisecondsBetweenSampels()
+        {
+            return 200;
+        }
+
         internal override void StartMeasuringInstruments(string path)
         {
         }
