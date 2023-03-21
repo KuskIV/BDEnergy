@@ -1,4 +1,5 @@
-﻿using BDEnergyFramework.Models;
+﻿using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Parsers;
 using BDEnergyFramework.Utils;
@@ -51,8 +52,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             // TODO handle empty TimeSeries and Measurement in calling method.
             if(cpuWatts == null)
             {
-                Console.WriteLine("json was not created. \n  Disregarding measurement: " + ++disregardedMeasurement);
-                return (new TimeSeries(), new Measurement());
+                throw new ScaphandreFileNotFoundException();
             }
             else
             {
@@ -157,13 +157,13 @@ namespace BDEnergyFramework.MeasuringInstruments
                 scapProcess.ErrorDataReceived += (sender, e) => { /* Discard error */ };
 
                 scapProcess.Start();
-                //var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int> { 5 });
+                //var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(new List<int> { 7 });
                 //scapProcess.ProcessorAffinity = processorAffinity;
                 scapProcess.PriorityClass = ProcessPriorityClass.High;
 
                 // Either:
-                // scapProcess.PrioirtyClass high and process.PrioroityCLass off in ProcessUtils
-                // resevere scapProcess for 1 core and not run test case on that core.
+                // scapProcess.PrioirtyClass high and process.PrioroityCLass off in ProcessUtils. 19 - 26, 0 miss
+                // resevere scapProcess for 1 core and not run test case on that core. 23 - 28, 0 miss
 
                 scapProcess.BeginOutputReadLine();
                 scapProcess.BeginErrorReadLine();
@@ -198,6 +198,12 @@ namespace BDEnergyFramework.MeasuringInstruments
                 return null;
             }
             var json = File.ReadAllText(jsonPath);
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
             var hostConsumption = new List<double>();
             while (reader.Read())
@@ -285,19 +291,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         }
 
 
-        public double ConvertWattsLstToJoules(List<double> wattMeasurements, long durationInMilliseconds)
-        {
-            // Convert duration to seconds
-            double durationInSeconds = durationInMilliseconds / 1000.0;
-
-            // Calculate the average power in watts
-            double averagePower = wattMeasurements.Average();
-
-            // Calculate the energy used in joules using the formula: energy = power * time
-            double totalEnergyInJoules = averagePower * durationInSeconds;
-
-            return totalEnergyInJoules;
-        }
+        
 
         // This function is called for each measurement and should convert the value which is watts to joules.
         // This is to create a timeseries with the values in joules.

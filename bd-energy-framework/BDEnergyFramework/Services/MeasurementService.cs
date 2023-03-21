@@ -206,6 +206,11 @@ namespace BDEnergyFramework.Services
                         _logger.Warning("Unable to find ipg file. Moving on...");
                         return false;
                     }
+                    catch (ScaphandreFileNotFoundException)
+                    {
+                        _logger.Warning("Unable to find Scaphandre json. Moving on...");
+                        return false;
+                    }
                 }
             }
 
