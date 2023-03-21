@@ -24,7 +24,7 @@ namespace BDEnergyFramework.Utils
 
         public static double ConvertWattToJoule(double watt, int count, long duration)
         {
-            double avgRate = (count / (duration / 1000));
+            double avgRate = (count / ((double)duration / 1000));
             return watt / avgRate;
         }
 
