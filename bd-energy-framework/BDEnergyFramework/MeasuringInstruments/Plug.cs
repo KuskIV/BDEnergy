@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -26,6 +27,12 @@ namespace BDEnergyFramework.MeasuringInstruments
                 .Build();
             machineName = Environment.MachineName;
         }
+
+        internal override int GetMilisecondsBetweenSampels()
+        {
+            return 200;
+        }
+
         internal override void StartMeasuringInstruments(string path)
         {
         }
@@ -39,11 +46,12 @@ namespace BDEnergyFramework.MeasuringInstruments
             var results = FetchResults(path, startTime, endTime);
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
-            foreach (var item in results)
+            double avgRate = (results.Count / (elapsedMilliseconds/1000));
+            foreach (var item in results)       
             {
                 timeSeries.Sampels.Add(new Sample
                 {
-                    CpuEnergyInJoules = item.Watt,
+                    CpuEnergyInJoules = MathUtils.ConvertWattToJoule(item.Watt,results.Count,elapsedMilliseconds),
                     ElapsedTime = (double)(item.Time - startTime).TotalMilliseconds,
                     AdditionalMetadata = new Dictionary<string, double>(),
                     CpuUtilization = 0,
@@ -53,13 +61,13 @@ namespace BDEnergyFramework.MeasuringInstruments
                     ProcessorPowerWatt = 0,
                 });
             }
-            var resJ = results.Select(x => x.Watt);
+            var resJ = results.Select(x => MathUtils.ConvertWattToJoule(x.Watt, results.Count, elapsedMilliseconds));
             measurement.StartTime = startTime;
             measurement.EndTime = endTime;
             measurement.CpuEnergyInJoules = resJ.Sum();
             measurement.Duration = elapsedMilliseconds;
-            measurement.AdditionalMetadata.Add("Min", resJ.Min());
-            measurement.AdditionalMetadata.Add("Max", resJ.Max());
+            measurement.AdditionalMetadata.Add("Min", MathUtils.ConvertWattToJoule(resJ.Min(), results.Count, elapsedMilliseconds));
+            measurement.AdditionalMetadata.Add("Max", MathUtils.ConvertWattToJoule(resJ.Max(), results.Count, elapsedMilliseconds));
             measurement.Iteration = iteration;
             return (timeSeries, measurement);
         }
@@ -85,7 +93,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 {
                     points.Add(new DtoPlugPoint
                     {
-                        Watt = reader.GetInt32("Watt"),
+                        Watt = reader.GetInt32("Watt")/5,
                         Current = reader.GetFloat("Current"),
                         Voltage = reader.GetInt32("Voltage"),
                         Ip = reader.GetString("Ip"),
@@ -119,6 +127,26 @@ namespace BDEnergyFramework.MeasuringInstruments
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
         {
             // do nothing
+        }
+
+        public double ConvertWattToJoules(double wattMeasurements)
+        {
+            double timeInSeconds = (double)GetMilisecondsBetweenSampels() / 1000; // Convert nanoseconds to seconds
+            double energyInJoules = wattMeasurements * timeInSeconds;
+            return energyInJoules;
+
+        }
+
+        public double CalculateTotalEnergyInJoules(List<double> wattMeasurements)
+        {
+            double totalEnergyInJoules = 0;
+
+            foreach (double wattMeasurement in wattMeasurements)
+            {
+                totalEnergyInJoules += ConvertWattToJoules(wattMeasurement);
+            }
+
+            return totalEnergyInJoules;
         }
     }
 }

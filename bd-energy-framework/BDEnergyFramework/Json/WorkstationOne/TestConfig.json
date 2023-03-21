@@ -1,15 +1,15 @@
 [
   {
-    "MeasurementInstruments": [ 6 ],
+    "MeasurementInstruments": [ 2 ],
     "RequiredMeasurements": 10,
     "TestCasePaths": [
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe"
     ],
     "AllocatedCores": [  ],
     "TestCaseParameters": [
-      "12"
+      "64000"
     ],
-    "UploadToDatabase": true,
+    "UploadToDatabase": false,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,

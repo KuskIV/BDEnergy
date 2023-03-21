@@ -35,9 +35,9 @@ namespace BDEnergyFramework.Services.Repositories
 
                 _logger.Information("Inserting measurement {cur}/{max}, test case {tc} measured by {mi}", insertCount, maxCount, PathUtils.GetFilenameFromPath(m.TestCase), m.MeasurementInstrument);
 
-                if (!m.Measurements.Any())
+                if (m is null || (m is { } mc  && !mc.Measurements.Any()))
                 {
-                    _logger.Information("No measurements were found to upload for {mi}", m.MeasurementInstrument);
+                    _logger.Information("No measurements were found to upload");
                     continue;
                 }
 

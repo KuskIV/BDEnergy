@@ -229,7 +229,7 @@ namespace BDEnergyFramework.Services
 
             SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied);
+            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements);
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -272,10 +272,16 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied)
+        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements)
         {
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
+
+            if (measurement.Measurements.Count() > requiredMeasurements)
+            {
+                _logger.Information("Enough measurements achieved for {mi}", mi);
+                return;
+            }
 
             var testCase = GetTestCase();
             

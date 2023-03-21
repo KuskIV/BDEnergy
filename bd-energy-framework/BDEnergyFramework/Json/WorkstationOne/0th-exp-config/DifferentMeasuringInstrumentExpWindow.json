@@ -10,7 +10,7 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000",
+      "64000",
       ""
     ],
     "UploadToDatabase": true,
@@ -18,11 +18,11 @@
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,
     "DisableWifi": true,
-    "ExperimentNumber": 1,
-    "ExperimentName": "same-one-api-compiler-different-measuring-instruments",
+    "ExperimentNumber": 2,
+    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update-and-watt",
     "ConcurrencyLimit": "multi-threaded",
     "TestCaseType": "microbenchmarks",
-    "Compiler": "clang",
+    "Compiler": "intel-one-api",
     "Optimizations": "-openmp",
     "Language": "c++",
     "StopBackgroundProcesses": true,
