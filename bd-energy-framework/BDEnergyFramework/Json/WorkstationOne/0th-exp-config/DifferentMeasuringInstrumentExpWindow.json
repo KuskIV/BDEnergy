@@ -19,7 +19,7 @@
     "MaximumTemperature": 200,
     "DisableWifi": true,
     "ExperimentNumber": 1,
-    "ExperimentName": "same-one-api-compiler-different-measuring-instruments",
+    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update",
     "ConcurrencyLimit": "multi-threaded",
     "TestCaseType": "microbenchmarks",
     "Compiler": "intel-one-api",
