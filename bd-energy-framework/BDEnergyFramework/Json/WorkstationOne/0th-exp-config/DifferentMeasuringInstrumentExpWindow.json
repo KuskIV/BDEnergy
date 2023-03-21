@@ -10,7 +10,7 @@
     "AllocatedCores": [],
     "TestCaseParameters": [
       "12",
-      "16000",
+      "64000",
       ""
     ],
     "UploadToDatabase": true,
@@ -22,7 +22,7 @@
     "ExperimentName": "same-one-api-compiler-different-measuring-instruments",
     "ConcurrencyLimit": "multi-threaded",
     "TestCaseType": "microbenchmarks",
-    "Compiler": "clang",
+    "Compiler": "intel-one-api",
     "Optimizations": "-openmp",
     "Language": "c++",
     "StopBackgroundProcesses": true,
