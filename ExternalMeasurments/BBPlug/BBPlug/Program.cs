@@ -26,5 +26,5 @@ while (true)
         }
 	}
     databaseHandler.CloseConnection();
-    Thread.Sleep(TimeSpan.FromSeconds(1));
+    Thread.Sleep(TimeSpan.FromSeconds(0.5));
 }
