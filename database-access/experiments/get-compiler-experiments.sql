@@ -8,6 +8,7 @@ select
     t.Compiler as TestCaseCompiler,
     mi.Name as Mi,
     lm.MaxIteration as CurrentIteration,
+    s.Samples as Samples,
     round(lm.AvgDuration, 2) as AvgDuration,
     round(lm.AvgCpu, 2) as AvgCpu,
     round(lm.TempMin, 2) as MinTemp,
@@ -32,7 +33,16 @@ from MeasuringCollection as m
         group by 
             CollectionId
         ) as lm on lm.CollectionId = m.Id
+    inner join(
+            select avg(t.samples) as Samples, CollectionId from (
+                select count(*) as samples, CollectionId, MeasurementId from Sample
+                where 1 = 1
+                group by MeasurementId, CollectionId
+            ) as t
+            group by t.CollectionId
+    ) as s on s.CollectionId = m.Id
 where 1 = 1
+    -- and s.CollectionId = m.Id
     and d.Env = 'prod'
     and m.Name = 'same-cpp-multi-core-micro-benchmark-different-compiler'
     and t.Parameter in ('', '16000', '12')

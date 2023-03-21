@@ -14,6 +14,7 @@ from Measurement as m
         select count(*) as Samples, CollectionId from Sample group by CollectionId
     ) as s on s.CollectionId = m.CollectionId
 where 1 = 1
+    -- and m.CollectionId in (1,2,3)
     and m.CollectionId = 2
 group by
     m.CollectionId

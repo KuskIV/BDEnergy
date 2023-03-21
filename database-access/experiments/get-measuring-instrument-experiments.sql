@@ -8,6 +8,7 @@ select
     -- t.Compiler as TestCaseCompiler,
     mi.Name as Mi,
     lm.MaxIteration as Iteration,
+    s.Samples as Samples,
     round(lm.AvgDuration, 2) as AvgDuration,
     round(lm.MinCpu, 2) as MinCpu,
     round(lm.MaxCpu, 2) as MaxCpu,
@@ -23,7 +24,8 @@ from MeasuringCollection as m
     inner join (
         select 
             Max(Iteration) as MaxIteration, 
-            CollectionId, Max(BeginTime) as MaxBegin, 
+            CollectionId, 
+            Max(BeginTime) as MaxBegin, 
             avg(Duration) as AvgDuration, 
             avg(CpuEnergyInJoules) as AvgCpu,
             min(CpuEnergyInJoules) as MinCpu,
@@ -36,12 +38,20 @@ from MeasuringCollection as m
         group by 
             CollectionId
         ) as lm on lm.CollectionId = m.Id
+    inner join(
+            select avg(t.samples) as Samples, CollectionId from (
+                select count(*) as samples, CollectionId, MeasurementId from Sample
+                where 1 = 1
+                group by MeasurementId, CollectionId
+            ) as t
+            group by t.CollectionId
+    ) as s on s.CollectionId = m.Id
 where 1 = 1
     and d.Env = 'prod'
     and m.Name = 'same-one-api-compiler-different-measuring-instruments-post-update-and-watt'
-    -- and m.Name = 'same-one-api-compiler-different-measuring-instruments-post-update'
     and t.Parameter in ('', '64000', '12')
     and d.Os = 'win32nt'
     and t.Compiler = 'intel-one-api'
+    and m.CollectionNumber = 2
 order by
     lm.MaxBegin desc
