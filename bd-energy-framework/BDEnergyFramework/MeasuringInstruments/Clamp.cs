@@ -1,4 +1,5 @@
-﻿using BDEnergyFramework.Models;
+﻿using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -104,7 +105,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
                 if (points.Count == 0)
                 {
-                    throw new Exception("No data points were found for the specified time range.");
+                    throw new ClampQueryFoundNoPointsException();
                 }
 
                 connection.Close();

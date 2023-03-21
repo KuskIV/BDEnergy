@@ -12,5 +12,6 @@
         public double EndTemperature { get; set; }
         public long Duration { get; set; }
         public Dictionary<string, double> AdditionalMetadata { get; set; } = new Dictionary<string, double>();
+        public bool HasBeenSaved = false;
     }
 }

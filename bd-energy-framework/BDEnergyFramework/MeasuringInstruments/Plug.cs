@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using static Org.BouncyCastle.Math.EC.ECCurve;
+using BDEnergyFramework.Exceptions;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -95,7 +96,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
                 if (points.Count == 0)
                 {
-                    throw new Exception("No data points were found for the specified time range.");
+                    throw new PlugQueryFoundNoPointsException();
                 }
 
                 connection.Close();

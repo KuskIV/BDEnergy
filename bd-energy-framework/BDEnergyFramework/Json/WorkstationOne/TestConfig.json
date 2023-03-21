@@ -5,11 +5,11 @@
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\msvc\\fannkuch-redux.exe"
     ],
-    "AllocatedCores": [ [0,1,2,3,4,5,6,7] ],
+    "AllocatedCores": [  ],
     "TestCaseParameters": [
       "12"
     ],
-    "UploadToDatabase": false,
+    "UploadToDatabase": true,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,

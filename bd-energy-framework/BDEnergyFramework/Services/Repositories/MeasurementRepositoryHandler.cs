@@ -35,22 +35,36 @@ namespace BDEnergyFramework.Services.Repositories
 
                 _logger.Information("Inserting measurement {cur}/{max}, test case {tc} measured by {mi}", insertCount, maxCount, PathUtils.GetFilenameFromPath(m.TestCase), m.MeasurementInstrument);
 
+                if (!m.Measurements.Any())
+                {
+                    _logger.Information("No measurements were found to upload for {mi}", m.MeasurementInstrument);
+                    continue;
+                }
+
                 var timeSeries = m.TimeSeries.Last();
                 var measurement = m.Measurements.Last();
-                var sampleRate = sampleRates[m.MeasurementInstrument];
 
-                var configId = GetConfigId(config, m.AllocatedCores);
-                var testCaseId = GetTestCaseId(config, m.TestCase, m.Parameter);
-                var dutId = GetDutId(config, machineName);
-                var measurementInstrumentId = GetMeasurementInstrumentId(config, m.MeasurementInstrument, sampleRate);
+                if (!measurement.HasBeenSaved)
+                {
+                    var sampleRate = sampleRates[m.MeasurementInstrument];
 
-                var collectionId = GetMeasurementCollectionId(
-                    configId, testCaseId, dutId, measurementInstrumentId, config);
+                    var configId = GetConfigId(config, m.AllocatedCores);
+                    var testCaseId = GetTestCaseId(config, m.TestCase, m.Parameter);
+                    var dutId = GetDutId(config, machineName);
+                    var measurementInstrumentId = GetMeasurementInstrumentId(config, m.MeasurementInstrument, sampleRate);
 
-                InsertMeasurement(measurement, collectionId);
-                var measurementId = GetMeasurementId(measurement, collectionId);
-                InsertTimeSeries(timeSeries, collectionId, measurementId);
+                    var collectionId = GetMeasurementCollectionId(
+                        configId, testCaseId, dutId, measurementInstrumentId, config);
 
+                    InsertMeasurement(measurement, collectionId);
+                    var measurementId = GetMeasurementId(measurement, collectionId);
+                    InsertTimeSeries(timeSeries, collectionId, measurementId);
+                    measurement.HasBeenSaved = true;
+                }
+                else
+                {
+                    _logger.Information("Measurement for {mi} already inserted", m.MeasurementInstrument);
+                }
             }
         }
 

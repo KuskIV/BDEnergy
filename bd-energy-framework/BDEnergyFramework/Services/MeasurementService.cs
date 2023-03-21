@@ -78,29 +78,22 @@ namespace BDEnergyFramework.Services
                     _dutService.DisableWifi();
                 }
 
-                var success = _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements, burninApplied));
+                _retryPolicy.Execute(() => PerformMeasurementsForAllConfigs(config, measurements, burninApplied));
 
                 if (burninApplied && config.UploadToDatabase)
                 {
-                    if (success)
+                    if (config.DisableWifi)
                     {
-                        if (config.DisableWifi)
-                        {
-                            _logger.Information("About to enable wifi");
-                            _dutService.EnableWifi();
-                            _logger.Information("Successfully enabled wifi");
-                        }
-
-                        _logger.Information("Initializing db connection");
-                        var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-                        repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
-                        repository.Dispose();
+                        _logger.Information("About to enable wifi");
+                        _dutService.EnableWifi();
+                        _logger.Information("Successfully enabled wifi");
                     }
-                    else
-                    {
-                        _logger.Warning("Measurements was not a success.");
-                    }
+
+                    _logger.Information("Initializing db connection");
+                    var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+                    repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
+                    repository.Dispose();
                 }
 
                 if (!burninApplied && IsBurnInCountAchieved(measurements, config))
@@ -183,7 +176,7 @@ namespace BDEnergyFramework.Services
             return measurements.First().Measurements.Count() + 1;
         }
 
-        private bool PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
+        private void PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
         {
             foreach (var mi in config.MeasurementInstruments)
             {
@@ -203,18 +196,22 @@ namespace BDEnergyFramework.Services
                     }
                     catch (IntelPowerGadgetFileNotFoundException)
                     {
-                        _logger.Warning("Unable to find ipg file. Moving on...");
-                        return false;
+                        _logger.Warning("Unable to find {mi} file. Moving on...", EMeasuringInstrument.IPG);
                     }
                     catch (ScaphandreFileNotFoundException)
                     {
-                        _logger.Warning("Unable to find Scaphandre json. Moving on...");
-                        return false;
+                        _logger.Warning("Unable to find {mi} json. Moving on...", EMeasuringInstrument.SCAPHANDRE);
+                    }
+                    catch(ClampQueryFoundNoPointsException) 
+                    {
+                        _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.CLAMP);
+                    }
+                    catch (PlugQueryFoundNoPointsException)
+                    {
+                        _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.PLUG);
                     }
                 }
             }
-
-            return true;
         }
 
         private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, EMeasuringInstrument mi, (string First, string Second) tc, List<int> allocatedCores, bool burninApplied)
