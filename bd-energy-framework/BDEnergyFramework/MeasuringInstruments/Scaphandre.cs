@@ -111,7 +111,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 };
 
                 int dataPointCount = timeSeries.Sampels.Count();
-                Console.WriteLine("Datapoints in timeseries: " + dataPointCount.ToString());
+                //Console.WriteLine("Datapoints in timeseries: " + dataPointCount.ToString());
 
                 return (timeSeries, measurement);
             }
