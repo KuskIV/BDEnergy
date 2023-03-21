@@ -1,15 +1,15 @@
 [
   {
-    "MeasurementInstruments": [ 2 ],
+    "MeasurementInstruments": [ 6 ],
     "RequiredMeasurements": 10,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe"
     ],
     "AllocatedCores": [  ],
     "TestCaseParameters": [
-      "64000"
+      "25000"
     ],
-    "UploadToDatabase": false,
+    "UploadToDatabase": true,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,
