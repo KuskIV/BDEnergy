@@ -49,7 +49,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             {
                 timeSeries.Sampels.Add(new Sample
                 {
-                    CpuEnergyInJoules = item.Watt,
+                    CpuEnergyInJoules = ConvertWattToJoules(item.Watt),
                     ElapsedTime = (double)(item.Time - startTime).TotalMilliseconds,
                     AdditionalMetadata = new Dictionary<string, double>(),
                     CpuUtilization = 0,
@@ -62,10 +62,10 @@ namespace BDEnergyFramework.MeasuringInstruments
             var resJ = results.Select(x => x.Watt);
             measurement.StartTime = startTime;
             measurement.EndTime = endTime;
-            measurement.CpuEnergyInJoules = resJ.Sum();
+            measurement.CpuEnergyInJoules = CalculateTotalEnergyInJoules((List<double>)resJ);
             measurement.Duration = elapsedMilliseconds;
-            measurement.AdditionalMetadata.Add("Min", resJ.Min());
-            measurement.AdditionalMetadata.Add("Max", resJ.Max());
+            measurement.AdditionalMetadata.Add("Min", ConvertWattToJoules(resJ.Min()));
+            measurement.AdditionalMetadata.Add("Max", ConvertWattToJoules((resJ.Max())));
             measurement.Iteration = iteration;
             return (timeSeries, measurement);
         }
@@ -125,6 +125,26 @@ namespace BDEnergyFramework.MeasuringInstruments
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
         {
             // do nothing
+        }
+
+        public double ConvertWattToJoules(double wattMeasurements)
+        {
+            double timeInSeconds = (double)GetMilisecondsBetweenSampels() / 1000; // Convert nanoseconds to seconds
+            double energyInJoules = wattMeasurements * timeInSeconds;
+            return energyInJoules;
+
+        }
+
+        public double CalculateTotalEnergyInJoules(List<double> wattMeasurements)
+        {
+            double totalEnergyInJoules = 0;
+
+            foreach (double wattMeasurement in wattMeasurements)
+            {
+                totalEnergyInJoules += ConvertWattToJoules(wattMeasurement);
+            }
+
+            return totalEnergyInJoules;
         }
     }
 }
