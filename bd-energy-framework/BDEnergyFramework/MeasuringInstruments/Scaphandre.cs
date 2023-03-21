@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Measurement = BDEnergyFramework.Models.Internal.Measurement;
 using ProcessorAffinityGenerator = BDEnergyFramework.Utils.ProcessorAffinityGenerator;
+using MathUtils = BDEnergyFramework.Utils.MathUtils;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -31,8 +32,6 @@ namespace BDEnergyFramework.MeasuringInstruments
     internal class Scaphandre : MeasuringInstrument
     {
         private  int sampleRate = 100000000; //100000000 = 100ms
-
-        int disregardedMeasurement = 0;
 
         //private string jsonPath = @"c:\Measuring instrument\scaphandre-main\target\release\report.json";
         public Scaphandre(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
@@ -49,18 +48,17 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             
 
-            // TODO handle empty TimeSeries and Measurement in calling method.
             if(cpuWatts == null)
             {
                 throw new ScaphandreFileNotFoundException();
             }
             else
             {
-                var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts);
+                var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts, elapsedMilliseconds);
 
 
                 // Parse the JSON file and get the process consumption for each measurement
-                var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath);
+                var processConsumptionPerMeasurement = GetProcessEnergyConsumptionPerMeasurement(jsonPath, elapsedMilliseconds);
 
                 // Calculate the total consumption for individual process
                 var totalProcessConsumption = GetTotalProcessConsumption(processConsumptionPerMeasurement);
@@ -93,7 +91,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
                     var sample = new Sample()
                     {
-                        CpuEnergyInJoules = ConvertWattToJoules(watt),
+                        CpuEnergyInJoules = MathUtils.ConvertWattToJoule(watt,cpuWatts.Count,elapsedMilliseconds),
                         PackageTemperature = 0,
                         ElapsedTime = 0,
                         ProcessorPowerWatt = 0,
@@ -231,7 +229,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         // Get energy consumption for individual processes.
         // Modify to only get for programs in the test case folder.
-        public List<Dictionary<string, double>> GetProcessEnergyConsumptionPerMeasurement(string jsonPath)
+        public List<Dictionary<string, double>> GetProcessEnergyConsumptionPerMeasurement(string jsonPath, long duration)
         {
             var json = File.ReadAllText(jsonPath);
             var jsonArray = JArray.Parse(json);
@@ -254,7 +252,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                             string processName = Path.GetFileName(processPath);
                             string processId = process["pid"].ToString();
                             double consumption = (double)process["consumption"] / 1000000.0; // Convert from micro watts to watts.
-                            double consumptionJoules = ConvertWattToJoules(consumption); // Converts from watts to joules
+                            double consumptionJoules = MathUtils.ConvertWattToJoule(consumption,jsonArray.Count, duration); // Converts from watts to joules
 
                             string processKey = $"{processName} (PID: {processId})";
                             processConsumption[processKey] = consumptionJoules;
@@ -296,21 +294,21 @@ namespace BDEnergyFramework.MeasuringInstruments
         // This function is called for each measurement and should convert the value which is watts to joules.
         // This is to create a timeseries with the values in joules.
         // A measurement should be taken every 100 ms so that watts represents the watts for a 100 ms
-        public double ConvertWattToJoules(double wattMeasurements)
+        /*public double ConvertWattToJoules(double wattMeasurements)
         {
             double timeInSeconds = (double)GetMilisecondsBetweenSampels() /1000; // Convert nanoseconds to seconds
             double energyInJoules = wattMeasurements * timeInSeconds;
             return energyInJoules;
 
-        }
+        }*/
 
-        public double CalculateTotalEnergyInJoules(List<double> wattMeasurements)
+        public double CalculateTotalEnergyInJoules(List<double> wattMeasurements, long duration)
         {
             double totalEnergyInJoules = 0;
 
             foreach (double wattMeasurement in wattMeasurements)
             {
-                totalEnergyInJoules += ConvertWattToJoules(wattMeasurement);
+                totalEnergyInJoules += MathUtils.ConvertWattToJoule(wattMeasurement, wattMeasurements.Count, duration);
             }
 
             return totalEnergyInJoules;
