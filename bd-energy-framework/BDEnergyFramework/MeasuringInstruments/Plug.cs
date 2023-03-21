@@ -93,7 +93,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 {
                     points.Add(new DtoPlugPoint
                     {
-                        Watt = reader.GetInt32("Watt")/5,
+                        Watt = reader.GetInt32("Watt"),
                         Current = reader.GetFloat("Current"),
                         Voltage = reader.GetInt32("Voltage"),
                         Ip = reader.GetString("Ip"),
