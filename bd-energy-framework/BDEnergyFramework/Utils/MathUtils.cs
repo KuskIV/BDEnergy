@@ -1,4 +1,6 @@
-﻿namespace BDEnergyFramework.Utils
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BDEnergyFramework.Utils
 {
     internal static class MathUtils
     {
@@ -18,6 +20,12 @@
         public static string GetMinMaxAvgStdAsString(List<long> values)
         {
             return GetMinMaxAvgStdAsString(values.Select(x => (double)x).ToList());
+        }
+
+        public static double ConvertWattToJoule(double watt, int count, long duration)
+        {
+            double avgRate = (count / (duration / 1000));
+            return watt / avgRate;
         }
 
         private static double GetStd(List<double> values)

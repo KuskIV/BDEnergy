@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using BDEnergyFramework.Exceptions;
+using BDEnergyFramework.Utils;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -40,11 +41,11 @@ namespace BDEnergyFramework.MeasuringInstruments
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
             double avgRate = (results.Count / (elapsedMilliseconds/1000));
-            foreach (var item in results)
+            foreach (var item in results)       
             {
                 timeSeries.Sampels.Add(new Sample
                 {
-                    CpuEnergyInJoules = item.Watt/avgRate,
+                    CpuEnergyInJoules = MathUtils.ConvertWattToJoule(item.Watt,results.Count,elapsedMilliseconds),
                     ElapsedTime = (double)(item.Time - startTime).TotalMilliseconds,
                     AdditionalMetadata = new Dictionary<string, double>(),
                     CpuUtilization = 0,
@@ -54,13 +55,13 @@ namespace BDEnergyFramework.MeasuringInstruments
                     ProcessorPowerWatt = 0,
                 });
             }
-            var resJ = results.Select(x => x.Watt/ avgRate);
+            var resJ = results.Select(x => MathUtils.ConvertWattToJoule(x.Watt, results.Count, elapsedMilliseconds));
             measurement.StartTime = startTime;
             measurement.EndTime = endTime;
             measurement.CpuEnergyInJoules = resJ.Sum();
             measurement.Duration = elapsedMilliseconds;
-            measurement.AdditionalMetadata.Add("Min", resJ.Min());
-            measurement.AdditionalMetadata.Add("Max", resJ.Max());
+            measurement.AdditionalMetadata.Add("Min", MathUtils.ConvertWattToJoule(resJ.Min(), results.Count, elapsedMilliseconds));
+            measurement.AdditionalMetadata.Add("Max", MathUtils.ConvertWattToJoule(resJ.Max(), results.Count, elapsedMilliseconds));
             measurement.Iteration = iteration;
             return (timeSeries, measurement);
         }
