@@ -139,6 +139,11 @@ namespace BDEnergyFramework.Services
                     measurements.AddRange(
                         repository.GetMeasurements(mi, sampleRate, testCase, parameter, config, machineName)
                         );
+
+                    foreach (var m in measurements.Last().Measurements)
+                    {
+                        m.HasBeenSaved = true;
+                    }
                 }
             }
 
