@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 using BBPlug.models;
 using System.Net.NetworkInformation;
+using Polly;
 
 namespace RspMeasuringDevice
 {
@@ -31,29 +32,22 @@ namespace RspMeasuringDevice
             connection.Close();
         }
 
-        public void InsertResults(PlugStatus result, string ip)
+        public void InsertResults(PlugStatus result, string ip, int maxRetries = 3, int retryDelayMilliseconds = 1000)
         {
-            try
-            {
-                using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time) VALUES (@watt, @current, @voltage, @ip, @time)", connection);
+            Policy.Handle<Exception>()
+                .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
+                .Execute(() =>
+                {
+                    using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time) VALUES (@watt, @current, @voltage, @ip, @time)", connection);
 
-                // set parameter values
-                command.Parameters.AddWithValue("@watt", result.Power);
-                command.Parameters.AddWithValue("@current", result.Current);
-                command.Parameters.AddWithValue("@voltage", result.Voltage);
-                command.Parameters.AddWithValue("@ip", ip);
-                command.Parameters.AddWithValue("@time", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                command.ExecuteNonQuery();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: {0}", ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine($"File succesfully at {DateTime.UtcNow}");
-            }
+                    // set parameter values
+                    command.Parameters.AddWithValue("@watt", result.Power);
+                    command.Parameters.AddWithValue("@current", result.Current);
+                    command.Parameters.AddWithValue("@voltage", result.Voltage);
+                    command.Parameters.AddWithValue("@ip", ip);
+                    command.Parameters.AddWithValue("@time", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    command.ExecuteNonQuery();
+                });
         }
 
     }
