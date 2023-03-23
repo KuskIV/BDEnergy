@@ -1,6 +1,6 @@
 [
   {
-    "MeasurementInstruments": [ 4, 5 ],
+    "MeasurementInstruments": [ 3 ],
     "RequiredMeasurements": 1,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
