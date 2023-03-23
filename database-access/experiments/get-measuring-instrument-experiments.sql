@@ -2,21 +2,26 @@ select
     m.Id as CollectionId,
     -- m.Name, 
     m.ConfigurationId as Config, 
+    SampleRate,
     d.Name as DutName, 
     d.Os as DutOs,
-    t.Name as TestCaseName,
     -- t.Compiler as TestCaseCompiler,
-    mi.Name as Mi,
-    lm.MaxIteration as Iteration,
+    t.Name as TestCaseName,
     s.Samples as Samples,
+    lm.MaxIteration as Iteration,
+    mi.Name as Mi,
+    DATE_FORMAT(lm.MaxBegin, "%H:%i:%s %d-%m-%Y") as LastStart,
+    round(lm.AvgCpu, 2) as AvgCpu,
     round(lm.AvgDuration, 2) as AvgDuration,
     round(lm.MinCpu, 2) as MinCpu,
     round(lm.MaxCpu, 2) as MaxCpu,
-    round(lm.AvgCpu, 2) as AvgCpu,
     round(lm.TempMin, 2) as MinTemp,
     round(lm.TempMax, 2) as MaxTemp,
     round(lm.TempAvg, 2) as AvgTemp,
-    DATE_FORMAT(lm.MaxBegin, "%H:%i:%s %d-%m-%Y") as LastStart
+    -- d.id as dut_id,
+    t.id as tc_id,
+    mi.id as mi_id
+    -- ConfigurationId as c_id
 from MeasuringCollection as m 
     inner join DeviceUnderTest as d on m.DutId = d.id
     inner join TestCase as t on m.TestCaseId = t.Id
