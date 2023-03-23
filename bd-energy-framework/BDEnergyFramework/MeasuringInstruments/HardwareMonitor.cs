@@ -12,7 +12,7 @@ namespace BDEnergyFramework.MeasuringInstruments
     {
         private Computer _computer;
 
-        private TimeSeries _timeSeries= new TimeSeries();
+        private TimeSeries _timeSeries = new TimeSeries();
         private DateTime _startTime;
 
         public ILogger _logger { get; }
@@ -75,7 +75,7 @@ namespace BDEnergyFramework.MeasuringInstruments
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
         {
             var elapseTime = (DateTime.UtcNow - _startTime).TotalMilliseconds / 1000;
-            var gpuEnergyInJoules = GetGpuEnergyOrDefault(update:true);
+            var gpuEnergyInJoules = GetGpuEnergyOrDefault(update: true);
             var packageTemperature = GetPackageTemperatureOrDefault();
             var processorPower = GetPackagePowerOrDefault();
             var corePower = GetCorePowerOrDefault();
@@ -94,7 +94,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             additionalMetadata.Add("Power CPU Cores", corePower);
 
-            
+
             _timeSeries.Sampels.Add(
                 new Sample()
                 {
@@ -128,7 +128,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             return energyInJoules;
         }
 
-        private double GetGpuEnergyOrDefault(bool update=false)
+        private double GetGpuEnergyOrDefault(bool update = false)
         {
             var defaultValue = -1d;
 
@@ -136,7 +136,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             {
                 defaultValue = _timeSeries.Sampels.Last().GpuEnergyInJoules;
             }
-            return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuGraphics, defaultValue, update:update);
+            return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuGraphics, defaultValue, update: update);
         }
 
         private double GetPackageTemperatureOrDefault()
@@ -195,7 +195,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             return GetCpuValue(SensorType.Power, HardwareMonitorNames.CpuDram, defaultValue);
         }
 
-        private double GetCpuValue(SensorType sensor, string name, double defaultValue, bool update=false)
+        private double GetCpuValue(SensorType sensor, string name, double defaultValue, bool update = false)
         {
             if (TryGetCpuValue(sensor, name, out var value, update))
             {
@@ -221,8 +221,8 @@ namespace BDEnergyFramework.MeasuringInstruments
                 valueExists = TryGetCpuValue(sensor, name, out var cpuValue);
                 var cpuName = $"{sensor} {name}";
 
-                if (!valueExists && 
-                    _timeSeries.Sampels.Any() && 
+                if (!valueExists &&
+                    _timeSeries.Sampels.Any() &&
                     _timeSeries.Sampels.Last().AdditionalMetadata.TryGetValue(cpuName, out var value))
                 {
                     cpuValue = (float)value;

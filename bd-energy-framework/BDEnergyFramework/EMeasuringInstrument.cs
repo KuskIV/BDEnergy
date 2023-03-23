@@ -3,10 +3,11 @@
     Unknown,
     RAPL,
     IPG,
-    LHM,
+    HWM,
     CLAMP,
     PLUG,
-    SCAPHANDRE
+    SCAPHANDRE,
+    LHM
 }
 
 
