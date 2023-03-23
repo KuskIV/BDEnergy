@@ -26,6 +26,10 @@
     "JjbpConfig": {
       "commandName": "Project",
       "commandLineArgs": "--config \"C:\\Github reps\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\JJBP\\JjbpValidConfig.json\""
+    },
+    "WorkstationTwoWindows": {
+      "commandName": "Project",
+      "commandLineArgs": "--config \"C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationTwo\\TestConfig.json\""
     }
   }
 }

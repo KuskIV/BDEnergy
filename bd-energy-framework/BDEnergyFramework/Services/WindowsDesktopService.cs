@@ -54,7 +54,8 @@ namespace BDEnergyFramework.Services
                 EMeasuringInstrument.LHM,
                 EMeasuringInstrument.CLAMP,
                 EMeasuringInstrument.SCAPHANDRE,
-                EMeasuringInstrument.PLUG
+                EMeasuringInstrument.PLUG,
+                EMeasuringInstrument.HWM
             };
         }
 

@@ -28,9 +28,16 @@ namespace BDEnergyFramework.Utils
                     return GetScaphandre();
                 case EMeasuringInstrument.PLUG:
                     return GetPlug();
+                case EMeasuringInstrument.HWM:
+                    return GetHardwareMonitor(logger);
                 default:
                     throw new NotImplementedException($"'{mi}' is not implemented");
             }
+        }
+
+        private static MeasuringInstrument GetHardwareMonitor(ILogger logger)
+        {
+            return new HardwareMonitor(EMeasuringInstrument.HWM, logger);
         }
 
         private static MeasuringInstrument GetPlug()
@@ -50,7 +57,7 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetLibreHardwareMonitor(ILogger logger)
         {
-            return new HardwareMonitor(EMeasuringInstrument.LHM, logger);
+            return new LibreHardwareMonitorInstrument(EMeasuringInstrument.LHM, logger);
         }
 
         private static MeasuringInstrument GetIntelPowerGadget()
