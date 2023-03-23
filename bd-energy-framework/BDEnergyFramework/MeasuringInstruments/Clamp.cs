@@ -2,6 +2,7 @@
 using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
@@ -51,11 +52,12 @@ namespace BDEnergyFramework.MeasuringInstruments
             var results = FetchResults(path, startTime,endTime);
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
+            double avgRate = (results.Count / (elapsedMilliseconds / 1000));
             foreach (var item in results)
             {
                 timeSeries.Sampels.Add(new Sample
                 {
-                    CpuEnergyInJoules = ConvertToJoule(item.C1TrueRMS),
+                    CpuEnergyInJoules = ConvertToJoule(item.C1TrueRMS, results.Count)/ avgRate,
                     ElapsedTime = (double)(item.Time-startTime).TotalMilliseconds,
                     AdditionalMetadata = new Dictionary<string, double>(),
                     CpuUtilization = 0,
@@ -65,7 +67,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                     ProcessorPowerWatt = 0,
                 });
             }
-            var resJ = results.Select(x => ConvertToJoule(x.C1TrueRMS));
+            var resJ = results.Select(x => ConvertToJoule(x.C1TrueRMS, results.Count)/ avgRate);
             measurement.StartTime = startTime;
             measurement.EndTime = endTime;
             measurement.CpuEnergyInJoules = resJ.Sum();
@@ -114,9 +116,12 @@ namespace BDEnergyFramework.MeasuringInstruments
 
             }
         }
-        private double ConvertToJoule(double measurement) 
+        private double ConvertToJoule(double measurement, int count) 
         {
-            return measurement * 1 * 230;
+            double miliVolt = measurement*1000; //Converts from volt to miliJoule
+            double A = miliVolt / 100; //Uses the specefic convertion ratio
+            double joule = A * 230;
+            return joule;
         }
 
         internal override void PerformMeasuring(object sender, ElapsedEventArgs e)
