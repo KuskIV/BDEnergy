@@ -1,0 +1,8 @@
+\paragraph{MN60 Clamp} \label{para:clamp}
+The primary instrument utilized in the research project obtain the "ground truth" is an highly accurate current clamp manufactured by CHAUVIN ARNOUX, specifically, the MN60 model. According to the provided documentation, the MN60 exhibits a 2\% margin of error \cite{ClampDoc}. Being an analog sensor, the MN60's measurements are inherently continuous, rendering the methodology for data acquisition, processing, and storage important.
+
+For the purpose of acquiring these continuous measurements, an Analog Discovery 2 device is employed, which has been  designed to handle analog signals \cite{AnalogDoc}. The Analog Discovery 2 is capable of obtaining a measurement at intervals of 100 milliseconds, with each measurement represented as a voltage value that can be converted to joules. The precise conversion ratio can be sourced from the relevant documentation \cite{ClampDoc}.
+
+The Analog Discovery 2 is connected to RaspberryPi that controls and procces the measurements, and subsecuently uploads them to a database for later proccesing.
+
+Since the clamp is connected phisicaly to the outside of the computer it will have more course grained measurments of the system, because of this the DEC is especially important to use, so that it can be compared with the rest of the instruments. \todo[options]{Add refrence to dynamic energy}

@@ -46,7 +46,6 @@ namespace BDEnergyFramework.MeasuringInstruments
             var results = FetchResults(path, startTime, endTime);
             TimeSeries timeSeries = new TimeSeries();
             Models.Internal.Measurement measurement = new Models.Internal.Measurement();
-            double avgRate = (results.Count / (elapsedMilliseconds/1000));
             foreach (var item in results)       
             {
                 timeSeries.Sampels.Add(new Sample
