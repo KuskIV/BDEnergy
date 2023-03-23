@@ -1,0 +1,41 @@
+
+\begin{lstlisting}[
+    style=csharp_style,
+    language=json, 
+    caption={An example of a valid configuration for BDE},
+    label={lst:bde_json}]
+    
+    [
+      {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 30,
+        "TestCasePaths": [
+            "path/to/one.exe",
+            "path/to/two.exe" 
+        ],
+        "AllocatedCores": [
+            [],
+            [1,2]
+        ],
+        "TestCaseParameters": [ 
+            "one_parameter",
+            "two_parameter",
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 100,
+        "DisableWifi": false,
+        "ExperimentNumber": 0,
+        "ExperimentName": "testing-phase",
+        "ConcurrencyLimit": "multi-thread",
+        "TestCaseType": "microbenchmarks",
+        "Compiler": "clang",
+        "Optimizations": "openmp",
+        "Language": "c++",
+        "StopBackgroundProcesses" : false,
+        "AdditionalMetadata": {}
+      }
+    ]
+
+\end{lstlisting}
