@@ -1,0 +1,59 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.18\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            title={The duration of the runtime}, 
+            ytick={1, 2, 3, 4},
+        yticklabels={
+             clang,  intel-one-api,  min-gw,  msvc
+            },
+            xmin=0,xmax=50,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=31.145,
+                lower quartile=31.179,
+                median=31.2045,
+                upper quartile=31.24575,
+                upper whisker=31.342
+                }, color = red
+                ] coordinates{(0,31.4)(0,31.346)(0,31.389)(0,31.398)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=0.883,
+                lower quartile=0.89825,
+                median=0.9115,
+                upper quartile=0.9217500000000001,
+                upper whisker=0.956
+                }, color = red
+                ] coordinates{(1,0.965)(1,0.96)(1,0.977)(1,1.052)(1,0.96)(1,0.963)(1,1.62)(1,0.961)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=46.73,
+                lower quartile=46.79325,
+                median=46.83,
+                upper quartile=46.891,
+                upper whisker=47.033
+                }, color = red
+                ] coordinates{(2,47.081)(2,47.296)(2,47.058)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=45.476,
+                lower quartile=45.613,
+                median=45.68,
+                upper quartile=45.74075,
+                upper whisker=45.923
+                }, color = red
+                ] coordinates{(3,46.433)(3,46.355)(3,45.977)(3,45.99)(3,46.294)(3,45.951)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{runtime measurements by ipg on workstationone for test case(s) mandelbrot} \label{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-mandelbrot.exe-clang-intel-one-api-min-gw-msvc-workstationone-runtime-duration}
+\end{figure}
