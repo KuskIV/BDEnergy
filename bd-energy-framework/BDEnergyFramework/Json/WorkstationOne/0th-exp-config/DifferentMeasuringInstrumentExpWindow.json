@@ -1,7 +1,7 @@
 ﻿[
   {
     "MeasurementInstruments": [ 2, 3, 4, 5, 6 ],
-    "RequiredMeasurements": 550,
+    "RequiredMeasurements": 750,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
@@ -28,7 +28,7 @@
   },
   {
     "MeasurementInstruments": [ 2, 3, 4, 5, 6 ],
-    "RequiredMeasurements": 238,
+    "RequiredMeasurements": 250,
     "TestCasePaths": [
       "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe"
     ],
