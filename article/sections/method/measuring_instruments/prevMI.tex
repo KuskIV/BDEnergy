@@ -1,7 +1,7 @@
-\paragraph{Running Average Power Limit}
+\paragraph{Running Average Power Limit:}
 Intel's RAPL is a commonly used software-based measuring instrument seen in the literature.\cite{biksbois} It uses model-specific-registers (MSRs) and Hardware performance counters to calculate how much energy the processor uses. The MSRs RAPL uses include \textit{MSR\_PKG\_ENERGY\_STATUS}, \textit{MSR\_DRAM\_ENERGY\_STATUS}, \textit{MSR\_PP0\_ENERGY\_STATUS} and \textit{MSR\_PP1\_ENERGY\_STATUS}. Which corresponds to the power domains, PKG, DRAM, PP0, and PP1 which are explained in \cite{biksbois}. RAPL has previously only been directly accessible on Linux and Mac. In \cite{biksbois} we found that RAPL had a high correlation of 0.81 with our ground truth on Linux.\cite{biksbois}
 
-\paragraph{Intel Power Gadget}
+\paragraph{Intel Power Gadget:}
 IPG is a software tool created by Intel, which can estimate the power of Intel processors. It contains a command line version called Powerlog which allows accessing the energy consumption using callable APIs. It uses the same hardware counters and MSRs as RAPL\cite{FireFox}, therefore it is expected to observe similar measurements to that of RAPL. Which is also shown in \cite{biksbois} where we found that IPG had a high correlation of 0.78 with our ground truth on Windows. We also found that IPG had a high correlation of 0.83 with RAPL, although the measurements is on different operating systems.\cite{biksbois}
 
 %% Sources saying IPG uses RAPL:
@@ -14,11 +14,11 @@ IPG is a software tool created by Intel, which can estimate the power of Intel p
 
 % also chatgpt
 
-\paragraph{Libre Hardware Monitor}
+\paragraph{Libre Hardware Monitor:}
 LHM\cite{LHM} is a fork of Open Hardware Monitor, where the difference is that LHM does not have a UI. Both projects are open source. LHM can use the same hardware counters and MSRs as RAPL and IPG and as such can measure the power domains PKG, DRAM, PP0, and PP1. Since it uses the methods to read energy consumption, a similar measurement is expected between LHM and IPG. We found that LHM correlated 0.76 with our ground truth on Windows. LHM was also found to have a high correlation of 0.85 with IPG.\cite{biksbois}
 
-\paragraph{AC Current Clamp}
+\paragraph{AC Current Clamp:}
 Serving as our ground truth measurement is our hardware-based measuring setup which is comprised of an MN60 AC clamp that is connected to the phase of the wire that goes into the PSU. It is also connected to an Analog Discovery 2 which is used as an oscilloscope which in turn is then connected to a Raspberry Pi 4. This setup allows us to continuously measure and log our data. The accuracy is reported to be $2\%$ For more detail see \cite{biksbois}.
 
-\paragraph{CloudFree EU smart Plugs}
+\paragraph{CloudFree EU smart Plugs:}
 Two CloudFree EU Smart Plugs\cite{CloudFreeEUSMartPlug} are used, as a lower-priced hardware-based measuring instrument, which also has greater ease of use than the AC Current Clamp setup. We have not found any information about their accuracy or sampling rate.
