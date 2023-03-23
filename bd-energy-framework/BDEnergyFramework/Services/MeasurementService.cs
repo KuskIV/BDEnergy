@@ -215,6 +215,10 @@ namespace BDEnergyFramework.Services
                     {
                         _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.PLUG);
                     }
+                    catch(Exception e)
+                    {
+                        _logger.Warning(e, "Unknown error occured. Retrying...");
+                    }
                 }
             }
         }
