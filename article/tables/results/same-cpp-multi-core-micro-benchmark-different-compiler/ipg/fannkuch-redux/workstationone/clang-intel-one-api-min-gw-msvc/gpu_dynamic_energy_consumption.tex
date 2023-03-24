@@ -7,10 +7,10 @@
         }
         \begin{axis}[
             xlabel={Average Energy Consumption (Watt)}, 
-            title={The dynamic energy consumption of the gpu}, 
+            title={The dynamic energy consumption of the GPU}, 
             ytick={1, 2, 3, 4},
         yticklabels={
-             clang,  intel-one-api,  min-gw,  msvc
+             Clang,  oneAPI,  MinGW,  MSVC
             },
             xmin=-0.1,xmax=0.1,
             ]
@@ -55,5 +55,5 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{gpu measurements by ipg on workstationone for test case(s) fannkuch-redux} \label{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-gpu-dynamic_energy_consumption}
+\caption{GPU measurements by IPG on DUT 1 for test case(s) FR} \label{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-gpu-dynamic_energy_consumption}
 \end{figure}

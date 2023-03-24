@@ -1,14 +1,16 @@
 import math
+import numpy as np
 
 
 def get_cochran(values, Z, E):
-    mean = sum(values) / len(values)
+    mean = np.nansum(values) / np.count_nonzero(~np.isnan(values))
     nominator = 0
 
     for v in values:
-        nominator += (v - mean) ** 2
+        if not str(v) == str(np.nan):
+            nominator += (v - mean) ** 2
 
-    result = nominator / len(values)
+    result = nominator / np.count_nonzero(~np.isnan(values))
 
     std = math.sqrt(result)
 

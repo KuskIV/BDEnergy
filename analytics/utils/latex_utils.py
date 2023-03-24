@@ -6,6 +6,11 @@ def get_ytick_labels(
     used_allocated_cores,
     used_compiler_str,
     used_os_names,
+    dut_name_mapper,
+    compiler_mapper,
+    test_case_mapper,
+    mi_mapper,
+    os_mapper,
 ):
     yticklables = []
 
@@ -64,6 +69,11 @@ def get_ytick_labels(
                 u_cores,
                 u_compiler,
                 u_os,
+                dut_name_mapper,
+                compiler_mapper,
+                test_case_mapper,
+                mi_mapper,
+                os_mapper,
             )
         )
 
@@ -167,26 +177,31 @@ def _get_ytick_lable(
     u_cores,
     u_compiler,
     u_os,
+    dut_name_mapper,
+    compiler_mapper,
+    test_case_mapper,
+    mi_mapper,
+    os_mapper,
 ):
     ylable = ""
 
     if len(used_test_case_names) > 1 and len(u_test_cases) > 1:
-        ylable += " " + l_test_case
+        ylable += " " + test_case_mapper[l_test_case]
 
     if len(used_mi_names) > 1 and len(u_mi) > 1:
-        ylable += " " + l_measuring_instrument
+        ylable += " " + mi_mapper[l_measuring_instrument]
 
     if len(used_dut_name) > 1 and len(u_dut) > 1:
-        ylable += " " + l_dut_name
+        ylable += " " + dut_name_mapper[l_dut_name]
 
     if len(used_os_names) > 1 and len(u_os) > 1:
-        ylable += "win" if l_os == "win32nt" else "lin"
+        ylable += " " + os_mapper[l_os]
 
     if len(used_allocated_cores) > 1 and len(u_cores) > 1:
         ylable += " " + l_allocated_cores
 
     if len(used_compiler_str) > 1 and len(u_compiler) > 1:
-        ylable += " " + l_compiler
+        ylable += " " + compiler_mapper[l_compiler]
 
     return ylable
 
