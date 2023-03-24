@@ -118,6 +118,8 @@ namespace BDEnergyFramework.MeasuringInstruments
             {
                 case "DESKTOP-IO08AJ7": // workstation one
                     return "192.168.1.182";
+                case "DESKTOP-1L7IS6S": //workstation two
+                    return "192.168.1.150";
                 default:
                     throw new Exception("Device does not have an assigned plug ip");
             }
