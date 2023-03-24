@@ -1,0 +1,43 @@
+
+\begin{lstlisting}[
+    style=csharp_style,
+    language=bash, 
+    caption={The implementation of the different measuring instruments on BDE},
+    label={lst:measuring_instrument}]
+    public class MeasuringInstrument
+    {
+        
+        public (TimeSeries, Measurement) GetMeasurement()
+        {
+            var path = GetPath(_measuringInstrument, fileCreatingTime);
+            return ParseData(path);
+        }
+
+        public void Start(DateTime fileCreatingTime)
+        {
+            var path = GetPath(_measuringInstrument, fileCreatingTime);
+
+            StartMeasuringInstruments(path);
+
+            StartTimer();
+        }
+            
+        public void Stop(DateTime date)
+        {
+            StopTimer();
+            StopMeasuringInstrument();
+        }
+        internal virtual int GetMilisecondsBetweenSampels()
+        {
+            return 100;
+        }
+                
+        internal virtual (TimeSeries, Measurement) ParseData(string path) { }
+
+        internal virtual void StopMeasuringInstrument() { }
+
+        internal virtual void StartMeasuringInstruments(string path) { }
+
+        internal virtual void PerformMeasuring() { }
+    }
+\end{lstlisting}
