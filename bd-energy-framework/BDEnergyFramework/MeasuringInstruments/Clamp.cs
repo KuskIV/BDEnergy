@@ -102,7 +102,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                         C1ACRMS = (double)reader[2],
                         C1TrueRMS = (double)reader[1],
                         //Time = DateTime.Parse(reader[3].ToString())
-                        Time = DateTime.ParseExact(reader[3].ToString(), "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
+                        Time = reader.GetDateTime("time")//(DateTime)reader[3] //DateTime.ParseExact(reader[3].ToString(), "yyyy-MM-dd HH.mm.ss.fff", CultureInfo.InvariantCulture)
                     });
                 }
                 reader.Close();
