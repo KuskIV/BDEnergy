@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -100,7 +101,8 @@ namespace BDEnergyFramework.MeasuringInstruments
                     {
                         C1ACRMS = (double)reader[2],
                         C1TrueRMS = (double)reader[1],
-                        Time = DateTime.Parse(reader[3].ToString())
+                        //Time = DateTime.Parse(reader[3].ToString())
+                        Time = DateTime.ParseExact(reader[3].ToString(), "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
                     });
                 }
                 reader.Close();
