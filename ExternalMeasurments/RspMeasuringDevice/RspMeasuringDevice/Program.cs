@@ -20,7 +20,7 @@ while (true)
         measurements1.Add(new Measurements(FileUtils.GetStartTime(files[i]), fileHandler.OpenFile(files[i])));
         List<List<Measurement>> md1 = measurements1.Select(x => x.measurements).ToList();
         md1.ForEach(x => ms1.AddRange(x));
-        databaseHandler.InsertResults(ms1);
+        await databaseHandler.InsertResults(ms1);
         //Clean Up
         ms1.Clear();
 

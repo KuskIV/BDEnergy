@@ -8,8 +8,8 @@ IConfiguration config = new ConfigurationBuilder()
     .Build();
 List<Plug> plugs = new List<Plug>
 {
-    new Plug("192.168.1.182")
-    //new Plug("192.168.1.150")
+    new Plug("192.168.1.182"),
+    new Plug("192.168.1.150")
 };
 DatabaseHandler databaseHandler = new DatabaseHandler(config["ConnectionStrings:MySqlConnection"]);
 databaseHandler.ÓpenConnection();

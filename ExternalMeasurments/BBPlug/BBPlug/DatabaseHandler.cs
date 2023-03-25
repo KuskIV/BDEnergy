@@ -32,7 +32,7 @@ namespace RspMeasuringDevice
             connection.Close();
         }
 
-        public void InsertResults(PlugStatus result, string ip, int maxRetries = 3, int retryDelayMilliseconds = 1000)
+        public void InsertResults(PlugStatus result, string ip, int maxRetries = 30, int retryDelayMilliseconds = 1000)
         {
             Policy.Handle<Exception>()
                 .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
