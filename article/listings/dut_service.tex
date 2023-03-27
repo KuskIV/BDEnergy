@@ -1,0 +1,16 @@
+\begin{lstlisting}[
+    style=csharp_style,
+    language=C, 
+    caption={The DUT interface which allows BDE to work on multiple OSs},
+    label={lst:dut_service}]
+    public interface IDutService
+    {
+        public void DisableWifi();
+        public void EnableWifi();
+        public List<EMeasuringInstrument> GetMeasuringInstruments();
+        public string GetOperatingSystem();
+        public double GetTemperature();
+        public bool IsAdmin();
+        public void StopBackgroundProcesses();
+    }
+\end{lstlisting}

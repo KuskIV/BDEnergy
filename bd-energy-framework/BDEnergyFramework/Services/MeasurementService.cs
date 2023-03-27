@@ -45,10 +45,8 @@ namespace BDEnergyFramework.Services
             var measurements = new List<MeasurementContext>();
             var burninApplied = config.BurnInPeriod <= 0 ? true : false;
 
-
             if (burninApplied)
             {
-
                 measurements = InitializeMeasurements(config, _machineName);
             }
 
@@ -82,18 +80,7 @@ namespace BDEnergyFramework.Services
 
                 if (burninApplied && config.UploadToDatabase)
                 {
-                    if (config.DisableWifi)
-                    {
-                        _logger.Information("About to enable wifi");
-                        _dutService.EnableWifi();
-                        _logger.Information("Successfully enabled wifi");
-                    }
-
-                    _logger.Information("Initializing db connection");
-                    var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-                    repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
-                    repository.Dispose();
+                    UploadMeasurementsToDatabase(config, measurements);
                 }
 
                 if (!burninApplied && IsBurnInCountAchieved(measurements, config))
@@ -106,6 +93,22 @@ namespace BDEnergyFramework.Services
             } while (!EnoughMeasurements(measurements, config, burninApplied));
 
             return measurements;
+        }
+
+        private void UploadMeasurementsToDatabase(MeasurementConfiguration config, List<MeasurementContext> measurements)
+        {
+            if (config.DisableWifi)
+            {
+                _logger.Information("About to enable wifi");
+                _dutService.EnableWifi();
+                _logger.Information("Successfully enabled wifi");
+            }
+
+            _logger.Information("Initializing db connection");
+            var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+            repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
+            repository.Dispose();
         }
 
         private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName)
