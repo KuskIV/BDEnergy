@@ -21,7 +21,6 @@ namespace BDEnergyFramework.MeasuringInstruments
         string machineName;
         public Plug(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
-            // "server=mysql47.unoeuro.com;user=stemlevelup_com;password=ez3rnBAx92p4;database=stemlevelup_com_db"
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
