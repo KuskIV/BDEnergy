@@ -36,7 +36,7 @@ namespace RspMeasuringDevice
             });
         }
 
-        public static string[] GetFiles(string path)
+        public static string[] GetFiles(string path)    
         {
             return Directory.GetFiles(path).OrderBy(s => s).ToArray();
         }
@@ -51,7 +51,7 @@ namespace RspMeasuringDevice
             string fileNameWithExtension = Path.GetFileName(file);
             string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithExtension);
             string format = "yyyy-MM-ddTHH-mm-ss-fffZ"; // specify the custom format string
-            DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture);
+            DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture).ToUniversalTime();
             return fileTime;
         }
     }

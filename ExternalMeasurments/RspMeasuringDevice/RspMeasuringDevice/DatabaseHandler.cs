@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
+using Polly;
 
 namespace RspMeasuringDevice
 {
@@ -28,19 +29,29 @@ namespace RspMeasuringDevice
         {
             connection.Close();
         }
-        public void InsertResults(List<Measurement> results)
+        public async Task InsertResults(List<Measurement> results)
         {
             string insertQuery = "INSERT INTO Measurements (TRms,Rms,Time) VALUES (@double1, @double2, @timestamp)";
+            int maxRetries = 30;
+            int retryDelayMs = 1000;
+
+            var retryPolicy = Policy
+                .Handle<Exception>()
+                .WaitAndRetryAsync(maxRetries, i => TimeSpan.FromMilliseconds(retryDelayMs * i));
+
             try
             {
-                foreach (Measurement measurement in results) 
+                await retryPolicy.ExecuteAsync(async () =>
                 {
-                    MySqlCommand command = new MySqlCommand(insertQuery, connection);
-                    command.Parameters.AddWithValue("@double1", measurement.C1TrueRMS);
-                    command.Parameters.AddWithValue("@double2", measurement.C1ACRMS);
-                    command.Parameters.AddWithValue("@timestamp", measurement.time.ToUniversalTime());
-                    int rowsAffected = command.ExecuteNonQuery();
-                }
+                    foreach (Measurement measurement in results)
+                    {
+                        MySqlCommand command = new MySqlCommand(insertQuery, connection);
+                        command.Parameters.AddWithValue("@double1", measurement.C1TrueRMS);
+                        command.Parameters.AddWithValue("@double2", measurement.C1ACRMS);
+                        command.Parameters.AddWithValue("@timestamp", measurement.time.ToUniversalTime());
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -50,6 +61,7 @@ namespace RspMeasuringDevice
             {
                 Console.WriteLine($"File succesfully uploaded at {DateTime.UtcNow.ToUniversalTime()}");
             }
+
         }
 
     }

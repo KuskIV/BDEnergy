@@ -1,0 +1,35 @@
+\begin{lstlisting}[
+    style=csharp_style,
+    language=bash, 
+    caption={An example of how BDE performs measurements},
+    label={lst:perform_measurement_bde}]
+    public void PerformMeasurement(MeasurementConfiguration config)
+    {
+        var measurements = new List<MeasurementContext>();
+        var burninApplied = SetIsBurninApplies(config);
+
+        if (burninApplied)
+            measurements = InitializeMeasurements(config, _machineName);
+
+        do
+        {
+            if (CpuTooHotOrCold(config))
+                Cooldown(config);
+
+            if (config.DisableWifi)
+                _dutService.DisableWifi();
+
+            PerformMeasurementsForAllConfigs(config, measurements);
+
+            if (burninApplied && config.UploadToDatabase)
+                UploadMeasurementsToDatabase(config, measurements);
+
+            if (!burninApplied && IsBurnInCountAchieved(measurements, config))
+            {
+                measurements = InitializeMeasurements(config, _machineName);
+                burninApplied = true;
+            }
+
+        } while (!EnoughMeasurements(measurements));
+    }
+\end{lstlisting}
