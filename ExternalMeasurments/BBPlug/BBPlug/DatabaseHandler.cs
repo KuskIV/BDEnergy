@@ -34,20 +34,29 @@ namespace RspMeasuringDevice
 
         public void InsertResults(PlugStatus result, string ip, int maxRetries = 30, int retryDelayMilliseconds = 1000)
         {
-            Policy.Handle<Exception>()
-                .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
-                .Execute(() =>
-                {
-                    using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time) VALUES (@watt, @current, @voltage, @ip, @time)", connection);
+            try
+            {
+                Policy.Handle<Exception>()
+                    .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
+                    .Execute(() =>
+                    {
+                        using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time) VALUES (@watt, @current, @voltage, @ip, @time)", connection);
 
-                    // set parameter values
-                    command.Parameters.AddWithValue("@watt", result.Power);
-                    command.Parameters.AddWithValue("@current", result.Current);
-                    command.Parameters.AddWithValue("@voltage", result.Voltage);
-                    command.Parameters.AddWithValue("@ip", ip);
-                    command.Parameters.AddWithValue("@time", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                    command.ExecuteNonQuery();
-                });
+                        // set parameter values
+                        command.Parameters.AddWithValue("@watt", result.Power);
+                        command.Parameters.AddWithValue("@current", result.Current);
+                        command.Parameters.AddWithValue("@voltage", result.Voltage);
+                        command.Parameters.AddWithValue("@ip", ip);
+                        command.Parameters.AddWithValue("@time", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                        command.ExecuteNonQuery();
+                    });
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception here, for example by logging it or displaying an error message to the user.
+                Console.WriteLine("An exception occurred: " + ex.Message);
+            }
+
         }
 
     }
