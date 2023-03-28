@@ -1,5 +1,7 @@
-\paragraph{Dynamic Energy Consumption (DEC):} Is utilized in \cite{fahad2019comparative,biksbois} to enable comparison between the software-based measuring instruments and the hardware-based measuring instruments, where to former measures energy consumption of the CPU and the latter the entire DUT. DEC is also used in the present study. A brief explanation of DEC based on \cite{fahad2019comparative} is given:
+\paragraph{Dynamic Energy Consumption (DEC):} Is utilized in \cite{fahad2019comparative,biksbois} to enable comparison between the software-based measuring instruments and the hardware-based measuring instruments, where one measures energy consumption of the CPU only and the latter the entire DUT. DEC is also used in the our work. A brief explanation of DEC based on \cite{fahad2019comparative} is given:
+
 \begin{equation}\label{eq:dynamicEnergy}
     E_D = E_T - (P_S * T_E)
 \end{equation}
+
 In \cref{eq:dynamicEnergy} $E_D$ is the DEC, $E_T$ is the total energy consumption of the system, $P_S$ is the energy consumption when the system is idle and $T_E$ is the duration of the program execution. With this equation the energy consumption of the test case is isolated. Using DEC requires also measuring the energy consumption on an idle case. \cite{fahad2019comparative}

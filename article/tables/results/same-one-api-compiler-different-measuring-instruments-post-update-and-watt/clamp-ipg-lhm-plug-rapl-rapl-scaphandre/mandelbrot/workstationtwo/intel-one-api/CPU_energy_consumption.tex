@@ -1,0 +1,77 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.22\textheight
+        }
+        \begin{axis}[
+            xlabel={Total Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6},
+        yticklabels={
+             Clamp,  IPG,  LHM,  Plug,  SCAP,  SCAPI
+            },
+            xmin=0,xmax=2000,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1296.2938678563532,
+                lower quartile=1346.7300628498624,
+                median=1363.1309846134986,
+                upper quartile=1380.4547769969618,
+                upper whisker=1429.316216680089
+                }, color = red
+                ] coordinates{(0,1293.4665507742916)(0,1530.7730514963146)(0,1501.2658056109774)(0,1443.9727340460481)(0,1441.185757814306)(0,1431.9135011477194)(0,1443.2360585697902)(0,1468.4199807892846)(0,1460.8278922721788)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=407.63702392578125,
+                lower quartile=413.62860107421875,
+                median=416.2034912109375,
+                upper quartile=418.0913391113281,
+                upper whisker=424.5697021484375
+                }, color = red
+                ] coordinates{(1,405.146240234375)(1,468.4583740234375)(1,480.7867431640625)(1,447.63421630859375)(1,450.10455322265625)(1,439.78594970703125)(1,445.95379638671875)(1,437.1171875)(1,426.1041259765625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=405.68427236344473,
+                lower quartile=411.12842758058184,
+                median=413.21910083570526,
+                upper quartile=414.86259596628463,
+                upper whisker=420.32210397559913
+                }, color = red
+                ] coordinates{(2,421.9414532401272)(2,453.8038553829513)(2,453.1238394779516)(2,439.4030215656982)(2,433.8966789261308)(2,423.708537572639)(2,442.0446381540299)(2,428.70513033255463)(2,431.4488212644694)(2,434.43285981877636)(2,438.87300034322516)(2,426.25338334067516)(2,428.4880497710294)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1248.908148351646,
+                lower quartile=1272.4744761904751,
+                median=1283.9647122905044,
+                upper quartile=1295.181532035651,
+                upper whisker=1327.0435406698543
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=409.149215067,
+                lower quartile=411.68712681137504,
+                median=416.1378972204001,
+                upper quartile=433.0585006724444,
+                upper whisker=451.5302539315556
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=364.7039822077499,
+                lower quartile=367.483509445275,
+                median=371.097081046525,
+                upper quartile=403.65763811424995,
+                upper whisker=406.848918798
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationtwo-cpu-energy_consumption}
+\end{figure}

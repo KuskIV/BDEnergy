@@ -72,7 +72,8 @@ def get_measurements(
                     )
                     tc_idle_case_id = int(tc_idle_case[ID].iloc[0])
 
-                    key = f"{tc_name}.{mi_name}.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
+                    key = f"{tc_name}.{dut_os}.{dut_name}.{config_cores}.{tc_compiler}.{mi_name}"
+                    # key = f"{tc_name}.{mi_name}.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
                     tc_collection = rep.get_collections(
                         db,
                         dut_id,
@@ -152,7 +153,8 @@ def get_measurements(
                     )
 
                     if scaphandre == mi_name:
-                        key = f"{tc_name}.{mi_name}_isolated.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
+                        key = f"{tc_name}.{dut_os}.{dut_name}.{config_cores}.{tc_compiler}.{mi_name}_isolated"
+                        # key = f"{tc_name}.{mi_name}_isolated.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
                         cpu_dynamic_energy_consumption[
                             key
                         ] = df_util.get_additional_metadata_dynamic_energy_consumption(
