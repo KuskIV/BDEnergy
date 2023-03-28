@@ -37,7 +37,7 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetHardwareMonitor(ILogger logger)
         {
-            return new HardwareMonitor(EMeasuringInstrument.HWM, logger);
+            throw new NotImplementedException();
         }
 
         private static MeasuringInstrument GetPlug()

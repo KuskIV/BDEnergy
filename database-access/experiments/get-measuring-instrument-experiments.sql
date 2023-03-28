@@ -64,9 +64,9 @@ where 1 = 1
     -- and d.Os = 'win32nt'
     and t.Compiler = 'intel-one-api'
     and m.CollectionNumber = 2
-    -- and d.Name = 'workstationtwo'
-    and d.Name = 'workstationone'
+    and d.Name = 'workstationtwo'
+    -- and d.Name = 'workstationone'
     -- and t.Name = 'mandelbrot.exe'
-    and not mi.Name = 'broken_clamp'
+    and not mi.Name in ('broken_clamp', 'yet_another_wonky_clamp')
 order by
     lm.MaxBegin desc

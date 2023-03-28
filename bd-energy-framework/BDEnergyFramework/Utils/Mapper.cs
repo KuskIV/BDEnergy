@@ -2,6 +2,7 @@
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using Microsoft.VisualBasic;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace BDEnergyFramework.Utils
@@ -77,23 +78,23 @@ namespace BDEnergyFramework.Utils
         {
             return new Sample()
             {
-                PackageTemperature = float.Parse(ts.PackageTemperature_0C),
-                ElapsedTime = float.Parse(ts.ElapsedTimesec),
-                CpuUtilization = float.Parse(ts.CPUUtilization),
-                ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt),
-                DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules),
-                GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules),
-                CpuEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules),
+                PackageTemperature = float.Parse(ts.PackageTemperature_0C, CultureInfo.InvariantCulture),
+                ElapsedTime = float.Parse(ts.ElapsedTimesec, CultureInfo.InvariantCulture),
+                CpuUtilization = float.Parse(ts.CPUUtilization, CultureInfo.InvariantCulture),
+                ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt, CultureInfo.InvariantCulture),
+                DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules, CultureInfo.InvariantCulture),
+                GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules, CultureInfo.InvariantCulture),
+                CpuEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules, CultureInfo.InvariantCulture),
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
-                    { "GpuUtilization", float.Parse(ts.GTUtilization) },
-                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz) },
+                    { "GpuUtilization", float.Parse(ts.GTUtilization, CultureInfo.InvariantCulture) },
+                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz, CultureInfo.InvariantCulture) },
                     { "GpuFrequencyMhz", ts.GTFrequencyMHz },
-                    { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt) },
-                    { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt) },
-                    { "PackagePl4InWatt", float.Parse(ts.PackagePL4_0Watt) },
-                    { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt) },
-                    { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt) }
+                    { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt, CultureInfo.InvariantCulture) },
+                    { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt, CultureInfo.InvariantCulture) },
+                    { "PackagePl4InWatt", float.Parse(ts.PackagePL4_0Watt, CultureInfo.InvariantCulture) },
+                    { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt, CultureInfo.InvariantCulture) },
+                    { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt, CultureInfo.InvariantCulture) }
                 },
             };
         }
