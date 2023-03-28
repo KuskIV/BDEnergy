@@ -10,13 +10,19 @@ def get_additional_metadata_total(tc_measurements, tc_name):
         relevant_keys = [x for x in keys if tc_name in x]
 
         if len(relevant_keys) == 0:
+            consumption = 0
+            process_energy_consumption.append(consumption)
             continue
 
         if len(relevant_keys) > 1:
             raise Exception(f"too many keys: {','.join(relevant_keys)}")
 
         relevant_key = relevant_keys[0]
-        consumption = field[relevant_key]
+
+        if relevant_key in field:
+            consumption = field[relevant_key]
+        else:
+            consumption = 0
 
         process_energy_consumption.append(consumption)
     return process_energy_consumption

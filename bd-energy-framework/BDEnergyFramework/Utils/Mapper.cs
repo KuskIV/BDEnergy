@@ -88,7 +88,7 @@ namespace BDEnergyFramework.Utils
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
                     { "GpuUtilization", float.Parse(ts.GTUtilization, CultureInfo.InvariantCulture) },
-                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz, CultureInfo.InvariantCulture) },
+                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz, CultureInfo.InvariantCulture) }, 
                     { "GpuFrequencyMhz", ts.GTFrequencyMHz },
                     { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt, CultureInfo.InvariantCulture) },
                     { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt, CultureInfo.InvariantCulture) },
