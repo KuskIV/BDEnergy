@@ -1,0 +1,77 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.22\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            title={The duration of the Runtime}, 
+            ytick={1, 2, 3, 4, 5, 6},
+        yticklabels={
+             Plug LIN,  RAPL LIN,  Clamp WIN,  IPG WIN,  Plug WIN,  SCAP WIN
+            },
+            xmin=0,xmax=50,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=18.201,
+                lower quartile=18.296,
+                median=18.327,
+                upper quartile=18.364,
+                upper whisker=18.463
+                }, color = red
+                ] coordinates{(0,18.132)(0,18.17)(0,18.016)(0,18.062)(0,18.002)(0,18.013)(0,18.16)(0,18.146)(0,18.177)(0,18.156)(0,18.502)(0,18.47)(0,18.504)(0,18.471)(0,18.483)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=19.284,
+                lower quartile=19.366,
+                median=19.392,
+                upper quartile=19.426,
+                upper whisker=19.516
+                }, color = red
+                ] coordinates{(1,19.118)(1,19.073)(1,19.139)(1,19.051)(1,19.182)(1,19.52)(1,19.526)(1,21.532)(1,19.541)(1,19.518)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=14.278,
+                lower quartile=14.348,
+                median=14.375499999999999,
+                upper quartile=14.40425,
+                upper whisker=14.468
+                }, color = red
+                ] coordinates{(2,14.49)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=14.184,
+                lower quartile=14.3535,
+                median=14.411,
+                upper quartile=14.5205,
+                upper whisker=14.738
+                }, color = red
+                ] coordinates{(3,14.83)(3,14.784)(3,14.828)(3,14.943)(3,14.801)(3,15.011)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=14.152,
+                lower quartile=14.339,
+                median=14.477,
+                upper quartile=14.57,
+                upper whisker=14.915
+                }, color = red
+                ] coordinates{(4,14.933)(4,14.959)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=14.276,
+                lower quartile=14.377,
+                median=14.432,
+                upper quartile=14.48225,
+                upper whisker=14.54
+                }, color = red
+                ] coordinates{(5,14.84)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{Runtime measurements on DUT 1 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationone-runtime-duration}
+\end{figure}

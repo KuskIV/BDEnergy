@@ -1,0 +1,68 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.2\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            title={The duration of the Runtime}, 
+            ytick={1, 2, 3, 4, 5},
+        yticklabels={
+             Clamp,  IPG,  LHM,  Plug,  SCAP
+            },
+            xmin=0,xmax=50,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=25.82,
+                lower quartile=27.533,
+                median=28.689500000000002,
+                upper quartile=29.998,
+                upper whisker=32.55
+                }, color = red
+                ] coordinates{(0,55.808)(0,44.484)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=25.68,
+                lower quartile=27.68025,
+                median=28.6845,
+                upper quartile=29.79475,
+                upper whisker=32.663
+                }, color = red
+                ] coordinates{(1,33.475)(1,33.137)(1,33.125)(1,34.166)(1,33.255)(1,33.252)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=25.705,
+                lower quartile=27.580000000000002,
+                median=28.6515,
+                upper quartile=29.801,
+                upper whisker=33.02
+                }, color = red
+                ] coordinates{(2,33.539)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=25.694,
+                lower quartile=27.381249999999998,
+                median=28.2845,
+                upper quartile=29.32875,
+                upper whisker=31.863
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=25.937,
+                lower quartile=27.307,
+                median=28.576,
+                upper quartile=29.642,
+                upper whisker=31.633
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{Runtime measurements on DUT 2 for test case(s) FR compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-fannkuch-redux.exe-intel-one-api-workstationtwo-runtime-duration}
+\end{figure}
