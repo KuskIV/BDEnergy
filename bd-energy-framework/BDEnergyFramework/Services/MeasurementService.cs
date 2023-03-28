@@ -318,7 +318,7 @@ namespace BDEnergyFramework.Services
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
 
-            _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
+            _logger.Information("Test case exited after {duration} milliseconds", m.Duration);
         }
 
         private static Action<string, string, List<int>, ILogger> GetTestCase()

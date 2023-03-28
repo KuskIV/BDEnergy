@@ -21,6 +21,9 @@ using System.Timers;
 using Measurement = BDEnergyFramework.Models.Internal.Measurement;
 using ProcessorAffinityGenerator = BDEnergyFramework.Utils.ProcessorAffinityGenerator;
 using MathUtils = BDEnergyFramework.Utils.MathUtils;
+using BDEnergyFramework.Models.Dto;
+using Google.Protobuf.WellKnownTypes;
+
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -44,17 +47,18 @@ namespace BDEnergyFramework.MeasuringInstruments
         internal override (TimeSeries, Measurement) ParseData(string path, DateTime startTime, DateTime endTime, long elapsedMilliseconds, double startTemperature, double endTemperature, int iteration)
         {
             string jsonPath = Path.ChangeExtension(path, "json");
-            var cpuWatts = GetHostWatts(jsonPath);
+            //var cpuWatts = GetHostWatts(jsonPath, startTime, endTime);
+            var hostDataList = GetHostWatts(jsonPath, startTime, endTime);
 
-            
 
-            if(cpuWatts == null)
+
+            if (hostDataList == null)
             {
                 throw new ScaphandreFileNotFoundException();
             }
             else
             {
-                var totalCpuJoules = CalculateTotalEnergyInJoules(cpuWatts, elapsedMilliseconds);
+                var totalCpuJoules = CalculateTotalEnergyInJoules(hostDataList, elapsedMilliseconds);
 
 
                 // Parse the JSON file and get the process consumption for each measurement
@@ -85,15 +89,22 @@ namespace BDEnergyFramework.MeasuringInstruments
                 // Timeseries consists of Sample
                 var samples = new List<Sample>();
 
-                for (int i = 0; i < cpuWatts.Count; i++)
+
+                for (int i = 0; i < hostDataList.Count; i++)
                 {
-                    var watt = cpuWatts[i];
+                    var watt = hostDataList[i].Watts;
+                    var time = hostDataList[i].Time;
+                    var test = (double)(time - startTime).TotalMilliseconds;
+                    //Console.WriteLine($"hostDataList: {time}");
+                    Console.WriteLine($"Sample {i + 1} Time: {test}");
+
 
                     var sample = new Sample()
                     {
-                        CpuEnergyInJoules = MathUtils.ConvertWattToJoule(watt,cpuWatts.Count,elapsedMilliseconds),
+                        CpuEnergyInJoules = MathUtils.ConvertWattToJoule(watt, hostDataList.Count,elapsedMilliseconds),
                         PackageTemperature = 0,
-                        ElapsedTime = 0,
+                        ElapsedTime = (double)(time - startTime).TotalMilliseconds,
+                        //ElapsedTime = (DateTime.UtcNow - startTime).TotalMilliseconds / 1000,
                         ProcessorPowerWatt = 0,
                         DramEnergyInJoules = 0,
                         GpuEnergyInJoules = 0,
@@ -188,7 +199,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             //Console.WriteLine("Scaphandre killed");
         }
 
-        public List<double> GetHostWatts(string jsonPath)
+        public List<DtoScapPoint> GetHostWatts(string jsonPath, DateTime startTime, DateTime endTime)
         {
 
             if (!File.Exists(jsonPath))
@@ -203,27 +214,45 @@ namespace BDEnergyFramework.MeasuringInstruments
             }
 
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
-            var hostConsumption = new List<double>();
+            var hostDataList = new List<DtoScapPoint>();
             while (reader.Read())
             {
                 if (reader.Value != null && reader.Value.ToString() == "host")
                 {
+                    double consumption = 0;
+                    double timestamp = 0;
                     // Move to the start of the host object
                     reader.Read();
 
                     // Read through the properties of the host object
                     while (reader.Read() && reader.TokenType != JsonToken.EndObject)
                     {
-                        if (reader.Value != null && reader.Value.ToString() == "consumption")
+                        if (reader.Value != null)
                         {
-                            reader.Read(); // move to the value
-                            hostConsumption.Add((double)reader.Value / 1000000.0); // Convert from micro watts to watts.
+                            if (reader.Value.ToString() == "consumption")
+                            {
+                                reader.Read(); // move to the value
+                                consumption = (double)reader.Value / 1000000.0; // Convert from micro watts to watts.
+                            }
+                            else if (reader.Value.ToString() == "timestamp")
+                            {
+                                reader.Read(); // move to the value
+                                //Console.WriteLine("Unix timestamp: " + reader.Value.ToString());
+                                timestamp = (double)reader.Value;
+                                //Console.WriteLine("reader.Value: " + reader.Value);
+                                //Console.WriteLine("timestamp: " + timestamp);
+
+
+                            }
                         }
                     }
+                    DateTime time = GetTimestampFromJson(timestamp);
+                    //Console.WriteLine(" DateTime time: " + time);
+                    hostDataList.Add(new DtoScapPoint { Watts = consumption, Time = time });
                 }
 
             }
-            return hostConsumption;
+            return hostDataList;
         }
 
 
@@ -302,17 +331,57 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         }*/
 
-        public double CalculateTotalEnergyInJoules(List<double> wattMeasurements, long duration)
+        public double CalculateTotalEnergyInJoules(List<DtoScapPoint> wattMeasurements, long duration)
         {
             double totalEnergyInJoules = 0;
 
-            foreach (double wattMeasurement in wattMeasurements)
+
+            foreach (DtoScapPoint wattMeasurement in wattMeasurements)
             {
-                totalEnergyInJoules += MathUtils.ConvertWattToJoule(wattMeasurement, wattMeasurements.Count, duration);
+                totalEnergyInJoules += MathUtils.ConvertWattToJoule(wattMeasurement.Watts, wattMeasurements.Count, duration);
             }
 
             return totalEnergyInJoules;
         }
+
+        //public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        //{
+        //    // Unix timestamp is seconds past epoch
+        //    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        //    dateTime = dateTime.AddMilliseconds(unixTimeStamp * 1000).ToLocalTime();
+        //    return dateTime;
+        //}
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+            // Separate the whole seconds and the fractional part (nanoseconds)
+            long wholeSeconds = (long)unixTimeStamp;
+            double fractionalSeconds = unixTimeStamp - wholeSeconds;
+
+            // Convert the fractional part to ticks (1 tick = 100 nanoseconds)
+            long nanoseconds = (long)(fractionalSeconds * 1_000_000_000);
+            long ticks = nanoseconds / 100;
+
+            dateTime = dateTime.AddSeconds(wholeSeconds).AddTicks(ticks).ToLocalTime();
+            return dateTime;
+        }
+        public static DateTime GetTimestampFromJson(double timestamp)
+        {
+            long seconds = (long)timestamp; // Extract the integer part (seconds) of the Unix timestamp
+            double fractionalSeconds = timestamp - seconds; // Calculate the fractional part of the Unix timestamp
+
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); // Unix epoch (1970-01-01 00:00:00 UTC)
+            DateTime time = epoch
+                .AddSeconds(seconds) // Add the integer part (seconds) to the epoch
+                .Add(TimeSpan.FromSeconds(fractionalSeconds)); // Add the fractional part (sub-second precision) to the DateTime
+
+            //Console.WriteLine($"DateTime time: {time:dd/MM/yyyy HH:mm:ss.fffffff}");
+            return time;
+        }
+
+
 
     }
 }

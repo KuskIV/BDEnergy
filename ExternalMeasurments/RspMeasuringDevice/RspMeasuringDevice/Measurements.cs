@@ -44,7 +44,7 @@ namespace RspMeasuringDevice
         {
             for (int i = 0; i < measurements.Count; i++)
             {
-                measurements[i].time = AddTimeStamp(i - measurements.Count);
+                measurements[i].time = AddTimeStamp(i);
             }
         }
     }

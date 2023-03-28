@@ -13,6 +13,7 @@ test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/*
 test-cases/microbenchmarks/cpp/single-thread/intel-one-api/*
 test-cases/microbenchmarks/cpp/multi-thread/min-gw/*
 test-cases/microbenchmarks/cpp/single-thread/min-gw/*
+test-cases/application/blackscholes/inputs/*
 
 # User-specific files
 *.rsuser
