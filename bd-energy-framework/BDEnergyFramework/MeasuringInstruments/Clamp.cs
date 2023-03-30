@@ -2,10 +2,12 @@
 using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
+using BDEnergyFramework.Utils;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Polly;
 using Polly.Retry;
+using Serilog;
 using System.Timers;
 
 namespace BDEnergyFramework.MeasuringInstruments
@@ -15,17 +17,17 @@ namespace BDEnergyFramework.MeasuringInstruments
     public class Clamp : MeasuringInstrument
     {
         IConfiguration config;
+        private ILogger _logger;
         private RetryPolicy _retryPolicy;
 
-        public Clamp(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
+        public Clamp(EMeasuringInstrument measuringInstrument, ILogger logger) : base(measuringInstrument)
         {
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
-            _retryPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            _logger = logger;
+            _retryPolicy = RetryUtils.GetRetryPolicy(_logger);
         }
 
         internal override void StartMeasuringInstruments(string path) 

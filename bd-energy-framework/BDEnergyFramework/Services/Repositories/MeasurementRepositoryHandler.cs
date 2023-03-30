@@ -17,13 +17,11 @@ namespace BDEnergyFramework.Services.Repositories
 
         public MeasurementRepositoryHandler(Func<IDbConnection> dbFactory, ILogger logger)
         {
-            _retryPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            _logger = logger;
+            _retryPolicy = RetryUtils.GetRetryPolicy(_logger);
 
             var connection = _retryPolicy.Execute(() => dbFactory());
             _repository = new MeasurementRepository(connection);
-            _logger = logger;
         }
 
         public void Dispose()

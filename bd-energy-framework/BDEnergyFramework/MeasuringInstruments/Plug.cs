@@ -14,6 +14,7 @@ using BDEnergyFramework.Exceptions;
 using BDEnergyFramework.Utils;
 using Polly;
 using Polly.Retry;
+using Serilog;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -22,17 +23,17 @@ namespace BDEnergyFramework.MeasuringInstruments
         IConfiguration config;
         string machineName;
         private RetryPolicy _retryPolicy;
+        private readonly ILogger _logger;
 
-        public Plug(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
+        public Plug(EMeasuringInstrument measuringInstrument, ILogger loggre) : base(measuringInstrument)
         {
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
             machineName = Environment.MachineName;
-            _retryPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            _logger = loggre;
+            _retryPolicy = RetryUtils.GetRetryPolicy(_logger);
         }
 
         internal override int GetMilisecondsBetweenSampels()
