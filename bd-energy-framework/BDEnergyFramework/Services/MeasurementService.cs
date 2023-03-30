@@ -25,11 +25,13 @@ namespace BDEnergyFramework.Services
         private List<MeasuringInstrument> _measuringInstruments = new List<MeasuringInstrument>();
         private Dictionary<EMeasuringInstrument, int> _sampleRates;
 
-        private IntelPowerLog _ipg;
-        private Scaphandre _scaphandre;
-        private Plug _plut;
-        private Clamp _clamp;
-        private LibreHardwareMonitorInstrument _lhm;
+        private MeasuringInstrument _ipg;
+        private MeasuringInstrument _lhm;
+
+        //private MeasuringInstrument _scaphandre;
+        //private MeasuringInstrument _plug;
+        //private MeasuringInstrument _clamp;
+
 
         public MeasurementService(IDutService dutService, Func<IDbConnection> dbFactory, ILogger logger, string machineName)
         {
@@ -45,13 +47,28 @@ namespace BDEnergyFramework.Services
                     //SetupMeasuringInstruments(config.MeasurementInstruments);
                 });
 
+            //_scaphandre = new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
+            //_plug = new Plug(EMeasuringInstrument.PLUG, logger);
+            //_clamp = new Clamp(EMeasuringInstrument.CLAMP, logger);
+
             _ipg = new IntelPowerLog(EMeasuringInstrument.IPG);
-            _scaphandre = new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
+            _lhm = new LibreHardwareMonitorInstrument(EMeasuringInstrument.LHM, logger);
+
+            //_measuringInstruments = 
 
         }
 
         public List<MeasurementContext> PerformMeasurement(MeasurementConfiguration config)
         {
+            config.MeasurementInstruments = new List<EMeasuringInstrument>()
+            {
+                //_plug.GetName(),
+                //_scaphandre.GetName(),
+                //_clamp.GetName(),
+                _ipg.GetName(),
+                _lhm.GetName()
+            };
+
             var measurements = new List<MeasurementContext>();
             var burninApplied = config.BurnInPeriod <= 0 ? true : false;
 
@@ -136,7 +153,18 @@ namespace BDEnergyFramework.Services
         private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName)
         {
             _logger.Information("About to initialize measuring instruments");
-            SetupMeasuringInstruments(config.MeasurementInstruments);
+            //SetupMeasuringInstruments(config.MeasurementInstruments);
+
+            _measuringInstruments = new List<MeasuringInstrument>()
+            {
+                _lhm, 
+                _ipg
+                //_plug,
+                //_clamp,
+                //_scaphandre
+            };
+
+
             _sampleRates = GetSampleRates();
 
             if (!config.UploadToDatabase)
@@ -219,57 +247,54 @@ namespace BDEnergyFramework.Services
 
         private void PerformMeasurementsForAllConfigs(MeasurementConfiguration config, List<MeasurementContext> measurements, bool burninApplied)
         {
-            foreach (var mi in config.MeasurementInstruments)
+            foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
             {
-                foreach (var tc in config.TestCasePaths.Zip(config.TestCaseParameters))
+                try
                 {
-                    try
+                    if (!config.AllocatedCores.Any())
                     {
-                        if (!config.AllocatedCores.Any())
-                        {
-                            PerformMeasurementForConfig(config, measurements, mi, tc, new List<int>(), burninApplied);
-                        }
+                        PerformMeasurementForConfig(config, measurements, tc, new List<int>(), burninApplied);
+                    }
 
-                        foreach (var allocatedCores in config.AllocatedCores)
-                        {
-                            PerformMeasurementForConfig(config, measurements, mi, tc, allocatedCores, burninApplied);
-                        }
-                    }
-                    catch (IntelPowerGadgetFileNotFoundException)
+                    foreach (var allocatedCores in config.AllocatedCores)
                     {
-                        _logger.Warning("Unable to find {mi} file. Moving on...", EMeasuringInstrument.IPG);
+                        PerformMeasurementForConfig(config, measurements, tc, allocatedCores, burninApplied);
                     }
-                    catch (ScaphandreFileNotFoundException)
-                    {
-                        _logger.Warning("Unable to find {mi} json. Moving on...", EMeasuringInstrument.SCAPHANDRE);
-                    }
-                    catch(ClampQueryFoundNoPointsException) 
-                    {
-                        _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.CLAMP);
-                    }
-                    catch (PlugQueryFoundNoPointsException)
-                    {
-                        _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.PLUG);
-                    }
-                    catch(Exception e)
-                    {
-                        _logger.Warning(e, "Unknown error occured. Moving on...");
-                    }
+                }
+                catch (IntelPowerGadgetFileNotFoundException)
+                {
+                    _logger.Warning("Unable to find {mi} file. Moving on...", EMeasuringInstrument.IPG);
+                }
+                catch (ScaphandreFileNotFoundException)
+                {
+                    _logger.Warning("Unable to find {mi} json. Moving on...", EMeasuringInstrument.SCAPHANDRE);
+                }
+                catch(ClampQueryFoundNoPointsException) 
+                {
+                    _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.CLAMP);
+                }
+                catch (PlugQueryFoundNoPointsException)
+                {
+                    _logger.Warning("Unable to query any {mi} measurements. Moving on...", EMeasuringInstrument.PLUG);
+                }
+                catch(Exception e)
+                {
+                    _logger.Warning(e, "Unknown error occured. Moving on...");
                 }
             }
         }
 
-        private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, EMeasuringInstrument mi, (string First, string Second) tc, List<int> allocatedCores, bool burninApplied)
+        private void PerformMeasurementForConfig(MeasurementConfiguration config, List<MeasurementContext> measurements, (string First, string Second) tc, List<int> allocatedCores, bool burninApplied)
         {
             var testCasePath = tc.First;
             var testCaseParameter = tc.Second;
 
-            _logger.Information("Executing and measuring using '{mi}' with input '{p} {testCaseParameter}', cores {cores}",
-                mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
+            _logger.Information("Executing and measuring with input '{p} {testCaseParameter}', cores {cores}",
+                PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
 
-            SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
+            SetupMeasurement(config, measurements, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements);
+            Measure(testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements);
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -312,14 +337,14 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements)
+        private void Measure(string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements)
         {
-            var measuringInstrument = GetMeasuringInstrument(mi);
-            var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
+            //var measuringInstrument = GetMeasuringInstrument(mi);
+            //var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
-            if (measurement.Measurements.Count() > requiredMeasurements)
+            if (measurements.Select(x => x.Measurements.Count()).Min() > requiredMeasurements)
             {
-                _logger.Information("Enough measurements achieved for {mi}", mi);
+                _logger.Information("Enough measurements achieved all");
                 return;
             }
 
@@ -329,29 +354,34 @@ namespace BDEnergyFramework.Services
 
             var fileCreatingTime = DateTime.UtcNow;
 
-            StartMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
+            StartMeasuringInstrument(burninApplied, fileCreatingTime);
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
-
-           //Thread.Sleep(1000);
 
             testCase(testCaseParameter, testCasePath, enabledCores, _logger);
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
-            StopMeasuringInstrument(burninApplied, measuringInstrument, fileCreatingTime);
+            StopMeasuringInstrument(burninApplied, fileCreatingTime);
 
             var endTemperature = _dutService.GetTemperature();
-            var iteration = GetIteration(measurements, mi, testCasePath, testCaseParameter, enabledCores);
 
-            _dutService.EnableWifi(); // TODO: only enable once
+            Thread.Sleep(TimeSpan.FromSeconds(15)); // sleep is for clamp and plug
+            _dutService.EnableWifi();
 
-            var (ts, m) = GetMeasurings(burninApplied, measuringInstrument, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration, fileCreatingTime);
+            foreach (var mi in _measuringInstruments)
+            {
+                var iteration = GetIteration(measurements, mi.GetName(), testCasePath, testCaseParameter, enabledCores);
 
-            measurement.TimeSeries.Add(ts);
-            measurement.Measurements.Add(m);
+                var (ts, m) = GetMeasurings(burninApplied, mi, startTemperature, startTime, stopWatch, endTime, endTemperature, iteration, fileCreatingTime);
+                
+                var measurement = GetMeasurement(measurements, mi.GetName(), testCasePath, testCaseParameter, enabledCores);
+                
+                measurement.TimeSeries.Add(ts);
+                measurement.Measurements.Add(m);
+            }
 
-            _logger.Information("Test case exited after {duration} milliseconds", m.Duration);
+            _logger.Information("Test case exited after {duration} milliseconds", measurements.First().Measurements.Last().Duration);
         }
 
         private static Action<string, string, List<int>, ILogger> GetTestCase()
@@ -379,37 +409,77 @@ namespace BDEnergyFramework.Services
             return (new TimeSeries(), new Measurement());
         }
 
-        private void StartMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime fileCreatingTime)
+        private void StartMeasuringInstrument(bool burninApplied, DateTime fileCreatingTime)
         {
             if (!burninApplied)
             {
                 return;
             }
 
-            if (measuringInstrument is MeasuringInstrument mi)
+            foreach (var mi in _measuringInstruments)
             {
-                mi.Start(fileCreatingTime);
+                if (mi is { } _mi)
+                {
+                    switch (_mi.GetName())
+                    {
+                        case EMeasuringInstrument.IPG:
+                        case EMeasuringInstrument.RAPL:
+                        case EMeasuringInstrument.HWM:
+                        case EMeasuringInstrument.LHM:
+                        case EMeasuringInstrument.SCAPHANDRE:
+                            _mi.Start(fileCreatingTime);
+                            _logger.Information("measuring instrument {mi} is started", _mi.GetName());
+                            break;
+                        case EMeasuringInstrument.CLAMP:
+                        case EMeasuringInstrument.PLUG:
+                            _logger.Information("measuring instrument {mi} is started", _mi.GetName());
+                            break;
+                        default:
+                            throw new ArgumentException($"Unknown measuring instrument {_mi.GetName()}");
+                    }
+                }
+                else
+                {
+                    _logger.Warning("Measuring instrument was null when starting measuring");
+                }
             }
-            else
-            {
-                _logger.Warning("Measuring instrument was null when starting measuring");
-            }
+
+
         }
 
-        private void StopMeasuringInstrument(bool burninApplied, MeasuringInstrument? measuringInstrument, DateTime startTime)
+        private void StopMeasuringInstrument(bool burninApplied, DateTime startTime)
         {
             if (!burninApplied)
             {
                 return;
             }
 
-            if (measuringInstrument is MeasuringInstrument mi)
+            foreach (var mi in _measuringInstruments)
             {
-                mi.Stop(startTime);
-            }
-            else
-            {
-                _logger.Warning("Measuring instrument was null when starting measuring");
+                if (mi is { } _mi)
+                {
+                    switch (_mi.GetName())
+                    {
+                        case EMeasuringInstrument.IPG:
+                        case EMeasuringInstrument.RAPL:
+                        case EMeasuringInstrument.HWM:
+                        case EMeasuringInstrument.LHM:
+                        case EMeasuringInstrument.SCAPHANDRE:
+                            _mi.Stop(startTime);
+                            _logger.Information("measuring instrument {mi} has been stopped", _mi.GetName());
+                            break;
+                        case EMeasuringInstrument.CLAMP:
+                        case EMeasuringInstrument.PLUG:
+                            _logger.Information("measuring instrument {mi} has been stopped", _mi.GetName());
+                            break;
+                        default:
+                            throw new ArgumentException($"Unknown measuring instrument {_mi.GetName()}");
+                    }
+                }
+                else
+                {
+                    _logger.Warning("Measuring instrument was null when starting measuring");
+                }
             }
         }
 
@@ -448,13 +518,17 @@ namespace BDEnergyFramework.Services
             _measuringInstruments = measurementInstruments.Select(x => MeasuringInstrumentUtils.GetMeasuringInstrument(x, _logger)).ToList();
         }
 
-        private void SetupMeasurement(MeasurementConfiguration config, List<MeasurementContext> measuremetns, EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<int> allocatedCores)
+        private void SetupMeasurement(MeasurementConfiguration config, List<MeasurementContext> measuremetns, string testCaseParameter, string testCasePath, List<int> allocatedCores)
         {
-            if (!MeasurementExists(measuremetns, mi, testCaseParameter, testCasePath, allocatedCores))
+            foreach (var mi in config.MeasurementInstruments)
             {
-                measuremetns.Add(
-                    new MeasurementContext(testCasePath, testCaseParameter, mi, allocatedCores));
+                if (!MeasurementExists(measuremetns, mi, testCaseParameter, testCasePath, allocatedCores))
+                {
+                    measuremetns.Add(
+                        new MeasurementContext(testCasePath, testCaseParameter, mi, allocatedCores));
+                }
             }
+
         }
 
         private static bool MeasurementExists(List<MeasurementContext> measuremetns, EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<int> allocatedCores)
