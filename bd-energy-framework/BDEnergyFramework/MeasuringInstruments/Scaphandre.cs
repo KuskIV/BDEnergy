@@ -96,7 +96,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                     var time = hostDataList[i].Time;
                     var test = (double)(time - startTime).TotalMilliseconds;
                     //Console.WriteLine($"hostDataList: {time}");
-                    Console.WriteLine($"Sample {i + 1} Time: {test}");
+                    //Console.WriteLine($"Sample {i + 1} Time: {test}");
 
 
                     var sample = new Sample()
