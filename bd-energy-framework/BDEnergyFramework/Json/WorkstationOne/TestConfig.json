@@ -1,13 +1,13 @@
 [
   {
-    "MeasurementInstruments": [ 3 ],
+    "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 1,
     "TestCasePaths": [
-      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe"
     ],
     "AllocatedCores": [  ],
     "TestCaseParameters": [
-      ""
+      "30000"
     ],
     "UploadToDatabase": false,
     "BurnInPeriod": 0,
