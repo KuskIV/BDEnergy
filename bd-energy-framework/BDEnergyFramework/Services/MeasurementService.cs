@@ -25,6 +25,12 @@ namespace BDEnergyFramework.Services
         private List<MeasuringInstrument> _measuringInstruments = new List<MeasuringInstrument>();
         private Dictionary<EMeasuringInstrument, int> _sampleRates;
 
+        private IntelPowerLog _ipg;
+        private Scaphandre _scaphandre;
+        private Plug _plut;
+        private Clamp _clamp;
+        private LibreHardwareMonitorInstrument _lhm;
+
         public MeasurementService(IDutService dutService, Func<IDbConnection> dbFactory, ILogger logger, string machineName)
         {
             _dutService = dutService;
@@ -38,6 +44,10 @@ namespace BDEnergyFramework.Services
                     _logger.Warning("Exception of type {type} occured with message '{msg}'. Retrying... (attempt: {a})", exception.GetType(), exception.Message, retryCount);
                     //SetupMeasuringInstruments(config.MeasurementInstruments);
                 });
+
+            _ipg = new IntelPowerLog(EMeasuringInstrument.IPG);
+            _scaphandre = new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
+
         }
 
         public List<MeasurementContext> PerformMeasurement(MeasurementConfiguration config)
