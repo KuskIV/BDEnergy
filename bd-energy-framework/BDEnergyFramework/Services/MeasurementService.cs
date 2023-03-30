@@ -381,7 +381,14 @@ namespace BDEnergyFramework.Services
                 measurement.Measurements.Add(m);
             }
 
-            _logger.Information("Test case exited after {duration} milliseconds", measurements.First().Measurements.Last().Duration);
+            try
+            {
+                _logger.Information("Test case exited after {duration} milliseconds", measurements.First().Measurements.Last().Duration);
+            }
+            catch (Exception)
+            {
+                _logger.Information("Test case exited");
+            }
         }
 
         private static Action<string, string, List<int>, ILogger> GetTestCase()
