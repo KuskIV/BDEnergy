@@ -2,27 +2,11 @@
 using BDEnergyFramework.Models;
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI.Common;
-using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.Mozilla;
-using RaspberryEnergyProcessing.Model;
-using RaspberryPiCommunication;
-using Spectre.Console.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics.Metrics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Polly;
+using Polly.Retry;
 using System.Timers;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -31,12 +15,17 @@ namespace BDEnergyFramework.MeasuringInstruments
     public class Clamp : MeasuringInstrument
     {
         IConfiguration config;
+        private RetryPolicy _retryPolicy;
+
         public Clamp(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
+            _retryPolicy = Policy
+                .Handle<Exception>()
+                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
 
         internal override void StartMeasuringInstruments(string path) 
@@ -83,7 +72,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             List<DtoClampPoint> points = new List<DtoClampPoint>();
             using (MySqlConnection connection = new MySqlConnection(config["MySqlConnection"]))
             {
-                connection.Open();
+                _retryPolicy.Execute(() => connection.Open());
 
                 string formattedStartTime = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 string formattedEndTime = endTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -94,7 +83,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 command.Parameters.AddWithValue("@start", formattedStartTime);
                 command.Parameters.AddWithValue("@end", formattedEndTime);
 
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = _retryPolicy.Execute(() => command.ExecuteReader());
                 while (reader.Read())
                 {
                     points.Add(new DtoClampPoint
@@ -105,14 +94,14 @@ namespace BDEnergyFramework.MeasuringInstruments
                         Time = reader.GetDateTime("time")//(DateTime)reader[3] //DateTime.ParseExact(reader[3].ToString(), "yyyy-MM-dd HH.mm.ss.fff", CultureInfo.InvariantCulture)
                     });
                 }
-                reader.Close();
+                _retryPolicy.Execute(() => reader.Close());
 
                 if (points.Count == 0)
                 {
                     throw new ClampQueryFoundNoPointsException();
                 }
 
-                connection.Close();
+                _retryPolicy.Execute(() => connection.Close());
 
                 return points;
 

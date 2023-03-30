@@ -12,6 +12,8 @@ using System.Timers;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using BDEnergyFramework.Exceptions;
 using BDEnergyFramework.Utils;
+using Polly;
+using Polly.Retry;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -19,6 +21,8 @@ namespace BDEnergyFramework.MeasuringInstruments
     {
         IConfiguration config;
         string machineName;
+        private RetryPolicy _retryPolicy;
+
         public Plug(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
         {
             config = new ConfigurationBuilder()
@@ -26,6 +30,9 @@ namespace BDEnergyFramework.MeasuringInstruments
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
             machineName = Environment.MachineName;
+            _retryPolicy = Policy
+                .Handle<Exception>()
+                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
 
         internal override int GetMilisecondsBetweenSampels()
@@ -35,6 +42,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StartMeasuringInstruments(string path)
         {
+            // Do nothing
         }
 
         internal override void StopMeasuringInstrument()
@@ -75,7 +83,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             List<DtoPlugPoint> points = new List<DtoPlugPoint>();
             using (MySqlConnection connection = new MySqlConnection(config["MySqlConnection"]))
             {
-                connection.Open();
+                _retryPolicy.Execute(() => connection.Open());
 
                 string formattedStartTime = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 string formattedEndTime = endTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -87,7 +95,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 command.Parameters.AddWithValue("@end", formattedEndTime);
                 command.Parameters.AddWithValue("@ip", GetDeviceIp());
 
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = _retryPolicy.Execute(() => command.ExecuteReader());
                 while (reader.Read())
                 {
                     points.Add(new DtoPlugPoint
@@ -99,14 +107,14 @@ namespace BDEnergyFramework.MeasuringInstruments
                         Time = reader.GetDateTime("time")
                 });
                 }
-                reader.Close();
+                _retryPolicy.Execute(() => reader.Close());
 
                 if (points.Count == 0)
                 {
                     throw new PlugQueryFoundNoPointsException();
                 }
 
-                connection.Close();
+                _retryPolicy.Execute(() => connection.Close());
 
                 return points;
 

@@ -97,18 +97,30 @@ namespace BDEnergyFramework.Services
 
         private void UploadMeasurementsToDatabase(MeasurementConfiguration config, List<MeasurementContext> measurements)
         {
-            if (config.DisableWifi)
+            try
             {
-                _logger.Information("About to enable wifi");
-                _dutService.EnableWifi();
-                _logger.Information("Successfully enabled wifi");
+                if (config.DisableWifi)
+                {
+                    _logger.Information("About to enable wifi");
+                    _dutService.EnableWifi();
+                    _logger.Information("Successfully enabled wifi");
+                }
+
+                _logger.Information("Initializing db connection");
+                var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+                repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
+                repository.Dispose();
             }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Error when uploading measurements. Moving on...");
 
-            _logger.Information("Initializing db connection");
-            var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-            repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
-            repository.Dispose();
+                foreach (var m in measurements)
+                {
+                    _ = m.Measurements.RemoveAll(x => x.HasBeenSaved == false);
+                }
+            }
         }
 
         private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName)
@@ -122,13 +134,25 @@ namespace BDEnergyFramework.Services
                 return new List<MeasurementContext>();
             }
 
+            try
+            {
+                return GetMeasurementsFromDatabase(config, machineName);
+            }
+            catch (Exception)
+            {
+                _logger.Information("Unable to initialize measurements. Starting with new list.");
+
+                return new List<MeasurementContext>();
+            }
+        }
+
+        private List<MeasurementContext> GetMeasurementsFromDatabase(MeasurementConfiguration config, string machineName)
+        {
             _dutService.EnableWifi();
 
             var measurements = new List<MeasurementContext>();
             _logger.Information("Initializing db connection");
             var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-
 
             foreach (var mi in config.MeasurementInstruments)
             {
@@ -153,7 +177,6 @@ namespace BDEnergyFramework.Services
             repository.Dispose();
             return measurements;
         }
-
 
         private Dictionary<EMeasuringInstrument, int> GetSampleRates()
         {
@@ -220,7 +243,7 @@ namespace BDEnergyFramework.Services
                     }
                     catch(Exception e)
                     {
-                        _logger.Warning(e, "Unknown error occured. Retrying...");
+                        _logger.Warning(e, "Unknown error occured. Moving on...");
                     }
                 }
             }
