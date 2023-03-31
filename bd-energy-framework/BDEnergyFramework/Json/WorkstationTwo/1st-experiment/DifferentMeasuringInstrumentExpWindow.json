@@ -1,7 +1,7 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 5, 2, 6, 7 ],
-    "RequiredMeasurements": 100000,
+    "MeasurementInstruments": [ 5, 6 ],
+    "RequiredMeasurements": 600,
     "TestCasePaths": [
       "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
       "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
