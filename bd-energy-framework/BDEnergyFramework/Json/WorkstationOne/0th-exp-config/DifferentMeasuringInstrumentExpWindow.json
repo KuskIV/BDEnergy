@@ -1,5 +1,30 @@
 ﻿[
   {
+    "MeasurementInstruments": [ 7 ],
+    "RequiredMeasurements": 200,
+    "TestCasePaths": [
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "64000"
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 2,
+    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update-and-watt",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
     "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 1000,
     "TestCasePaths": [
