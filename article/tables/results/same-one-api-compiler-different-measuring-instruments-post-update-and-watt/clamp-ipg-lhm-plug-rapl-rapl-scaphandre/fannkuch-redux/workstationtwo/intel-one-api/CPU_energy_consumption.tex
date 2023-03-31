@@ -3,27 +3,18 @@
     \begin{tikzpicture}[]
         \pgfplotsset{
             width=0.9\textwidth,
-            height=0.22\textheight
+            height=0.2\textheight
         }
         \begin{axis}[
             xlabel={Total Energy Consumption (Joules)}, 
             title={The energy consumption of the CPU}, 
-            ytick={1, 2, 3, 4, 5, 6},
+            ytick={1, 2, 3, 4, 5},
         yticklabels={
-             Clamp,  IPG,  LHM,  Plug,  SCAP,  SCAPI
+             IPG,  LHM,  Plug,  SCAP,  SCAPI
             },
             xmin=0,xmax=2000,
             ]
         
-        
-        \addplot+ [boxplot prepared={
-                lower whisker=1579.6993029332,
-                lower quartile=1688.824774040901,
-                median=1767.7439534298096,
-                upper quartile=1843.8124475777943,
-                upper whisker=2037.0840070260488
-                }, color = red
-                ] coordinates{(0,3805.7336716420987)(0,2688.1872846582037)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=389.80413818359375,
@@ -32,7 +23,7 @@
                 upper quartile=446.94610595703125,
                 upper whisker=483.342529296875
                 }, color = red
-                ] coordinates{(1,487.37103271484375)(1,490.345947265625)(1,514.6580810546875)(1,486.92901611328125)(1,484.99420166015625)(1,503.358154296875)(1,484.287353515625)(1,489.07281494140625)(1,504.4725341796875)(1,483.97039794921875)};
+                ] coordinates{(0,487.37103271484375)(0,490.345947265625)(0,514.6580810546875)(0,486.92901611328125)(0,484.99420166015625)(0,503.358154296875)(0,484.287353515625)(0,489.07281494140625)(0,504.4725341796875)(0,483.97039794921875)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=387.73753714410583,
@@ -41,34 +32,34 @@
                 upper quartile=446.9699976395613,
                 upper whisker=481.9536157530114
                 }, color = red
-                ] coordinates{(2,495.371486745388)(2,507.06150775446304)(2,509.7883568926096)(2,514.9128385693042)(2,508.5913889813295)(2,489.1903487822215)};
+                ] coordinates{(1,495.371486745388)(1,507.06150775446304)(1,509.7883568926096)(1,514.9128385693042)(1,508.5913889813295)(1,489.1903487822215)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1372.323011952187,
-                lower quartile=1453.4377256478135,
-                median=1496.8748977272735,
-                upper quartile=1547.1319235235608,
-                upper whisker=1677.7374429967454
+                lower whisker=1346.5575421686774,
+                lower quartile=1447.9488134108458,
+                median=1494.3365560958314,
+                upper quartile=1546.3205082356728,
+                upper whisker=1685.4647357859517
+                }, color = red
+                ] coordinates{(2,1711.6857974683478)(2,1997.0158031088174)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=388.59466909049996,
+                lower quartile=419.254716672,
+                median=431.35404852184627,
+                upper quartile=445.55294516330764,
+                upper whisker=484.58753699942855
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=391.09391621566664,
-                lower quartile=416.3221469523333,
-                median=429.92713591580764,
-                upper quartile=445.41318854613456,
-                upper whisker=476.2569558405
-                }, color = red
-                ] coordinates{};
-        
-        \addplot+ [boxplot prepared={
-                lower whisker=354.0370034832083,
-                lower quartile=380.0368935971666,
-                median=396.98246392988466,
-                upper quartile=407.19238530986536,
+                lower whisker=349.1433320670001,
+                lower quartile=381.9263054722916,
+                median=396.1062755405769,
+                upper quartile=407.3009675405,
                 upper whisker=443.971694678
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(4,448.6631844982857)(4,445.8164667547501)(4,452.84884603521425)};
         
         
         \end{axis}
