@@ -96,4 +96,34 @@
     "AdditionalMetadata": {
       "msDelayInTestCase": "500"
     }
+  },
+  {
+    "MeasurementInstruments": [ 2 ],
+    "RequiredMeasurements": 10000,
+    "TestCasePaths": [
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\fannkuch-redux.exe",
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\mandelbrot.exe",
+      "C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\clang\\idle-case.exe"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "16000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 1,
+    "ExperimentName": "same-cpp-multi-core-micro-benchmark-different-compiler",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "clang",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  }
 ]

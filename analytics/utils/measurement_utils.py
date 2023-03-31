@@ -17,7 +17,7 @@ def get_measurements(
     db,
     experiment_name,
     experiment_number,
-    energy_per_time,
+    # energy_per_time,
     scaphandre,
     cpu_energy_results,
     dram_energy_results,
@@ -30,6 +30,7 @@ def get_measurements(
     dram_dynamic_energy_consumption,
     idle_cpu_consumption_results,
     used_test_case_name,
+    cpu_dynamic_energy_watt_consumption,
 ):
     for dut_index, dut_row in used_dut.iterrows():
         dut_id = dut_row[ID]
@@ -123,13 +124,19 @@ def get_measurements(
                     )
 
                     idle_cpu_consumption = df_util.get_cpu_energy_per_time(
-                        tc_idle_case_measurements, energy_per_time, used_test_case_name
+                        tc_idle_case_measurements,
+                        tc_idle_case_measurements["Duration"].mean(),
+                        used_test_case_name,
                     )
                     idle_gpu_consumption = df_util.get_gpu_energy_per_time(
-                        tc_idle_case_measurements, energy_per_time, used_test_case_name
+                        tc_idle_case_measurements,
+                        tc_idle_case_measurements["Duration"].mean(),
+                        used_test_case_name,
                     )
                     idle_dram_consumption = df_util.get_dram_energy_per_time(
-                        tc_idle_case_measurements, energy_per_time, used_test_case_name
+                        tc_idle_case_measurements,
+                        tc_idle_case_measurements["Duration"].mean(),
+                        used_test_case_name,
                     )
 
                     idle_cpu_consumption_results[key] = tc_idle_case_measurements[
@@ -139,17 +146,42 @@ def get_measurements(
                     cpu_dynamic_energy_consumption[
                         key
                     ] = df_util.get_cpu_dynamic_energy(
-                        tc_measurements, idle_cpu_consumption, energy_per_time, tc_name
+                        tc_measurements,
+                        idle_cpu_consumption,
+                        tc_measurements["Duration"].mean(),
+                        tc_name,
                     )
+
+                    idle_cpu_watt_consumption = df_util.get_cpu_energy_per_time(
+                        tc_idle_case_measurements,
+                        1000,
+                        used_test_case_name,
+                    )
+
+                    cpu_dynamic_energy_watt_consumption[
+                        key
+                    ] = df_util.get_cpu_dynamic_energy(
+                        tc_measurements,
+                        idle_cpu_watt_consumption,
+                        1000,
+                        tc_name,
+                    )
+
                     gpu_dynamic_energy_consumption[
                         key
                     ] = df_util.get_gpu_dynamic_energy(
-                        tc_measurements, idle_gpu_consumption, energy_per_time, tc_name
+                        tc_measurements,
+                        idle_gpu_consumption,
+                        tc_measurements["Duration"].mean(),
+                        tc_name,
                     )
                     dram_dynamic_energy_consumption[
                         key
                     ] = df_util.get_dram_dynamic_energy(
-                        tc_measurements, idle_dram_consumption, energy_per_time, tc_name
+                        tc_measurements,
+                        idle_dram_consumption,
+                        tc_measurements["Duration"].mean(),
+                        tc_name,
                     )
 
                     if scaphandre == mi_name:
@@ -158,8 +190,14 @@ def get_measurements(
                         cpu_dynamic_energy_consumption[
                             key
                         ] = df_util.get_additional_metadata_dynamic_energy_consumption(
-                            tc_measurements, energy_per_time, tc_name
+                            tc_measurements, tc_measurements["Duration"].mean(), tc_name
                         )
                         cpu_energy_results[key] = df_util.get_additional_metadata_total(
                             tc_measurements, tc_name
+                        )
+
+                        cpu_dynamic_energy_watt_consumption[
+                            key
+                        ] = df_util.get_additional_metadata_dynamic_energy_consumption(
+                            tc_measurements, 1000, tc_name
                         )
