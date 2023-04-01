@@ -55,7 +55,8 @@ namespace RspMeasuringDevice
             //DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture).ToUniversalTime();
             //return fileTime;
             FileInfo fileInfo = new FileInfo(file);
-            DateTime creationTime = fileInfo.CreationTime;
+            DateTime creationTime = fileInfo.CreationTimeUtc;
+            //Console.WriteLine("File "+ creationTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             return creationTime.AddSeconds(-10).ToUniversalTime();
         }
     }

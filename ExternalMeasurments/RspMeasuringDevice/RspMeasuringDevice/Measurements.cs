@@ -11,12 +11,13 @@ namespace RspMeasuringDevice
     {
         public DateTime TimeStamp { get; set; }
         public List<Measurement> measurements { get; set; }
+        public DateTime Last { get; } 
 
         public Measurements(DateTime dateTime, string rawMeasurement)
         {
             TimeStamp = dateTime;
             measurements = LoadMeasurement(rawMeasurement);
-            AddTimeStamps();
+            Last = AddTimeStamps();
         }
 
         private List<Measurement> LoadMeasurement(string rawStr)
@@ -40,12 +41,13 @@ namespace RspMeasuringDevice
             return TimeStamp.AddMilliseconds(i * 100);
         }
 
-        private void AddTimeStamps()
+        private DateTime AddTimeStamps()
         {
             for (int i = 0; i < measurements.Count; i++)
             {
                 measurements[i].time = AddTimeStamp(i);
             }
+            return measurements.Last().time;
         }
     }
 }
