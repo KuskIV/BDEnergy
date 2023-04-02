@@ -21,8 +21,8 @@ Thread.Sleep(500);
 while (true) 
 {
     files = fileHandler.GetFiles();
-    Thread.Sleep(100);
-    MasterTime = DateTime.UtcNow.AddMilliseconds(-100);
+    Thread.Sleep(500);
+    MasterTime = DateTime.UtcNow.AddMilliseconds(-500);
     databaseHandler.ÓpenConnection();
     for (int i = 0; i < files.Count; i += 1)
     {
