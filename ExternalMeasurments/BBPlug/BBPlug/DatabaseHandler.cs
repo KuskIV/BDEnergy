@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using BBPlug.models;
 using System.Net.NetworkInformation;
 using Polly;
+using MySqlX.XDevAPI.Common;
 
 namespace RspMeasuringDevice
 {
@@ -22,9 +23,22 @@ namespace RspMeasuringDevice
             connection = new MySqlConnection(DbConnectionStr);
         }
 
-        public void ÓpenConnection() 
+        public void ÓpenConnection(int maxRetries = 30, int retryDelayMilliseconds = 1000) 
         {
-            connection.Open();
+            try
+            {
+                Policy.Handle<Exception>()
+                    .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
+                    .Execute(() =>
+                    {
+                        connection.Open();
+                    });
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception here, for example by logging it or displaying an error message to the user.
+                Console.WriteLine("An exception occurred: " + ex.Message);
+            }
         }
 
         public void CloseConnection() 
@@ -32,8 +46,10 @@ namespace RspMeasuringDevice
             connection.Close();
         }
 
-        public void InsertResults(PlugStatus result, string ip, int maxRetries = 30, int retryDelayMilliseconds = 1000)
+        public async Task InsertResults(PlugStatus result, string ip)
         {
+            int maxRetries = 300;
+            int retryDelayMilliseconds = 1000;
             try
             {
                 Policy.Handle<Exception>()
@@ -51,12 +67,19 @@ namespace RspMeasuringDevice
                         command.ExecuteNonQuery();
                     });
             }
+             catch (MySqlException ex) when (ex.Number == 0 || ex.Number == 2013)
+            {
+                // Connection is closed or lost, reopen it and retry operation
+                Console.WriteLine("Connection lost or closed, retrying operation...");
+                connection.Close();
+                connection.Open();
+                await InsertResults(result, ip);
+            }
             catch (Exception ex)
             {
-                // Handle the exception here, for example by logging it or displaying an error message to the user.
-                Console.WriteLine("An exception occurred: " + ex.Message);
+                // Handle other exceptions
+                Console.WriteLine("Error: {0}", ex.Message);
             }
-
         }
 
     }
