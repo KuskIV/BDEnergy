@@ -34,7 +34,7 @@ namespace RspMeasuringDevice
         //    }
         //}
 
-        public string OpenFile(string path, int retryCount = 20, int delayMs = 1500)
+        public string OpenFile(string path, int retryCount = 30, int delayMs = 500)
         {
             var policy = Policy
             .Handle<IOException>()
