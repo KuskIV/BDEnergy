@@ -3,18 +3,27 @@
     \begin{tikzpicture}[]
         \pgfplotsset{
             width=0.9\textwidth,
-            height=0.18\textheight
+            height=0.2\textheight
         }
         \begin{axis}[
             xlabel={Average Runtime (s)}, 
             title={The average duration}, 
-            ytick={1, 2, 3, 4},
+            ytick={1, 2, 3, 4, 5},
         yticklabels={
-             IPG,  LHM,  Plug,  SCAP
+             Clamp,  IPG,  LHM,  Plug,  SCAP
             },
             xmin=0,xmax=50,
             ]
         
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=20.898,
+                lower quartile=21.42875,
+                median=21.616,
+                upper quartile=21.81225,
+                upper whisker=22.334
+                }, color = red
+                ] coordinates{(0,20.841)(0,22.536)(0,23.136)(0,22.699)(0,22.736)(0,22.86)(0,23.105)(0,22.735)(0,23.125)(0,22.592)(0,22.747)(0,22.95)(0,23.201)(0,22.542)(0,23.1)(0,22.693)(0,22.934)(0,22.818)(0,22.603)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=20.928,
@@ -23,7 +32,7 @@
                 upper quartile=21.6085,
                 upper whisker=22.02
                 }, color = red
-                ] coordinates{(0,20.897)(0,20.861)(0,20.893)(0,20.88)(0,22.279)(0,22.067)(0,22.031)(0,22.065)(0,23.24)(0,22.098)(0,22.102)};
+                ] coordinates{(1,20.897)(1,20.861)(1,20.893)(1,20.88)(1,22.279)(1,22.067)(1,22.031)(1,22.065)(1,23.24)(1,22.098)(1,22.102)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=20.881,
@@ -32,16 +41,16 @@
                 upper quartile=21.26175,
                 upper whisker=21.502
                 }, color = red
-                ] coordinates{(1,21.533)(1,21.513)(1,21.511)(1,21.533)(1,21.538)(1,21.582)(1,21.867)(1,21.706)(1,21.523)(1,21.643)(1,21.533)(1,21.598)(1,21.534)(1,21.598)(1,21.518)};
+                ] coordinates{(2,21.533)(2,21.513)(2,21.511)(2,21.533)(2,21.538)(2,21.582)(2,21.867)(2,21.706)(2,21.523)(2,21.643)(2,21.533)(2,21.598)(2,21.534)(2,21.598)(2,21.518)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=20.859,
-                lower quartile=21.3755,
-                median=21.5745,
-                upper quartile=21.77125,
+                lower quartile=21.38775,
+                median=21.569499999999998,
+                upper quartile=21.7845,
                 upper whisker=22.182
                 }, color = red
-                ] coordinates{(2,22.956)(2,22.963)(2,22.826)(2,22.916)(2,22.881)(2,22.522)(2,23.22)(2,22.431)};
+                ] coordinates{(3,22.956)(3,22.963)(3,22.826)(3,22.916)(3,22.881)(3,22.522)(3,23.22)(3,22.431)(3,22.839)(3,23.24)(3,22.703)(3,22.625)(3,22.752)(3,22.713)(3,22.748)(3,22.701)(3,22.524)(3,23.18)(3,22.899)(3,23.084)(3,23.225)(3,23.209)(3,23.043)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=21.082,
@@ -50,7 +59,7 @@
                 upper quartile=21.715,
                 upper whisker=22.146
                 }, color = red
-                ] coordinates{(3,22.19)(3,22.209)};
+                ] coordinates{(4,22.19)(4,22.209)};
         
         
         \end{axis}

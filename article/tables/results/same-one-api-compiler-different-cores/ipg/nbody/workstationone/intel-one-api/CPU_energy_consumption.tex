@@ -1,0 +1,95 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.26\textheight
+        }
+        \begin{axis}[
+            xlabel={Total Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8},
+        yticklabels={
+             0,  1,  2,  3,  4,  5,  6,  7
+            },
+            xmin=0,xmax=800,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=131.918212890625,
+                lower quartile=136.0340118408203,
+                median=153.6767578125,
+                upper quartile=157.52781677246094,
+                upper whisker=187.78741455078125
+                }, color = red
+                ] coordinates{(0,195.3338623046875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=129.96728515625,
+                lower quartile=137.7166748046875,
+                median=163.169921875,
+                upper quartile=171.01414489746094,
+                upper whisker=204.49700927734375
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=128.94134521484375,
+                lower quartile=132.2894744873047,
+                median=146.53042602539062,
+                upper quartile=154.70651245117188,
+                upper whisker=186.6002197265625
+                }, color = red
+                ] coordinates{(2,194.108154296875)(2,195.30303955078125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=129.259521484375,
+                lower quartile=132.65602111816406,
+                median=146.37918090820312,
+                upper quartile=154.117431640625,
+                upper whisker=172.37451171875
+                }, color = red
+                ] coordinates{(3,225.43499755859375)(3,186.48846435546875)(3,186.61004638671875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=128.49267578125,
+                lower quartile=133.78512573242188,
+                median=146.36053466796875,
+                upper quartile=154.23870849609375,
+                upper whisker=177.11627197265625
+                }, color = red
+                ] coordinates{(4,194.67779541015625)(4,187.36370849609375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=129.258544921875,
+                lower quartile=132.217041015625,
+                median=146.53408813476562,
+                upper quartile=154.79949951171875,
+                upper whisker=185.95196533203125
+                }, color = red
+                ] coordinates{(5,202.65985107421875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=127.7913818359375,
+                lower quartile=133.3416748046875,
+                median=146.19161987304688,
+                upper quartile=153.65524291992188,
+                upper whisker=178.69512939453125
+                }, color = red
+                ] coordinates{(6,194.013427734375)(6,186.6097412109375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=128.59490966796875,
+                lower quartile=133.4014129638672,
+                median=146.80517578125,
+                upper quartile=154.99954223632812,
+                upper whisker=179.069580078125
+                }, color = red
+                ] coordinates{(7,187.5802001953125)(7,203.70556640625)(7,187.65985107421875)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 1 for test case(s) NB compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-nbody.exe-intel-one-api-workstationone-cpu-energy_consumption}
+\end{figure}
