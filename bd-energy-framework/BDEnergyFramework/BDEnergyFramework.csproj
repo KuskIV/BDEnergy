@@ -76,6 +76,9 @@
     <None Update="Json\WorkstationTwo\1st-experiment\DifferentMeasuringInstrumentExpWindow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationTwo\2nd-experiment\DifferentCoresInstrumentExpWindow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationTwo\TestConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
