@@ -17,7 +17,7 @@ foreach (var file in files)
 {
     FileUtils.RemoveFile(file);
 }
-Thread.Sleep(500);
+Thread.Sleep(1000);
 while (true) 
 {
     files = fileHandler.GetFiles();
@@ -33,11 +33,6 @@ while (true)
         md1.ForEach(x => ms1.AddRange(x));
         await databaseHandler.InsertResults(ms1);
         ms1.Clear();
-    }
-   
-    foreach (var file in files)
-    {
-        FileUtils.RemoveFile(file);
     }
     databaseHandler.CloseConnection();
 
