@@ -128,9 +128,10 @@ namespace BDEnergyFramework.MeasuringInstruments
                 case "DESKTOP-IO08AJ7": // workstation one
                     return "192.168.1.182";
                 case "DESKTOP-1L7IS6S": //workstation two
+                case "test-H610M-HVS-M-2-R2-0":
                     return "192.168.1.150";
                 default:
-                    throw new Exception("Device does not have an assigned plug ip");
+                    throw new Exception($"Device '{machineName}' does not have an assigned plug ip");
             }
         }
 

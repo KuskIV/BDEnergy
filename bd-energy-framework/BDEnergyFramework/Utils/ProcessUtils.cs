@@ -70,23 +70,6 @@ namespace BDEnergyFramework.Utils
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
 
-            // var process = new Process()
-            // {
-            //     // StartInfo = new ProcessStartInfo("sudo", executablePath)
-            //     StartInfo = new ProcessStartInfo()
-            //     {
-            //         FileName = "sudo",
-            //         UseShellExecute = false,
-            //         RedirectStandardOutput = true,
-            //         Arguments = string.Format("{0} {1}", testCasePath, testCaseParameter),
-            //     }
-            // };
-            // // process.StartInfo.Arguments = parameters;
-            // // process.StartInfo.UseShellExecute = false;
-            // // process.StartInfo.RedirectStandardOutput = true;
-            // process.Start();
-            // process.PriorityClass = ProcessPriorityClass.High;
-
             if (enabledCores.Any())
             {
                 var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
