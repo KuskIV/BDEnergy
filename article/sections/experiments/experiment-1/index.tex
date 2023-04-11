@@ -1,17 +1,16 @@
 \subsection{Experiment One}\label{subsec:exp_one}
 
-The first experiment investigated \textbf{RQ1}. This experiment employed both multi-core test cases presented in \cref{subsec:test_cases}, and the measurements were performed using IPG. IPG was chosen based on its performance in \cite{biksbois}, where it was found to produce similar measurements to LHM. Since the objective of this experiment was to identify the most energy-efficient compiler, the expectation was that a similar conclusion would be made if multiple measuring instruments were used. This experiment was conducted on DUT 1.  
+The first experiment investigated \cref{RQ:RQ1}. This experiment employed both multi-core test cases presented in \cref{subsec:test_cases}, and the measurements were performed using IPG. IPG was chosen based on its performance in \cite{biksbois}, where it was found to produce similar measurements to LHM. Since the objective of this experiment was to identify the most energy-efficient compiler, the expectation was that a similar conclusion would be made if multiple measuring instruments were used. This experiment was conducted on DUT 1.  
 
 \paragraph{Initial Measurements:} As was presented in \cref{subsec:Statistics}, Cochran's formula was used to ensure confidence in the measurements made. The initial measurements were taken to gain insight into the number of measurements required before making additional measurements if required. The number chosen for the initial measurements was 30, as the central limit theorem suggests that a sample size of at least 30 is usually sufficient to ensure that the sampling distribution of the sample mean approximates normality, regardless of the underlying distribution of the population\cite{central-limit-theorem}. In this experiment, the process' priority class for the framework, the test case, and the measuring instrument were set to \texttt{HIGH}.
 
-\input{tables/experiment-1/initial-measurements-compilers.tex}
-
 After 30 measurements, the results from Cochran's formula can be seen in \cref{tab:initial-measurements}, where it was evident that the required samples varied between compilers and test cases. When the test cases were analyzed it was found that MB deviates less than FR, with MB requiring as little as $3$ samples with MinGW, while FR requires up to $62,086$ samples with Clang. Given these results, more measurements were necessary. When the compilers were analyzed interestingly oneAPI had the lowest energy consumption for FR, but the highest for MB. oneAPI also displayed the lowest energy consumption. As a result, 550 additional measurements were conducted for the next step.
 
-\input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/cpu_energy_consumption.tex}
-
+\input{tables/experiment-1/initial-measurements-compilers.tex}
 
 \paragraph{Results:} After 550 measurements were obtained, the reported values by Cochran's formula still indicated that MSVC, MinGW, and Clang needed more measurements. Between the different compilers, Clang stands out where $61.086$ measurements are required. Because this number is so much higher than other compilers, additional measurements were taken using this compiler. After $10.000$ measurements, Cochran's formula now indicated that $1.289$ measurements were required, which is more in line with other compilers.
+
+\input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/cpu_energy_consumption.tex}
 
 When looking at the results for FR in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-energy_consumption,fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}, and for MB in \cref{app:exp_one}, oneAPI had the lowest DEC and total energy consumption for both test cases. Clang deviated the most in \cref{fig:1-same-cpp-multi-core-micro-benchmark-different-compiler-ipg-fannkuch-redux.exe-clang-intel-one-api-min-gw-msvc-workstationone-cpu-dynamic_energy_consumption}.
 
