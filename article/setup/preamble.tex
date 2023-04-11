@@ -56,10 +56,14 @@
 % \usepackage[bookmarksnumbered]{hyperref} %add hidelinks evt
 \usepackage[capitalise, noabbrev]{cleveref}
 \crefdefaultlabelformat{#2\textbf{#1}#3}
-\crefformat{RQ1}{\textbf{RQ1}}
-\crefformat{RQ2}{\textbf{RQ2}}
-\crefformat{RQ3}{\textbf{RQ3}}
-\crefformat{RQ4}{\textbf{RQ4}}
+\newcounter{RQ}
+\renewcommand{\theRQ}{\textbf{\arabic{RQ}}}
+\crefname{RQ}{RQ}{RQs}
+%\crefformat{RQ1}{\textbf{RQ1}}
+%\crefformat{RQ2}{\textbf{RQ2}}
+%\crefformat{RQ3}{\textbf{RQ3}}
+%\crefformat{RQ4}{\textbf{RQ4}}
+\usepackage{hyperref}
 
 \usepackage{graphicx}
 \usepackage{pgf-pie} %%% make pies 
