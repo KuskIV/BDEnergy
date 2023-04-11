@@ -58,6 +58,9 @@
     <None Update="Json\Mhk\MhkValidConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\3th-exp-config\DifferentCoresExpClamp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationOne\3th-exp-config\DifferentCoresExp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

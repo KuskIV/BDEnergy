@@ -1,0 +1,17 @@
+\subsection{Experiment Three}\label{subsec:exp_three}
+
+The third experiment will answer \texttt{RQ3-4}. This will done by taking a look at the per-core performance of the two CPU's used in this work. This will be tested using single-core test cases introduced in \cref{subsec:test_cases}, by running each test case on one core at a time, while measuring the energy consumption using IPG and Clamp. This will show how the performance is between P- and E-cores, and how the performance is between cores with the same specifications.
+
+\paragraph{Per-Core Initial Measurements:} The first measurements made, will be in order to compare the per-core performance, where $250$ measurements will be made for each test case on each core. After $250$ measurements, more measurements were made where it was required, as can be found in \cref{app:exp_three_coch}, with an upper limit of $1000$ measurements.
+
+\paragraph{Per-Core Results:} When presenting the results, it will be based on DUT 2 and test case SN, where the other results can be found in \cref{app:exp_three}. The CPU in DUT 2 is the one with both P- and E-cores, where the difference in performance can be observed in \cref{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-cpu-dec}, \cref{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-cpu-dec_per_second} and \cref{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-runtime-duration} showing the DEC, DEC per second and duration respectively. When comparing between P and E cores, the duration is on average is $76.26\%$ lower on P cores, the energy consumption is $70.44\%$ lower on P cores over the entire duration, while E cores has a $72.88\%$ lower energy consumption per second. When comparing cores of the same type, the largest difference between the best and worst performing core was found on DUT 2, with test case NB, where the performance was $11.61\%$ worse on core 2 than core 7. The lowest difference  was found on DUT 2, test case NB on a P core, where the energy consumption was $1.17\%$ higher on core $6$ than core $10$.
+
+\input{tables/results/same-one-api-compiler-different-cores/ipg/spectral-norm/workstationtwo/intel-one-api/CPU_DEC.tex}
+\input{tables/results/same-one-api-compiler-different-cores/ipg/spectral-norm/workstationtwo/intel-one-api/CPU_DEC_per_second.tex}
+\input{tables/results/same-one-api-compiler-different-cores/ipg/spectral-norm/workstationtwo/intel-one-api/Runtime_duration.tex}
+
+
+% dut 1, NB: 11.61 2 and 7
+% dut 1, SN: 2.5
+% dut 2, NB: E:3.38, P: 1.17
+% dut 2, SN: E: 1.26, P:2.35
