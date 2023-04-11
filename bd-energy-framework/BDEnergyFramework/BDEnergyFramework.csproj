@@ -97,10 +97,15 @@
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationTwo\LinuxTestConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationTwo\1st-experiment\DifferentMeasuringInstrumentExpLinux.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Secrets\" />
     <Folder Include="SQL\" />
   </ItemGroup>
 

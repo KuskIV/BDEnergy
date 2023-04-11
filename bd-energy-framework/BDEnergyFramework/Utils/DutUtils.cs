@@ -13,7 +13,8 @@ namespace BDEnergyFramework.Utils
     public static class DutUtils
     {
         public const string WorkstationOne = "WorkstationOne";
-        
+        public const string WorkstationTwo = "WorkstationTwo";
+
         public static IDutService GetDutService(Models.UserSecrets secrets, ILogger logger)
         {
             if (IsWindowsMachine())
@@ -25,7 +26,7 @@ namespace BDEnergyFramework.Utils
 
             if (IsLinuxMachine())
             {
-                return new LinuxDesktopService(secrets.MachineName);
+                return new LinuxDesktopService(secrets.MachineName, secrets.WifiAdapterName);
             }
 
             throw new NotImplementedException($"The OS {Environment.OSVersion.Platform.ToString()} is not implemented");
