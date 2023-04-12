@@ -12,6 +12,9 @@ using System.Timers;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using BDEnergyFramework.Exceptions;
 using BDEnergyFramework.Utils;
+using Polly;
+using Polly.Retry;
+using Serilog;
 
 namespace BDEnergyFramework.MeasuringInstruments
 {
@@ -19,13 +22,18 @@ namespace BDEnergyFramework.MeasuringInstruments
     {
         IConfiguration config;
         string machineName;
-        public Plug(EMeasuringInstrument measuringInstrument) : base(measuringInstrument)
+        private RetryPolicy _retryPolicy;
+        private readonly ILogger _logger;
+
+        public Plug(EMeasuringInstrument measuringInstrument, ILogger loggre) : base(measuringInstrument)
         {
             config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .AddJsonFile("Secrets/appsettings.secrets.json", true)
                 .Build();
             machineName = Environment.MachineName;
+            _logger = loggre;
+            _retryPolicy = RetryUtils.GetRetryPolicy(_logger);
         }
 
         internal override int GetMilisecondsBetweenSampels()
@@ -35,6 +43,7 @@ namespace BDEnergyFramework.MeasuringInstruments
 
         internal override void StartMeasuringInstruments(string path)
         {
+            // Do nothing
         }
 
         internal override void StopMeasuringInstrument()
@@ -75,7 +84,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             List<DtoPlugPoint> points = new List<DtoPlugPoint>();
             using (MySqlConnection connection = new MySqlConnection(config["MySqlConnection"]))
             {
-                connection.Open();
+                _retryPolicy.Execute(() => connection.Open());
 
                 string formattedStartTime = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 string formattedEndTime = endTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -87,7 +96,7 @@ namespace BDEnergyFramework.MeasuringInstruments
                 command.Parameters.AddWithValue("@end", formattedEndTime);
                 command.Parameters.AddWithValue("@ip", GetDeviceIp());
 
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = _retryPolicy.Execute(() => command.ExecuteReader());
                 while (reader.Read())
                 {
                     points.Add(new DtoPlugPoint
@@ -99,14 +108,14 @@ namespace BDEnergyFramework.MeasuringInstruments
                         Time = reader.GetDateTime("time")
                 });
                 }
-                reader.Close();
+                _retryPolicy.Execute(() => reader.Close());
 
                 if (points.Count == 0)
                 {
                     throw new PlugQueryFoundNoPointsException();
                 }
 
-                connection.Close();
+                _retryPolicy.Execute(() => connection.Close());
 
                 return points;
 
@@ -120,9 +129,10 @@ namespace BDEnergyFramework.MeasuringInstruments
                 case "biksbois-Komplett-PC":
                     return "192.168.1.182";
                 case "DESKTOP-1L7IS6S": //workstation two
+                case "test-H610M-HVS-M-2-R2-0":
                     return "192.168.1.150";
                 default:
-                    throw new Exception("Device does not have an assigned plug ip");
+                    throw new Exception($"Device '{machineName}' does not have an assigned plug ip");
             }
         }
 

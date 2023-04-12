@@ -7,7 +7,9 @@ select
     d.Os as DutOs,
     -- t.Compiler as TestCaseCompiler,
     t.Name as TestCaseName,
-    s.Samples as Samples,
+    s.avgSamples as Samples,
+    -- s.minSamples as miSamples,
+    -- s.maxSamples as maSamples,
     lm.MaxIteration as Iteration,
     mi.Name as Mi,
     DATE_FORMAT(lm.MaxBegin, "%H:%i:%s %d-%m-%Y") as LastStart,
@@ -44,10 +46,14 @@ from MeasuringCollection as m
             CollectionId
         ) as lm on lm.CollectionId = m.Id
     inner join(
-            select avg(t.samples) as Samples, CollectionId from (
-                select count(*) as samples, CollectionId, MeasurementId from Sample
-                where 1 = 1
-                group by MeasurementId, CollectionId
+            select 
+                avg(t.samples) as avgSamples,
+                min(t.samples) as minSamples, 
+                max(t.samples) as maxSamples, 
+                CollectionId from (
+                    select count(*) as samples, CollectionId, MeasurementId from Sample
+                    where 1 = 1
+                    group by MeasurementId, CollectionId
             ) as t
             group by t.CollectionId
     ) as s on s.CollectionId = m.Id
@@ -55,8 +61,12 @@ where 1 = 1
     and d.Env = 'prod'
     and m.Name = 'same-one-api-compiler-different-measuring-instruments-post-update-and-watt'
     and t.Parameter in ('', '64000', '12')
-    and d.Os = 'win32nt'
+    -- and d.Os = 'win32nt'
     and t.Compiler = 'intel-one-api'
     and m.CollectionNumber = 2
+    and d.Name = 'workstationtwo'
+    -- and d.Name = 'workstationone'
+    -- and t.Name = 'mandelbrot.exe'
+    and not mi.Name in ('broken_clamp', 'yet_another_wonky_clamp')
 order by
     lm.MaxBegin desc

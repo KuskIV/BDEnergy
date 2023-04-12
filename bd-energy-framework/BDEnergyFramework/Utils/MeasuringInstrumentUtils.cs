@@ -23,11 +23,11 @@ namespace BDEnergyFramework.Utils
                 case EMeasuringInstrument.LHM:
                     return GetLibreHardwareMonitor(logger);
                 case EMeasuringInstrument.CLAMP:
-                    return GetClamp();
+                    return GetClamp(logger);
                 case EMeasuringInstrument.SCAPHANDRE:
                     return GetScaphandre();
                 case EMeasuringInstrument.PLUG:
-                    return GetPlug();
+                    return GetPlug(logger);
                 case EMeasuringInstrument.HWM:
                     return GetHardwareMonitor(logger);
                 default:
@@ -37,12 +37,12 @@ namespace BDEnergyFramework.Utils
 
         private static MeasuringInstrument GetHardwareMonitor(ILogger logger)
         {
-            return new HardwareMonitor(EMeasuringInstrument.HWM, logger);
+            throw new NotImplementedException();
         }
 
-        private static MeasuringInstrument GetPlug()
+        private static MeasuringInstrument GetPlug(ILogger logger)
         {
-            return new Plug(EMeasuringInstrument.PLUG);
+            return new Plug(EMeasuringInstrument.PLUG, logger);
         }
 
         private static MeasuringInstrument GetScaphandre()
@@ -50,9 +50,9 @@ namespace BDEnergyFramework.Utils
             return new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
         }
 
-        private static MeasuringInstrument GetClamp()
+        private static MeasuringInstrument GetClamp(ILogger logger)
         {
-            return new Clamp(EMeasuringInstrument.CLAMP);
+            return new Clamp(EMeasuringInstrument.CLAMP, logger);
         }
 
         private static MeasuringInstrument GetLibreHardwareMonitor(ILogger logger)

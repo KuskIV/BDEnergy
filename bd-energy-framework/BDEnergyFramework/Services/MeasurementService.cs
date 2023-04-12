@@ -97,18 +97,30 @@ namespace BDEnergyFramework.Services
 
         private void UploadMeasurementsToDatabase(MeasurementConfiguration config, List<MeasurementContext> measurements)
         {
-            if (config.DisableWifi)
+            try
             {
-                _logger.Information("About to enable wifi");
-                _dutService.EnableWifi();
-                _logger.Information("Successfully enabled wifi");
+                if (config.DisableWifi)
+                {
+                    _logger.Information("About to enable wifi");
+                    _dutService.EnableWifi();
+                    _logger.Information("Successfully enabled wifi");
+                }
+
+                _logger.Information("Initializing db connection");
+                var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
+
+                repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
+                repository.Dispose();
             }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Error when uploading measurements. Moving on...");
 
-            _logger.Information("Initializing db connection");
-            var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-            repository.InsertLastMeasurements(measurements, config, _machineName, _sampleRates);
-            repository.Dispose();
+                foreach (var m in measurements)
+                {
+                    _ = m.Measurements.RemoveAll(x => x.HasBeenSaved == false);
+                }
+            }
         }
 
         private List<MeasurementContext> InitializeMeasurements(MeasurementConfiguration config, string machineName)
@@ -122,13 +134,25 @@ namespace BDEnergyFramework.Services
                 return new List<MeasurementContext>();
             }
 
+            try
+            {
+                return GetMeasurementsFromDatabase(config, machineName);
+            }
+            catch (Exception)
+            {
+                _logger.Information("Unable to initialize measurements. Starting with new list.");
+
+                return new List<MeasurementContext>();
+            }
+        }
+
+        private List<MeasurementContext> GetMeasurementsFromDatabase(MeasurementConfiguration config, string machineName)
+        {
             _dutService.EnableWifi();
 
             var measurements = new List<MeasurementContext>();
             _logger.Information("Initializing db connection");
             var repository = new MeasurementRepositoryHandler(_dbFactory, _logger);
-
-
 
             foreach (var mi in config.MeasurementInstruments)
             {
@@ -153,7 +177,6 @@ namespace BDEnergyFramework.Services
             repository.Dispose();
             return measurements;
         }
-
 
         private Dictionary<EMeasuringInstrument, int> GetSampleRates()
         {
@@ -220,7 +243,7 @@ namespace BDEnergyFramework.Services
                     }
                     catch(Exception e)
                     {
-                        _logger.Warning(e, "Unknown error occured. Retrying...");
+                        _logger.Warning(e, "Unknown error occured. Moving on...");
                     }
                 }
             }
@@ -230,13 +253,24 @@ namespace BDEnergyFramework.Services
         {
             var testCasePath = tc.First;
             var testCaseParameter = tc.Second;
+            var delay = GetDelay(config);
 
             _logger.Information("Executing and measuring using '{mi}' with input '{p} {testCaseParameter}', cores {cores}",
                 mi, PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
 
             SetupMeasurement(config, measurements, mi, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements);
+            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements, delay);
+        }
+
+        private int GetDelay(MeasurementConfiguration config)
+        {
+            if (config.AdditionalMetadata.TryGetValue("msDelayInTestCase", out var delay))
+            {
+                return int.Parse(delay);
+            }
+
+            return 0;
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -279,7 +313,7 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements)
+        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements, int delay)
         {
             var measuringInstrument = GetMeasuringInstrument(mi);
             var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
@@ -300,9 +334,11 @@ namespace BDEnergyFramework.Services
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
-           //Thread.Sleep(1000);
+            Thread.Sleep(delay);
 
             testCase(testCaseParameter, testCasePath, enabledCores, _logger);
+
+            Thread.Sleep(delay);
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;
@@ -318,7 +354,7 @@ namespace BDEnergyFramework.Services
             measurement.TimeSeries.Add(ts);
             measurement.Measurements.Add(m);
 
-            _logger.Information("Test case exited after {duration} miliseconds", m.Duration);
+            _logger.Information("Test case exited after {duration} milliseconds", m.Duration);
         }
 
         private static Action<string, string, List<int>, ILogger> GetTestCase()

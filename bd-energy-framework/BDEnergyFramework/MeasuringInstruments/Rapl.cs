@@ -38,7 +38,11 @@ public class Rapl : MeasuringInstrument
         };
         
         var lastSample = ts.Sampels.Last().AdditionalMetadata;
-        
+
+        var totalDram = GetValueOrDefaultFromDictionary(lastSample, "total_dram");
+        var totalPackage = GetValueOrDefaultFromDictionary(lastSample, "total_package");
+        var totalUncore = GetValueOrDefaultFromDictionary(lastSample, "total_uncore");
+
         var m = new Measurement()
         {
             StartTime = startTime,
@@ -47,12 +51,23 @@ public class Rapl : MeasuringInstrument
             EndTemperature = endTemperature,
             Duration = elapsedMilliseconds,
             Iteration = iteration,
-            DramEnergyInJoules = lastSample["total_dram"],
-            CpuEnergyInJoules = lastSample["total_package"],
-            GpuEnergyInJoules = lastSample["total_uncore"],
+            DramEnergyInJoules = totalDram,
+            CpuEnergyInJoules = totalPackage,
+            GpuEnergyInJoules = totalUncore,
         };
 
         return (ts, m);
+    }
+
+    private static double GetValueOrDefaultFromDictionary(Dictionary<string, double> lastSample, string key)
+    {
+        var value = 0d;
+        if (lastSample.TryGetValue(key, out var v))
+        {
+            value = v;
+        }
+
+        return value;
     }
 
     internal override void PerformMeasuring(object sender, ElapsedEventArgs e)

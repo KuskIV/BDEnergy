@@ -8,7 +8,7 @@
     "AllocatedCores": [
       [0, 1]
     ],
-    "TestCaseParameters": [ "10000" ],
+    "TestCaseParameters": [ "1000" ],
     "UploadToDatabase": true,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,

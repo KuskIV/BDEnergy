@@ -1,0 +1,95 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.26\textheight
+        }
+        \begin{axis}[
+            xlabel={Total DEC (Joules)}, 
+            title={The DEC of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8},
+        yticklabels={
+             0,  1,  2,  3,  4,  5,  6,  7
+            },
+            xmin=0,xmax=300,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=61.58014130981826,
+                lower quartile=66.22524946283781,
+                median=80.45282898977158,
+                upper quartile=89.11255499087488,
+                upper whisker=97.0392728526466
+                }, color = red
+                ] coordinates{(0,163.3362740275449)(0,216.38407685547935)(0,144.8310369871346)(0,141.5254978021872)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.794728924095466,
+                lower quartile=68.12984351075067,
+                median=82.2169123074138,
+                upper quartile=90.66571282172971,
+                upper whisker=102.55911934420669
+                }, color = red
+                ] coordinates{(1,171.70974324223562)(1,143.25012012191212)(1,132.20229065070288)(1,144.7070096132311)(1,230.80335693762618)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.49749832045947,
+                lower quartile=67.26899704871094,
+                median=81.65607915805028,
+                upper quartile=90.81506573710617,
+                upper whisker=100.5886326774332
+                }, color = red
+                ] coordinates{(2,140.37820621553035)(2,131.75422933399474)(2,141.83325388705023)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.798583262209036,
+                lower quartile=67.23716529632175,
+                median=81.90525662023562,
+                upper quartile=90.26419245346857,
+                upper whisker=102.08189524922656
+                }, color = red
+                ] coordinates{(3,151.89753501450676)(3,141.95651221294256)(3,133.75214086169674)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.81618654006894,
+                lower quartile=68.02798438343785,
+                median=81.70297024088877,
+                upper quartile=90.49184551061734,
+                upper whisker=111.36417257644848
+                }, color = red
+                ] coordinates{(4,165.40471924142457)(4,141.4725806543068)(4,144.12771062352647)(4,128.0775988336107)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.68801307708404,
+                lower quartile=65.86086143454233,
+                median=80.59714970786571,
+                upper quartile=89.91475178832377,
+                upper whisker=119.8700461419366
+                }, color = red
+                ] coordinates{(5,149.06829768621662)(5,131.6570741903493)(5,139.8015359362949)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=62.835281680320065,
+                lower quartile=67.35614272100656,
+                median=81.41821569045588,
+                upper quartile=89.26706368952023,
+                upper whisker=97.10989152495716
+                }, color = red
+                ] coordinates{(6,190.40931383563992)(6,140.63164944793607)(6,131.3577496354559)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=65.80507549012765,
+                lower quartile=73.3808817207512,
+                median=86.88394156941587,
+                upper quartile=95.87350269066683,
+                upper whisker=104.89750790214367
+                }, color = red
+                ] coordinates{(7,182.8400482235109)(7,138.516057252223)(7,148.5388911190638)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 1 for test case(s) SN compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationone-cpu-dec}
+\end{figure}

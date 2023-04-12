@@ -7,3 +7,4 @@ where 1 = 1
     -- and Name = 'idle-case.exe'
     -- and Threads = 'multi-threaded'
     -- and Parameter in ('', '12', '16000')
+    and compiler = 'msvc'

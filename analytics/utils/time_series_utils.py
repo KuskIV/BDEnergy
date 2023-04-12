@@ -86,15 +86,15 @@ def get_time_series(
                             time_series[key].append(ts)
 
                             if mi_name == scaphandre:
-                                key = f"{tc_name}.{mi_name}_isolated.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
+                                isolated_key = f"{tc_name}.{mi_name}_isolated.{dut_name}.{config_cores}.{tc_compiler}.{dut_os}"
                                 isolated_column = df_util.get_additional_metadata_total(
                                     ts, tc_name
                                 )
                                 isolated_ts = ts.copy()
                                 isolated_ts["CpuEnergyInJoules"] = isolated_column
-                                if not key in time_series:
-                                    time_series[key] = []
-                                time_series[key].append(isolated_ts)
+                                if not isolated_key in time_series:
+                                    time_series[isolated_key] = []
+                                time_series[isolated_key].append(isolated_ts)
                         if len(time_series[key]) >= time_series_used:
                             break
                     print(f"done")

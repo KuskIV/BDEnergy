@@ -1,5 +1,6 @@
 ﻿using BBPlug.devices;
 using Microsoft.Extensions.Configuration;
+using Polly;
 using RspMeasuringDevice;
 using System.Linq;
 
@@ -20,7 +21,7 @@ while (true)
         var plugState = plug.Status;
         if (plugState != null) 
         {
-            databaseHandler.InsertResults(plugState, plug.ip);
+            await databaseHandler.InsertResults(plugState, plug.ip);
         }
         else
         {

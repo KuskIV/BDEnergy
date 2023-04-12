@@ -58,6 +58,12 @@
     <None Update="Json\Mhk\MhkValidConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\3th-exp-config\DifferentCoresExpClamp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationOne\3th-exp-config\DifferentCoresExp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentMeasuringInstrumentExpWindow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -71,6 +77,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Json\WorkstationTwo\1st-experiment\DifferentMeasuringInstrumentExpWindow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationTwo\2nd-experiment\DifferentCoresInstrumentExpWindow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationTwo\2nd-experiment\DifferentCoresInstrumentExpWindowsLast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Json\WorkstationTwo\TestConfig.json">
@@ -88,13 +100,11 @@
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Json\WorkstationOne\0th-exp-config\DifferentMeasuringInstrumentExpLinuxjson.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Secrets\" />
     <Folder Include="SQL\" />
   </ItemGroup>
 

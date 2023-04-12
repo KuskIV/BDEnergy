@@ -1,6 +1,67 @@
 import json
 
 
+def get_rapl_column(df, column):
+    last_rapl_value = 0
+    rapl_values = []
+
+    for _, rapl_row in df.iterrows():
+        loaded_value = json.loads(rapl_row["AdditionalMetadata"])[column]
+        rapl_value = loaded_value - last_rapl_value
+        last_rapl_value = loaded_value
+        rapl_values.append(rapl_value)
+
+    return rapl_values
+
+
+def trim_dataframes(
+    measurements_used,
+    dram_energy_results,
+    cpu_energy_results,
+    gpu_energy_results,
+    duration_results,
+    cpu_dynamic_energy_consumption,
+    gpu_dynamic_energy_consumption,
+    dram_dynamic_energy_consumption,
+    idle_cpu_consumption_results,
+    temperature_end,
+    temperature_begin,
+    cpu_dynamic_energy_watt_consumption,
+):
+    for key, value in dram_energy_results.items():
+        dram_energy_results[key] = value[:measurements_used]
+
+    for key, value in cpu_energy_results.items():
+        cpu_energy_results[key] = value[:measurements_used]
+
+    for key, value in gpu_energy_results.items():
+        gpu_energy_results[key] = value[:measurements_used]
+
+    for key, value in duration_results.items():
+        duration_results[key] = value[:measurements_used]
+
+    for key, value in cpu_dynamic_energy_consumption.items():
+        cpu_dynamic_energy_consumption[key] = value[:measurements_used]
+
+    for key, value in gpu_dynamic_energy_consumption.items():
+        gpu_dynamic_energy_consumption[key] = value[:measurements_used]
+
+    for key, value in dram_dynamic_energy_consumption.items():
+        dram_dynamic_energy_consumption[key] = value[:measurements_used]
+
+    for key, value in idle_cpu_consumption_results.items():
+        idle_cpu_consumption_results[key] = value[:measurements_used]
+
+    for key, value in temperature_end.items():
+        temperature_end[key] = value[:measurements_used]
+
+    for key, value in temperature_begin.items():
+        temperature_begin[key] = value[:measurements_used]
+
+    for key, value in cpu_dynamic_energy_watt_consumption.items():
+        cpu_dynamic_energy_watt_consumption[key] = value[:measurements_used]
+
+
 def get_additional_metadata_total(tc_measurements, tc_name):
     process_energy_consumption = []
 
@@ -10,13 +71,19 @@ def get_additional_metadata_total(tc_measurements, tc_name):
         relevant_keys = [x for x in keys if tc_name in x]
 
         if len(relevant_keys) == 0:
+            consumption = 0
+            process_energy_consumption.append(consumption)
             continue
 
         if len(relevant_keys) > 1:
             raise Exception(f"too many keys: {','.join(relevant_keys)}")
 
         relevant_key = relevant_keys[0]
-        consumption = field[relevant_key]
+
+        if relevant_key in field:
+            consumption = field[relevant_key]
+        else:
+            consumption = 0
 
         process_energy_consumption.append(consumption)
     return process_energy_consumption

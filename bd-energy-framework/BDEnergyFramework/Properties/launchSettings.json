@@ -15,6 +15,10 @@
       "commandName": "Project",
       "commandLineArgs": "--config \"/home/biksbois/Documents/GitHub/BDEnergy/bd-energy-framework/BDEnergyFramework/Json/WorkstationOne/LinuxTestConfig.json\""
     },
+    "WorkstationTwoTestLinux": {
+      "commandName": "Project",
+      "commandLineArgs": "--config \"/home/test/Documents/GitHub/BDEnergy/bd-energy-framework/BDEnergyFramework/Json/WorkstationTwo/LinuxTestConfig.json\""
+    },
     "MhkConfigPath": {
       "commandName": "Project",
       "commandLineArgs": "--config \"C:\\Users\\Mads Kusk\\git\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\MHK\\MhkValidConfig.json\""

@@ -53,13 +53,22 @@ namespace RspMeasuringDevice
                     }
                 });
             }
+            catch (MySqlException ex) when (ex.Number == 0 || ex.Number == 2013)
+            {
+                // Connection is closed or lost, reopen it and retry operation
+                Console.WriteLine("Connection lost or closed, retrying operation...");
+                connection.Close();
+                connection.Open();
+                await InsertResults(results);
+            }
             catch (Exception ex)
             {
+                // Handle other exceptions
                 Console.WriteLine("Error: {0}", ex.Message);
             }
             finally
             {
-                Console.WriteLine($"File succesfully uploaded at {DateTime.UtcNow.ToUniversalTime()}");
+                Console.WriteLine($"File successfully uploaded at {DateTime.UtcNow.ToUniversalTime()}");
             }
 
         }

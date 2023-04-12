@@ -2,6 +2,8 @@
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using BDEnergyFramework.Utils;
+using Polly;
+using Polly.Retry;
 using System.Data;
 using ILogger = Serilog.ILogger;
 
@@ -11,12 +13,15 @@ namespace BDEnergyFramework.Services.Repositories
     {
         private readonly MeasurementRepository _repository;
         private readonly ILogger _logger;
+        private RetryPolicy _retryPolicy;
 
         public MeasurementRepositoryHandler(Func<IDbConnection> dbFactory, ILogger logger)
         {
-            var connection = dbFactory();
-            _repository = new MeasurementRepository(connection);
             _logger = logger;
+            _retryPolicy = RetryUtils.GetRetryPolicy(_logger);
+
+            var connection = _retryPolicy.Execute(() => dbFactory());
+            _repository = new MeasurementRepository(connection);
         }
 
         public void Dispose()

@@ -6,20 +6,24 @@ namespace BDEnergyFramework.Services;
 public class LinuxDesktopService : IDutService
 {
     private readonly string _machineName;
+    private readonly string _wifiAdapterName;
 
-    public LinuxDesktopService(string machineName)
+    public LinuxDesktopService(string machineName, string wifiAdapterName)
     {
         _machineName = machineName;
+        _wifiAdapterName = wifiAdapterName;
+        // LinuxUtils.ExecuteCommandGetOutput("", "source ~/intel/oneapi/setvars.sh");
+        // source ~/intel/oneapi/setvars.sh
     }
     
     public void DisableWifi()
     {
-        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "enp0s31f6 down");
+        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", _wifiAdapterName + " down"); // enp0s31f6
     }
 
     public void EnableWifi()
     {
-        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", "enp0s31f6 up");
+        LinuxUtils.ExecuteCommandAsSudo("/sbin/ifconfig", _wifiAdapterName + " up");
         
         while (!PingGoogleSuccessfully())
         {
@@ -49,6 +53,10 @@ public class LinuxDesktopService : IDutService
         if (_machineName.Equals(DutUtils.WorkstationOne))
         {
             temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone1/temp");
+        }
+        else if (_machineName.Equals((DutUtils.WorkstationTwo)))
+        {
+            temperature = LinuxUtils.ExecuteCommandGetOutput("/bin/cat", "/sys/class/thermal/thermal_zone0/temp");
         }
         else
         {

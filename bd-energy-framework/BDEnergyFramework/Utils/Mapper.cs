@@ -2,6 +2,7 @@
 using BDEnergyFramework.Models.Dto;
 using BDEnergyFramework.Models.Internal;
 using Microsoft.VisualBasic;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace BDEnergyFramework.Utils
@@ -77,23 +78,23 @@ namespace BDEnergyFramework.Utils
         {
             return new Sample()
             {
-                PackageTemperature = float.Parse(ts.PackageTemperature_0C),
-                ElapsedTime = float.Parse(ts.ElapsedTimesec),
-                CpuUtilization = float.Parse(ts.CPUUtilization),
-                ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt),
-                DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules),
-                GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules),
-                CpuEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules),
+                PackageTemperature = float.Parse(ts.PackageTemperature_0C, CultureInfo.InvariantCulture),
+                ElapsedTime = float.Parse(ts.ElapsedTimesec, CultureInfo.InvariantCulture),
+                CpuUtilization = float.Parse(ts.CPUUtilization, CultureInfo.InvariantCulture),
+                ProcessorPowerWatt = float.Parse(ts.ProcessorPower_0Watt, CultureInfo.InvariantCulture),
+                DramEnergyInJoules = float.Parse(ts.CumulativeDRAMEnergy_0Joules, CultureInfo.InvariantCulture),
+                GpuEnergyInJoules = float.Parse(ts.CumulativeGTEnergy_0Joules, CultureInfo.InvariantCulture),
+                CpuEnergyInJoules = float.Parse(ts.CumulativeProcessorEnergy_0Joules, CultureInfo.InvariantCulture),
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
-                    { "GpuUtilization", float.Parse(ts.GTUtilization) },
-                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz) },
+                    { "GpuUtilization", float.Parse(ts.GTUtilization, CultureInfo.InvariantCulture) },
+                    { "CpuFrequencyMhz", float.Parse(ts.CPUFrequency_0MHz, CultureInfo.InvariantCulture) }, 
                     { "GpuFrequencyMhz", ts.GTFrequencyMHz },
-                    { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt) },
-                    { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt) },
-                    { "PackagePl4InWatt", float.Parse(ts.PackagePL4_0Watt) },
-                    { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt) },
-                    { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt) }
+                    { "PackagePl1InWatt", float.Parse(ts.PackagePL1_0Watt, CultureInfo.InvariantCulture) },
+                    { "PackagePl2InWatt", float.Parse(ts.PackagePL2_0Watt, CultureInfo.InvariantCulture) },
+                    { "PackagePl4InWatt", float.Parse(ts.PackagePL4_0Watt, CultureInfo.InvariantCulture) },
+                    { "PsysPl1InWatt", float.Parse(ts.PlatformPsysPL1_0Watt, CultureInfo.InvariantCulture) },
+                    { "PsysPl2InWatt", float.Parse(ts.PlatformPsysPL2_0Watt, CultureInfo.InvariantCulture) }
                 },
             };
         }
@@ -182,23 +183,43 @@ namespace BDEnergyFramework.Utils
 
         public static Sample MapToTimeSeries(Dictionary<string, double> data)
         {
+            var dram = GetValueOrDefaultFromDictionary(data, "dram");
+            var elapsed = GetValueOrDefaultFromDictionary(data, "elapsed");
+            var package = GetValueOrDefaultFromDictionary(data, "package-0");
+            var uncore = GetValueOrDefaultFromDictionary(data, "uncore");
+            var runningDram = GetValueOrDefaultFromDictionary(data, "running_dram");
+            var runningCore = GetValueOrDefaultFromDictionary(data, "running_core");
+            var runninUncore = GetValueOrDefaultFromDictionary(data, "running_uncore");
+            var runningPackage = GetValueOrDefaultFromDictionary(data, "running_package-0");
+            
             return new Sample()
             {
-                DramEnergyInJoules = data["dram"],
-                ElapsedTime = data["elapsed"],
-                CpuEnergyInJoules = data["package-0"],
-                GpuEnergyInJoules = data["uncore"],
+                DramEnergyInJoules = dram,
+                ElapsedTime = elapsed,
+                CpuEnergyInJoules = package,
+                GpuEnergyInJoules = uncore,
                 PackageTemperature = 0,
                 CpuUtilization = 0,
                 ProcessorPowerWatt = 0,
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
-                    { "total_dram",  data["running_dram"] },
-                    { "total_core",  data["running_core"] },
-                    { "total_uncore",  data["running_uncore"] },
-                    { "total_package",  data["running_package-0"] },
+                    { "total_dram",  runningDram },
+                    { "total_core",  runningCore },
+                    { "total_uncore",  runninUncore },
+                    { "total_package",  runningPackage },
                 }
             };
+        }
+        
+        private static double GetValueOrDefaultFromDictionary(Dictionary<string, double> lastSample, string key)
+        {
+            var value = 0d;
+            if (lastSample.TryGetValue(key, out var v))
+            {
+                value = v;
+            }
+
+            return value;
         }
     }
 }

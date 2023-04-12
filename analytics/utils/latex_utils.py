@@ -24,11 +24,13 @@ def get_ytick_labels(
     for l in data.columns:
         column_data = l.split(".")
         u_test_cases.append(column_data[0])
-        u_mi.append(column_data[2])
+        u_mi.append(column_data[6])
+        # u_mi.append(column_data[2])
         u_dut.append(column_data[3])
         u_cores.append(column_data[4])
         u_compiler.append(column_data[5])
-        u_os.append(column_data[6])
+        u_os.append(column_data[2])
+        # u_os.append(column_data[6])
 
     u_test_cases = list(set(u_test_cases))
     u_mi = list(set(u_mi))
@@ -40,11 +42,13 @@ def get_ytick_labels(
     for l in data.columns:
         column_data = l.split(".")
         l_test_case = column_data[0]
-        l_measuring_instrument = column_data[2]
+        l_measuring_instrument = column_data[6]
+        # l_measuring_instrument = column_data[2]
         l_dut_name = column_data[3]
         l_allocated_cores = column_data[4]
         l_compiler = column_data[5]
-        l_os = column_data[6]
+        l_os = column_data[2]
+        # l_os = column_data[6]
 
         if len(l_allocated_cores) == 2:
             l_allocated_cores = "all"
@@ -210,7 +214,8 @@ def _parse_outliers(outliers, i):
     parsed_input = ""
 
     for o in outliers:
-        parsed_input += f"({i},{o})"
+        if o > 0:
+            parsed_input += f"({i},{o})"
 
     return parsed_input
 
