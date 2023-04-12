@@ -2,7 +2,7 @@
     \centering
     \begin{tikzpicture}[]
         \pgfplotsset{
-            width=0.9\textwidth,
+            width=0.4\textwidth,
             height=0.26\textheight
         }
         \begin{axis}[
@@ -12,7 +12,7 @@
         yticklabels={
              Plug LIN,  RAPL LIN,  Clamp WIN,  IPG WIN,  LHM WIN,  Plug WIN,  SCAP WIN,  SCAPI WIN
             },
-            xmin=0,xmax=1000,
+            xmin=100,xmax=900,
             ]
         
         
@@ -62,31 +62,31 @@
                 ] coordinates{(4,435.0717613954264)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=436.10804669365575,
-                lower quartile=451.0071882690863,
-                median=458.06152700180087,
-                upper quartile=465.0819154571177,
-                upper whisker=480.3340747735856
+                lower whisker=406.27487316124586,
+                lower quartile=437.0826130971039,
+                median=448.6740718470652,
+                upper quartile=457.72683207879527,
+                upper whisker=487.81434528569264
                 }, color = red
-                ] coordinates{(5,425.9175330196433)(5,412.30446696671015)};
+                ] coordinates{(5,397.8043545500333)(5,404.5388826966008)(5,402.33115569264635)(5,404.7992812662966)(5,534.1707950517631)(5,532.8806577479126)(5,532.5247797026594)(5,535.7518619771212)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=441.05129815822227,
-                lower quartile=443.9310427451457,
-                median=445.25602868509355,
-                upper quartile=446.737740984599,
-                upper whisker=450.60052418602436
+                lower whisker=441.00139756842685,
+                lower quartile=448.3437553593778,
+                median=451.0511352711223,
+                upper quartile=453.4788750214138,
+                upper whisker=460.7144106382679
                 }, color = red
-                ] coordinates{(6,455.44715693184287)(6,453.08859204552834)(6,452.9138071328131)(6,453.20550572376976)};
+                ] coordinates{(6,434.18162070614613)(6,463.2244154185874)(6,461.29067211940986)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=554.8677959684336,
-                lower quartile=559.9802100822906,
-                median=561.6955653812602,
-                upper quartile=563.8828035551369,
-                upper whisker=567.5760240877506
+                lower whisker=556.7981235028822,
+                lower quartile=563.1668171809501,
+                median=565.5554146602075,
+                upper quartile=567.4392156523672,
+                upper whisker=571.874920534443
                 }, color = red
-                ] coordinates{(7,569.8923242239106)};
+                ] coordinates{(7,482.1196786268623)(7,548.9004987655857)(7,574.1661725930778)(7,574.2091889477764)};
         
         
         \end{axis}

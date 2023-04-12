@@ -17,7 +17,14 @@ namespace RspMeasuringDevice
         {
             TimeStamp = dateTime;
             measurements = LoadMeasurement(rawMeasurement);
-            Last = AddTimeStamps();
+            if(measurements.Count > 0) 
+            {
+                Last = AddTimeStamps();
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         private List<Measurement> LoadMeasurement(string rawStr)
