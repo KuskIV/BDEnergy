@@ -1,17 +1,13 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 5 ],
-    "RequiredMeasurements": 1000,
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 3000,
     "TestCasePaths": [
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe"
     ],
     "AllocatedCores": [],
     "TestCaseParameters": [
-      "12",
-      "64000",
-      ""
+      "12"
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
@@ -29,17 +25,13 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 6 ],
-    "RequiredMeasurements": 1500,
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 3000,
     "TestCasePaths": [
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe",
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
       "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
     ],
     "AllocatedCores": [],
     "TestCaseParameters": [
-      "12",
-      "64000",
       ""
     ],
     "UploadToDatabase": true,
