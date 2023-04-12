@@ -88,6 +88,9 @@
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\0th-exp-config\DifferentMeasuringInstrumentExpLinuxjson.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
