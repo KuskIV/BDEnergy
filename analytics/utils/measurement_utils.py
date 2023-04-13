@@ -2,6 +2,7 @@ from utils.column_name_utils import *
 import utils.results_repository as rep
 import utils.dataframe_utils as df_util
 import utils.query_utils as query
+import pandas as pd
 
 
 def get_measurements(
@@ -113,7 +114,30 @@ def get_measurements(
                     dram_energy_results[key] = list(
                         tc_measurements["DramEnergyInJoules"]
                     )
-                    cpu_energy_results[key] = list(tc_measurements["CpuEnergyInJoules"])
+                    if mi_name == "rapl":
+                        tc_idle_case_measurements["CpuEnergyInJoules"] = [
+                            x
+                            for x in list(
+                                tc_idle_case_measurements["CpuEnergyInJoules"]
+                            )
+                            if x > -500
+                        ]
+                        tc_measurements["CpuEnergyInJoules"] = pd.Series(
+                            [
+                                x
+                                for x in list(tc_measurements["CpuEnergyInJoules"])
+                                if x > -500
+                            ]
+                        )
+                        cpu_energy_results[key] = [
+                            x
+                            for x in list(tc_measurements["CpuEnergyInJoules"])
+                            if x > -500
+                        ]
+                    else:
+                        cpu_energy_results[key] = list(
+                            tc_measurements["CpuEnergyInJoules"]
+                        )
                     gpu_energy_results[key] = list(tc_measurements["GpuEnergyInJoules"])
                     duration_results[key] = list(tc_measurements["Duration"])
                     temperature_begin[key] = list(
