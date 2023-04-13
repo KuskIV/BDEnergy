@@ -1,0 +1,77 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.22\textheight
+        }
+        \begin{axis}[
+            xlabel={Total DEC (Joules)}, 
+            title={The DEC of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6},
+        yticklabels={
+             Clamp,  IPG,  LHM,  Plug,  SCAP,  SCAPI
+            },
+            xmin=0,xmax=1300,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=905.2711254870882,
+                lower quartile=995.1622745764698,
+                median=1124.8890161167155,
+                upper quartile=1153.78126589469,
+                upper whisker=1246.8044284505913
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=335.27898225487144,
+                lower quartile=351.74119558275004,
+                median=357.8932507073407,
+                upper quartile=363.555434695617,
+                upper whisker=381.20598897322395
+                }, color = red
+                ] coordinates{(1,327.84253095901784)(1,333.6949140848933)(1,331.6211488210468)(1,389.8745386995317)(1,404.62624233079833)(1,398.5657471569625)(1,397.0865025760415)(1,386.5891791926232)(1,403.06768034276877)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=334.8502757016288,
+                lower quartile=351.1734423255318,
+                median=357.5496879549666,
+                upper quartile=363.15889974737956,
+                upper whisker=380.79715968460096
+                }, color = red
+                ] coordinates{(2,329.2772409423019)(2,396.95220497679566)(2,410.41863538764756)(2,396.06104846651726)(2,382.61212553308167)(2,387.2787178917539)(2,388.54806308943216)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=886.2827014701962,
+                lower quartile=914.3404596865091,
+                median=924.3680310495347,
+                upper quartile=933.385137689945,
+                upper whisker=961.4655332439817
+                }, color = red
+                ] coordinates{(3,829.6534310630524)(3,993.7086279275626)(3,968.4203339288939)(3,962.1997893067922)(3,990.7465320749171)(3,974.1427755304666)(3,964.1945918177795)(3,962.853061245016)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=335.1841551837414,
+                lower quartile=353.60415205003494,
+                median=360.1903322993888,
+                upper quartile=366.3209975365129,
+                upper whisker=383.9484276794105
+                }, color = red
+                ] coordinates{(4,388.654769478353)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=360.60209381667664,
+                lower quartile=387.61863547393176,
+                median=396.67776086603027,
+                upper quartile=405.6297920471383,
+                upper whisker=425.0581494005571
+                }, color = red
+                ] coordinates{(5,356.40180886008494)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements on DUT 2 for test case(s) FR compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-fannkuch-redux.exe-intel-one-api-workstationtwo-cpu-dec}
+\end{figure}

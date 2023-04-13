@@ -1,0 +1,71 @@
+﻿[
+  {
+    "MeasurementInstruments": [ 4 ],
+    "RequiredMeasurements": 3000,
+    "TestCasePaths": [
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "64000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 2,
+    "ExperimentName": "run-clamp-many-times-exp",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  },
+  {
+    "MeasurementInstruments": [ 2, 4 ],
+    "RequiredMeasurements": 500,
+    "TestCasePaths": [
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\nbody.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\spectral-norm.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\idle-case.exe"
+    ],
+    "AllocatedCores": [
+      [ 0 ],
+      [ 1 ],
+      [ 2 ],
+      [ 3 ],
+      [ 4 ],
+      [ 5 ],
+      [ 6 ],
+      [ 7 ],
+      [ 8 ],
+      [ 9 ]
+    ],
+    "TestCaseParameters": [
+      "180000000",
+      "18000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 3,
+    "ExperimentName": "same-one-api-compiler-different-cores",
+    "ConcurrencyLimit": "single-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {
+      "msDelayInTestCase": "500"
+    }
+  }
+]

@@ -1,27 +1,33 @@
 [
-  {
-    "MeasurementInstruments": [ 5 ],
-    "RequiredMeasurements": 1,
-    "TestCasePaths": [
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
-    ],
-    "AllocatedCores": [  ],
-    "TestCaseParameters": [
-      ""
-    ],
-    "UploadToDatabase": false,
-    "BurnInPeriod": 0,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": false,
-    "ExperimentNumber": 1,
-    "ExperimentName": "TEST",
-    "ConcurrencyLimit": "TEST",
-    "TestCaseType": "TEST",
-    "Compiler": "TEST",
-    "Optimizations": "TEST",
-    "Language": "TEST",
-    "StopBackgroundProcesses": false,
-    "AdditionalMetadata": {}
-  }
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 100,
+        "TestCasePaths": [
+            "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\nbody.exe",
+            "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\spectral-norm.exe",
+            "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\idle-case.exe"
+        ],
+        "AllocatedCores": [ [ 0 ] ],
+        "TestCaseParameters": [
+            "180000000",
+            "18000",
+            ""
+        ],
+        "UploadToDatabase": false,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": false,
+        "ExperimentNumber": 1,
+        "ExperimentName": "TEST",
+        "ConcurrencyLimit": "TEST",
+        "TestCaseType": "TEST",
+        "Compiler": "TEST",
+        "Optimizations": "TEST",
+        "Language": "TEST",
+        "StopBackgroundProcesses": false,
+        "AdditionalMetadata": {
+            "msDelayInTestCase": "500"
+        }
+    }
 ]

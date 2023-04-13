@@ -183,23 +183,43 @@ namespace BDEnergyFramework.Utils
 
         public static Sample MapToTimeSeries(Dictionary<string, double> data)
         {
+            var dram = GetValueOrDefaultFromDictionary(data, "dram");
+            var elapsed = GetValueOrDefaultFromDictionary(data, "elapsed");
+            var package = GetValueOrDefaultFromDictionary(data, "package-0");
+            var uncore = GetValueOrDefaultFromDictionary(data, "uncore");
+            var runningDram = GetValueOrDefaultFromDictionary(data, "running_dram");
+            var runningCore = GetValueOrDefaultFromDictionary(data, "running_core");
+            var runninUncore = GetValueOrDefaultFromDictionary(data, "running_uncore");
+            var runningPackage = GetValueOrDefaultFromDictionary(data, "running_package-0");
+            
             return new Sample()
             {
-                DramEnergyInJoules = data["dram"],
-                ElapsedTime = data["elapsed"],
-                CpuEnergyInJoules = data["package-0"],
-                GpuEnergyInJoules = data["uncore"],
+                DramEnergyInJoules = dram,
+                ElapsedTime = elapsed,
+                CpuEnergyInJoules = package,
+                GpuEnergyInJoules = uncore,
                 PackageTemperature = 0,
                 CpuUtilization = 0,
                 ProcessorPowerWatt = 0,
                 AdditionalMetadata = new Dictionary<string, double>()
                 {
-                    { "total_dram",  data["running_dram"] },
-                    { "total_core",  data["running_core"] },
-                    { "total_uncore",  data["running_uncore"] },
-                    { "total_package",  data["running_package-0"] },
+                    { "total_dram",  runningDram },
+                    { "total_core",  runningCore },
+                    { "total_uncore",  runninUncore },
+                    { "total_package",  runningPackage },
                 }
             };
+        }
+        
+        private static double GetValueOrDefaultFromDictionary(Dictionary<string, double> lastSample, string key)
+        {
+            var value = 0d;
+            if (lastSample.TryGetValue(key, out var v))
+            {
+                value = v;
+            }
+
+            return value;
         }
     }
 }

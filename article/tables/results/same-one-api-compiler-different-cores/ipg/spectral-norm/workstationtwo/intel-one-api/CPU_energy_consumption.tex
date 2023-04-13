@@ -1,0 +1,113 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.30000000000000004\textheight
+        }
+        \begin{axis}[
+            xlabel={Total Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+        yticklabels={
+             0,  1,  2,  3,  4,  5,  6,  7,  8,  9
+            },
+            xmin=0,xmax=800,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=96.5863037109375,
+                lower quartile=99.00535583496094,
+                median=100.45370483398438,
+                upper quartile=103.22221374511719,
+                upper whisker=109.51617431640625
+                }, color = red
+                ] coordinates{(0,114.63470458984375)(0,112.04058837890625)(0,110.80010986328125)(0,110.68212890625)(0,111.59832763671875)(0,110.69927978515625)(0,111.39996337890625)(0,112.467529296875)(0,112.66326904296875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=96.25018310546875,
+                lower quartile=98.11978149414062,
+                median=99.42581176757812,
+                upper quartile=100.67982482910156,
+                upper whisker=104.44366455078125
+                }, color = red
+                ] coordinates{(1,104.5892333984375)(1,106.6732177734375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=95.9189453125,
+                lower quartile=98.19451904296875,
+                median=99.20285034179688,
+                upper quartile=100.15629577636719,
+                upper whisker=103.01708984375
+                }, color = red
+                ] coordinates{(2,107.80364990234375)(2,107.28424072265625)(2,103.662109375)(2,110.391357421875)(2,103.11920166015625)(2,103.7490234375)(2,103.793701171875)(2,103.24285888671875)(2,103.1065673828125)(2,103.711181640625)(2,104.28826904296875)(2,103.6004638671875)(2,103.34368896484375)(2,104.343017578125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=96.29437255859375,
+                lower quartile=98.10496520996094,
+                median=99.23648071289062,
+                upper quartile=100.17451477050781,
+                upper whisker=103.2586669921875
+                }, color = red
+                ] coordinates{(3,105.49005126953125)(3,106.9732666015625)(3,103.3485107421875)(3,103.64007568359375)(3,104.0316162109375)(3,103.56610107421875)(3,103.44183349609375)(3,103.6875)(3,103.4158935546875)(3,104.00921630859375)(3,104.228271484375)(3,103.92486572265625)(3,104.01177978515625)(3,103.3316650390625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=96.240478515625,
+                lower quartile=98.09025573730469,
+                median=99.24087524414062,
+                upper quartile=100.29542541503906,
+                upper whisker=103.47039794921875
+                }, color = red
+                ] coordinates{(4,105.0496826171875)(4,105.32647705078125)(4,106.7620849609375)(4,108.88409423828125)(4,106.24200439453125)(4,107.45477294921875)(4,107.62725830078125)(4,108.34771728515625)(4,107.38421630859375)(4,110.774169921875)(4,109.98187255859375)(4,107.52093505859375)(4,117.60992431640625)(4,103.7735595703125)(4,104.502197265625)(4,103.8505859375)(4,104.15228271484375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=96.35821533203125,
+                lower quartile=98.49740600585938,
+                median=99.68930053710938,
+                upper quartile=101.34307861328125,
+                upper whisker=105.34954833984375
+                }, color = red
+                ] coordinates{(5,111.91412353515625)(5,115.07342529296875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=313.2076416015625,
+                lower quartile=328.6275634765625,
+                median=338.11846923828125,
+                upper quartile=344.3669738769531,
+                upper whisker=362.12933349609375
+                }, color = red
+                ] coordinates{(6,379.61737060546875)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=312.21136474609375,
+                lower quartile=330.12396240234375,
+                median=338.0233154296875,
+                upper quartile=344.25184631347656,
+                upper whisker=355.77197265625
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=311.80810546875,
+                lower quartile=330.7522277832031,
+                median=339.6954345703125,
+                upper quartile=344.8849639892578,
+                upper whisker=364.56842041015625
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=313.21185302734375,
+                lower quartile=323.8656921386719,
+                median=331.68255615234375,
+                upper quartile=337.3163146972656,
+                upper whisker=355.71038818359375
+                }, color = red
+                ] coordinates{(9,369.7220458984375)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) SN compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-cpu-energy_consumption}
+\end{figure}

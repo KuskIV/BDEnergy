@@ -7,7 +7,7 @@
         }
         \begin{axis}[
             xlabel={Average Runtime (s)}, 
-            title={The duration of the Runtime}, 
+            title={The average duration}, 
             ytick={1, 2, 3, 4, 5},
         yticklabels={
              Clamp,  IPG,  LHM,  Plug,  SCAP
@@ -17,13 +17,13 @@
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=25.82,
-                lower quartile=27.533,
-                median=28.689500000000002,
-                upper quartile=29.998,
-                upper whisker=32.55
+                lower whisker=25.773,
+                lower quartile=27.6635,
+                median=28.615499999999997,
+                upper quartile=29.7855,
+                upper whisker=32.843
                 }, color = red
-                ] coordinates{(0,55.808)(0,44.484)};
+                ] coordinates{(0,33.503)(0,33.159)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=25.68,
@@ -44,20 +44,20 @@
                 ] coordinates{(2,33.539)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=25.694,
-                lower quartile=27.381249999999998,
-                median=28.2845,
-                upper quartile=29.32875,
-                upper whisker=31.863
+                lower whisker=25.488,
+                lower quartile=27.490000000000002,
+                median=28.4795,
+                upper quartile=29.6805,
+                upper whisker=32.956
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(3,33.298)(3,40.678)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=25.937,
-                lower quartile=27.307,
-                median=28.576,
-                upper quartile=29.642,
-                upper whisker=31.633
+                lower whisker=25.504,
+                lower quartile=27.296,
+                median=28.488,
+                upper quartile=29.69,
+                upper whisker=32.545
                 }, color = red
                 ] coordinates{};
         

@@ -15,7 +15,7 @@ namespace BDEnergyFramework.Utils
         {
             return Policy
                 .Handle<Exception>()
-                .WaitAndRetry(100, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (exception, time) =>
+                .WaitAndRetry(200, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (exception, time) =>
                 {
                     logger.Error(exception, "Error occured. Retrying soon...");
                 });

@@ -1,0 +1,95 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.26\textheight
+        }
+        \begin{axis}[
+            xlabel={Total Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8},
+        yticklabels={
+             0,  1,  2,  3,  4,  5,  6,  7
+            },
+            xmin=0,xmax=800,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.06805419921875,
+                lower quartile=229.6208953857422,
+                median=244.09451293945312,
+                upper quartile=252.56689453125,
+                upper whisker=262.1409912109375
+                }, color = red
+                ] coordinates{(0,324.70135498046875)(0,366.5028076171875)(0,306.9210205078125)(0,300.41302490234375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.31787109375,
+                lower quartile=230.65191650390625,
+                median=244.88864135742188,
+                upper quartile=253.37738037109375,
+                upper whisker=265.7725830078125
+                }, color = red
+                ] coordinates{(1,332.921142578125)(1,302.57275390625)(1,293.03240966796875)(1,302.90374755859375)(1,394.78668212890625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.08575439453125,
+                lower quartile=229.85992431640625,
+                median=244.32937622070312,
+                upper quartile=253.40013122558594,
+                upper whisker=263.15399169921875
+                }, color = red
+                ] coordinates{(2,302.302978515625)(2,291.895751953125)(2,302.3931884765625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.363525390625,
+                lower quartile=229.9215545654297,
+                median=244.5472412109375,
+                upper quartile=252.7829132080078,
+                upper whisker=265.1571044921875
+                }, color = red
+                ] coordinates{(3,314.11553955078125)(3,302.28411865234375)(3,292.32598876953125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.4049072265625,
+                lower quartile=230.61563110351562,
+                median=244.405029296875,
+                upper quartile=253.20912170410156,
+                upper whisker=274.2449951171875
+                }, color = red
+                ] coordinates{(4,328.2335205078125)(4,300.6175537109375)(4,301.21282958984375)(4,290.91998291015625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.4398193359375,
+                lower quartile=228.61566162109375,
+                median=243.36810302734375,
+                upper quartile=252.63511657714844,
+                upper whisker=282.59539794921875
+                }, color = red
+                ] coordinates{(5,310.5263671875)(5,290.50189208984375)(5,298.5928955078125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=225.24658203125,
+                lower quartile=229.67034912109375,
+                median=243.86581420898438,
+                upper quartile=251.7600860595703,
+                upper whisker=259.47283935546875
+                }, color = red
+                ] coordinates{(6,352.79656982421875)(6,297.60150146484375)(6,289.08819580078125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=228.550048828125,
+                lower quartile=236.39773559570312,
+                median=249.85269165039062,
+                upper quartile=258.87188720703125,
+                upper whisker=269.15631103515625
+                }, color = red
+                ] coordinates{(7,346.0887451171875)(7,296.92303466796875)(7,308.2403564453125)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 1 for test case(s) SN compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationone-cpu-energy_consumption}
+\end{figure}

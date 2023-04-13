@@ -288,13 +288,24 @@ namespace BDEnergyFramework.Services
         {
             var testCasePath = tc.First;
             var testCaseParameter = tc.Second;
+            var delay = GetDelay(config);
 
             _logger.Information("Executing and measuring with input '{p} {testCaseParameter}', cores {cores}",
                 PathUtils.GetFilenameFromPath(testCasePath), testCaseParameter, string.Join(',', allocatedCores));
 
             SetupMeasurement(config, measurements, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements);
+            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements, delay);
+        }
+
+        private int GetDelay(MeasurementConfiguration config)
+        {
+            if (config.AdditionalMetadata.TryGetValue("msDelayInTestCase", out var delay))
+            {
+                return int.Parse(delay);
+            }
+
+            return 0;
         }
 
         private bool IsBurnInCountAchieved(List<MeasurementContext> measurements, MeasurementConfiguration config)
@@ -337,7 +348,7 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements)
+        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements, int delay)
         {
             //var measuringInstrument = GetMeasuringInstrument(mi);
             //var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
@@ -358,7 +369,11 @@ namespace BDEnergyFramework.Services
             var startTime = DateTime.UtcNow;
             var stopWatch = Stopwatch.StartNew();
 
+            Thread.Sleep(delay);
+
             testCase(testCaseParameter, testCasePath, enabledCores, _logger);
+
+            Thread.Sleep(delay);
 
             stopWatch.Stop();
             var endTime = DateTime.UtcNow;

@@ -1,7 +1,8 @@
 \subsection{Background Processes}
 
-To limit background processes on Windows, a few measures were taken.  Firstly when the DUTs were set up, all startup processes in the Task Manager on Windows were also disabled, in addition to non-Microsoft background services found in System Configuration. Exceptions were however made to processes related to Intel.
+To limit background processes on Windows, a few step were taken. When the DUTs were set up, all startup processes in the Task Manager on Windows were also disabled, in addition to non-Microsoft background services found in System Configuration. Exceptions were however made to processes related to Intel.
+
+During runtime, different background processes were also stopped. These processes were found by looking at the running processes using command \texttt{Get-Process}. %The process of finding processes that were not necessary included finding processes that based on their description did not seem essential, killing them, and observing the result. Based on this, 
+A list of processes was found which are killed using the \texttt{Stop-Process} command before running the experiments. The list can be found in \cref{tab:background_processes}.
 
 \input{tables/background_processes_table.tex}
-
-Secondly, during runtime, different background processes were also stopped. These processes were found by looking at the running processes using command \texttt{Get-Process}. The process of finding processes that were not necessary included finding processes that based on their description did not seem essential, killing them, and observing the result. Based on this, a list of processes was found which are killed using the \texttt{Stop-Process} command before running the experiments. The list can be found in \cref{tab:background_processes}.

@@ -6,8 +6,8 @@
             height=0.22\textheight
         }
         \begin{axis}[
-            xlabel={Average Energy Consumption (Watt)}, 
-            title={The dynamic energy consumption of the CPU}, 
+            xlabel={Average DEC (Watts)}, 
+            title={The DEC per second of the CPU}, 
             ytick={1, 2, 3, 4, 5, 6},
         yticklabels={
              Clamp,  IPG,  LHM,  Plug,  SCAP,  SCAPI
@@ -17,13 +17,13 @@
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=5.538303856755128,
-                lower quartile=7.395662917501184,
-                median=8.196556135472807,
-                upper quartile=8.80304857039636,
-                upper whisker=10.688539108997823
+                lower whisker=3.1403810708099087,
+                lower quartile=9.476968135811461,
+                median=13.639798512464758,
+                upper quartile=15.67154847473326,
+                upper whisker=19.468703650942558
                 }, color = red
-                ] coordinates{(0,11.691645950068242)(0,11.169539444573637)(0,11.047077498640242)(0,10.985039861103722)};
+                ] coordinates{};
         
         \addplot+ [boxplot prepared={
                 lower whisker=13.671516868866966,
@@ -44,34 +44,34 @@
                 ] coordinates{(2,16.03285385679371)(2,15.867321540011744)(2,15.540878583673152)(2,14.969727673619122)(2,15.352799581904574)(2,15.115153618451675)(2,15.401625231892655)(2,15.14416898015471)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=19.98714067680674,
-                lower quartile=20.76981375735756,
-                median=21.26573470715956,
-                upper quartile=21.59120647518513,
-                upper whisker=22.56930179085588
+                lower whisker=19.668500983565828,
+                lower quartile=20.636669588217003,
+                median=20.9817617355998,
+                upper quartile=21.334042361619016,
+                upper whisker=22.32254860261321
                 }, color = red
-                ] coordinates{(3,23.227876822381482)(3,22.861351114232917)};
+                ] coordinates{(3,19.389908750555904)(3,14.603500983565723)(3,19.56466603210948)(3,23.289398419462962)(3,22.407328734761798)(3,22.63082338793736)(3,22.922872711314398)(3,22.4035009835656)(3,22.985143495643108)(3,22.420759866814542)(3,22.57301317868766)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=14.183700095102173,
-                lower quartile=14.297625170102172,
-                median=14.405916795102174,
-                upper quartile=15.533979995102172,
-                upper whisker=16.281610106213286
+                lower whisker=13.935614087454088,
+                lower quartile=14.290182931898535,
+                median=14.388339731898537,
+                upper quartile=15.488974754120758,
+                upper whisker=16.239277643009647
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=16.875429099999995,
-                lower quartile=17.02712465,
-                median=17.146395799999997,
-                upper quartile=18.950352333333335,
-                upper whisker=19.089050555555556
+                lower whisker=16.390292166666665,
+                lower quartile=17.033470599999998,
+                median=17.161755955999997,
+                upper quartile=18.900225444444445,
+                upper whisker=19.19241844444445
                 }, color = red
                 ] coordinates{};
         
         
         \end{axis}
     \end{tikzpicture}
-\caption{CPU measurements on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationtwo-cpu-dynamic_energy_consumption}
+\caption{CPU measurements on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationtwo-cpu-dec_per_second}
 \end{figure}

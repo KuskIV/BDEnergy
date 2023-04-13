@@ -1,0 +1,31 @@
+﻿[
+  {
+    "MeasurementInstruments": [ 1, 5 ],
+    "RequiredMeasurements": 600,
+    "TestCasePaths": [
+      "/home/test/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/fannkuch-redux",
+      "/home/test/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/mandelbrot",
+      "/home/test/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/intel-one-api/idle-case"
+    ],
+    "AllocatedCores": [],
+    "TestCaseParameters": [
+      "12",
+      "64000",
+      ""
+    ],
+    "UploadToDatabase": true,
+    "BurnInPeriod": 1,
+    "MinimumTemperature": 0,
+    "MaximumTemperature": 200,
+    "DisableWifi": true,
+    "ExperimentNumber": 2,
+    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update-and-watt",
+    "ConcurrencyLimit": "multi-threaded",
+    "TestCaseType": "microbenchmarks",
+    "Compiler": "intel-one-api",
+    "Optimizations": "-openmp",
+    "Language": "c++",
+    "StopBackgroundProcesses": true,
+    "AdditionalMetadata": {}
+  }
+]

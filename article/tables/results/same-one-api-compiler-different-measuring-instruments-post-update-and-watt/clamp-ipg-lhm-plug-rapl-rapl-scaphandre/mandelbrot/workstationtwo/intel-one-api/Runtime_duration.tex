@@ -7,7 +7,7 @@
         }
         \begin{axis}[
             xlabel={Average Runtime (s)}, 
-            title={The duration of the Runtime}, 
+            title={The average duration}, 
             ytick={1, 2, 3, 4, 5},
         yticklabels={
              Clamp,  IPG,  LHM,  Plug,  SCAP
@@ -17,13 +17,13 @@
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=20.841,
-                lower quartile=21.329,
-                median=21.485999999999997,
-                upper quartile=21.661,
-                upper whisker=22.115
+                lower whisker=20.898,
+                lower quartile=21.42875,
+                median=21.616,
+                upper quartile=21.81225,
+                upper whisker=22.334
                 }, color = red
-                ] coordinates{(0,22.866)(0,23.096)(0,22.912)(0,22.517)(0,22.721)(0,22.444)(0,22.599)(0,22.595)(0,22.562)(0,22.725)(0,22.353)(0,22.535)(0,22.621)(0,22.787)(0,22.41)(0,22.32)(0,22.408)};
+                ] coordinates{(0,20.841)(0,22.536)(0,23.136)(0,22.699)(0,22.736)(0,22.86)(0,23.105)(0,22.735)(0,23.125)(0,22.592)(0,22.747)(0,22.95)(0,23.201)(0,22.542)(0,23.1)(0,22.693)(0,22.934)(0,22.818)(0,22.603)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=20.928,
@@ -44,22 +44,22 @@
                 ] coordinates{(2,21.533)(2,21.513)(2,21.511)(2,21.533)(2,21.538)(2,21.582)(2,21.867)(2,21.706)(2,21.523)(2,21.643)(2,21.533)(2,21.598)(2,21.534)(2,21.598)(2,21.518)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=20.989,
-                lower quartile=21.3205,
-                median=21.5,
-                upper quartile=21.73425,
-                upper whisker=22.17
+                lower whisker=20.859,
+                lower quartile=21.38775,
+                median=21.569499999999998,
+                upper quartile=21.7845,
+                upper whisker=22.182
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(3,22.956)(3,22.963)(3,22.826)(3,22.916)(3,22.881)(3,22.522)(3,23.22)(3,22.431)(3,22.839)(3,23.24)(3,22.703)(3,22.625)(3,22.752)(3,22.713)(3,22.748)(3,22.701)(3,22.524)(3,23.18)(3,22.899)(3,23.084)(3,23.225)(3,23.209)(3,23.043)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=21.082,
-                lower quartile=21.283250000000002,
-                median=21.430500000000002,
-                upper quartile=21.571,
-                upper whisker=21.969
+                lower quartile=21.407,
+                median=21.533,
+                upper quartile=21.715,
+                upper whisker=22.146
                 }, color = red
-                ] coordinates{(4,22.039)};
+                ] coordinates{(4,22.19)(4,22.209)};
         
         
         \end{axis}

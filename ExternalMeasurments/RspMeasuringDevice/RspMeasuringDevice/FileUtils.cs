@@ -1,6 +1,7 @@
 ﻿using Polly;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,11 +49,15 @@ namespace RspMeasuringDevice
 
         public static DateTime GetStartTime(string file)
         {
-            string fileNameWithExtension = Path.GetFileName(file);
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithExtension);
-            string format = "yyyy-MM-ddTHH-mm-ss-fffZ"; // specify the custom format string
-            DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture).ToUniversalTime();
-            return fileTime;
+            //string fileNameWithExtension = Path.GetFileName(file);
+            //string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithExtension);
+            //string format = "yyyy-MM-ddTHH-mm-ss-fffZ"; // specify the custom format string
+            //DateTime fileTime = DateTime.ParseExact(fileNameWithoutExtension, format, System.Globalization.CultureInfo.InvariantCulture).ToUniversalTime();
+            //return fileTime;
+            FileInfo fileInfo = new FileInfo(file);
+            DateTime creationTime = fileInfo.CreationTimeUtc;
+            //Console.WriteLine("File "+ creationTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            return creationTime.AddSeconds(-10).ToUniversalTime();
         }
     }
 }
