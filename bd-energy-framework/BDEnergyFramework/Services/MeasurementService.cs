@@ -26,10 +26,10 @@ namespace BDEnergyFramework.Services
         private Dictionary<EMeasuringInstrument, int> _sampleRates;
 
         private MeasuringInstrument _ipg;
-        private MeasuringInstrument _lhm;
+        //private MeasuringInstrument _lhm;
 
         //private MeasuringInstrument _scaphandre;
-        //private MeasuringInstrument _plug;
+        private MeasuringInstrument _plug;
         //private MeasuringInstrument _clamp;
 
 
@@ -48,11 +48,11 @@ namespace BDEnergyFramework.Services
                 });
 
             //_scaphandre = new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
-            //_plug = new Plug(EMeasuringInstrument.PLUG, logger);
+            _plug = new Plug(EMeasuringInstrument.PLUG, logger);
             //_clamp = new Clamp(EMeasuringInstrument.CLAMP, logger);
 
             _ipg = new IntelPowerLog(EMeasuringInstrument.IPG);
-            _lhm = new LibreHardwareMonitorInstrument(EMeasuringInstrument.LHM, logger);
+            //_lhm = new LibreHardwareMonitorInstrument(EMeasuringInstrument.LHM, logger);
 
             //_measuringInstruments = 
 
@@ -62,11 +62,11 @@ namespace BDEnergyFramework.Services
         {
             config.MeasurementInstruments = new List<EMeasuringInstrument>()
             {
-                //_plug.GetName(),
+                _plug.GetName(),
                 //_scaphandre.GetName(),
                 //_clamp.GetName(),
                 _ipg.GetName(),
-                _lhm.GetName()
+                //_lhm.GetName()
             };
 
             var measurements = new List<MeasurementContext>();
@@ -157,9 +157,9 @@ namespace BDEnergyFramework.Services
 
             _measuringInstruments = new List<MeasuringInstrument>()
             {
-                _lhm, 
-                _ipg
-                //_plug,
+                //_lhm, 
+                _ipg,
+                _plug,
                 //_clamp,
                 //_scaphandre
             };
@@ -295,7 +295,7 @@ namespace BDEnergyFramework.Services
 
             SetupMeasurement(config, measurements, testCaseParameter, testCasePath, allocatedCores);
 
-            Measure(mi, testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements, delay);
+            Measure(testCaseParameter, testCasePath, measurements, allocatedCores, burninApplied, config.RequiredMeasurements, delay);
         }
 
         private int GetDelay(MeasurementConfiguration config)
@@ -348,11 +348,8 @@ namespace BDEnergyFramework.Services
             return measurements.Any() && measurements.All(x => x.Measurements.Count >= config.RequiredMeasurements);
         }
 
-        private void Measure(EMeasuringInstrument mi, string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements, int delay)
+        private void Measure(string testCaseParameter, string testCasePath, List<MeasurementContext> measurements, List<int> enabledCores, bool burninApplied, int requiredMeasurements, int delay)
         {
-            //var measuringInstrument = GetMeasuringInstrument(mi);
-            //var measurement = GetMeasurement(measurements, mi, testCasePath, testCaseParameter, enabledCores);
-
             if (measurements.Select(x => x.Measurements.Count()).Min() > requiredMeasurements)
             {
                 _logger.Information("Enough measurements achieved all");
@@ -381,8 +378,8 @@ namespace BDEnergyFramework.Services
 
             var endTemperature = _dutService.GetTemperature();
 
-            Thread.Sleep(TimeSpan.FromSeconds(15)); // sleep is for clamp and plug
             _dutService.EnableWifi();
+            Thread.Sleep(TimeSpan.FromSeconds(15)); // sleep is for clamp and plug
 
             foreach (var mi in _measuringInstruments)
             {

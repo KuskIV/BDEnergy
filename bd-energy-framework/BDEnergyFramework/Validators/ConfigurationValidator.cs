@@ -14,7 +14,7 @@ namespace BDEnergyFramework.Validators
             foreach(var c in configuration)
             {
                 ValidateMeasuringInstruments(dutService, c.MeasurementInstruments, errors);
-                ValidatePaths(c.TestCasePaths, errors);
+                //ValidatePaths(c.TestCasePaths, errors);
                 ValidateTestCases(c, errors);
                 ValidateTemperatures(c, errors);
             }

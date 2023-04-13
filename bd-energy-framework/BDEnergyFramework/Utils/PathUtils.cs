@@ -28,6 +28,8 @@ namespace BDEnergyFramework.Utils
             return path;
         }
 
+
+
         public static string GetFilenameFromPath(string path)
         {
             return Path.GetFileName(path);
