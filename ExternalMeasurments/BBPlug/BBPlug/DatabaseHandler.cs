@@ -56,7 +56,7 @@ namespace RspMeasuringDevice
                     .WaitAndRetry(maxRetries, retryAttempt => TimeSpan.FromMilliseconds(retryDelayMilliseconds))
                     .Execute(() =>
                     {
-                        using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time) VALUES (@watt, @current, @voltage, @ip, @time)", connection);
+                        using var command = new MySqlCommand("INSERT INTO power_usage (Watt, Current, Voltage, Ip, time, React, Apparent, PowFactor) VALUES (@watt, @current, @voltage, @ip, @time, @React, @Apparent, @PowFactor)", connection);
 
                         // set parameter values
                         command.Parameters.AddWithValue("@watt", result.Power);
@@ -64,6 +64,9 @@ namespace RspMeasuringDevice
                         command.Parameters.AddWithValue("@voltage", result.Voltage);
                         command.Parameters.AddWithValue("@ip", ip);
                         command.Parameters.AddWithValue("@time", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                        command.Parameters.AddWithValue("@React", result.ReactivePower);
+                        command.Parameters.AddWithValue("@Apparent", result.ApparentPower);
+                        command.Parameters.AddWithValue("@PowFactor", result.PowerFactor);
                         command.ExecuteNonQuery();
                     });
             }
