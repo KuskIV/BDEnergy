@@ -27,11 +27,12 @@
             StopTimer();
             StopMeasuringInstrument();
         }
-        internal virtual int GetMilisecondsBetweenSampels()
+
+        internal virtual int GetMilisecondsBetweenSamples()
         {
             return 100;
         }
-                
+        
         internal virtual (TimeSeries, Measurement) ParseData(string path) { }
 
         internal virtual void StopMeasuringInstrument() { }
