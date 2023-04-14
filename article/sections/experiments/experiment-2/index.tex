@@ -15,10 +15,11 @@ The Clamp required the most measurements, where the highest case required $44.10
 \input{tables/results/same-one-api-compiler-different-measuring-instruments-post-update-and-watt/clamp-ipg-lhm-plug-rapl-rapl-scaphandre/mandelbrot/workstationone/intel-one-api/CPU_DEC.tex}
 \input{tables/results/same-one-api-compiler-different-measuring-instruments-post-update-and-watt/clamp-ipg-lhm-plug-rapl-rapl-scaphandre/fannkuch-redux/workstationone/intel-one-api/CPU_DEC.tex}
 
-When applying statistical methods from \cref{subsec:Statistics}, it was discovered that some of the data did not follow a normal distribution and were not significantly different from previous studies \cite{biksbois, Koedijk2022diff}. Thus, Kendalls Tau Correlation Coefficient was used, and the results for the two test cases can be seen in \cref{fig:fannkuchCorr} and \cref{fig:mandelbrotCorr}.
+When applying statistical methods from \cref{subsec:Statistics}, it was discovered that some of the data did not follow a normal distribution and were significantly different from eachother, previous studies \cite{biksbois, Koedijk2022diff} have had simliar results. Thus, Kendalls Tau Correlation Coefficient was used, and the results for the two test cases can be seen in \cref{fig:fannkuchCorr} and \cref{fig:mandelbrotCorr}.
 
 \begin{figure}[H]
     \centering
+    \hspace*{-1cm} % move the figure 1cm to the left
     \includegraphics[width=0.6\textwidth]{figures/Fannkuch-redux_ex2.png}
     \caption{Heatmap showing the correlation ceoffecient betwween all of the measurement instrument on windows for the fannkuch-redux testcase}
     \label{fig:fannkuchCorr}
@@ -26,10 +27,12 @@ When applying statistical methods from \cref{subsec:Statistics}, it was discover
   
   \begin{figure}[H]
     \centering
+    \hspace*{-1cm} % move the figure 1cm to the left
     \includegraphics[width=0.6\textwidth]{figures/Mandelbrot_ex2.png}
-    \caption{Heatmap showing the correlation ceoffecient betwween all of the measurement instrument on windows for the Mandelbrot testcase }
+    \caption{Heatmap showing the correlation coefficient between all of the measurement instruments on windows for the Mandelbrot test case.}
     \label{fig:mandelbrotCorr}
   \end{figure}
+  
 
   All DUTs showed moderate to high correlation with the ground truth (Clamp) when assessed with the Guildford Scale. The measuring instruments varied in their correlation performance, with SCAPI being the best but with very few data points logged, this is also the case with SCAP. LHM and IPG being essentially equal in performance for both test cases which Slight diviations. Since usability is also a factor, IPG was chosen as the best measuring instrument and will be used for future experiments on Windows.
 
