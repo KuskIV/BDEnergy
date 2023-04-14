@@ -67,6 +67,6 @@ where 1 = 1
     and d.Name = 'workstationtwo'
     -- and d.Name = 'workstationone'
     -- and t.Name = 'mandelbrot.exe'
-    and not mi.Name in ('broken_clamp', 'yet_another_wonky_clamp')
+    and not mi.Name in ('broken_clamp', 'yet_another_wonky_clamp', 'wonky_clamp', 'shit_clamp', 'donkey_clamp', 'sliding_clamp', 'clamp_with_multiple_points', 'maybe_good_clamp')
 order by
     lm.MaxBegin desc
