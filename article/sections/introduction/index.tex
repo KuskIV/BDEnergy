@@ -2,12 +2,14 @@
 
 In recent years there has been rapid growth in Information and Communications Technology (ICT) which has led to an increase in energy consumption. Furthermore, it is expected that the rapid growth of ICT will continue in the future. \cite{jones2018stop,andrae2015global} As the use of ICT rises the demand for computational power rises as well, therefore energy efficiency has or perhaps should become more of a concern for companies and software developers alike.
 
-In this paper, we investigate energy consumption of various C++ test cases using different measuring instruments on Windows 11, comparing the efficiency and tradeoffs between sequential and parallel execution. Our experiments involve two Device Under Tests (DUTs): an Intel Coffee Lake CPU with a traditional P-core setup and an Intel Raptor Lake CPU with P- and E-cores. We analyze the impact of Asymmetric Multicore Processors (AMPs) on parallel execution compared to traditional Symmetric MultiCore Processors.
+In this paper, there are three experiments. The first experiment 
+
+In this paper, we investigate energy consumption of various test cases on Windows 11, comparing the efficiency and tradeoffs between sequential and parallel execution. Our experiments involve two Device Under Tests (DUTs): an Intel Coffee Lake CPU with a traditional P-core setup and an Intel Raptor Lake CPU with P- and E-cores. We analyze the impact of Asymmetric Multicore Processors (AMPs) on parallel execution compared to traditional Symmetric MultiCore Processors. We conduct three experiments, each building upon the previous one. The first experiment focuses on selecting the C++ compiler for the test cases in the second experiment. The second experiment aims to identify the best measuring instruments for our use case, using only C++ test cases to avoid noise from e.g. a garbage collector or just-in-time compilation. In the third experiment, we expand the scope beyond C++ test cases, as the preferred measuring instruments have been chosen, and focus on analyzing energy consumption behavior when utilizing different numbers of cores. The following research questions are formulated to assist with the process:
 
 \begin{itemize}
     %\item How does the compiler, temperature and background process impact the energy consumption?
     %\item What is the best measuring instrument for Windows? %% omformuler, måske kritere for at vælge hvad der er bedst i de forskellige situationer. fx hw måling er gode men svære at sætte op, e3 kræver tingene køre i længere tid osv.
-    \item RQ\refstepcounter{RQ}\theRQ: How does the compiler used to compile the test cases impact the energy consumption?\label[RQ]{RQ:RQ1}
+    \item RQ\refstepcounter{RQ}\theRQ: How does the C++ compiler used to compile the test cases impact the energy consumption?\label[RQ]{RQ:RQ1}
     \item RQ\refstepcounter{RQ}\theRQ: What are the advantages and drawbacks of the different types of measuring instruments in terms of accuracy, ease of use, and cost?\label[RQ]{RQ:RQ2}
     % \item \textit{How well does microbenchmarks represent a realistic usecase compared to macrobenchmarks?}
     \item RQ\refstepcounter{RQ}\theRQ: What effect does parallelism have on the energy consumption of the test cases?\label[RQ]{RQ:RQ3}
