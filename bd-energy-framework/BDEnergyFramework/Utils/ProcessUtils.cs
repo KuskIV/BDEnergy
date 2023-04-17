@@ -33,10 +33,15 @@ namespace BDEnergyFramework.Utils
             else if (testCasePath == TestCaseUtils.MARK3D)
             {
                 var startTime = DateTime.UtcNow;
-                var ahkPath = "left-click.exe";
-                var p = new Process();
-                p.StartInfo.FileName = ahkPath;
-                p.Start();
+
+                while (ProcessNotRunning("3DMarkCPUProfile"))
+                {
+                    LeftClick();
+                    Thread.Sleep(
+                        TimeSpan.FromSeconds(1));
+                }
+
+                logger.Information("Starting {name}", testCasePath);
 
                 while (!Is3DMarkDone(startTime))
                 {
@@ -45,6 +50,8 @@ namespace BDEnergyFramework.Utils
                     Thread.Sleep(
                         TimeSpan.FromMilliseconds(500));
                 }
+
+                logger.Information("Stopping {name}", testCasePath);
 
                 if (Is3DMarkFileError(startTime))
                 {
@@ -81,6 +88,21 @@ namespace BDEnergyFramework.Utils
 
             logger.Information("Test case '{tc}' exited with exit code '{exitCode}'",
                 PathUtils.GetFilenameFromPath(testCasePath), exitCode);
+        }
+
+        private static bool ProcessNotRunning(string processName)
+        {
+            var processes = Process.GetProcessesByName(processName);
+
+            return !processes.Any();
+        }
+
+        private static void LeftClick()
+        {
+            var ahkPath = "left-click.exe";
+            var p = new Process();
+            p.StartInfo.FileName = ahkPath;
+            p.Start();
         }
 
         private static void SetAffinityOfProcessesFor3DMark(List<int> enabledCores)

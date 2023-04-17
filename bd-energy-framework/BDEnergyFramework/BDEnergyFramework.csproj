@@ -46,6 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="click-run-again-3d-mark.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="EnergyLib64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

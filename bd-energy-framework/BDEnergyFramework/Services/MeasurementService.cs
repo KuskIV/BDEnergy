@@ -397,7 +397,7 @@ namespace BDEnergyFramework.Services
 
             try
             {
-                _logger.Information("Test case exited after {duration} milliseconds", measurements.First().Measurements.Last().Duration);
+                _logger.Information("Test case exited after {duration} milliseconds", stopWatch.ElapsedMilliseconds);
             }
             catch (Exception)
             {

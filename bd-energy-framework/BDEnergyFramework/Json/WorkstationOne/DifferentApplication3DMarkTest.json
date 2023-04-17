@@ -1,7 +1,7 @@
 [
   {
     "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 2,
+    "RequiredMeasurements": 2000,
     "TestCasePaths": [
       "3D-MARK"
     ],
