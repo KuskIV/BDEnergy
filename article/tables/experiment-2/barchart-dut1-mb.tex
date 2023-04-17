@@ -1,42 +1,52 @@
-\begin{tikzpicture}
-    \pgfplotsset{
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \pgfplotsset{
             width=0.4\textwidth,
-            height=0.3\textheight
+            height=0.5\textheight
         }
-    \begin{axis}[
-        ybar=5pt,
-        ymin=0,ymax=150,
-        xtick=data,
-        enlarge x limits={abs=0.5cm},
-        symbolic x coords={IPG, LHM, RAPL, Clamp1, Clamp2, Plug1, Plug2, SCAP, SCAPI},
-        bar width = 5pt,
-        ylabel= DEC (Joules), clip=false,
-            ytick align=outside, 
-            ytick pos=left,
-            major x tick style = transparent,
-            legend style={at={(0.04,0.96)},anchor=north west, font=\footnotesize, legend cell align=left,},
-            ]    
-        \addplot[ybar,fill=blue, area legend] coordinates {
-            (IPG,20)
-            (LHM,30)
-            (RAPL,40)
-            (Clamp1,50)
-            (Clamp2,60)
-            (Plug1,70)
-            (Plug2,80)
-            (SCAP,90)
-            (SCAPI,100)};
-        \addplot[ybar,fill=purple, area legend] coordinates {
-            (IPG,20)
-            (LHM,30)
-            (RAPL,40)
-            (Clamp1,50)
-            (Clamp2,60)
-            (Plug1,70)
-            (Plug2,80)
-            (SCAP,90)
-            (SCAPI,100)}; 
-     \legend{MB, FR}  
-     \node (title) at (xticklabel* cs: 0.5,25pt) {Measuring Instrument};
-    \end{axis}
-    \end{tikzpicture}
+        \begin{axis}
+            [
+                xbar,
+                legend style={at={(0.5,-0.1)}, anchor=north,legend columns=-1},
+                bar width = 5pt,
+                xlabel= DEC (Joules),
+                xmin=0,xmax=900,
+                symbolic y coords = {
+                    IPG, 
+                    LHM, 
+                    SCAP, 
+                    SCAPI, 
+                    Clamp WIN, 
+                    Plug WIN,
+                    RAPL,
+                    Clamp LIN,
+                    Plug LIN},
+            ]
+            \addplot coordinates { 
+                (524.49,IPG)
+                (517.275,LHM)
+                (524.18,SCAP)
+                (659.47,SCAPI)
+                (677.93,Clamp WIN)
+                (758.63,Plug WIN)
+                (325.89,RAPL)
+                (0,Clamp LIN)
+                (836.47,Plug LIN)
+                };
+            \addplot coordinates { 
+                (415.05,IPG)
+                (426.03,LHM)
+                (451.05,SCAP)
+                (565.55,SCAPI)
+                (327.41,Clamp WIN)
+                (448.67,Plug WIN)
+                (557.63,RAPL)
+                (0,Clamp LIN)
+                (752.80,Plug LIN)
+                };
+            \legend{FR, MB}
+            \end{axis}
+        \end{tikzpicture}
+    \caption{The average DEC for DUT 1, where both test cases are compiled on oneAPI} \label{fig:dut-1-compare-mi}
+\end{figure}
