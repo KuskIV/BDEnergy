@@ -1,0 +1,40 @@
+[
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "3D-MARK"
+        ],
+        "AllocatedCores": [
+            [ 4 ],
+            [ 4, 3 ],
+            [ 4, 3, 2 ],
+            [ 4, 3, 2, 1 ],
+            [ 4, 3, 2, 1, 5 ],
+            [ 4, 3, 2, 1, 5, 0 ],
+            [ 4, 3, 2, 1, 5, 0, 8 ],
+            [ 4, 3, 2, 1, 5, 0, 8, 7 ],
+            [ 4, 3, 2, 1, 5, 0, 8, 7, 6 ],
+            [ 4, 3, 2, 1, 5, 0, 8, 7, 6, 9 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 1,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "same-mi-different-application",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+            "msDelayInTestCase": "500"
+        }
+    }
+]

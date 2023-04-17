@@ -94,6 +94,15 @@
     <None Update="Json\WorkstationTwo\2nd-experiment\DifferentCoresInstrumentExpWindowsLast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationTwo\3rd-experiment\DifferentApplicationPCMarkTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationTwo\3rd-experiment\DifferentApplicationIdleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Json\WorkstationTwo\3rd-experiment\DifferentApplication3DMarkTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationTwo\TestConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

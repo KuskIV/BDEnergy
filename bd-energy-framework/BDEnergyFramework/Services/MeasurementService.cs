@@ -29,8 +29,8 @@ namespace BDEnergyFramework.Services
         //private MeasuringInstrument _lhm;
 
         //private MeasuringInstrument _scaphandre;
-        private MeasuringInstrument _plug;
-        //private MeasuringInstrument _clamp;
+        //private MeasuringInstrument _plug;
+        private MeasuringInstrument _clamp;
 
 
         public MeasurementService(IDutService dutService, Func<IDbConnection> dbFactory, ILogger logger, string machineName)
@@ -48,8 +48,8 @@ namespace BDEnergyFramework.Services
                 });
 
             //_scaphandre = new Scaphandre(EMeasuringInstrument.SCAPHANDRE);
-            _plug = new Plug(EMeasuringInstrument.PLUG, logger);
-            //_clamp = new Clamp(EMeasuringInstrument.CLAMP, logger);
+            //_plug = new Plug(EMeasuringInstrument.PLUG, logger);
+            _clamp = new Clamp(EMeasuringInstrument.CLAMP, logger);
 
             _ipg = new IntelPowerLog(EMeasuringInstrument.IPG);
             //_lhm = new LibreHardwareMonitorInstrument(EMeasuringInstrument.LHM, logger);
@@ -62,9 +62,9 @@ namespace BDEnergyFramework.Services
         {
             config.MeasurementInstruments = new List<EMeasuringInstrument>()
             {
-                _plug.GetName(),
+                //_plug.GetName(),
                 //_scaphandre.GetName(),
-                //_clamp.GetName(),
+                _clamp.GetName(),
                 _ipg.GetName(),
                 //_lhm.GetName()
             };
@@ -159,8 +159,8 @@ namespace BDEnergyFramework.Services
             {
                 //_lhm, 
                 _ipg,
-                _plug,
-                //_clamp,
+                //_plug,
+                _clamp,
                 //_scaphandre
             };
 
@@ -379,7 +379,9 @@ namespace BDEnergyFramework.Services
             var endTemperature = _dutService.GetTemperature();
 
             _dutService.EnableWifi();
-            Thread.Sleep(TimeSpan.FromSeconds(15)); // sleep is for clamp and plug
+            var sleepDelay = TimeSpan.FromMinutes(3);
+            _logger.Information("About to sleep until {time}", DateTime.UtcNow.Add(sleepDelay));
+            Thread.Sleep(sleepDelay); // sleep is for clamp and plug
 
             foreach (var mi in _measuringInstruments)
             {
