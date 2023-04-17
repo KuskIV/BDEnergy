@@ -20,6 +20,7 @@ Both Windows and Linux is supported on BDE. This is supported through the \textt
 
 \paragraph*{}
 BDE also supports multiple measuring instruments, through a parent class \texttt{MeasuringInstrument} in \cref{lst:measuring_instrument} the measuring instruments can inherit from. \texttt{MeasuringInstrument} implements a start (line $10$) and stop (line $19$) method, and a method to get the data measured between the start and stop in line $4$. In terms of the virtual methods, each measuring instrument needs to override, these are measuring instruments specific. This includes a start (line $34$) and stop (line $32$) method, a method to parse the measurement data in line $30$ and a method in line $36$ which performs a measurement by default every 100ms by default. The method in line $36$ is made for measuring instruments line RAPL, where an action is required to read the energy consumption.
+\newpage
 
 \input{listings/perform_measurement.tex}
 
