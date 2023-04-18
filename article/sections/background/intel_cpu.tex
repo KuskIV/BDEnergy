@@ -21,7 +21,7 @@ Another thing that can control the performance of CPU i P-states. P-states are u
 
 % The G-states (Global-States) define the overall state of the system. G0 represents a working computer where C-states, P-states, and S0 states can occur, while G3 represents a completely shut-down system.
 
-In this study the C-states can have a large impact on the energy consumption of the test cases, especially the idle case as was found in \cite{biksbois}.
+In this study the C-states can have a large impact on the energy consumption of the benchmarks, especially the idle case as was found in \cite{biksbois}.
 
 \paragraph{Disabling C-States}
 In order to achieve a consistent performance during testing, it is necessary to completely disable C-states on the computer by modifying several BIOS settings. Merely deactivating the C-states option does not suffice, since the CPU still has the ability to switch to different P-states, which can lead to frequency fluctuations. To address this, the Intel SpeedStep\cite{IntelSpeedStep} feature, which regulates the P-state of the CPU, must also be disabled, as it can result in frequency changes. Furthermore, the Intel Speed Shift\cite{IntelSpeedShift} capability, which allows the hardware to control the P-state instead of the operating system, should also be disabled. These measures ensure a stable CPU frequency and optimal performance.

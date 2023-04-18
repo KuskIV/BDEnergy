@@ -1,19 +1,19 @@
 \subsection{Experiment Three}\label{subsec:exp_three}
 
-The third experiment investigated \cref{RQ:RQ3,RQ:RQ4}, by taking a look at the per-core performance. In this experiment only IPG and the Clamp was used to conduct measurements. The test case was executed on one core at a time using the single-core test cases introduced in \cref{subsec:test_cases}. This allowed a comparison between the energy consumption of the P- and E-cores on DUT 2 and the P-cores on DUT 1.
+The third experiment investigated \cref{RQ:RQ3,RQ:RQ4}, by taking a look at the per-core performance. In this experiment only IPG and the Clamp was used to conduct measurements. The benchmark was executed on one core at a time using the single-core benchmarks introduced in \cref{subsec:test_cases}. This allowed a comparison between the energy consumption of the P- and E-cores on DUT 2 and the P-cores on DUT 1.
 
-%The test case used in this experiment was the single-core test cases introduced in \cref{subsec:test_cases}, by running each test case on one core at a time, while measuring the energy consumption using IPG and Clamp. This will show how the performance is between P- and E-cores, and how the performance is between cores with the same specifications.
+%The benchmark used in this experiment was the single-core benchmarks introduced in \cref{subsec:test_cases}, by running each benchmark on one core at a time, while measuring the energy consumption using IPG and Clamp. This will show how the performance is between P- and E-cores, and how the performance is between cores with the same specifications.
 
-\paragraph{Per-Core Initial Measurements:} An initial $250$ measurements were made for each test case on each core. Then Cochran's formula was calculated to determine if more measurements were required as shown in \cref{app:exp_three_coch}. However the limit of $1000$ measurements set in experiment two was still used.
+\paragraph{Per-Core Initial Measurements:} An initial $250$ measurements were made for each benchmark on each core. Then Cochran's formula was calculated to determine if more measurements were required as shown in \cref{app:exp_three_coch}. However the limit of $1000$ measurements set in experiment two was still used.
 
-%The first measurements were made, will be in order to compare the per-core performance, where $250$ measurements will be made for each test case on each core. After $250$ measurements, more measurements were made where it was required, as can be found in \cref{app:exp_three_coch}, with an upper limit of $1000$ measurements.
+%The first measurements were made, will be in order to compare the per-core performance, where $250$ measurements will be made for each benchmark on each core. After $250$ measurements, more measurements were made where it was required, as can be found in \cref{app:exp_three_coch}, with an upper limit of $1000$ measurements.
 
 \input{tables/dut-2-exp-3.tex}
 
 \paragraph{Per-Core Results:} The results, presented here are based on DUT 2, where the results will be shown in graphs, given the low deviation in the results. Boxplots for both DUTs can be found in \cref{app:exp_three}. The run time was on average $76.26\%$ lower on the P-cores compared to the E-cores and The total DEC was on average $70.44\%$ lower on P cores, however the E cores had a $72.88\%$ lower energy consumption per second. %When comparing  P- and E-cores, the duration is on average is $76.26\%$ lower on P cores, the energy consumption is $70.44\%$ lower on P cores over the entire duration, while E cores has a $72.88\%$ lower energy consumption per second.
-The largest difference between two cores of the same type was found on DUT 1 with test case NB, where the performance was $11.61\%$ worse on core 1 than core 6. The smallest difference was found on DUT 2, test case NB on a E core, where the energy consumption was $1.17\%$ higher on core $6$ than core $9$.
+The largest difference between two cores of the same type was found on DUT 1 with benchmark NB, where the performance was $11.61\%$ worse on core 1 than core 6. The smallest difference was found on DUT 2, benchmark NB on a E core, where the energy consumption was $1.17\%$ higher on core $6$ than core $9$.
 
-%When comparing cores of the same type, the largest difference between the best and worst performing core was found on DUT 2, with test case NB, 
+%When comparing cores of the same type, the largest difference between the best and worst performing core was found on DUT 2, with benchmark NB, 
 
 
 
