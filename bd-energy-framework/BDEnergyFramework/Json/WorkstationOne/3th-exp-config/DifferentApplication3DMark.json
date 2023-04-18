@@ -1,110 +1,110 @@
 [
-  {
-    "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 150,
-    "TestCasePaths": [
-      "3D-MARK"
-    ],
-    "AllocatedCores": [
-      [ 0 ],
-      [ 0, 5 ],
-      [ 0, 5, 6 ],
-      [ 0, 5, 6, 2 ],
-      [ 0, 5, 6, 2, 4 ],
-      [ 0, 5, 6, 2, 4, 3 ],
-      [ 0, 5, 6, 2, 4, 3, 1 ],
-      [ 0, 5, 6, 2, 4, 3, 1, 7 ]
-    ],
-    "TestCaseParameters": [
-      ""
-    ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 1,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": true,
-    "ExperimentNumber": 3,
-    "ExperimentName": "same-mi-different-application",
-    "ConcurrencyLimit": "multi-threaded",
-    "TestCaseType": "application",
-    "Compiler": "UNKOWN",
-    "Optimizations": "",
-    "Language": "UNKNOWN",
-    "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {
-      "msDelayInTestCase": "500"
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "3D-MARK"
+        ],
+        "AllocatedCores": [
+            [ 0 ],
+            [ 0, 5 ],
+            [ 0, 5, 6 ],
+            [ 0, 5, 6, 2 ],
+            [ 0, 5, 6, 2, 4 ],
+            [ 0, 5, 6, 2, 4, 3 ],
+            [ 0, 5, 6, 2, 4, 3, 1 ],
+            [ 0, 5, 6, 2, 4, 3, 1, 7 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "same-mi-different-application-post-config-update",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+            "msDelayInTestCase": "500"
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            [ 0 ],
+            [ 0, 5 ],
+            [ 0, 5, 6 ],
+            [ 0, 5, 6, 2 ],
+            [ 0, 5, 6, 2, 4 ],
+            [ 0, 5, 6, 2, 4, 3 ],
+            [ 0, 5, 6, 2, 4, 3, 1 ],
+            [ 0, 5, 6, 2, 4, 3, 1, 7 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "same-mi-different-application-post-config-update",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+            "msDelayInTestCase": "500"
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 0 ],
+            [ 0, 5 ],
+            [ 0, 5, 6 ],
+            [ 0, 5, 6, 2 ],
+            [ 0, 5, 6, 2, 4 ],
+            [ 0, 5, 6, 2, 4, 3 ],
+            [ 0, 5, 6, 2, 4, 3, 1 ],
+            [ 0, 5, 6, 2, 4, 3, 1, 7 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "same-mi-different-application-post-config-update",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+            "msDelayInTestCase": "500"
+        }
     }
-  },
-  {
-    "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 150,
-    "TestCasePaths": [
-      "IDLE"
-    ],
-    "AllocatedCores": [
-      [ 0 ],
-      [ 0, 5 ],
-      [ 0, 5, 6 ],
-      [ 0, 5, 6, 2 ],
-      [ 0, 5, 6, 2, 4 ],
-      [ 0, 5, 6, 2, 4, 3 ],
-      [ 0, 5, 6, 2, 4, 3, 1 ],
-      [ 0, 5, 6, 2, 4, 3, 1, 7 ]
-    ],
-    "TestCaseParameters": [
-      ""
-    ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 1,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": true,
-    "ExperimentNumber": 3,
-    "ExperimentName": "same-mi-different-application",
-    "ConcurrencyLimit": "multi-threaded",
-    "TestCaseType": "application",
-    "Compiler": "UNKOWN",
-    "Optimizations": "",
-    "Language": "UNKNOWN",
-    "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {
-      "msDelayInTestCase": "500"
-    }
-  },
-  {
-    "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 150,
-    "TestCasePaths": [
-      "PC-MARK-10"
-    ],
-    "AllocatedCores": [
-      [ 0 ],
-      [ 0, 5 ],
-      [ 0, 5, 6 ],
-      [ 0, 5, 6, 2 ],
-      [ 0, 5, 6, 2, 4 ],
-      [ 0, 5, 6, 2, 4, 3 ],
-      [ 0, 5, 6, 2, 4, 3, 1 ],
-      [ 0, 5, 6, 2, 4, 3, 1, 7 ]
-    ],
-    "TestCaseParameters": [
-      ""
-    ],
-    "UploadToDatabase": true,
-    "BurnInPeriod": 1,
-    "MinimumTemperature": 0,
-    "MaximumTemperature": 200,
-    "DisableWifi": true,
-    "ExperimentNumber": 3,
-    "ExperimentName": "same-mi-different-application",
-    "ConcurrencyLimit": "multi-threaded",
-    "TestCaseType": "application",
-    "Compiler": "UNKOWN",
-    "Optimizations": "",
-    "Language": "UNKNOWN",
-    "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {
-      "msDelayInTestCase": "500"
-    }
-  }
 ]

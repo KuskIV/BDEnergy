@@ -38,6 +38,10 @@
     "WorkstationOneTestApp": {
       "commandName": "Project",
       "commandLineArgs": "--config \"C:\\Users\\Power\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationOne\\DifferentApplication3DMarkTest.json\""
+    },
+    "WorkstationTwoTestApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--config \"C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\bd-energy-framework\\BDEnergyFramework\\Json\\WorkstationTwo\\DifferentApplication3DMarkTest.json\""
     }
   }
 }

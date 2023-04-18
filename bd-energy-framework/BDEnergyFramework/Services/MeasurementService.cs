@@ -382,6 +382,7 @@ namespace BDEnergyFramework.Services
             var sleepDelay = TimeSpan.FromMinutes(3);
             _logger.Information("About to sleep until {time}", DateTime.UtcNow.Add(sleepDelay));
             Thread.Sleep(sleepDelay); // sleep is for clamp and plug
+            //_logger.Warning("REMEMBER TO ENABLE DELAY");
 
             foreach (var mi in _measuringInstruments)
             {

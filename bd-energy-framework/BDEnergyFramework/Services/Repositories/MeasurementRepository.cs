@@ -29,14 +29,38 @@ namespace BDEnergyFramework.Services.Repositories
 
         public bool ConfigExists(Configuration configuration)
         {
-            var allocatedCores = JsonSerializer.Serialize(configuration.AllocatedCores).Replace("[", "").Replace("]", "");
+            var query = "";
+            
+            if (configuration.AllocatedCores.Count == 0)
+            {
+                var allocatedCores = JsonSerializer.Serialize(configuration.AllocatedCores).Replace("[", "").Replace("]", "");
+                query = "SELECT COUNT(*) FROM Configuration WHERE " +
+                    "MinimumTemperature = @minTemp AND " +
+                    "MaximumTemperature = @maxTemp AND " +
+                    "Burnin = @burnin AND " +
+                    $"JSON_CONTAINS(AllocatedCores, JSON_ARRAY({allocatedCores}))";
+                    //"JSON_CONTAINS(AllocatedCores, JSON_ARRAY(@allocatedCores))";
+            }
+            else
+            {
+                query = "SELECT COUNT(*) FROM Configuration WHERE " +
+                    "MinimumTemperature = @minTemp AND " +
+                    "MaximumTemperature = @maxTemp AND " +
+                    "Burnin = @burnin ";
 
-            var query = "SELECT COUNT(*) FROM Configuration WHERE " +
-                "MinimumTemperature = @minTemp AND " +
-                "MaximumTemperature = @maxTemp AND " +
-                "Burnin = @burnin AND " +
-                $"JSON_CONTAINS(AllocatedCores, JSON_ARRAY({allocatedCores}))";
-                //"JSON_CONTAINS(AllocatedCores, JSON_ARRAY(@allocatedCores))";
+                for (int i = 0; i < 12; i++)
+                {
+                    if (configuration.AllocatedCores.Contains(i))
+                    {
+                        query += $" AND JSON_CONTAINS(AllocatedCores, JSON_ARRAY({i}))";
+                    }
+                    else
+                    {
+                        query += $" AND NOT JSON_CONTAINS(AllocatedCores, JSON_ARRAY({i}))";
+                    }
+                }
+            }
+
 
             var response = _retryPolicy.Execute(() => _connection.ExecuteScalar<int>(query, new
             {
@@ -68,14 +92,38 @@ namespace BDEnergyFramework.Services.Repositories
 
         public DtoConfiguration GetConfiguration(Configuration configuration)
         {
-            var allocatedCores = JsonSerializer.Serialize(configuration.AllocatedCores).Replace("[", "").Replace("]", "");
+            var query = "";
+
+            if (configuration.AllocatedCores.Count == 0)
+            {
+                var allocatedCores = JsonSerializer.Serialize(configuration.AllocatedCores).Replace("[", "").Replace("]", "");
             
-            var query = "select * from Configuration WHERE " +
-                "MinimumTemperature = @minTemp AND " +
-                "MaximumTemperature = @maxTemp AND " +
-                "Burnin = @burnin AND " +
-                //$"JSON_CONTAINS(AllocatedCores, JSON_ARRAY(@allocatedCores))";
-                $"JSON_CONTAINS(AllocatedCores, JSON_ARRAY({allocatedCores}))";
+                query = "select * from Configuration WHERE " +
+                    "MinimumTemperature = @minTemp AND " +
+                    "MaximumTemperature = @maxTemp AND " +
+                    "Burnin = @burnin AND " +
+                    //$"JSON_CONTAINS(AllocatedCores, JSON_ARRAY(@allocatedCores))";
+                    $"JSON_CONTAINS(AllocatedCores, JSON_ARRAY({allocatedCores}))";
+            }
+            else
+            {
+                query = "select * from Configuration WHERE " +
+                    "MinimumTemperature = @minTemp AND " +
+                    "MaximumTemperature = @maxTemp AND " +
+                    "Burnin = @burnin ";
+
+                for (int i = 0; i < 12; i++)
+                {
+                    if (configuration.AllocatedCores.Contains(i))
+                    {
+                        query += $" AND JSON_CONTAINS(AllocatedCores, JSON_ARRAY({i}))";
+                    }
+                    else
+                    {
+                        query += $" AND NOT JSON_CONTAINS(AllocatedCores, JSON_ARRAY({i}))";
+                    }
+                }
+            }
 
             return _retryPolicy.Execute(() => _connection.QueryFirst<DtoConfiguration>(query, new
             {

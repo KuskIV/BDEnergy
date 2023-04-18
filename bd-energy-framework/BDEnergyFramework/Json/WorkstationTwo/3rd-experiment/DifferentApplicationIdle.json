@@ -3,7 +3,7 @@
         "MeasurementInstruments": [ 2 ],
         "RequiredMeasurements": 150,
         "TestCasePaths": [
-            "3D-MARK"
+            "IDLE"
         ],
         "AllocatedCores": [
             [ 4 ],
@@ -21,12 +21,12 @@
             ""
         ],
         "UploadToDatabase": true,
-        "BurnInPeriod": 1,
+        "BurnInPeriod": 0,
         "MinimumTemperature": 0,
         "MaximumTemperature": 200,
         "DisableWifi": true,
         "ExperimentNumber": 3,
-        "ExperimentName": "same-mi-different-application",
+        "ExperimentName": "same-mi-different-application-post-config-update",
         "ConcurrencyLimit": "multi-threaded",
         "TestCaseType": "application",
         "Compiler": "UNKOWN",
