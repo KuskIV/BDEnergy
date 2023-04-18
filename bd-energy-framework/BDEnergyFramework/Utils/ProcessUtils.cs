@@ -29,6 +29,7 @@ namespace BDEnergyFramework.Utils
             if (testCasePath == TestCaseUtils.IDLE)
             {
                 Thread.Sleep(TimeSpan.FromMinutes(1));
+                return;
             }
             else if (testCasePath == TestCaseUtils.MARK3D)
             {
