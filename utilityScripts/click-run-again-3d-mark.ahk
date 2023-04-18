@@ -1,8 +1,4 @@
-; Find the "RUN AGAIN" button
-ControlGet, buttonHwnd, Hwnd,, Button1, 3DMark
-
-; Clock on the button
-ControlClick,, ahk_id %buttonHwnd%,,
+ControlClick, RUN CUSTOM, 3DMark
 
 ; Exit the script
 ExitApp
