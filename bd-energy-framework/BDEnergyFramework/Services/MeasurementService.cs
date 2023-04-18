@@ -382,7 +382,7 @@ namespace BDEnergyFramework.Services
 
             if (testCasePath != TestCaseUtils.IDLE)
             {
-                var sleepDelay = TimeSpan.FromMilliseconds(((measurements.SelectMany(x => x.Measurements).Count() * 1000) / 2)  + 5000);
+                var sleepDelay = TimeSpan.FromMilliseconds(((measurements.SelectMany(x => x.Measurements).Count() * 1000) / 3)  + 5000);
                 //var sleepDelay = TimeSpan.FromMilliseconds(((measurements.SelectMany(x => x.TimeSeries).Count() * 1000) / 2)  + 5000);
                 _logger.Information("About to sleep for {t} until {time}",sleepDelay, DateTime.UtcNow.Add(sleepDelay));
                 Thread.Sleep(sleepDelay); // sleep is for clamp and plug
