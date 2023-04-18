@@ -10,9 +10,10 @@
         ymin=0, ymax=35000,
         xtick={0,500,1000,1500,2000,2500,3000},
         ytick={0, 5000,10000,15000,20000,25000,30000,35000},
-        legend pos=north west,
-        ymajorgrids=true,
-        grid style=dashed,
+        y tick label style={/pgf/number format/fixed,
+        /pgf/number format/precision=5
+        },
+        scaled y ticks=false
     ]
     
     \addplot[
