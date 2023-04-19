@@ -33,20 +33,21 @@ namespace BDEnergyFramework.Utils
             }
             else if (testCasePath == TestCaseUtils.MARK3D)
             {
+                Execute3DMark(testCasePath, enabledCores, logger);
+
+                return;
+            }
+            else if (testCasePath == TestCaseUtils.PCMARK)
+            {
                 var startTime = DateTime.UtcNow;
 
-                while (ProcessNotRunning("3DMarkCPUProfile"))
-                {
-                    LeftClick();
-                    Thread.Sleep(
-                        TimeSpan.FromSeconds(1));
-                }
+                TabMultipleTimes();
 
                 logger.Information("Starting {name}", testCasePath);
 
-                while (!Is3DMarkDone(startTime))
+                while (!IsPCMarkDone(startTime))
                 {
-                    SetAffinityOfProcessesFor3DMark(enabledCores);
+                    SetAffinityOfProcessesForPCMark(enabledCores);
 
                     Thread.Sleep(
                         TimeSpan.FromMilliseconds(500));
@@ -54,16 +55,12 @@ namespace BDEnergyFramework.Utils
 
                 logger.Information("Stopping {name}", testCasePath);
 
-                if (Is3DMarkFileError(startTime))
+                if (IsPCMarkFileError(startTime))
                 {
                     throw new Mark3DContainedErrorException();
                 }
 
                 return;
-            }
-            else if (testCasePath == TestCaseUtils.PCMARK)
-            {
-                throw new NotImplementedException("PCMARK is yet to be implemented");
             }
 
             var executablePath = testCasePath;
@@ -91,6 +88,35 @@ namespace BDEnergyFramework.Utils
                 PathUtils.GetFilenameFromPath(testCasePath), exitCode);
         }
 
+        private static void Execute3DMark(string testCasePath, List<int> enabledCores, ILogger logger)
+        {
+            var startTime = DateTime.UtcNow;
+
+            while (ProcessNotRunning("3DMarkCPUProfile"))
+            {
+                LeftClick();
+                Thread.Sleep(
+                    TimeSpan.FromSeconds(1));
+            }
+
+            logger.Information("Starting {name}", testCasePath);
+
+            while (!Is3DMarkDone(startTime))
+            {
+                SetAffinityOfProcessesFor3DMark(enabledCores);
+
+                Thread.Sleep(
+                    TimeSpan.FromMilliseconds(500));
+            }
+
+            logger.Information("Stopping {name}", testCasePath);
+
+            if (Is3DMarkFileError(startTime))
+            {
+                throw new Mark3DContainedErrorException();
+            }
+        }
+
         private static bool ProcessNotRunning(string processName)
         {
             var processes = Process.GetProcessesByName(processName);
@@ -106,6 +132,14 @@ namespace BDEnergyFramework.Utils
             p.Start();
         }
 
+        private static void TabMultipleTimes()
+        {
+            var ahkPath = "start-pcmark.exe";
+            var p = new Process();
+            p.StartInfo.FileName = ahkPath;
+            p.Start();
+        }
+
         private static void SetAffinityOfProcessesFor3DMark(List<int> enabledCores)
         {
             var processes = new List<string>()
@@ -113,6 +147,17 @@ namespace BDEnergyFramework.Utils
                 "3DMarkCPUProfile",
             };
 
+            SetAffinityOfProcesses(processes, enabledCores);
+        }
+
+        private static void SetAffinityOfProcessesForPCMark(List<int> enabledCores)
+        {
+            var runningProcesses = Process.GetProcesses();
+
+            var processes = runningProcesses
+                .Select(x => x.ProcessName)
+                .Where(x => x.Contains("PCMark10-")).ToList();
+                            
             SetAffinityOfProcesses(processes, enabledCores);
         }
 
@@ -129,8 +174,15 @@ namespace BDEnergyFramework.Utils
 
                 foreach (var p in processes)
                 {
-                    var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
-                    p.ProcessorAffinity = processorAffinity;
+                    try
+                    {
+                        var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
+                        p.ProcessorAffinity = processorAffinity;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"unable to set affinity for process '{p.ProcessName}'. Error: {e.Message}");
+                    }
                 }
             }
         }
@@ -146,6 +198,17 @@ namespace BDEnergyFramework.Utils
             return file.Contains("FAILED");
         }
 
+        private static bool IsPCMarkFileError(DateTime startTime)
+        {
+            var path = PathUtils.DataFolderPath + "/" + "PCMark 10";
+
+            var files = Directory.GetFiles(path);
+
+            var file = files.First(x => x.EndsWith(".pcmark10-result") && File.GetCreationTimeUtc(x) > startTime);
+
+            return file.Contains("FAILED");
+        }
+
         private static bool Is3DMarkDone(DateTime startTime)
         {
             var path = PathUtils.DataFolderPath + "/" + "3DMark";
@@ -153,6 +216,20 @@ namespace BDEnergyFramework.Utils
             var files = Directory.GetFiles(path);
 
             if (files.Any(x => x.EndsWith(".3dmark-result") && File.GetCreationTimeUtc(x) > startTime))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsPCMarkDone(DateTime startTime)
+        {
+            var path = PathUtils.DataFolderPath + "/" + "PCMark 10";
+
+            var files = Directory.GetFiles(path);
+
+            if (files.Any(x => x.EndsWith(".pcmark10-result") && File.GetCreationTimeUtc(x) > startTime))
             {
                 return true;
             }
