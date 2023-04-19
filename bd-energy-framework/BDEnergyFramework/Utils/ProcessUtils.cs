@@ -174,8 +174,15 @@ namespace BDEnergyFramework.Utils
 
                 foreach (var p in processes)
                 {
-                    var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
-                    p.ProcessorAffinity = processorAffinity;
+                    try
+                    {
+                        var processorAffinity = ProcessorAffinityGenerator.GenerateProcessorAffinity(enabledCores);
+                        p.ProcessorAffinity = processorAffinity;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"unable to set affinity for process '{p.ProcessName}'. Error: {e.Message}");
+                    }
                 }
             }
         }
