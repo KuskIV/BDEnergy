@@ -1,0 +1,114 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.30000000000000004\textheight
+        }
+        \begin{axis}[
+            xlabel={Average DEC (Watts)},
+            ylabel={Number of Cores}, 
+            title={The DEC per second of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+        yticklabels={
+             4, 3, 2, 1, 5, 0, 8, 7, 6, 9,  4, 3, 2, 1, 5, 0, 8, 7, 6,  4, 3, 2, 1, 5, 0, 8, 7,  4, 3, 2, 1, 5, 0, 8,  4, 3, 2, 1, 5, 0,  4, 3, 2, 1, 5,  4, 3, 2, 1,  4, 3, 2,  4, 3,  4
+            },
+            xmin=0,xmax=20,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.607587442344506,
+                lower quartile=7.728221588081991,
+                median=7.784609255686233,
+                upper quartile=7.822207241897848,
+                upper whisker=7.8628523145219615
+                }, color = red
+                ] coordinates{(0,7.9995733864522665)(0,8.171930356375551)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.691781803520626,
+                lower quartile=7.983133494791745,
+                median=8.106882796735249,
+                upper quartile=8.235879416752844,
+                upper whisker=8.419810920435687
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.701966037380186,
+                lower quartile=7.914310310063305,
+                median=8.04537363478649,
+                upper quartile=8.117029050708016,
+                upper whisker=8.371199962416444
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.806951697398419,
+                lower quartile=7.886817482630973,
+                median=7.952997853506967,
+                upper quartile=8.046952771416368,
+                upper whisker=8.219307113495802
+                }, color = red
+                ] coordinates{(3,7.521311975365948)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.634719534027432,
+                lower quartile=7.700449506600715,
+                median=7.806461791244675,
+                upper quartile=7.906384488931652,
+                upper whisker=8.06276780539191
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7.418008875938674,
+                lower quartile=7.45006441416267,
+                median=7.534223608523075,
+                upper quartile=7.672913942007427,
+                upper whisker=7.777804510525013
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=6.858054119665263,
+                lower quartile=6.947618066627527,
+                median=7.012441508974955,
+                upper quartile=7.054281918672004,
+                upper whisker=7.148357275583932
+                }, color = red
+                ] coordinates{(6,6.720360097989496)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=6.1288058677888015,
+                lower quartile=6.228241694323484,
+                median=6.2435039055824415,
+                upper quartile=6.307376983676727,
+                upper whisker=6.3770313517545185
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.95563579782817,
+                lower quartile=5.106065655211399,
+                median=5.1536689252415355,
+                upper quartile=5.2201492769129025,
+                upper whisker=5.338497854698541
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=3.196488200803816,
+                lower quartile=3.265491439613441,
+                median=3.291222312057343,
+                upper quartile=3.380027462229169,
+                upper whisker=3.456273967057194
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) 3DM} \label{fig:3-same-mi-different-application-post-config-update-ipg-3d-mark.exe-unkown-workstationtwo-cpu-dec_per_second}
+\end{figure}
