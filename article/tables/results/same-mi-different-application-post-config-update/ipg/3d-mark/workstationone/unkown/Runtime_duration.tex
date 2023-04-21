@@ -1,0 +1,96 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.26\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            ylabel={Number of Cores}, 
+            title={The average duration}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8},
+        yticklabels={
+             0, 1, 2, 3, 4, 5, 6, 7
+            },
+            xmin=0,xmax=200,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=61.392,
+                lower quartile=61.6405,
+                median=61.944500000000005,
+                upper quartile=61.999249999999996,
+                upper whisker=62.438
+                }, color = red
+                ] coordinates{(0,59.834)(0,62.618)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=63.391,
+                lower quartile=63.574250000000006,
+                median=63.6405,
+                upper quartile=63.723749999999995,
+                upper whisker=63.88
+                }, color = red
+                ] coordinates{(1,62.905)(1,61.49)(1,63.965)(1,64.014)(1,64.249)(1,64.216)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=65.381,
+                lower quartile=65.62700000000001,
+                median=65.7855,
+                upper quartile=65.82825,
+                upper whisker=66.023
+                }, color = red
+                ] coordinates{(2,65.287)(2,65.264)(2,65.29)(2,66.299)(2,66.338)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=66.663,
+                lower quartile=67.941,
+                median=68.8315,
+                upper quartile=69.01925,
+                upper whisker=69.105
+                }, color = red
+                ] coordinates{(3,65.475)(3,65.833)(3,65.839)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=69.511,
+                lower quartile=69.89375,
+                median=70.4585,
+                upper quartile=70.659,
+                upper whisker=71.765
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=78.518,
+                lower quartile=78.6645,
+                median=78.7675,
+                upper quartile=78.82124999999999,
+                upper whisker=79.034
+                }, color = red
+                ] coordinates{(5,79.064)(5,79.08)(5,79.276)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=94.495,
+                lower quartile=94.93,
+                median=95.754,
+                upper quartile=96.03675,
+                upper whisker=96.107
+                }, color = red
+                ] coordinates{(6,99.037)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=145.745,
+                lower quartile=146.116,
+                median=146.502,
+                upper quartile=146.845,
+                upper whisker=147.634
+                }, color = red
+                ] coordinates{(7,150.171)(7,148.164)(7,150.625)(7,149.803)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{Runtime measurements by IPG on DUT 1 for test case(s) 3DM} \label{fig:3-same-mi-different-application-post-config-update-ipg-3d-mark.exe-unkown-workstationone-runtime-duration}
+\end{figure}
