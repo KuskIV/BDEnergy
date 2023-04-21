@@ -4,15 +4,15 @@
 \begin{tikzpicture}
 \pgfplotsset{
     every axis/.style={ymin=0},
-    width=0.75\textwidth,
+    width=0.25\textwidth,
     height=0.25\textheight,
-    xtick={1, 2, 3, 4, 5, 6, 7, 8},
+    xtick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
     y axis style/.style={
     yticklabel style=#1,
     ylabel style=#1,
     y axis line style=#1,
     ytick style=#1}}
-\begin{axis}[ scale only axis, ymin=0, ymax=160, xmin=1,xmax=10, axis y line*=left, xlabel=Number of Cores, ylabel=Duration (s), y axis style=green!75!black]
+\begin{axis}[ scale only axis, ymin=0, ymax=170, xmin=1,xmax=10, axis y line*=left, xlabel=Number of Cores, ylabel=Duration (s), y axis style=green!75!black]
     \addplot[smooth, green!75!black, mark=o, draw] 
     coordinates 
     {
