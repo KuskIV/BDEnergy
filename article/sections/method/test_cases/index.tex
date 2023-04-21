@@ -1,10 +1,10 @@
-\subsection{benchmarks}\label{subsec:test_cases}
+\subsection{Benchmarks}\label{subsec:test_cases}
 
 Our work employed microbenchmarks and macrobenchmarks to asses the measuring instruments. This section outlines the selected benchmarks and the rationale behind their selection.
 
 \paragraph{Microbenchmarks:} are small, focused benchmarks that test a specific operation, algorithm or piece of code. They are useful for measuring the performance of some particular code precisely while minimizing the impact of other factors. However microbenchmarks may not provide an accurate representation of overall performance.\cite{MicroVSMacro}
 
-The first couple of experiments utilized microbenchmarks from the Computer Language Benchmark Game (CLBG)\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html}} as benchmarks. The selected benchmarks encompassed both single- and multi-threaded microbenchmarks. A challenge in choosing benchmarks involved ensuring compatibility with the chose compilers, as well as with both Windows and Linux. Certain libraries, such as \texttt{<sched.h>}, were used in many implementations and was not available on Windows, which limited the pool of compatible microbenchmarks. The microbenchmarks were executed using the highest parameters specified in the CLBG as input for each benchmark. The chosen microbenchmark benchmarks and their abbreviation are presented in \cref{tab:microbenchmarks}. During compilation, the only parameter given is \texttt{-openmp} for the multi-core benchmarks, ensuring optimization for all cores of the DUT.
+The microbenchmarks are from the Computer Language Benchmark Game (CLBG)\footnote{\url{https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html}}. The selected benchmarks include both single- and multi-threaded microbenchmarks, which are compatible with the chosen compilers, as well as with both Windows and Linux. Certain libraries, such as \texttt{<sched.h>}, were used in many implementations and was not available on Windows, which limited the pool of compatible microbenchmarks. The microbenchmarks were executed using the highest parameters specified in the CLBG as input for each benchmark. The chosen microbenchmark benchmarks and their abbreviation are presented in \cref{tab:microbenchmarks}. During compilation, the only parameter given is \texttt{-openmp} for the multi-core benchmarks, ensuring optimization for all cores of the DUT.
 
 \input{tables/benchmarks/microbenchmakrs.tex}
 
