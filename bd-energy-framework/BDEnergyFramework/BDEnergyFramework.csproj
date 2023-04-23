@@ -139,6 +139,9 @@
     <None Update="Json\WorkstationTwo\1st-experiment\DifferentMeasuringInstrumentExpLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="start-pcmark-updated.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="start-pcmark.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

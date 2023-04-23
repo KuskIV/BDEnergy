@@ -134,7 +134,7 @@ namespace BDEnergyFramework.Utils
 
         private static void TabMultipleTimes()
         {
-            var ahkPath = "start-pcmark.exe";
+            var ahkPath = "start-pcmark-updated.exe";
             var p = new Process();
             p.StartInfo.FileName = ahkPath;
             p.Start();
@@ -157,6 +157,10 @@ namespace BDEnergyFramework.Utils
             var processes = runningProcesses
                 .Select(x => x.ProcessName)
                 .Where(x => x.Contains("PCMark10-")).ToList();
+
+            processes.Add("firefox");
+            processes.Add("chrome");
+            processes.Add("pvengine64");
                             
             SetAffinityOfProcesses(processes, enabledCores);
         }
