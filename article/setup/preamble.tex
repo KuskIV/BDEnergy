@@ -1,0 +1,149 @@
+\documentclass[a4paper, 10pt, english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[total={6.69in, 10in}]{geometry}
+\usepackage[english]{babel}
+\usepackage{silence}
+\WarningFilter{latex}{File `}
+\WarningFilter{latex}{Package}
+% \newcommand{\sectionbreak}{\clearpage}
+\hbadness=10000
+\vbadness=10000
+\usepackage{microtype}
+\usepackage{collcell}
+\usepackage{etoolbox}
+\usepackage{xstring}
+\usepackage{lipsum}
+\usepackage{listings}
+
+\usepackage{tikz, ifthen, xstring, calc, pgfopts}
+\usepackage{pgf-umlcd}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+% %\usepackage{algorithm}
+% %\usepackage{algpseudocode} %% Algorithms is this ok Roni?
+\usepackage{tikz} %%% Plot graphs 
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
+\usepackage{todonotes}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[hyphens]{url}
+\urlstyle{same}
+\usepackage{url}
+% \def\UrlBreaks{\do\/\do-}
+% \usepackage{breakurl}
+\usepackage{blindtext}
+
+\usepackage{pdfpages}
+\usepackage{csvsimple}
+% \usepackage{subfig}
+% \usepackage{subfigure}
+\usepackage{bookmark}
+\usepackage{setspace}
+\usepackage{reledmac}
+\usepackage{setspace}
+\usepackage{microtype}
+% \usepackage{etoolbox}
+% \usepackage{etool}
+% \usepackage{dblfnote}
+% \usepackage{ftnright}
+% \arrangementX[A]{twocol}
+% % \colalignX{\justifying}
+% \makeatletter
+% \bhooknoteX[A]{\setstretch{1}}
+% \bhookgroupX[A]{\setstretch{1}}
+% \makeatother
+% \let\footnote\footnoteA
+\usepackage{datatool}
+% \usepackage[bookmarksnumbered]{hyperref} %add hidelinks evt
+\usepackage[capitalise, noabbrev]{cleveref}
+\crefdefaultlabelformat{#2\textbf{#1}#3}
+\newcounter{RQ}
+\renewcommand{\theRQ}{\textbf{\arabic{RQ}}}
+\crefname{RQ}{RQ}{RQs}
+%\crefformat{RQ1}{\textbf{RQ1}}
+%\crefformat{RQ2}{\textbf{RQ2}}
+%\crefformat{RQ3}{\textbf{RQ3}}
+%\crefformat{RQ4}{\textbf{RQ4}}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+\usepackage{pgf-pie} %%% make pies 
+\usepackage{pgfplots} %%% PLOT THAT SHITTS
+\usepgfplotslibrary{statistics}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.14}
+\usepackage{wrapfig}
+\usepackage[labelfont=bf]{caption}
+%\captionsetup[figure]{font=small}
+\usepackage{indentfirst}
+\usepackage{subcaption}
+\graphicspath{ {./Figures/} }
+%Table packages
+\usepackage{longtable}
+\usepackage{amsmath, tabu, centernot}
+\newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+\newcommand{\nbigCI}{\centernot{\bigCI}}
+\usepackage{xcolor,colortbl}
+\usepackage[export]{adjustbox}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{changepage} %% indents paragrahs with \adjustwidth 
+\usepackage{array}
+%table text size
+\usepackage{pdfpages}
+\usepackage{bbding} %%%% Add icons like checkmars with command: \Checkmark
+%%\usepackage{stmaryrd} %%%% Add icons like arrows 
+%%\usepackage{mathabx} %%%% Add math icons 
+%TOC 
+\usepackage{titlesec}
+\usepackage[titletoc]{appendix}
+% \titleformat{\chapter}[display]
+%   {\normalfont\bfseries}{}{10pt}{\Huge\thechapter.\quad}
+%Vis sidetal
+\usepackage{lastpage}
+%font
+\usepackage[sc]{mathpazo}
+\linespread{1.05} 
+% load a colour package
+% \usepackage{xcolor}
+\definecolor{aaublue}{RGB}{33,26,82}% dark blue
+% Make the standard latex tables look so much better
+\usepackage{array,booktabs}
+% Enable the use of frames around, e.g., theorems
+% The framed package is used in the example environment
+\usepackage{framed}
+% Defines new environments such as equation,
+% align and split 
+\usepackage{amsmath}
+\usepackage{mathtools}
+% Adds new math symbols
+\usepackage{amssymb}
+% Use theorems in your document
+% The ntheorem package is also used for the example environment
+% When using thmmarks, amsmath must be an option as well. Otherwise \eqref doesn't work anymore.
+\usepackage[amsmath,thmmarks]{ntheorem}
+%lav afsnit med denne commando
+\newcommand{\nytafsnit}{\newline\newline \indent}
+
+
+\usepackage[giveninits=true, backend = biber, style=nature]{biblatex}
+\usepackage{hyphenat}
+
+\bibliography{bib.bib}
+
+\usepackage{csquotes}
+\newtheorem{theorem}{Theorem} 
+\newtheorem{definition}{Definition}
+% \newtheorem{lemma}{Lemma}
+
+\titleformat{\chapter}{}{}{0em}{\bfseries\LARGE\ifnum\value{chapter}>0\relax\arabic{chapter}.~\f}
+\usepackage{dblfnote}
+\pretocmd{\footnote}{%
+  \widowpenalty=150% LaTeX default value
+}{}{}
+
+\newcolumntype{T}{>{\columncolor{Gray}}c}
+\newcolumntype{Q}{>{\columncolor{white}}c}
+\newcolumntype{Z}{>{\columncolor{DarkGray}}c}
+
+\titleformat{\subsubsection}[runin]{\bfseries}{}{}{}[.]
