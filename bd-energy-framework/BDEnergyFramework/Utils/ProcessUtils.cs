@@ -161,6 +161,7 @@ namespace BDEnergyFramework.Utils
             processes.Add("firefox");
             processes.Add("chrome");
             processes.Add("pvengine64");
+            processes.Add("FMSIScan");
                             
             SetAffinityOfProcesses(processes, enabledCores);
         }
