@@ -323,7 +323,7 @@ namespace BDEnergyFramework.Services.Repositories
                     s.AdditionalMetadata.Remove(key);
                     s.AdditionalMetadata.Add(key, -1);
                 }
-                query += $" ({collectionId}, {s.PackageTemperature}, {s.ElapsedTime}, {s.ProcessorPowerWatt}, {s.DramEnergyInJoules}, {s.GpuEnergyInJoules}, {s.CpuEnergyInJoules}, {s.CpuUtilization}, '{JsonSerializer.Serialize(s.AdditionalMetadata)}', {measurementId}), ";
+                query += $" ({collectionId}, {s.PackageTemperature.ToString().Replace(',', '.')}, {s.ElapsedTime.ToString().Replace(',', '.')}, {s.ProcessorPowerWatt.ToString().Replace(',', '.')}, {s.DramEnergyInJoules.ToString().Replace(',', '.')}, {s.GpuEnergyInJoules.ToString().Replace(',', '.')}, {s.CpuEnergyInJoules.ToString().Replace(',', '.')}, {s.CpuUtilization.ToString().Replace(',', '.')}, '{JsonSerializer.Serialize(s.AdditionalMetadata)}', {measurementId}), ";
             }
 
             query = query.TrimEnd();

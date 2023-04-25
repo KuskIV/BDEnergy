@@ -1,9 +1,9 @@
 [
   {
     "MeasurementInstruments": [ 2 ],
-    "RequiredMeasurements": 2000,
+    "RequiredMeasurements": 1,
     "TestCasePaths": [
-      "PC-MARK-10"
+      "IDLE"
     ],
     "AllocatedCores": [
       [ 0 ]
@@ -11,7 +11,7 @@
     "TestCaseParameters": [
       ""
     ],
-    "UploadToDatabase": false,
+    "UploadToDatabase": true,
     "BurnInPeriod": 0,
     "MinimumTemperature": 0,  
     "MaximumTemperature": 200,
