@@ -2,7 +2,11 @@
 
 In this work Cochran's formula was used to determine how many measurements were required in order to gain confidence in our results. When analyzing the results from Cochran's formula, it was found that the amount of measurements could deviate a lot between benchmarks, measuring instrument, DUTs and even cores on the same DUT.
 
-Results can deviate from core to core as a result of the variability in the fabrication process, where the exact characteristics of each core can change, despite being assembled in the same way.\cite{Mauzy2020}
+Results can deviate from core to core as a result of the variability in the fabrication process, where the exact characteristics of each core can change, despite being assembled in the same way.\cite{Mauzy2020} In our work we explored how much the variability in the fabrication process can effect the performance of the cores, and found the energy consumption deviated between $1.17\%$ and $11.61\%$ among cores with the same specs.
+
+When comparing the results from Cochran's formula between DUTs, DUT 2 required less measurements than DUT 1. The cause of this can be either software or hardware based. When setting up both DUTs, effort was put into ensuring all software was the same version. Both DUTs run on a fresh install of windows, and have the same software downloaded, and the same background processes are disabled, so it seems unlikely this is the cause. When comparing hardware, the two DUTs are from different generations of intel CPUs, released five years apart. DUT 1 is the older of the two, and has been used for multiple years, while DUT 2 is brand new. The different components of the two DUTs are also from different brands. Given DUT 1 is older and has been used more could mean it also deviates more, but this is something to explore in a future work.
+
+In the first experiment in \cref{subsec:exp_one}, different compilers were compared. This experiment found that both the energy consumption, and measurements required deviated between compilers.
 
 
 
