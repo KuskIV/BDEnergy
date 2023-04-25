@@ -40,7 +40,7 @@ namespace BDEnergyFramework.Services.Repositories
 
                 _logger.Information("Inserting measurement {cur}/{max}, test case {tc} measured by {mi}", insertCount, maxCount, PathUtils.GetFilenameFromPath(m.TestCase), m.MeasurementInstrument);
 
-                if (m is null || (m is { } mc  && !mc.Measurements.Any()))
+                if (m is null || (m is { } mc  && !mc.Measurements.Any() || !m.TimeSeries.Any()))
                 {
                     _logger.Information("No measurements were found to upload");
                     continue;
@@ -89,9 +89,17 @@ namespace BDEnergyFramework.Services.Repositories
         {
             _logger.Debug("Inserting timeseries with {p} points", timeSeries.Sampels.Count());
 
-            foreach (var t in timeSeries.Sampels)
+            foreach (var t in SplitList<Sample>(timeSeries.Sampels))
             {
                 _repository.InsertTimeseries(t, collectionId, measurementId);
+            }
+        }
+
+        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 1000)
+        {
+            for (int i = 0; i < locations.Count; i += nSize)
+            {
+                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
             }
         }
 
