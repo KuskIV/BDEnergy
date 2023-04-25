@@ -284,14 +284,6 @@ namespace BDEnergyFramework.Services.Repositories
             _retryPolicy.Execute(() => _connection.Execute(query));
         }
 
-        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 30)
-        {
-            for (int i = 0; i < locations.Count; i += nSize)
-            {
-                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
-            }
-        }
-
         public bool MeasurementCollectionExists(MeasurementCollection mc)
         {
             var additionalMetadata = JsonSerializer.Serialize(mc.AdditionalMetadata);
