@@ -257,32 +257,39 @@ namespace BDEnergyFramework.Services.Repositories
             }));
         }
 
-        public void InsertTimeseries(Sample t, int collectionId, int measurementId)
+        public void InsertTimeseries(List<Sample> t, int collectionId, int measurementId)
         {
-            var query = "INSERT INTO Sample(CollectionId, PackageTemperature, ElapsedTime, ProcessorPowerInWatt, DramEnergyInJoules, GpuEnergyInJoules, CpuEnergyInJoules, CpuUtilization, AdditionalMetadata, MeasurementId) " +
-                "VALUES(@collectionid, @packageTemperature, @elapsedTime, @processorPowerInWatt, @dramEnergyInJoules, @gpuEnergyInJoules, @cpuEnergyInJoules, @cpuUtilization, @additionalMetadata, @measurementId)";
-
-            var keys = t.AdditionalMetadata.Where(x => x.Value.ToString() == "NaN").Select(y => y.Key);
-
-            foreach (var key in keys)
+            if (!t.Any())
             {
-                t.AdditionalMetadata.Remove(key);
-                t.AdditionalMetadata.Add(key, -1);
+                return;
             }
 
-            _retryPolicy.Execute(() => _connection.Execute(query, new 
+            var query = "INSERT INTO Sample(CollectionId, PackageTemperature, ElapsedTime, ProcessorPowerInWatt, DramEnergyInJoules, GpuEnergyInJoules, CpuEnergyInJoules, CpuUtilization, AdditionalMetadata, MeasurementId) VALUES ";
+
+            foreach (var s in t)
             {
-                collectionid=collectionId,
-                packageTemperature=t.PackageTemperature,
-                elapsedTime=t.ElapsedTime,  
-                processorPowerInWatt=t.ProcessorPowerWatt,
-                dramEnergyInJoules=t.DramEnergyInJoules,
-                gpuEnergyInJoules=t.GpuEnergyInJoules,
-                cpuEnergyInJoules=t.CpuEnergyInJoules,
-                cpuUtilization=t.CpuUtilization,
-                additionalMetadata=JsonSerializer.Serialize(t.AdditionalMetadata),
-                measurementId=measurementId
-            }));
+                var keys = s.AdditionalMetadata.Where(x => x.Value.ToString() == "NaN").Select(y => y.Key);
+
+                foreach (var key in keys)
+                {
+                    s.AdditionalMetadata.Remove(key);
+                    s.AdditionalMetadata.Add(key, -1);
+                }
+                query += $" ({collectionId}, {s.PackageTemperature}, {s.ElapsedTime}, {s.ProcessorPowerWatt}, {s.DramEnergyInJoules}, {s.GpuEnergyInJoules}, {s.CpuEnergyInJoules}, {s.CpuUtilization}, '{JsonSerializer.Serialize(s.AdditionalMetadata)}', {measurementId}), ";
+            }
+
+            query = query.TrimEnd();
+            query = query.TrimEnd(',');
+
+            _retryPolicy.Execute(() => _connection.Execute(query));
+        }
+
+        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 30)
+        {
+            for (int i = 0; i < locations.Count; i += nSize)
+            {
+                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
+            }
         }
 
         public bool MeasurementCollectionExists(MeasurementCollection mc)
