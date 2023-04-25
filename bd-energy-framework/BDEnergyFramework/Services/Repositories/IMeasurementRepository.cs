@@ -20,7 +20,7 @@ namespace BDEnergyFramework.Services.Repositories
         void InsertMeasurementCollection(MeasurementCollection mc);
         void InsertMeasuringInstrument(MeasurementInstrument measurementInstrument);
         void InsertTestCase(TestCase tc);
-        void InsertTimeseries(Sample t, int collectionId, int measurementId);
+        void InsertTimeseries(List<Sample> t, int collectionId, int measurementId);
         bool MeasurementCollectionExists(MeasurementCollection mc);
         bool MeasuringInstrumentExists(MeasurementInstrument mi);
         bool TestCaseExists(TestCase testCase);

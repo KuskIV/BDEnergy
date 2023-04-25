@@ -89,9 +89,17 @@ namespace BDEnergyFramework.Services.Repositories
         {
             _logger.Debug("Inserting timeseries with {p} points", timeSeries.Sampels.Count());
 
-            foreach (var t in timeSeries.Sampels)
+            foreach (var t in SplitList<Sample>(timeSeries.Sampels))
             {
                 _repository.InsertTimeseries(t, collectionId, measurementId);
+            }
+        }
+
+        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 1000)
+        {
+            for (int i = 0; i < locations.Count; i += nSize)
+            {
+                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
             }
         }
 
