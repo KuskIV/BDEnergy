@@ -61,6 +61,9 @@
     <None Update="Json\Mhk\MhkValidConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationOne\3th-exp-config\DifferentApplicationPCMark.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationOne\DifferentApplication3DMarkTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
