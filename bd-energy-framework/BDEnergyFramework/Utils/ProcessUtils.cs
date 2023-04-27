@@ -164,6 +164,10 @@ namespace BDEnergyFramework.Utils
             processes.Add("FMSIScan");
             processes.Add("eva_player");
             processes.Add("ffmpeg");
+            processes.Add("javaw");
+            processes.Add("soffice.bin");
+            processes.Add("soffice");
+            processes.Add("dcraw");
                             
             SetAffinityOfProcesses(processes, enabledCores);
         }
