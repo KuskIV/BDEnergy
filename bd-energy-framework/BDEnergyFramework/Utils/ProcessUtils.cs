@@ -162,6 +162,8 @@ namespace BDEnergyFramework.Utils
             processes.Add("chrome");
             processes.Add("pvengine64");
             processes.Add("FMSIScan");
+            processes.Add("eva_player");
+            processes.Add("ffmpeg");
                             
             SetAffinityOfProcesses(processes, enabledCores);
         }

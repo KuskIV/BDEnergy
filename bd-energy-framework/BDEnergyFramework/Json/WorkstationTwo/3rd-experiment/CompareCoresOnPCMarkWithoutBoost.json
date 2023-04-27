@@ -1,0 +1,292 @@
+[
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 10,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 4, 3, 2, 1 ],
+            [ 8, 7, 6, 9 ],
+            [ 8, 7, 4, 3 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 20,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            []
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 20,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 4, 3, 2, 1 ],
+            [ 8, 7, 6, 9 ],
+            [ 8, 7, 4, 3 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 40,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            []
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 40,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 4, 3, 2, 1 ],
+            [ 8, 7, 6, 9 ],
+            [ 8, 7, 4, 3 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 80,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            []
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 80,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 4, 3, 2, 1 ],
+            [ 8, 7, 6, 9 ],
+            [ 8, 7, 4, 3 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 100,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            []
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "PC-MARK-10"
+        ],
+        "AllocatedCores": [
+            [ 4, 3, 2, 1 ],
+            [ 8, 7, 6, 9 ],
+            [ 8, 7, 4, 3 ]
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    },
+    {
+        "MeasurementInstruments": [ 2 ],
+        "RequiredMeasurements": 150,
+        "TestCasePaths": [
+            "IDLE"
+        ],
+        "AllocatedCores": [
+            []
+        ],
+        "TestCaseParameters": [
+            ""
+        ],
+        "UploadToDatabase": true,
+        "BurnInPeriod": 0,
+        "MinimumTemperature": 0,
+        "MaximumTemperature": 200,
+        "DisableWifi": true,
+        "ExperimentNumber": 3,
+        "ExperimentName": "compare-p-and-e-cores-on-pcmark-without-boost",
+        "ConcurrencyLimit": "multi-threaded",
+        "TestCaseType": "application",
+        "Compiler": "UNKOWN",
+        "Optimizations": "",
+        "Language": "UNKNOWN",
+        "StopBackgroundProcesses": true,
+        "AdditionalMetadata": {
+        }
+    }
+]

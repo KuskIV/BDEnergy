@@ -103,6 +103,9 @@
     <None Update="Json\WorkstationTwo\3rd-experiment\DifferentApplication.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Json\WorkstationTwo\3rd-experiment\CompareCoresOnPCMarkWithoutBoost.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Json\WorkstationTwo\3rd-experiment\DifferentApplicationPCMark.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
