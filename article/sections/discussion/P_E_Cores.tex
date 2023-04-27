@@ -1,0 +1,9 @@
+\subsection{P and E Cores}
+In \cref{subsec:exp_three} we analyzed the impact of the P- and E-cores in DUT2 as specified in \cref{RQ:RQ4}. Where we found that the E-cores had a lower DEC per second, but a higher execution time and total DEC per benchmark. With our setup the E-cores had a higher energy consumption than the P-cores. However there are some several aspects which affect the result. Firstly as specified in \cref{subsec:P_E_Cores} the E-cores are designed to handle smaller non-time critical jobs such as background services. This description does not fit the benchmarks we have used, because the put the cores under heavy load. Therefore while the DEC of the E-cores on our benchmark is worse than that of the P-cores. I does not show that in a real life computing the addition of E-cores to run smaller jobs is not beneficial.
+
+Secondly, because we have disabled Intel Turbo Boost and C-states the frequency of the cores remained static at their base clock 1.8 Ghz for the E-cores and 2.5 Ghz for the P-cores. This prevents the cores from boosting to higher frequencies and down throttling to lower frequencies, where the former would result in an increase in energy consumption per second while the latter would cause a decrease in energy consumption per second. Not disabling these features, would  impact the results.
+
+Since running benchmarks with a heavy load is not the intended task for E-cores and the clock speed of cores was made static, the experimental setup used in this work does not provide a realistic assessment of the affect of P- and E-cores.
+
+
+% P cores 2.5 E cores 1.8
