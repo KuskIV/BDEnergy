@@ -18,7 +18,7 @@ It uses the same hardware counters and MSRs as RAPL\cite{FireFox}, therefore it 
 Therefore, a similar measurement is expected between LHM, IPG and RAPL. We found in \cite{biksbois} that LHM on Windows correlated 0.76 with our ground truth on Windows and a high correlation of 0.85 with IPG.\newline
 
 \noindent\textbf{MN60 AC Current Clamp (Clamp):}
-Serving as our ground truth a setup comprised of an MN60 AC clamp, an Analog Discovery 2 and a Raspberry Pi 4. The MN60 AC clamp is connected to the phase of the wire that goes into the PSU and the Analog Discovery 2 which is used as an oscilloscope. The Analog Discovery 2 is connected to the Raspberry Pi 4. This setup allows us to continuously measure and log our data.\cite{biksbois} The accuracy is reported to be $2\%$\cite{ClampDoc}.\newline
+Serving as our ground truth a setup comprised of an MN60 AC clamp, an Analog Discovery 2 and a Raspberry Pi 4. The MN60 AC clamp is connected to the phase of the wire that goes into the Power Supply Unit (PSU) and the Analog Discovery 2 which is used as an oscilloscope. The Analog Discovery 2 is connected to the Raspberry Pi 4. This setup allows us to continuously measure and log our data.\cite{biksbois} The accuracy is reported to be $2\%$\cite{ClampDoc}.\newline
 %For more detail see \cite{biksbois}.
 
 \noindent\textbf{CloudFree EU smart Plug (Plug):} is used, as an alternative lower-priced hardware-based measuring instrument, which also has greater ease of use than the Clamp setup. The accuracy and sampling rate of the plug is unknown.\cite{CloudFreeEUSMartPlug}\newline
