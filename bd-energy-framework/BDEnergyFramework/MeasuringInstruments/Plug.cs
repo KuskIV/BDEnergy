@@ -126,6 +126,7 @@ namespace BDEnergyFramework.MeasuringInstruments
             switch (machineName)
             {
                 case "DESKTOP-IO08AJ7": // workstation one
+                case "biksbois-Komplett-PC":
                     return "192.168.1.182";
                 case "DESKTOP-1L7IS6S": //workstation two
                 case "test-H610M-HVS-M-2-R2-0":

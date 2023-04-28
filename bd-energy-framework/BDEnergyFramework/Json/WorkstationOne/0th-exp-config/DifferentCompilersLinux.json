@@ -1,6 +1,6 @@
 ﻿[
   {
-    "MeasurementInstruments": [ 4 ],
+    "MeasurementInstruments": [ 1,5 ],
     "RequiredMeasurements": 30,
     "TestCasePaths": [
       "/home/biksbois/Documents/GitHub/BDEnergy/test-cases/microbenchmarks/cpp/multi-thread/clang/fannkuch-redux",
