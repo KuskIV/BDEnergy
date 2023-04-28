@@ -8,13 +8,13 @@
       {
         "MeasurementInstruments": [ 2 ],
         "RequiredMeasurements": 30,
-        "TestCasePaths": [
+        "BenchmarkPaths": [
             "path/to/one.exe", "path/to/two.exe" 
         ],
         "AllocatedCores": [
             [], [1,2]
         ],
-        "TestCaseParameters": [ 
+        "BenchmarkParameters": [ 
             "one_parameter", "two_parameter",
         ],
         "UploadToDatabase": true,
@@ -25,7 +25,7 @@
         "ExperimentNumber": 0,
         "ExperimentName": "testing-phase",
         "ConcurrencyLimit": "multi-thread",
-        "TestCaseType": "microbenchmarks",
+        "BenchmarkType": "microbenchmarks",
         "Compiler": "clang",
         "Optimizations": "openmp",
         "Language": "c++",

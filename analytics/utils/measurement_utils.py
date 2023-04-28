@@ -2,6 +2,7 @@ from utils.column_name_utils import *
 import utils.results_repository as rep
 import utils.dataframe_utils as df_util
 import utils.query_utils as query
+import pandas as pd
 
 
 def get_measurements(
@@ -31,6 +32,7 @@ def get_measurements(
     idle_cpu_consumption_results,
     used_test_case_name,
     cpu_dynamic_energy_watt_consumption,
+    idle_case_config=-1,
 ):
     for dut_index, dut_row in used_dut.iterrows():
         dut_id = dut_row[ID]
@@ -84,15 +86,31 @@ def get_measurements(
                         experiment_name,
                         experiment_number,
                     )
-                    tc_idle_case_collection = rep.get_collections(
-                        db,
-                        dut_id,
-                        mi_id,
-                        config_id,
-                        tc_idle_case_id,
-                        experiment_name,
-                        experiment_number,
-                    )
+
+                    if idle_case_config < 0:
+                        tc_idle_case_collection = rep.get_collections(
+                            db,
+                            dut_id,
+                            mi_id,
+                            config_id,
+                            tc_idle_case_id,
+                            experiment_name,
+                            experiment_number,
+                        )
+                    else:
+                        # print(
+                        #     f"dut: {dut_id}, mi: {mi_id}, config {idle_case_config}, test case: {tc_idle_case_id}, name: {experiment_name}, number: {experiment_number} "
+                        # )
+                        tc_idle_case_collection = rep.get_collections(
+                            db,
+                            dut_id,
+                            mi_id,
+                            idle_case_config,
+                            tc_idle_case_id,
+                            experiment_name,
+                            experiment_number,
+                        )
+                        print(tc_idle_case_collection.shape)
 
                     if tc_collection.shape[0] == 0:
                         print(f"N - {key}.{mi_row['SampleRate']}.{tc_id}")
@@ -113,7 +131,30 @@ def get_measurements(
                     dram_energy_results[key] = list(
                         tc_measurements["DramEnergyInJoules"]
                     )
-                    cpu_energy_results[key] = list(tc_measurements["CpuEnergyInJoules"])
+                    if mi_name == "rapl":
+                        tc_idle_case_measurements["CpuEnergyInJoules"] = [
+                            x
+                            for x in list(
+                                tc_idle_case_measurements["CpuEnergyInJoules"]
+                            )
+                            if x > -500
+                        ]
+                        tc_measurements["CpuEnergyInJoules"] = pd.Series(
+                            [
+                                x
+                                for x in list(tc_measurements["CpuEnergyInJoules"])
+                                if x > -500
+                            ]
+                        )
+                        cpu_energy_results[key] = [
+                            x
+                            for x in list(tc_measurements["CpuEnergyInJoules"])
+                            if x > -500
+                        ]
+                    else:
+                        cpu_energy_results[key] = list(
+                            tc_measurements["CpuEnergyInJoules"]
+                        )
                     gpu_energy_results[key] = list(tc_measurements["GpuEnergyInJoules"])
                     duration_results[key] = list(tc_measurements["Duration"])
                     temperature_begin[key] = list(

@@ -1,18 +1,22 @@
 %\paragraph{Statistical Methods}
-In this sections the statistical method used to analyze our results are presented. This section is based on what was found in \cite{biksbois} and can be referred to for further detail. %A common assumption is that the data follows the normal distribution \cite{fahad2019comparative}
+In this sections the statistical method used to analyze our results are presented. This section is based on what was found in \cite{biksbois} and can be referred to for further detail.\newline %A common assumption is that the data follows the normal distribution \cite{fahad2019comparative}
 
-\paragraph{Shapiro-Wilk Test:} was used to examine if the data followed a normal distribution, which is an important assumption for some statistical methods. Prior research suggested that our data wont be normally distributed \cite{biksbois}, therefore we expected our data to not be normally distributed, this was tested using the Shapiro-Wilk test. Understanding the distribution of the data helped choose subsequent statistical methods.\cite{razali2011power}
+\noindent\textbf{Shapiro-Wilk Test:} was used to examine if the data followed a normal distribution. %, which is an assumption for some statistical methods. 
+We expected or data to not be normally distributed, because that was found to be the case is \cite{biksbois}. Understanding the distribution of the data was essential when choosing subsequent statistical methods.\cite{razali2011power}\newline
 
-\paragraph{Mann-Whitney U Test:}
-To evaluate if there is a statistical significant difference between samples the Mann-Whitney U Test was used, because it is a non-parametric test that does not assume normality in the data.\cite{mann1947test}
+\noindent\textbf{Mann-Whitney U Test:}
+to evaluate if there is a statistical significant difference between samples the Mann-Whitney U Test was used, because it is a non-parametric test that does not assume normality in the data.\cite{mann1947test}\newline
 
 %Since our data is not normally distributed, a non-parametric test was used to evaluate whether there were statistically significant differences between various measurements. The Mann-Whitney U test was used due to its capacity to compare two independent samples without assuming normality.
 
-\paragraph{Kendall's Tau Correlation Coefficient:}
-to assess the correlation between our measurements, Kendall's Tau correlation coefficient was used. This non-parametric measure of association was chosen because it can evaluate the strength and direction of relationships between ordinal variables, even when the underlying data does not adhere to a normal distribution.\cite{han1987non} %Additionally, Kendall's Tau is less sensitive to outliers and skewed data.
+\noindent\textbf{Kendall's Tau Correlation Coefficient:}
+was used to asses the correlation between our measurements. It is a non-parametric measure of association that can evaluate the strength and direction of relationships between ordinal variables, when the underlying data does not adhere to a normal distribution.\cite{han1987non} The correlation can be evaluated using the Guilford scale
+\cite[219]{guilford1950fundamental} as can be seen in \cref{fig:GuildfordScale}.\newline
 
-\paragraph{Cochran's Formula:}
-To determine an appropriate sample size for our measurements, Cochran's formula was used. With this formula a required sample size to achieve a desired level of statistical power can be calculated.\cite{Cochran}
+\input{tables/GuildfordScale.tex}
+%Additionally, Kendall's Tau is less sensitive to outliers and skewed data.
 
-\paragraph{}
-In summary, the selection of the Shapiro-Wilk test, Mann-Whitney U test, Kendall's Tau correlation coefficient, and Cochran's formula allowed us to effectively analyze our data, taking into account its non-normal distribution and ordinal nature while determining statistically significant differences, correlations, and an appropriate sample size for our measurements.
+\noindent\textbf{Cochran's Formula:}
+To determine an appropriate sample size for our measurements, Cochran's formula was used. With this formula a required sample size to achieve a desired level of statistical power can be calculated.\cite{Cochran}\newline
+
+\noindent In summary, the selection of the Shapiro-Wilk test, Mann-Whitney U test, Kendall's Tau correlation coefficient, and Cochran's formula allowed us to effectively analyze our data, taking into account its non-normal distribution and ordinal nature while determining statistically significant differences, correlations, and an appropriate sample size for our measurements.

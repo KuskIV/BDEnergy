@@ -13,12 +13,12 @@
             \attribute{Burnin : INT}
             \attribute{AllocatedCores : JSON}
         \end{object}
-        \begin{object}[text width=5cm]{TestCase}{10,0}
+        \begin{object}[text width=5cm]{Benchmark}{10,0}
             \attribute{Id : INT}
             \attribute{Name : VARCHAR}
             \attribute{Compiler : VARCHAR}
             \attribute{Optimizations : VARCHAR}
-            \attribute{TestCaseSize : VARCHAR}
+            \attribute{BenchmarkSize : VARCHAR}
             \attribute{Parameter : VARCHAR}
             \attribute{Threads : VARCHAR}
         \end{object}
@@ -33,7 +33,7 @@
             \attribute{Name : VARCHAR}
             \attribute{CollectionNumber : INT}
             \attribute{ConfigId : INT}
-            \attribute{TestCaseId : INT}
+            \attribute{BenchmarkId : INT}
             \attribute{MeasurementInstrumentId : INT}
             \attribute{AdditionalMetadata : JSON}
         \end{object}
@@ -65,7 +65,7 @@
         
         \association{MeasuringInstrument}{}{0..*}{MeasurementCollection}{}{1}
         \association{Configuration}{}{0..*}{MeasurementCollection}{}{1}
-        \association{TestCase}{}{0..*}{MeasurementCollection}{}{1}
+        \association{Benchmark}{}{0..*}{MeasurementCollection}{}{1}
         \association{DeviceUnderTest}{}{0..*}{MeasurementCollection}{}{1}
         \association{MeasurementCollection}{}{1}{Measurement}{}{1..*}
         \association{MeasurementCollection}{}{1}{Sample}{}{1..*}

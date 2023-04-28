@@ -1,0 +1,95 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.26\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8},
+        yticklabels={
+             0, 1, 2, 3, 4, 5, 6, 7,  0, 5, 6, 2, 4, 3, 1,  0, 5, 6, 2, 4, 3,  0, 5, 6, 2, 4,  0, 5, 6, 2,  0, 5, 6,  0, 5,  0
+            },
+            xmin=0,xmax=2000,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1600.59619140625,
+                lower quartile=1645.1446228027344,
+                median=1678.9347534179688,
+                upper quartile=1707.7724914550781,
+                upper whisker=1778.0560302734375
+                }, color = red
+                ] coordinates{(0,1836.4364013671875)(0,3873.498046875)(0,3791.6630859375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1640.5601806640625,
+                lower quartile=1669.5162353515625,
+                median=1702.5245971679688,
+                upper quartile=1739.0556945800781,
+                upper whisker=1838.66162109375
+                }, color = red
+                ] coordinates{(1,1943.2760009765625)(1,1864.127685546875)(1,3976.25732421875)(1,3849.386962890625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1666.2357177734375,
+                lower quartile=1699.4358215332031,
+                median=1735.8279418945312,
+                upper quartile=1784.6516418457031,
+                upper whisker=1889.923828125
+                }, color = red
+                ] coordinates{(2,1963.513427734375)(2,3960.526611328125)(2,3802.806884765625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1680.410888671875,
+                lower quartile=1734.2084045410156,
+                median=1772.0855102539062,
+                upper quartile=1807.1498107910156,
+                upper whisker=1891.77099609375
+                }, color = red
+                ] coordinates{(3,2009.88525390625)(3,4301.60595703125)(3,4157.505859375)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1727.8282470703125,
+                lower quartile=1767.1727294921875,
+                median=1806.1300048828125,
+                upper quartile=1846.2762145996094,
+                upper whisker=1931.2103271484375
+                }, color = red
+                ] coordinates{(4,2098.440673828125)(4,1975.8546142578125)(4,4107.337890625)(4,4007.394775390625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1671.0252685546875,
+                lower quartile=1717.2276611328125,
+                median=1758.0728759765625,
+                upper quartile=1798.5192260742188,
+                upper whisker=1877.529052734375
+                }, color = red
+                ] coordinates{(5,2025.55615234375)(5,3929.595703125)(5,3796.85986328125)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1837.3095703125,
+                lower quartile=1886.635986328125,
+                median=1941.7662353515625,
+                upper quartile=1991.511962890625,
+                upper whisker=2110.62841796875
+                }, color = red
+                ] coordinates{(6,2205.58740234375)(6,4366.18310546875)(6,4249.7890625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=2317.460693359375,
+                lower quartile=2388.1891479492188,
+                median=2430.9105224609375,
+                upper quartile=2510.6082153320312,
+                upper whisker=2662.027587890625
+                }, color = red
+                ] coordinates{(7,2716.302001953125)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 1 for test case(s) 3DM compiled on } \label{fig:3-same-mi-different-application-post-config-update-ipg-3d-mark.exe-unkown-workstationone-cpu-energy_consumption}
+\end{figure}

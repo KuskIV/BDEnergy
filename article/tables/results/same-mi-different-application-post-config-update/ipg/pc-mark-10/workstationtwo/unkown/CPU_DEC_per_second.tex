@@ -1,0 +1,105 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.28\textheight
+        }
+        \begin{axis}[
+            xlabel={Average DEC (Watts)}, 
+            ylabel={Number of Cores}, 
+            title={The DEC per second of the CPU}, 
+            ytick={1, 2, 3, 4, 5, 6, 7, 8, 9},
+        yticklabels={
+                10,9,8,7,6,5,4,3,2
+            },
+            xmin=0,xmax=10,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.2296294494726885,
+                lower quartile=4.414198699461128,
+                median=4.477444127230992,
+                upper quartile=4.621002720533627,
+                upper whisker=4.713519330851521
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.258541624557698,
+                lower quartile=4.415849300221764,
+                median=4.4619282394729884,
+                upper quartile=4.591638625067911,
+                upper whisker=4.699791633231276
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.271050823344416,
+                lower quartile=4.41542849278233,
+                median=4.511881556635796,
+                upper quartile=4.614582434202648,
+                upper whisker=4.692888376859609
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.279409049505596,
+                lower quartile=4.412140214108703,
+                median=4.512795211315868,
+                upper quartile=4.582508920309619,
+                upper whisker=4.7086552896593235
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.358376440038783,
+                lower quartile=4.467781046983209,
+                median=4.585327540101691,
+                upper quartile=4.6987293130969014,
+                upper whisker=4.765081763427323
+                }, color = red
+                ] coordinates{(4,5.399113284498742)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.288207613722043,
+                lower quartile=4.358332485218124,
+                median=4.444353491863994,
+                upper quartile=4.531519182827398,
+                upper whisker=4.65788877358827
+                }, color = red
+                ] coordinates{(5,5.2624043000691545)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=4.184138855062934,
+                lower quartile=4.281240405706221,
+                median=4.381832828098494,
+                upper quartile=4.510600692855617,
+                upper whisker=4.555439796535448
+                }, color = red
+                ] coordinates{(6,5.235155384852475)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=3.994650976248397,
+                lower quartile=4.113990457568407,
+                median=4.219893166851358,
+                upper quartile=4.355569790835151,
+                upper whisker=4.448899239253488
+                }, color = red
+                ] coordinates{(7,5.065478849267277)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=3.696093708851495,
+                lower quartile=3.8088024878514015,
+                median=3.9391895804218375,
+                upper quartile=4.022417504101666,
+                upper whisker=4.1431635140993395
+                }, color = red
+                ] coordinates{(8,4.738108746809295)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM} \label{fig:3-same-mi-different-application-post-config-update-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-dec_per_second}
+\end{figure}

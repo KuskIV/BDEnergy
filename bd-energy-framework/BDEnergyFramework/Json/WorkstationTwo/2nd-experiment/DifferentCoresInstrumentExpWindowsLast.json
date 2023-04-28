@@ -3,11 +3,13 @@
     "MeasurementInstruments": [ 4 ],
     "RequiredMeasurements": 3000,
     "TestCasePaths": [
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\fannkuch-redux.exe"
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\mandelbrot.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
     ],
     "AllocatedCores": [],
     "TestCaseParameters": [
-      "12"
+      "64000",
+      ""
     ],
     "UploadToDatabase": true,
     "BurnInPeriod": 1,
@@ -15,7 +17,7 @@
     "MaximumTemperature": 200,
     "DisableWifi": true,
     "ExperimentNumber": 2,
-    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update-and-watt",
+    "ExperimentName": "run-clamp-many-times-exp",
     "ConcurrencyLimit": "multi-threaded",
     "TestCaseType": "microbenchmarks",
     "Compiler": "intel-one-api",
@@ -25,13 +27,28 @@
     "AdditionalMetadata": {}
   },
   {
-    "MeasurementInstruments": [ 4 ],
-    "RequiredMeasurements": 3000,
+    "MeasurementInstruments": [ 2, 4 ],
+    "RequiredMeasurements": 500,
     "TestCasePaths": [
-      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\multi-thread\\intel-one-api\\idle-case.exe"
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\nbody.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\spectral-norm.exe",
+      "C:\\Users\\test\\Documents\\GitHub\\BDEnergy\\test-cases\\microbenchmarks\\cpp\\single-thread\\intel-one-api\\idle-case.exe"
     ],
-    "AllocatedCores": [],
+    "AllocatedCores": [
+      [ 0 ],
+      [ 1 ],
+      [ 2 ],
+      [ 3 ],
+      [ 4 ],
+      [ 5 ],
+      [ 6 ],
+      [ 7 ],
+      [ 8 ],
+      [ 9 ]
+    ],
     "TestCaseParameters": [
+      "180000000",
+      "18000",
       ""
     ],
     "UploadToDatabase": true,
@@ -39,14 +56,16 @@
     "MinimumTemperature": 0,
     "MaximumTemperature": 200,
     "DisableWifi": true,
-    "ExperimentNumber": 2,
-    "ExperimentName": "same-one-api-compiler-different-measuring-instruments-post-update-and-watt",
-    "ConcurrencyLimit": "multi-threaded",
+    "ExperimentNumber": 3,
+    "ExperimentName": "same-one-api-compiler-different-cores",
+    "ConcurrencyLimit": "single-threaded",
     "TestCaseType": "microbenchmarks",
     "Compiler": "intel-one-api",
-    "Optimizations": "-openmp",
+    "Optimizations": "",
     "Language": "c++",
     "StopBackgroundProcesses": true,
-    "AdditionalMetadata": {}
+    "AdditionalMetadata": {
+      "msDelayInTestCase": "500"
+    }
   }
 ]

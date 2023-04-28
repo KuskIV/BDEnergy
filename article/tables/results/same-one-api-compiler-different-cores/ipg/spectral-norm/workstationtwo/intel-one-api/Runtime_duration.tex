@@ -2,11 +2,12 @@
     \centering
     \begin{tikzpicture}[]
         \pgfplotsset{
-            width=0.5\textwidth,
+            width=0.9\textwidth,
             height=0.30000000000000004\textheight
         }
         \begin{axis}[
-            xlabel={Average Runtime (s)}, 
+            xlabel={Average Runtime (s)},
+            ylabel={Core}, 
             title={The average duration}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
         yticklabels={
@@ -109,5 +110,5 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{Runtime measurements by IPG on DUT 2 for test case(s) SN compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-runtime-duration}
+\caption{Runtime measurements by IPG on DUT 2 for benchmark(s) SN compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-spectral-norm.exe-intel-one-api-workstationtwo-runtime-duration}
 \end{figure}
