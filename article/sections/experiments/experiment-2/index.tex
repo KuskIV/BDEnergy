@@ -2,7 +2,7 @@
 
 The second experiment investigated \cref{RQ:RQ2}, in order to identify our preferred measuring instrument on Windows. The measuring instrument was chosen based on a combination of different factors, including its correlation with our ground truth, ease of use and cost. 
 
-A couple of changes were made in the experimental setup for experiment two. Firstly, due to some issues with SCAP, where its sampling rate significantly decreased when the DUT was under full load, the process priority class of the benchmark was set to \texttt{Normal}. Secondly, due to an execution time of less than a second for \texttt{MB} when compiled with Intel's oneApi, \texttt{MB's} input parameter was changed from $16.000$ to $64.000$ which increased the duration of the benchmark execution time to $\sim 14$ seconds. This avoided a scenario where the Plug only had a single data point per measurement. For this experiment, \texttt{FR} was executed $550$ times, while \texttt{MB} was executed $222$ times, based on \cref{tab:initial-measurements}.
+A couple of changes were made in the experimental setup for experiment two. Firstly, due to some issues with SCAP, where its sampling rate significantly decreased when the DUT was under full load, the process priority class of the benchmark was set to \texttt{Normal}. Secondly, due to an execution time of less than a second for \texttt{MB} when compiled with oneAPI, \texttt{MB's} input parameter was changed from $16.000$ to $64.000$ which increased the duration of the benchmark execution time to $\sim 14$ seconds. This avoided a scenario where the Plug only had a single data point per measurement. For this experiment, \texttt{FR} was executed $550$ times, while \texttt{MB} was executed $222$ times, based on \cref{tab:initial-measurements}.
 
 \input{tables/results/evolution/evolution.tex}
 
@@ -23,7 +23,7 @@ When applying statistical methods from \cref{subsec:Statistics}, it was discover
     \centering
     \hspace*{-1cm} % move the figure 1cm to the left
     \includegraphics[width=0.6\textwidth]{figures/Fannkuch-redux_ex2.png}
-    \caption{Heatmap showing the correlation coefficient between all of the measurement instrument on Windows for the Fannkuch-Redux Benchmark}
+    \caption{Heatmap showing the correlation coefficient between all of the measurement instrument on Windows for FR}
     \label{fig:fannkuchCorr}
 \end{figure}
 
