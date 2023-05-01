@@ -1,14 +1,15 @@
-\subsection{C++ benchmarks analysis}
+\subsection{C++ Benchmarks Analysis}
 As can be seen in the results from \cref{subsec:exp_one}, most C++ compilers performed about the same, except for the intels C++ compiler, which was about twice as fast on the Mandelbrot test case. We wanted to look more into how this is achieved and what intel does different compared to other C++ compilers, as we had fears that some of the code could be optimized away making it and invalid benchmark. To investigate this the executables from the intel and Mingw compilers were decompiled so that they can be compared instruction to instruction. A superficial note that makes some of the differences apparent is the size differences between the produced executables, where the other are around 220 mb to 280 mb while the intel is 668 mb nearly 3 times more.
 
-When looking at the overall structure of the Assembly code some major differences can be found in the structure of the programs. The intel assembly is using several function calls that seems to be unique for intel process such as ___intel_new_feature_proc_init and __intel_fast_memset, these both seem to be part of intel default c++ libraries\cite{Intelassembly}. The MinGw seems to use general purpose registers more and utilizes C++ Standard Library(STD), in the assembly more.
-
+When looking at the overall structure of the Assembly code some major differences can be found in the structure of the programs. The intel assembly is using several function calls that seems to be unique for intel process such as \texttt{\_\_\_intel\_new\_feature\_proc\_init} and \texttt{\_\_intel\_fast\_memset}, these both seem to be part of intel default c++ libraries\cite{Intelassembly}. The MinGw seems to use general purpose registers more and utilizes C++ Standard Library(STD), in the assembly more.
 
 % The minGw compiled code seem to make more use of purpose made registers and operations in the setup, such as movaps and xmm regs for floating point operations, where intel seems to have a preference for general purpose registers. 
 % In terms of of libraries used it seems to utilities std much more.
 %  The mvsc instead makes more use of general functions that are part of C runtime on windows\cite{SCRTassembly}, it also utilizes locks, system calls more frequently seemingly for thread synchronization. Another thing seemingly more common in the microsoft c++ compiled assembly is error handling. 
 
 % https://www.intel.com/content/www/us/en/developer/tools/isa-extensions/overview.html
+
+
 These observations are mostly based on the setup of the mains function from the different compilers the larger differences and what we would expect to have a larger effect on the runtime can be seen in the mandelbrot function. Mingw seems to only use standard X86 instruction\cite{X86} to perform the calculations on the floating points and using xmm registers for it. The Intel implementation seems to be utilizing Advance Vector extensions (AVX)\cite{AVX}, to perform the calculations, the usage of AVX main results in a significant increase in the speed of calculations as it allows for multiple calculations to be performed in parallel. The AVX technology is a set of instructions that were introduced by intel to enhance the performance of floating-point-intensive applications\cite{AVX}. It seems that the intel compiler is optimizing the code for the AVX architecture, which allows it to take full advantage of the processing power of the CPU. 
 
 The use of AVX to perform large floating point calculations in parallel, also makes sense given our finding that the intel program is twice as fast, but consumes a similar amount of energy, which is similar to other findings about energy consumption and parallelism\cite{Lindholt2022}.
