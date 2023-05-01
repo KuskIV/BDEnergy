@@ -3,18 +3,45 @@
     \begin{tikzpicture}[]
         \pgfplotsset{
             width=0.9\textwidth,
-            height=0.22\textheight
+            height=0.28\textheight
         }
         \begin{axis}[
-            xlabel={Total Energy Consumption (Joules)}, 
+            xlabel={Average Energy Consumption (Joules)}, 
             title={The energy consumption of the CPU}, 
-            ytick={1, 2, 3, 4, 5, 6},
+            ytick={1, 2, 3, 4, 5, 6, 7, 8, 9},
         yticklabels={
-             Clamp,  IPG,  LHM,  Plug,  SCAP,  SCAPI
+             Clamp LIN,  Plug LIN,  RAPL LIN,  Clamp WIN,  IPG WIN,  LHM WIN,  Plug WIN,  SCAP WIN,  SCAPI WIN
             },
             xmin=0,xmax=2000,
             ]
         
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1467.159246410767,
+                lower quartile=1614.02652097282,
+                median=1657.9514231582004,
+                upper quartile=1718.8075558307967,
+                upper whisker=1847.9575549915112
+                }, color = red
+                ] coordinates{(0,1441.6926642978358)(0,1423.4799089429016)(0,1434.1200504133608)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=1155.1136636771323,
+                lower quartile=1231.2995551515,
+                median=1267.5452921489114,
+                upper quartile=1299.2483667891784,
+                upper whisker=1369.0872469635642
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=302.421875,
+                lower quartile=319.42578125,
+                median=334.7265625,
+                upper quartile=346.814453125,
+                upper whisker=370.515625
+                }, color = red
+                ] coordinates{};
         
         \addplot+ [boxplot prepared={
                 lower whisker=1668.2202090586698,
@@ -23,7 +50,7 @@
                 upper quartile=2108.11852740366,
                 upper whisker=2351.107687913966
                 }, color = red
-                ] coordinates{(0,2417.3855419833726)};
+                ] coordinates{(3,2417.3855419833726)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=389.80413818359375,
@@ -32,7 +59,7 @@
                 upper quartile=446.94610595703125,
                 upper whisker=483.342529296875
                 }, color = red
-                ] coordinates{(1,487.37103271484375)(1,490.345947265625)(1,514.6580810546875)(1,486.92901611328125)(1,484.99420166015625)(1,503.358154296875)(1,484.287353515625)(1,489.07281494140625)(1,504.4725341796875)(1,483.97039794921875)};
+                ] coordinates{(4,487.37103271484375)(4,490.345947265625)(4,514.6580810546875)(4,486.92901611328125)(4,484.99420166015625)(4,503.358154296875)(4,484.287353515625)(4,489.07281494140625)(4,504.4725341796875)(4,483.97039794921875)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=387.73753714410583,
@@ -41,37 +68,37 @@
                 upper quartile=446.9699976395613,
                 upper whisker=481.9536157530114
                 }, color = red
-                ] coordinates{(2,495.371486745388)(2,507.06150775446304)(2,509.7883568926096)(2,514.9128385693042)(2,508.5913889813295)(2,489.1903487822215)};
+                ] coordinates{(5,495.371486745388)(5,507.06150775446304)(5,509.7883568926096)(5,514.9128385693042)(5,508.5913889813295)(5,489.1903487822215)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=1332.0020632411063,
-                lower quartile=1445.7859806231936,
-                median=1495.464909338721,
-                upper quartile=1548.1267354645681,
+                lower quartile=1446.6457038461538,
+                median=1497.380727272725,
+                upper quartile=1550.6165853658567,
                 upper whisker=1690.4118596491237
                 }, color = red
-                ] coordinates{(3,1711.6857974683478)(3,1997.0158031088174)(3,1723.824851985552)};
+                ] coordinates{(6,1711.6857974683478)(6,1997.0158031088174)(6,1723.824851985552)(6,1727.6246727272726)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=388.59466909049996,
-                lower quartile=419.254716672,
-                median=431.35404852184627,
-                upper quartile=445.55294516330764,
-                upper whisker=484.58753699942855
+                lower quartile=426.4683287763846,
+                median=439.8811839046154,
+                upper quartile=453.83292413319225,
+                upper whisker=491.4576580868571
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(7,495.4990106893333)(7,497.68584393928575)(7,498.01617996857146)(7,504.92727233257136)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=349.1433320670001,
-                lower quartile=381.9263054722916,
-                median=396.1062755405769,
-                upper quartile=407.3009675405,
-                upper whisker=443.971694678
+                lower whisker=354.0370034832083,
+                lower quartile=390.38034158228845,
+                median=403.4603877341538,
+                upper quartile=417.47278180395676,
+                upper whisker=457.5469091417143
                 }, color = red
-                ] coordinates{(5,448.6631844982857)(5,445.8164667547501)(5,452.84884603521425)};
+                ] coordinates{(8,349.1433320670001)(8,462.4109517591429)(8,462.61530016457147)};
         
         
         \end{axis}
     \end{tikzpicture}
-\caption{CPU measurements on DUT 2 for benchmark(s) FR compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-fannkuch-redux.exe-intel-one-api-workstationtwo-cpu-energy_consumption}
+\caption{CPU measurements on DUT 2 for test case(s) FR compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-fannkuch-redux.exe-intel-one-api-workstationtwo-cpu-energy_consumption}
 \end{figure}
