@@ -1,0 +1,50 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.16\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Energy Consumption (Joules)}, 
+            title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3},
+        yticklabels={
+             4, 3, 2, 1,  8, 7, 4, 3,  8, 7, 6, 9
+            },
+            xmin=0,xmax=2000,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7065.78857421875,
+                lower quartile=7176.201416015625,
+                median=7235.304443359375,
+                upper quartile=7371.1834716796875,
+                upper whisker=7518.96337890625
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7088.2763671875,
+                lower quartile=7149.079833984375,
+                median=7268.634765625,
+                upper quartile=7382.738525390625,
+                upper whisker=7571.41845703125
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=7970.8974609375,
+                lower quartile=8249.397216796875,
+                median=8459.5859375,
+                upper quartile=8646.183349609375,
+                upper whisker=9084.5380859375
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-without-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-energy_consumption}
+\end{figure}
