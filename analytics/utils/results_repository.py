@@ -82,10 +82,11 @@ def get_measurements(db, collection_id):
 
 
 def get_time_series(db, collection_id, measurement_id):
-    query = "SELECT ElapsedTime, CpuEnergyInJoules, ProcessorPowerInWatt, AdditionalMetadata FROM Sample where CollectionId = %s and MeasurementId = %s order by ElapsedTime asc"
+    query = "SELECT ElapsedTime, PackageTemperature, CpuEnergyInJoules, ProcessorPowerInWatt, AdditionalMetadata FROM Sample where CollectionId = %s and MeasurementId = %s order by ElapsedTime asc"
     parameters = [collection_id, measurement_id]
     columns = [
         "ElapsedTime",
+        "PackageTemperature",
         "CpuEnergyInJoules",
         "ProcessorPowerInWatt",
         "AdditionalMetadata",
