@@ -4,6 +4,7 @@
 % Shorter GPT version.
 %In \cref{subsec:exp_two}, we analyzed the correlation between different measuring instruments and our ground truth, finding that software-based instruments had a correlation of $0.7$ - $0.75$ while the Plug had a correlation of $0.55$, indicating lower accuracy. We expected the correlation of the software based measuring instruments to be similar since they are using the same hardware counters and MSRs. For the remaining experiments, we chose the software-based instrument based on considerations of accuracy, ease of use, and availability as expressed in \cref{RQ:RQ2}. While SCAPI had the highest correlation, it and SCAP had a low sample rate and was tedious to set up on Windows. LHM had more issues than IPG and required calculations for getting joule measurements, so we chose IPG. 
 
-One thing to note is that our determination of accuracy is based of the accuracy of the Clamp, which means that if the Clamp is not accurate, then we do not know if the other measuring instruments are.
+
+The ground truth used in this work is a current clamp, which means that if the Clamp is not accurate, then we do not know if the other measuring instruments are.
 
 For IPG, a bluescreen issue was encoutered when using the API, similarly to \cite{biksbois}, which occured when requesting new measurements ten times per second. The issue was most likely related to requesting measurements, when no data was available, despite Intel claiming IPG is able to sample $1000$ times per second, but is something to explore in a future work. This issue was however resolved by using the GUI instead, which could be executed using the command \texttt{IntelPowerGadget.exe -start} and \texttt{IntelPowerGadget.exe -stop}.
