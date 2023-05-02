@@ -12,7 +12,7 @@
     ylabel style=#1,
     y axis line style=#1,
     ytick style=#1}}
-\begin{axis}[ scale only axis, ymin=0, ymax=170, xmin=1,xmax=8, axis y line*=left, xlabel=Number of Cores, ylabel=Duration (s), y axis style=green!75!black]
+\begin{axis}[ scale only axis, ymin=0, ymax=170, xmin=1,xmax=8, axis y line*=left, xlabel=Number of Cores, ylabel=Execution time (s), y axis style=green!75!black]
     \addplot[smooth, green!75!black, mark=o, draw] 
     coordinates 
     {
@@ -67,6 +67,6 @@
 \end{axis} 
 
 \end{tikzpicture}
-    \caption{The evolution of the DEC (blue), DEC per second (red) and duration (green) as more cores are allocated to 3DM on DUT 1}
+    \caption{The evolution of the DEC (blue), DEC per second (red) and execution time (green) as more cores are allocated to 3DM on DUT 1}
     \label{fig:exp_3_dut_1_3dm_result}
 \end{figure}
