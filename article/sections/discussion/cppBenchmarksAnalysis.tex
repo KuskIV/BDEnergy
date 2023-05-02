@@ -1,34 +1,15 @@
 \subsection{C++ Benchmarks Analysis}
 
-In the first experiment in \cref{subsec:exp_one}, different compilers were compared. This experiment found that both the energy consumption, and measurements required deviated between compilers. This was especially clear when comparing the oneAPI to the other compilers. The initial fear was that the benchmark would have been removed as dead code by the compiler, thus resulting in the low durations observed, but given that the executable from oneAPI (668 mb) was three times as large as for MinGW (220 mb) it seemed unlikely. The analysis was conducted by comparing the oneAPI against MinGW, by decompiling the executables and comparing the instructions.
-
-When comparing the Assembly code structure between the main functions from the compilers, the oneAPI used several function calls unique for intel process such as \texttt{\_\_\_intel\_new\_feature\_proc\_init} and \texttt{\_\_intel\_fast\_memset}, where both functions are part of Intel's default C++ libraries\cite{Intelassembly}. The MinGW used general purpose registers more and utilizes C++ Standard Library, in the assembly more than oneAPI.
-
-% The minGw compiled code seem to make more use of purpose made registers and operations in the setup, such as movaps and xmm regs for floating point operations, where intel seems to have a preference for general purpose registers. 
-% In terms of of libraries used it seems to utilities std much more.
-%  The mvsc instead makes more use of general functions that are part of C runtime on windows\cite{SCRTassembly}, it also utilizes locks, system calls more frequently seemingly for thread synchronization. Another thing seemingly more common in the microsoft c++ compiled assembly is error handling. 
-
-% https://www.intel.com/content/www/us/en/developer/tools/isa-extensions/overview.html
+In the first experiment presented in \cref{subsec:exp_one}, different C++ compilers were compared. Through this experiment it was found that the energy consumption, execution time and measurements required deviated between compilers. Based on this observation, the initial fear was that the benchmark could have been removed as dead code by the compiler. Based on this, an analysis was conducted in \cref{app:compiler-analysis}, where the instructions from the decompiled executables were compared between MinGW and oneAPI. Based on this analysis it was found that oneAPI achieved a better performance as it used unique intel functions, Advanced Vector extensions to perform calculations in parallel and loop unrolling. Opposed to oneAPI, MinGW used general purpose registers more in a combination with the C++ Standard Library. 
 
 
-When moving on to the Mandelbrot function, where the differences with the larges effect on runtime are expected, Mingw only use standard X86 instruction\cite{X86} to perform the calculations on the floating points and \texttt{xmm} registers to store the values. Opposed to this, oneAPI's implementation also utilized Advance Vector extensions (AVX)\cite{AVXIntel}, to perform the calculations. The usage of AVX results in a significant increase in the speed of calculations as it allows for multiple calculations to be performed in parallel. The AVX technology is a set of instructions introduced by Intel to enhance the performance of floating-point-intensive applications\cite{AVXIntel}. Compared to MinGW, oneAPI is better at optimizing the code for the AVX architecture and take full advantage of the processing power of the CPU. 
+% In the first experiment in \cref{subsec:exp_one}, different compilers were compared. This experiment found that both the energy consumption, and measurements required deviated between compilers. This was especially clear when comparing the oneAPI to the other compilers. The initial fear was that the benchmark would have been removed as dead code by the compiler, thus resulting in the low durations observed, but given that the executable from oneAPI (668 mb) was three times as large as for MinGW (220 mb) it seemed unlikely. The analysis was conducted by comparing the oneAPI against MinGW, by decompiling the executables and comparing the instructions.
 
-The use of AVX to perform large floating point calculations in parallel resulting in a similar energy consumption but a lower duration is an observation also found by others studies about energy consumption and parallelism\cite{Lindholt2022}.
-
-Besides the speed up gained from utilizing AVX, oneAPI also practice loop unrolling where no evidence is found of this in MinGW. This and the inclusion of extension libraries could be the reasons why the executable made by oneAPI is larger but with a lower runtime than MinGW and the the other compilers.
+% When comparing the Assembly code structure between the main functions from the compilers, the oneAPI used several function calls unique for intel process such as \texttt{\_\_\_intel\_new\_feature\_proc\_init} and \texttt{\_\_intel\_fast\_memset}, where both functions are part of Intel's default C++ libraries\cite{Intelassembly}. The MinGW used general purpose registers more and utilizes C++ Standard Library, in the assembly more than oneAPI.
 
 
+% When moving on to the Mandelbrot function, where the differences with the larges effect on runtime are expected, Mingw only use standard X86 instruction\cite{X86} to perform the calculations on the floating points and \texttt{xmm} registers to store the values. Opposed to this, oneAPI's implementation also utilized Advance Vector extensions (AVX)\cite{AVXIntel}, to perform the calculations. The usage of AVX results in a significant increase in the speed of calculations as it allows for multiple calculations to be performed in parallel. The AVX technology is a set of instructions introduced by Intel to enhance the performance of floating-point-intensive applications\cite{AVXIntel}. Compared to MinGW, oneAPI is better at optimizing the code for the AVX architecture and take full advantage of the processing power of the CPU. 
 
-% To conclude we were able to confirm that the test case compiled by the intel c++ compiler did not remove any of the relevant executions from the executable, and performed the correct calculations. The speed up seems mainly be caused be the usage of AVX in parallel, and smaller optimizations such a loop unrolling.
+% The use of AVX to perform large floating point calculations in parallel resulting in a similar energy consumption but a lower duration is an observation also found by others studies about energy consumption and parallelism\cite{Lindholt2022}.
 
-% Additional note:
-% intel also seems to create significantly bigger files. 3x larger
-% intel uses both xmm and ymm depending on need. AVX instructions
-% "Overall, YMM registers are a significant improvement over XMM registers in enabling data parallelism and speeding up certain types of computational tasks, especially those that involve large amounts of data."
-
-
-% in Mingw the Mandelbrot function seems to be a subroutine. ming also seems to only use xmm registers and general purpose
-
-% Mingw: movaps, moveapd, movsd, subsd, divsd, mulsd, cvtsi2sd,comisd,setae, nop, retn
-
-% intel: vmovsd,vsubsd,vmovss,vmovaps,test,vmovapd,vorpd,vdivsd,vmulsd,vbroadcastsd, vmovlpd, vpaddd,vextracti128,vpmovzxdq,vpor,vfmadd213pd,vmovupd,vzeroupper,vfmsub231sd,vaddsd,vperm2f128,vshufpd,vfmsub213sd,vfmsub231sd,vpermilpd,setbe,movzx,vucomisd,vmulpd,dec
+% Besides the speed up gained from utilizing AVX, oneAPI also practice loop unrolling where no evidence is found of this in MinGW. This and the inclusion of extension libraries could be the reasons why the executable made by oneAPI is larger but with a lower runtime than MinGW and the the other compilers.
