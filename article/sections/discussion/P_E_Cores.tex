@@ -1,10 +1,27 @@
 \subsection{P- and E Cores}
-In \cref{subsec:exp_three}, we examined the impact of P- and E-cores in DUT2, as outlined in \cref{RQ:RQ4}. Our findings showed that E-cores had lower DEC per second but higher execution time and total DEC per benchmark. However, certain aspects of our experimental setup influenced these results.
 
-Firstly, as detailed in \cref{subsec:P_E_Cores}, E-cores are designed for smaller, non-time critical tasks such as background services. Our benchmarks, which placed the cores under heavy load, did not align with this intended use. As a result, our comparison of E-cores and P-cores in terms of DEC does not accurately reflect their performance in real-life computing scenarios where E-cores might effectively handle smaller tasks.
+When comparing P- and E cores in \cref{subsec:exp_three}, it was done on benchmarks which placed the cores under heavy load with Turbo Boost and C-states disabled, and a static base clock. E cores were introduced in \cref{subsec:P_E_Cores} as cores designed for smaller, non-time critical tasks such as background services. This shows that the E cores are used in this work for tasks they were not meant for.
 
-Secondly, we disabled Intel Turbo Boost and C-states, causing core frequencies to remain static at their base clock of 1.8 GHz for E-cores and 2.5 GHz for P-cores. This decreased energy consumption per second under heavy load but increased it when idling, thus impacting our measurements.
+When analyzing the results from \cref{subsec:exp_three}, it was found that E-cores had lower DEC per second but higher execution time and total DEC per benchmark. If similar observations can be made for other workloads is something to look into in a future work.
 
-Given the mismatch between our benchmarks and the intended use of E-cores, as well as the static core clock speeds, our experimental setup does not offer a realistic evaluation of the effects of P- and E-cores.
+
+
+% In \cref{subsec:exp_three}, we examined the impact of P- and E-cores in DUT2, as outlined in \cref{RQ:RQ4}. Our findings showed that E-cores had lower DEC per second but higher execution time and total DEC per benchmark.
+
+% E-cores are, as covered in \cref{subsec:P_E_Cores}, designed for smaller, non-time critical tasks such as background services. In this work, the benchmarks placed the cores under heavy load.
+
+
+
+
+
+
+% Firstly, as detailed in \cref{subsec:P_E_Cores}, E-cores are designed for smaller, non-time critical tasks such as background services. Our benchmarks, which placed the cores under heavy load, did not align with this intended use. As a result, our comparison of E-cores and P-cores in terms of DEC does not accurately reflect their performance in real-life computing scenarios where E-cores might effectively handle smaller tasks.
+
+% Secondly, we disabled Intel Turbo Boost and C-states, causing core frequencies to remain static at their base clock of 1.8 GHz for E-cores and 2.5 GHz for P-cores. This decreased energy consumption per second under heavy load but increased it when idling, thus impacting our measurements.
+
+
+
+
+% Given the mismatch between our benchmarks and the intended use of E-cores, as well as the static core clock speeds, our experimental setup does not offer a realistic evaluation of the effects of P- and E-cores.
 
 % P cores 2.5 E cores 1.8
