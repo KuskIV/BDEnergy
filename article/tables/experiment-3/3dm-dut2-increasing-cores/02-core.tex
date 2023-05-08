@@ -1,21 +1,15 @@
 \begin{figure}[H]
     \centering
-
-
-
 \begin{tikzpicture}
     \pgfplotsset{
         width=1.0\textwidth,
         height=0.25\textheight
     }
     \begin{axis}[
-        % title={Temperature dependence of CuSO\(_4\cdot\)5H\(_2\)O solubility},
         xlabel={Time (s)},
         ylabel={Energy Consumption (w)},
-        xmin=0, xmax=81,
+        xmin=0, %, xmax=80,
         ymin=0, ymax=30,
-        % xtick={0,20,40,60,80,100},
-        % ytick={0,20,40,60,80,100,120},
         legend pos=north west,
         ymajorgrids=true,
         grid style=dashed,
@@ -792,10 +786,8 @@
             (84.61900329589844, 13.03499984741211)
             
         };
-        % \legend{CuSO\(_4\cdot\)5H\(_2\)O}
-        
     \end{axis}
     \end{tikzpicture}
-    \caption{A timeseries of the energy consumption over time for DUT 2 when running 3DM on two cores}
-    \label{fig:exp_3_dut_1_3dm_timeseries_two_cores}
+    \caption{A timeseries of the energy consumption over time for DUT 2 when running 3DM for two core}
+    % \label{fig:exp_3_dut_2_3dm_timeseries_all_cores}
 \end{figure}
