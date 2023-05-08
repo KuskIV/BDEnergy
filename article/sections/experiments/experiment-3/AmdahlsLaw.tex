@@ -1,0 +1,45 @@
+To compare the predicted speedup from Amdahl's Law to the actual speedup achieved, you'll need to follow these steps:
+
+    Run the benchmark on a single core: Execute the original, non-parallelized version of your program on a single core or processor, and measure its execution time (T_serial).
+
+    Determine the fractions S and P: Analyze your code to identify the serial (S) and parallel (P) portions, as previously discussed.
+
+    Predict the speedup using Amdahl's Law: Use the formula Sp = 1 / (S + (P / N)) to predict the potential speedup (Sp_predicted) when using N cores (e.g., 10 cores in your example).
+
+    Implement the parallel version: Modify your code to incorporate parallelism using a suitable parallel programming model, as previously discussed.
+
+    Run the benchmark on multiple cores: Execute the parallelized version of your program on multiple cores (e.g., 10 cores), and measure its execution time (T_parallel).
+
+    Calculate the actual speedup: Divide the single-core execution time (T_serial) by the multi-core execution time (T_parallel) to obtain the actual speedup (Sp_actual), as previously discussed.
+
+    Compare the predicted and actual speedups: Analyze the difference between the predicted speedup (Sp_predicted) from Amdahl's Law and the actual speedup (Sp_actual) achieved by your parallelized program. This comparison can help you understand the efficiency of your parallelization efforts and identify any potential bottlenecks or areas for further optimization.
+
+
+
+
+From a 3DM, DUT 2 using 10 cores.
+start: 0.06699943542480469
+end: 41.49199676513672
+Time total = Ttotal = 41,4249973297
+
+Time serial = Ts
+~ Ts start: 0.06699943542480469
+~ Ts end: 13.687000274658203
+
+~ Ts start: 32.38800048828125
+~ Ts end: 41.49199676513672
+~Ts: (13,687000274658203 - 0,06699943542480469) + (41,49199676513672 - 32,38800048828125) = 22,7239971161
+
+
+Fraction of the serial portion (S)
+S = Ts / Ttotal = 22,7239971161 / 41,4249973297 = 0,5485576000
+
+Fraction of the parallel portion (P).
+P = 1 - S = 1 - 0,5485576000 = 0,4514424
+
+
+Compute the speedup factor (Sp) for the task using Amdahl's Law formula:
+
+Sp = 1 / (S + (P / N))
+Sp = 1 / (0,5485576000 + (0,4514424 / 10)) = 1,6843471464
+where Sp is the speedup factor, N is the number of processing elements or cores, and S and P are the fractions of the task that are serial and parallel, respectively.
