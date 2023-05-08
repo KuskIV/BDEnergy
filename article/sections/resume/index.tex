@@ -1,3 +1,13 @@
 \section*{Summary}
 
+Artiklen 'Exploring the Energy Consumption of Highly Parallel Software on Windows' undersøger forskellige aspekter omkring strømforbruget af software med et primært fokus på Windows med et udgangspunkt i fire forskningsspørgsmål. Disse fire forskningsspørgsmål er lavet baseret på huller litteraturen, hvor man blandt andet i høj grad bruger Linux og måler strømforbruget ved hjælp af det Linux ekslusive målingsværktøj RAPL. Et af forskningsspørgsmålene omhandler derfor hvor gode eksisterende alternativer til RAPL der fungere på Windows er. Det bedste måleværktøj bliver fundet ved at kompile forskellige C++ programmer på den mest energy venlige C++ kompiler, som er hvad det første forskningsspørgsmål handler om. Her ender Intel's oneAPI med at være den kompiler med det laveste energy forbrug, baseret på strømforbruget af to benchmarks kompilet på kompileren.
+
+Ud over at være primært baseret på Windows, er dette studie også anderledes ved brugen af Cochrans formular. Cochrans formular bruges til at udregne hvor mange målinger man skal bruge før at man har tillid til ens resultater. Ved hjælp af Cochrans formular ser vi også at folk i litteraturen har en tendens til at have for lidt målinger i forhold til hvad vi finder frem til at være nok.
+
+Det bedste målingsværktøj til Windows bliver fundet ved at sammenligne målingerne med en sandhedsværdi målt på en strømklemme samt ved at brugervenligheden. Det bedste måleværktøj ender med at være Intel's PowerGadget, med en korrelation på $0.72$ med strømklemmen. Hvis man sammenligner de forskellige måleinstrumenter, havde de dog en lignende korrelation, hvor Intel's PowerGadget var nemmere at bruge. 
+
+I det trejde forskningsspørgsmål unsersøges hvilken effekt det har at parallelisere forskellige benchmarks. Dette bliver gjort ved at køre det samme benchmark på et stigende antal af kerner, for at se hvad det gør ved strømforbruget og køretiden. Resultatet af dette eksperiment viste at der var en sammenhæng mellem køretiden og energiforbruget, som begge gik ned når der var flere kerner, samt at energyforbruget er sekund gik ned. Baseret på det, blev det konkluderet at et højere antal kerner er bedre, men kun indtil en grænse, som afhænger af arbejdsbyrden.
+
+Det fjerde forskningsspørgsmål sammenlignede de to forskellige typer kerner der er at finde på de nyeste Intel CPU'er, nemlig P- og E kerner. Dette eksperiment blev lavet ved at køre det samme benchmark på en kerne ad gangen, også at udregne det gennemsnitelige energiforbrug og køretid for de to slags kerner. Her blev der konkluderet at de mere kraftfulde P kerner havde en lavere køretid og energiforbrug, mens E kernerne havde et lavere energiforbrug per sekund.
+
 
