@@ -1,8 +1,10 @@
-\noindent\textbf{Intel's Running Average Power Limit (RAPL):} is a software-based measuring instrument most frequently used in the litterature.\cite{biksbois}. RAPL uses model-specific-registers (MSRs) and Hardware performance counters to calculate how much energy the CPU uses. The MSRs RAPL uses include \textit{MSR\_PKG\_ENERGY\_STATUS}, \textit{MSR\_DRAM\_ENERGY\_STATUS}, \textit{MSR\_PP0\_ENERGY\_STATUS} and \textit{MSR\_PP1\_ENERGY\_STATUS}. %Which corresponds to the power domains, PKG, DRAM, PP0, and PP1 which are explained in \cite{biksbois}. 
-RAPL is only supported on Linux and Mac. In \cite{biksbois} RAPL was found to have a high correlation of 0.81 with a hardware measurement.\cite{biksbois}\newline
+\noindent\textbf{Intel's Running Average Power Limit (RAPL):} is a Mac and Linux exclusive software-based measuring instrument most frequently used in the litterature.\cite{biksbois}. RAPL uses model-specific-registers (MSRs) and Hardware performance counters to calculate how much energy the CPU uses. The MSRs used by RAPL are those for the power domains PKG, DRAM, PP0, and PP1, covered in \cite{biksbois}. 
 
-\noindent\textbf{Intel Power Gadget (IPG):} is a software tool created by Intel, which can estimate the power of Intel processors. %It contains a command line version called Powerlog which allows accessing the energy consumption using callable APIs. 
-It uses the same hardware counters and MSRs as RAPL\cite{FireFox}, therefore it is expected to have similar measurements to RAPL. Which was also found in \cite{biksbois}, where IPG had a high correlation of 0.78 with the ground truth on Windows and a high correlation of 0.83 with RAPL on Linux.\cite{biksbois}\newline
+% The MSRs RAPL uses include \textit{MSR\_PKG\_ENERGY\_STATUS}, \textit{MSR\_DRAM\_ENERGY\_STATUS}, \textit{MSR\_PP0\_ENERGY\_STATUS} and \textit{MSR\_PP1\_ENERGY\_STATUS}. %Which corresponds to the power domains, PKG, DRAM, PP0, and PP1 which are explained in \cite{biksbois}. 
+In \cite{biksbois} RAPL was found to have a correlation of $0.81$ with the ground truth.\cite{biksbois}\newline
+
+\noindent\textbf{Intel Power Gadget (IPG):} is a Windows and Mac exclusive software tool created by Intel, which can estimate the energy consumption on Intel processors. %It contains a command line version called Powerlog which allows accessing the energy consumption using callable APIs. 
+IPG uses the same hardware counters and MSRs as RAPL\cite{FireFox}, and is therefore expected to have similar measurements to RAPL, which was found to be the case in \cite{biksbois}. \cite{biksbois} found that IPG had a correlation of $0.78$ with the ground truth on Windows and a correlation of $0.83$ with RAPL on Linux.\cite{biksbois}\newline
 
 %% Sources saying IPG uses RAPL:
 % https://firefox-source-docs.mozilla.org/performance/intel_power_gadget.html
@@ -14,10 +16,11 @@ It uses the same hardware counters and MSRs as RAPL\cite{FireFox}, therefore it 
 
 % also chatgpt
 
-\noindent\textbf{Libre Hardware Monitor (LHM):} is a fork of Open Hardware Monitor, without a GUI.\cite{LHM} Both projects are open source and LHM uses the same hardware counters and MSRs as RAPL and IPG. % and as such can measure the power domains PKG, DRAM, PP0, and PP1. 
-Therefore, a similar measurement is expected between LHM, IPG and RAPL. In \cite{biksbois} LHM on Windows was found to have a high correlation of 0.76 with our ground truth on Windows and a high correlation of 0.85 with IPG.\newline
+\noindent\textbf{Libre Hardware Monitor (LHM):} is a fork of Open Hardware Monitor, without a GUI, and is supported on Windows and Linux.\cite{LHM} Both projects are open source and LHM uses the same hardware counters and MSRs as RAPL and IPG. % and as such can measure the power domains PKG, DRAM, PP0, and PP1. 
+In \cite{biksbois} LHM on Windows was found to have a correlation of $0.76$ with the ground truth on Windows and a correlation of $0.85$ with IPG.\newline
 
-\noindent\textbf{MN60 AC Current Clamp (Clamp):} is a current clamp connected to the phase of the wire going into the power supply unit (PSU), which serves as the ground truth. The clamp is connected to an Analog Discovery 2, where the Analog Discovery 2 is connected to a Raspberry Pi 4 in order to measure and log measurements continuously.\cite{biksbois} The accuracy is reported to be $2\%$\cite{ClampDoc}.\newline
+\noindent\textbf{MN60 AC Current Clamp (Clamp):} is a current clamp connected to the phase of the wire going into the power supply unit (PSU), which serves as the ground truth. The clamp is connected to an Analog Discovery 2, where the Analog Discovery 2 is connected to a Raspberry Pi 4 in order to measure and log measurements continuously.\cite{biksbois} The intrinsic error is reported to be $2\%$\cite{ClampDoc}.\newline
+%For more detail see \cite{biksbois}. %The accuracy is reported to be $2\%$\cite{ClampDoc}.\newline
 %For more detail see \cite{biksbois}.
 
-\noindent\textbf{CloudFree EU smart Plug (Plug):} is used, as an alternative lower-priced hardware-based measuring instrument, which also has greater ease of use than the Clamp setup. The accuracy and sampling rate of the plug is unknown.\cite{CloudFreeEUSMartPlug}\newline
+\noindent\textbf{CloudFree EU smart Plug (Plug):} is a smart plug with energy measuring capabilities, used as an alternative lower-priced, easier to use hardware-based measuring instrument. The accuracy and sampling rate of the plug is unknown.\cite{CloudFreeEUSMartPlug}\newline
