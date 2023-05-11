@@ -1,9 +1,9 @@
-\input{tables/results/evolution/evolution.tex}
 
 \subsection{Experiment Two}\label[subsec]{subsec:exp_two}
 
 The second experiment investigated \cref{RQ:RQ2}, in order to identify the best measuring instrument on Windows. The best measuring instrument will in this study be based on a combination of different factors, including its correlation with our ground truth, ease of use and availability. 
 
+\input{tables/results/evolution/evolution.tex}
 A couple of changes were made in the experimental setup for experiment two. Firstly, due to some issues with SCAP, where its sampling rate significantly decreased when the DUT was under full load, the process priority class of the benchmark was set to \texttt{Normal}. Secondly, due to an execution time of less than a second for MB when compiled with oneAPI, MB's parameter was changed from $16.000$ to $64.000$ which increased the execution time of the benchmark to $\sim 14$ seconds. This avoided a scenario where the Plug only had a single data point per measurement. For this experiment, FR was executed $550$ times, while MB was executed $222$ times, based on \cref{tab:initial-measurements}.
 
 \input{tables/experiment-2/barchart-dut1-mb.tex}
