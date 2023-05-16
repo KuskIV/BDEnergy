@@ -7,87 +7,88 @@
         }
         \begin{axis}[
             xlabel={Average DEC (Joules)}, 
-            ylabel={Number of Cores}, 
+            ylabel={Number of Cores},
             title={The DEC of the CPU}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8},
         yticklabels={
                 8,7,6,5,4,3,2,1
+        %      0, 1, 2, 3, 4, 5, 6, 7,  0, 5, 6, 2, 4, 3, 1,  0, 5, 6, 2, 4, 3,  0, 5, 6, 2, 4,  0, 5, 6, 2,  0, 5, 6,  0, 5,  0
             },
             xmin=0,xmax=2000,
             ]
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=992.9831520602089,
-                lower quartile=1007.4067055675846,
-                median=1034.6592505965084,
-                upper quartile=1066.5724062654672,
-                upper whisker=1149.502349681703
+                lower whisker=999.1432446870311,
+                lower quartile=1031.975131470315,
+                median=1063.9802081591756,
+                upper quartile=1090.4231787080078,
+                upper whisker=1162.9500702962355
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(0,897.7783157595667)(0,506.88035090742335)(0,510.2069879297045)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1017.3114808463425,
-                lower quartile=1029.4391622052021,
-                median=1057.671191271096,
-                upper quartile=1112.1950647774481,
-                upper whisker=1148.1082406443993
+                lower whisker=1004.7548514996957,
+                lower quartile=1032.6201921841553,
+                median=1074.218025979302,
+                upper quartile=1108.986085247052,
+                upper whisker=1185.836619598986
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(1,905.1988575910754)(1,528.8599965816915)(1,549.330956282227)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1046.5473974045049,
-                lower quartile=1067.0090468553003,
-                median=1101.4877836226763,
-                upper quartile=1135.4898672257161,
-                upper whisker=1213.8450685175003
+                lower whisker=981.0847661799397,
+                lower quartile=1038.9115382417974,
+                median=1077.0905458388017,
+                upper quartile=1122.3625273082448,
+                upper whisker=1223.7907199082233
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(2,875.6149904767609)(2,543.7374340327511)(2,548.9448041949667)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1072.12600086461,
-                lower quartile=1102.4771724683183,
-                median=1128.5922624584712,
-                upper quartile=1167.1993921600679,
-                upper whisker=1223.9023300497242
+                lower whisker=973.9022798747993,
+                lower quartile=1046.9088128319695,
+                median=1098.8696377289737,
+                upper quartile=1125.8973153262007,
+                upper whisker=1202.1651684729213
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(3,888.8559225138864)(3,537.0338925743991)(3,523.4294255176234)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1095.3522987537958,
-                lower quartile=1132.1207840990915,
-                median=1148.8098667502918,
-                upper quartile=1187.418646726544,
-                upper whisker=1235.4351451585899
+                lower whisker=1007.6694877516371,
+                lower quartile=1061.9039519100918,
+                median=1096.1342452346585,
+                upper quartile=1132.6750421254028,
+                upper whisker=1219.366385454763
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(4,878.0793824500303)(4,951.0202812812864)(4,565.7839145293557)(4,565.2863299970483)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1050.4713673871747,
-                lower quartile=1070.5041815926238,
-                median=1110.7472166886826,
-                upper quartile=1159.2324568099953,
-                upper whisker=1190.6161221758684
+                lower whisker=813.1646553728996,
+                lower quartile=903.5594220206034,
+                median=945.545077058575,
+                upper quartile=984.8634954793665,
+                upper whisker=1047.3138561563378
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(5,577.1216236539545)(5,617.9572352039667)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1215.015023232197,
-                lower quartile=1248.6472626831155,
-                median=1291.7468248411747,
-                upper quartile=1344.8816368791681,
-                upper whisker=1405.619698120489
+                lower whisker=825.271576196357,
+                lower quartile=889.8595515465482,
+                median=934.9769224052484,
+                upper quartile=987.7495131461249,
+                upper whisker=1112.6630284521307
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(6,645.0196137297653)(6,654.573032237035)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=1704.7620839307183,
-                lower quartile=1761.1926989084204,
-                median=1786.609386131548,
-                upper quartile=1817.9989183027837,
-                upper whisker=1885.9005452300776
+                lower whisker=758.9161541111059,
+                lower quartile=822.1908095713088,
+                median=858.1606961798768,
+                upper quartile=940.2091047092297,
+                upper whisker=1096.7949130240233
                 }, color = red
-                ] coordinates{(7,1907.9500567024306)(7,1927.6287174643562)(7,1946.8340506525692)(7,1929.3135351141564)(7,1948.220607895994)(7,1944.275263517718)(7,1936.059921471147)};
+                ] coordinates{(7,1136.9071495038258)};
         
         
         \end{axis}

@@ -10,9 +10,9 @@
             title={The DEC per second of the CPU}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8, 9},
         yticklabels={
-             Clamp (L),  Plug (L),  RAPL LIN,  Clamp (W),  IPG WIN,  LHM WIN,  Plug (W),  SCAP WIN,  SCAPI WIN
+             Clamp LIN,  Plug LIN,  RAPL LIN,  Clamp WIN,  IPG WIN,  LHM WIN,  Plug WIN,  SCAP WIN,  SCAPI WIN
             },
-            xmin=0,xmax=45,
+            xmin=0,xmax=40,
             ]
         
         
@@ -44,7 +44,7 @@
                 ] coordinates{(2,12.412157848349231)(2,12.764659048496682)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=0.614417983030918,
+                lower whisker=-7.614417983030918,
                 lower quartile=5.106003025590063,
                 median=9.679486543052363,
                 upper quartile=14.718826705578223,

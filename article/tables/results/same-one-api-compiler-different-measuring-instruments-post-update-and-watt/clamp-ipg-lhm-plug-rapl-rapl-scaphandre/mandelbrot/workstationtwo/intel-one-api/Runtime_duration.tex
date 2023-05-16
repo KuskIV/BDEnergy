@@ -6,11 +6,11 @@
             height=0.26\textheight
         }
         \begin{axis}[
-            xlabel={Average Runtime (s)}, 
-            title={The average execution time}, 
+            xlabel={Average Execution Time (s)}, 
+            title={The Average Execution Time}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8},
         yticklabels={
-             Clamp (L),  Plug (L),  RAPL LIN,  Clamp (W),  IPG WIN,  LHM WIN,  Plug (W),  SCAP WIN
+             Clamp LIN,  Plug LIN,  RAPL LIN,  Clamp WIN,  IPG WIN,  LHM WIN,  Plug WIN,  SCAP WIN
             },
             xmin=0,xmax=50,
             ]
@@ -91,5 +91,5 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{Runtime measurements on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationtwo-runtime-duration}
+\caption{Execution time measurements on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-same-one-api-compiler-different-measuring-instruments-post-update-and-watt-clamp-ipg-lhm-plug-rapl-rapl-scaphandre-mandelbrot.exe-intel-one-api-workstationtwo-runtime-duration}
 \end{figure}

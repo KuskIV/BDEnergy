@@ -103,8 +103,6 @@
     <None Update="Json\WorkstationOne\0th-exp-config\DifferentCompilersLinux.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

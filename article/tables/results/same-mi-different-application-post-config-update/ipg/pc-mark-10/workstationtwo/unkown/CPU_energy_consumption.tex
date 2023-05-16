@@ -7,99 +7,98 @@
         }
         \begin{axis}[
             xlabel={Average Energy Consumption (Joules)}, 
-            ylabel={Number of Cores}, 
             title={The energy consumption of the CPU}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8, 9},
         yticklabels={
-                10,9,8,7,6,5,4,3,2
+             4, 3, 2, 1, 5, 0, 8, 7, 6, 9,  4, 3, 2, 1, 5, 0, 8, 7, 6,  4, 3, 2, 1, 5, 0, 8, 7,  4, 3, 2, 1, 5, 0, 8,  4, 3, 2, 1, 5, 0,  4, 3, 2, 1, 5,  4, 3, 2, 1,  4, 3, 2,  4, 3
             },
             xmin=0,xmax=2000,
             ]
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=6277.66455078125,
-                lower quartile=6399.058837890625,
-                median=6527.78955078125,
-                upper quartile=6676.745849609375,
+                lower whisker=6173.111328125,
+                lower quartile=6385.552001953125,
+                median=6459.82421875,
+                upper quartile=6673.490478515625,
                 upper whisker=7085.80224609375
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6312.33984375,
-                lower quartile=6410.1246337890625,
-                median=6516.562255859375,
-                upper quartile=6745.5338134765625,
+                lower whisker=6155.611328125,
+                lower quartile=6379.818115234375,
+                median=6488.72265625,
+                upper quartile=6682.828857421875,
                 upper whisker=7133.42919921875
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6323.56591796875,
-                lower quartile=6425.5806884765625,
-                median=6549.7373046875,
-                upper quartile=6685.988525390625,
+                lower whisker=6281.28076171875,
+                lower quartile=6405.24267578125,
+                median=6531.29052734375,
+                upper quartile=6672.29345703125,
                 upper whisker=7061.64013671875
                 }, color = red
                 ] coordinates{(2,7095.1953125)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6354.65625,
-                lower quartile=6485.9156494140625,
-                median=6596.529052734375,
-                upper quartile=6794.4105224609375,
+                lower whisker=6323.96044921875,
+                lower quartile=6445.934814453125,
+                median=6568.87451171875,
+                upper quartile=6758.367919921875,
                 upper whisker=7144.49462890625
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6362.07568359375,
-                lower quartile=6483.9727783203125,
-                median=6577.521484375,
-                upper quartile=6758.0509033203125,
-                upper whisker=7140.2783203125
+                lower whisker=6299.81640625,
+                lower quartile=6451.456787109375,
+                median=6564.5087890625,
+                upper quartile=6700.452880859375,
+                upper whisker=7021.37744140625
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(4,7140.2783203125)(4,7106.20361328125)(4,7110.0634765625)(4,7091.6875)(4,7083.71142578125)(4,7101.5126953125)(4,7108.54541015625)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6392.708984375,
-                lower quartile=6508.8525390625,
-                median=6604.123779296875,
-                upper quartile=6801.2559814453125,
+                lower whisker=6263.1826171875,
+                lower quartile=6500.26171875,
+                median=6592.80908203125,
+                upper quartile=6798.809326171875,
                 upper whisker=7164.54052734375
                 }, color = red
                 ] coordinates{(5,7264.80810546875)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6419.80908203125,
-                lower quartile=6567.374267578125,
-                median=6625.624267578125,
-                upper quartile=6799.175048828125,
+                lower whisker=6340.30126953125,
+                lower quartile=6563.395263671875,
+                median=6625.15869140625,
+                upper quartile=6794.90966796875,
                 upper whisker=7137.38671875
                 }, color = red
                 ] coordinates{(6,7316.173828125)(6,7212.0498046875)(6,7235.412109375)(6,7230.755859375)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6510.30029296875,
-                lower quartile=6642.4942626953125,
-                median=6754.4931640625,
-                upper quartile=6936.159912109375,
+                lower whisker=6432.08544921875,
+                lower quartile=6622.76708984375,
+                median=6741.5341796875,
+                upper quartile=6929.31494140625,
                 upper whisker=7353.8564453125
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=6758.732421875,
-                lower quartile=6885.8873291015625,
-                median=7020.84765625,
-                upper quartile=7155.954345703125,
-                upper whisker=7539.77587890625
+                lower whisker=6634.748046875,
+                lower quartile=6869.05908203125,
+                median=7004.3388671875,
+                upper quartile=7155.92626953125,
+                upper whisker=7571.6044921875
                 }, color = red
-                ] coordinates{(8,7605.50927734375)(8,7713.50439453125)(8,7646.9287109375)(8,7571.6044921875)};
+                ] coordinates{(8,7605.50927734375)(8,7713.50439453125)(8,7646.9287109375)};
         
         
         \end{axis}
     \end{tikzpicture}
-\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-same-mi-different-application-post-config-update-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-energy_consumption}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM} \label{fig:3-same-mi-different-application-post-config-update-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-energy_consumption}
 \end{figure}

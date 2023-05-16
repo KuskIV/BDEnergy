@@ -6,91 +6,90 @@
             height=0.26\textheight
         }
         \begin{axis}[
-            xlabel={Total DEC (Joules)}, 
-            ylabel={Core}, 
+            xlabel={Average DEC (Joules)}, 
             title={The DEC of the CPU}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8},
         yticklabels={
              0,  1,  2,  3,  4,  5,  6,  7
             },
-            xmin=0,xmax=300,
+            xmin=0,xmax=1000,
             ]
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=-31.440686627336504,
-                lower quartile=-27.331755271961136,
-                median=-9.858502453645727,
-                upper quartile=-5.988971214288611,
-                upper whisker=24.367695443849527
+                lower whisker=30.014351747513274,
+                lower quartile=34.12328310288864,
+                median=51.59653592120405,
+                upper quartile=55.46606716056117,
+                upper whisker=85.8227338186993
                 }, color = red
-                ] coordinates{(0,31.31306265579414)};
+                ] coordinates{(0,92.76810103064392)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-32.49694204031263,
-                lower quartile=-24.741346636014413,
-                median=0.5997630510048282,
-                upper quartile=8.373697157786964,
-                upper whisker=41.90836326991612
+                lower whisker=28.66096195267994,
+                lower quartile=36.41655735697816,
+                median=61.7576670439974,
+                upper quartile=69.53160115077954,
+                upper whisker=103.0662672629087
                 }, color = red
                 ] coordinates{};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-33.61154344558412,
-                lower quartile=-30.261456326411462,
-                median=-16.188785149973754,
-                upper quartile=-8.132145463896435,
-                upper whisker=23.894431549501746
+                lower whisker=27.598700775029386,
+                lower quartile=30.94878789420204,
+                median=45.02145907063975,
+                upper quartile=53.07809875671707,
+                upper whisker=85.10467577011525
                 }, color = red
-                ] coordinates{(2,31.51567604145737)(2,32.59363686361172)};
+                ] coordinates{(2,92.72592026207087)(2,93.80388108422522)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-33.285558971149584,
-                lower quartile=-29.88724559002697,
-                median=-16.296239504698576,
-                upper quartile=-8.57861888266818,
-                upper whisker=8.39812376210753
+                lower whisker=27.99543941791495,
+                lower quartile=31.393752799037564,
+                median=44.98475888436596,
+                upper quartile=52.702379506396355,
+                upper whisker=69.67912215117207
                 }, color = red
-                ] coordinates{(3,62.80595557873485)(3,23.80608233369003)(3,23.927619851850807)};
+                ] coordinates{(3,124.08695396779939)(3,85.08708072275456)(3,85.20861824091534)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-34.07507917462959,
-                lower quartile=-28.76645991683234,
-                median=-16.27105593110737,
-                upper quartile=-8.36955262162597,
-                upper whisker=14.414622422687216
+                lower whisker=27.129567259549333,
+                lower quartile=32.43818651734659,
+                median=44.93359050307156,
+                upper quartile=52.835093812552955,
+                upper whisker=75.61926885686614
                 }, color = red
-                ] coordinates{(4,32.086329576697494)(4,24.639494997598717)};
+                ] coordinates{(4,93.29097601087642)(4,85.84414143177764)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-33.44859853844821,
-                lower quartile=-30.491563500566734,
-                median=-16.335534719357554,
-                upper quartile=-8.146009521843503,
-                upper whisker=23.09424284004487
+                lower whisker=27.815394338151677,
+                lower quartile=30.772429376033152,
+                median=44.92845815724233,
+                upper quartile=53.11798335475638,
+                upper whisker=84.35823571664476
                 }, color = red
-                ] coordinates{(5,39.91741241630825)};
+                ] coordinates{(5,101.18140529290814)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-34.56527458322866,
-                lower quartile=-29.012422080743903,
-                median=-16.24429949330967,
-                upper quartile=-8.77464382492225,
-                upper whisker=16.09404898215115
+                lower whisker=26.570818607585792,
+                lower quartile=32.123671110070546,
+                median=44.89179369750478,
+                upper quartile=52.3614493658922,
+                upper whisker=77.2301421729656
                 }, color = red
-                ] coordinates{(6,31.55146494481113)(6,24.130897205240416)};
+                ] coordinates{(6,92.68755813562558)(6,85.26699039605487)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=-34.30287446782066,
-                lower quartile=-29.667126036935862,
-                median=-16.157776449461934,
-                upper quartile=-8.035661242697564,
-                upper whisker=23.87394656546033
+                lower whisker=26.85099088222293,
+                lower quartile=31.486739313107726,
+                median=44.996088900581654,
+                upper quartile=53.118204107346024,
+                upper whisker=85.02781191550392
                 }, color = red
-                ] coordinates{(7,40.444976147082684)(7,24.66240369276889)};
+                ] coordinates{(7,101.59884149712627)(7,85.81626904281248)};
         
         
         \end{axis}
     \end{tikzpicture}
-\caption{CPU measurements by IPG on DUT 1 for benchmark(s) NB compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-nbody.exe-intel-one-api-workstationone-cpu-dec}
+\caption{CPU measurements by IPG on DUT 1 for test case(s) NB compiled on oneAPI} \label{fig:3-same-one-api-compiler-different-cores-ipg-nbody.exe-intel-one-api-workstationone-cpu-dec}
 \end{figure}
