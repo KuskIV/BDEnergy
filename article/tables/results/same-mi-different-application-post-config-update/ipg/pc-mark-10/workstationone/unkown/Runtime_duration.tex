@@ -6,91 +6,92 @@
             height=0.26\textheight
         }
         \begin{axis}[
-            xlabel={Average Runtime (s)}, 
-            ylabel={Number of Cores}, 
-            title={The average execution time}, 
+            xlabel={Average Execution Time (s)}, 
+            ylabel={Number of Cores},
+            title={The Average Execution Time}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8},
         yticklabels={
                 8,7,6,5,4,3,2,1
+        %      0, 1, 2, 3, 4, 5, 6, 7,  0, 5, 6, 2, 4, 3, 1,  0, 5, 6, 2, 4, 3,  0, 5, 6, 2, 4,  0, 5, 6, 2,  0, 5, 6,  0, 5,  0
             },
             xmin=0,xmax=1000,
             ]
         
         
         \addplot+ [boxplot prepared={
-                lower whisker=683.054,
-                lower quartile=685.0625,
-                median=688.705,
-                upper quartile=690.0264999999999,
-                upper whisker=691.257
+                lower whisker=678.096,
+                lower quartile=687.694,
+                median=691.69,
+                upper quartile=694.209,
+                upper whisker=700.184
                 }, color = red
-                ] coordinates{(0,674.889)(0,676.207)(0,675.978)(0,675.456)(0,700.184)};
+                ] coordinates{(0,674.889)(0,676.207)(0,675.978)(0,675.456)(0,674.462)(0,675.756)(0,677.374)(0,677.325)(0,676.012)(0,675.166)(0,676.04)(0,676.954)(0,676.933)(0,676.964)(0,479.302)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=683.394,
-                lower quartile=691.596,
-                median=696.311,
-                upper quartile=697.184,
-                upper whisker=701.176
+                lower whisker=694.615,
+                lower quartile=695.911,
+                median=698.18,
+                upper quartile=700.889,
+                upper whisker=704.396
                 }, color = red
-                ] coordinates{(1,683.092)};
+                ] coordinates{(1,683.953)(1,683.394)(1,683.092)(1,685.181)(1,688.417)(1,684.305)(1,686.213)(1,686.026)(1,684.14)(1,685.078)(1,684.728)(1,687.309)(1,686.167)(1,688.06)(1,684.793)(1,683.35)(1,686.122)(1,684.871)(1,683.91)(1,685.203)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=689.007,
-                lower quartile=690.1965,
-                median=691.65,
-                upper quartile=693.044,
-                upper whisker=695.35
+                lower whisker=688.029,
+                lower quartile=691.843,
+                median=694.251,
+                upper quartile=695.575,
+                upper whisker=700.498
                 }, color = red
-                ] coordinates{(2,698.069)};
+                ] coordinates{(2,705.287)(2,711.338)(2,701.875)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=695.441,
-                lower quartile=696.6835,
-                median=697.417,
-                upper quartile=698.6505,
-                upper whisker=699.97
+                lower quartile=698.349,
+                median=700.411,
+                upper quartile=702.422,
+                upper whisker=705.385
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(3,717.299)(3,717.371)(3,716.622)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=708.495,
-                lower quartile=713.9845,
-                median=716.359,
-                upper quartile=719.6595,
-                upper whisker=725.632
+                lower quartile=715.776,
+                median=719.173,
+                upper quartile=721.177,
+                upper whisker=727.191
                 }, color = red
-                ] coordinates{};
+                ] coordinates{(4,730.731)(4,732.966)(4,742.894)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=728.172,
-                lower quartile=729.1835000000001,
-                median=730.158,
-                upper quartile=733.6669999999999,
-                upper whisker=736.409
+                lower quartile=732.982,
+                median=734.853,
+                upper quartile=737.219,
+                upper whisker=741.823
                 }, color = red
-                ] coordinates{(5,748.883)(5,756.438)};
+                ] coordinates{(5,723.213)(5,748.883)(5,756.438)(5,754.134)(5,774.516)(5,748.543)(5,751.911)(5,744.895)};
         
         \addplot+ [boxplot prepared={
-                lower whisker=760.972,
-                lower quartile=765.7025000000001,
-                median=770.823,
-                upper quartile=779.613,
-                upper whisker=791.316
+                lower whisker=761.861,
+                lower quartile=770.823,
+                median=773.925,
+                upper quartile=777.098,
+                upper whisker=786.092
                 }, color = red
-                ] coordinates{(6,802.865)(6,802.021)(6,802.865)};
+                ] coordinates{(6,760.972)(6,802.865)(6,802.021)(6,791.316)(6,802.865)(6,799.04)(6,806.176)(6,890.865)(6,897.927)(6,804.14)(6,808.05)(6,808.045)(6,806.205)(6,788.24)(6,804.05)(6,806.123)(6,827.659)};
         
         \addplot+ [boxplot prepared={
                 lower whisker=914.544,
-                lower quartile=916.037,
-                median=916.5284999999999,
-                upper quartile=940.85125,
-                upper whisker=952.83
+                lower quartile=922.889,
+                median=926.428,
+                upper quartile=944.2425000000001,
+                upper whisker=975.513
                 }, color = red
-                ] coordinates{(7,1110.875)(7,1216.391)(7,1053.347)};
+                ] coordinates{(7,1110.875)(7,1216.391)(7,1053.347)(7,1204.617)(7,1353.99)(7,979.468)(7,1121.421)(7,1244.461)(7,1123.598)(7,1059.614)(7,1155.657)(7,1040.268)};
         
         
         \end{axis}
     \end{tikzpicture}
-\caption{Runtime measurements by IPG on DUT 1 for test case(s) PCM compiled on } \label{fig:3-same-mi-different-application-post-config-update-ipg-pc-mark-10.exe-unkown-workstationone-runtime-duration}
+\caption{Execution time measurements by IPG on DUT 1 for test case(s) PCM} \label{fig:3-same-mi-different-application-post-config-update-ipg-pc-mark-10.exe-unkown-workstationone-runtime-duration}
 \end{figure}

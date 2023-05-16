@@ -6,12 +6,13 @@
             height=0.26\textheight
         }
         \begin{axis}[
-            xlabel={Average Runtime (s)}, 
+            xlabel={Average Execution Time (s)}, 
             ylabel={Number of Cores},
-            title={The average execution time}, 
+            title={The Average Execution Time}, 
             ytick={1, 2, 3, 4, 5, 6, 7, 8},
         yticklabels={
                 8,7,6,5,4,3,2,1
+        %      0, 1, 2, 3, 4, 5, 6, 7,  0, 5, 6, 2, 4, 3, 1,  0, 5, 6, 2, 4, 3,  0, 5, 6, 2, 4,  0, 5, 6, 2,  0, 5, 6,  0, 5,  0
             },
             xmin=0,xmax=200,
             ]
@@ -92,5 +93,5 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{Runtime measurements by IPG on DUT 1 for test case(s) 3DM} \label{fig:3-same-mi-different-application-post-config-update-ipg-3d-mark.exe-unkown-workstationone-runtime-duration}
+\caption{Execution time measurements by IPG on DUT 1 for test case(s) 3DM} \label{fig:3-same-mi-different-application-post-config-update-ipg-3d-mark.exe-unkown-workstationone-runtime-duration}
 \end{figure}

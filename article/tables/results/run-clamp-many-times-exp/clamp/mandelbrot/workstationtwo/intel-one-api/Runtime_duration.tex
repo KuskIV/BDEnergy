@@ -1,0 +1,32 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.12000000000000001\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            title={The average duration}, 
+            ytick={1},
+        yticklabels={
+            
+            },
+            xmin=0,xmax=50,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=20.956,
+                lower quartile=21.396,
+                median=21.574,
+                upper quartile=21.761,
+                upper whisker=22.304
+                }, color = red
+                ] coordinates{(0,22.324)(0,23.213)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{Runtime measurements by Clamp on DUT 2 for test case(s) MB compiled on oneAPI} \label{fig:2-run-clamp-many-times-exp-clamp-mandelbrot.exe-intel-one-api-workstationtwo-runtime-duration}
+\end{figure}
