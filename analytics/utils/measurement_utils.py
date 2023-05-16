@@ -98,9 +98,9 @@ def get_measurements(
                             experiment_number,
                         )
                     else:
-                        # print(
-                        #     f"dut: {dut_id}, mi: {mi_id}, config {idle_case_config}, test case: {tc_idle_case_id}, name: {experiment_name}, number: {experiment_number} "
-                        # )
+                        print(
+                            f"dut: {dut_id}, mi: {mi_id}, config {idle_case_config}, test case: {tc_idle_case_id}, name: {experiment_name}, number: {experiment_number} "
+                        )
                         tc_idle_case_collection = rep.get_collections(
                             db,
                             dut_id,
@@ -110,7 +110,6 @@ def get_measurements(
                             experiment_name,
                             experiment_number,
                         )
-                        print(tc_idle_case_collection.shape)
 
                     if tc_collection.shape[0] == 0:
                         print(f"N - {key}.{mi_row['SampleRate']}.{tc_id}")
@@ -166,19 +165,27 @@ def get_measurements(
 
                     idle_cpu_consumption = df_util.get_cpu_energy_per_time(
                         tc_idle_case_measurements,
-                        tc_idle_case_measurements["Duration"].mean(),
+                        tc_measurements[
+                            "Duration"
+                        ].mean(),  # tc_idle_case_measurements["Duration"].mean(), # tc_measurements["Duration"].mean()
                         used_test_case_name,
                     )
                     idle_gpu_consumption = df_util.get_gpu_energy_per_time(
                         tc_idle_case_measurements,
-                        tc_idle_case_measurements["Duration"].mean(),
+                        tc_measurements[
+                            "Duration"
+                        ].mean(),  # tc_idle_case_measurements["Duration"].mean(),
                         used_test_case_name,
                     )
                     idle_dram_consumption = df_util.get_dram_energy_per_time(
                         tc_idle_case_measurements,
-                        tc_idle_case_measurements["Duration"].mean(),
+                        tc_measurements[
+                            "Duration"
+                        ].mean(),  # tc_idle_case_measurements["Duration"].mean(),
                         used_test_case_name,
                     )
+
+                    # print(idle_cpu_consumption)
 
                     idle_cpu_consumption_results[key] = tc_idle_case_measurements[
                         "CpuEnergyInJoules"
