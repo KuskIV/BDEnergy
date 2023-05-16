@@ -5,42 +5,53 @@
     \multicolumn{4}{||c||}{SN measurements on DUT 2} \\ [0.5ex] \hline\hline
     Metric & E-core & P-core & Difference \\\hline
     Execution time & $58.96$ s & $13.96$ s & $-76.32$\% \\
-    Energy & $336.88$ j & $99.53$ j & $-70.45$\% \\
-    DEC & $253.85$ j & $16.26$ j & $-93.59$\% \\
+    % Energy & $31.87$ j & $26.49$ j & $-70.45$\% \\
+    DEC & $31.87$ j & $26.49$ j & $-16.88$\% \\
     DEC per second & $0.53$ w & $1.88$ w & $+254.71$\% \\\hline
     \end{tabular}
     \caption{The average performance difference between P and E cores on DUT 2, SN}
     \label{tab:dut-2-exp-3-sn}
 \end{table}
 
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{|| c | c | c | c ||}
+%     \hline
+%     \multicolumn{4}{||c||}{NB measurements on DUT 2} \\ [0.5ex] \hline\hline
+%     Metric & E-core & P-core & Difference \\\hline
+%     Execution time & $29.59$ s & $11.54$ s & $-60.96$\% \\
+%     % Energy & $31.87$ j & $26.49$ j & $-70.45$\% \\
+%     DEC & $19.04$ j & $26.00$ j & $+36.55$\% \\
+%     DEC per second & $0.66$ w & $2.23$ w & $+237.87$\% \\\hline
+%     \end{tabular}
+%     \caption{The average performance difference between P and E cores on DUT 2, SN}
+%     \label{tab:dut-2-exp-3-nb}
+% \end{table}
 
-% DEC, E
-%  - 249.81 + 255.66 + 254.87 + 255.08 = 253.85
-% DEC, P
-%  - 17.04 + 15.28 + 16.19 + 15.94 + 16.40 + 16.72 = 16.26
+% NB
 
-% diff = 93.59
+% P - Cores
 
+% DEC: 26.29 + 25.47 + 25.97 + 25.92 + 26.29 + 26.07 = 26.00
+% DEC/SEC: 2.27 + 2.21 + 2.25 + 2.24 + 2.27 + 2.19 = 2.23
+% Time: 11.48 + 11.46 + 11.46 + 11.48 + 11.48 + 11.89 = 11.54
 
+% E - Cores
 
-% DEC PS, E
-%  - 0.51 + 0.51 + 0.54 + 0.55 = 0.53
-% DEC PS, P
-%  - 1.87 + 1.88 + 1.87 + 1.89 + 1.85 + 1.90 = 1.88
+% DEC: 19.54 + 17.67 + 19.39 + 19.58 = 19.04
+% DEC/SEC: 0.65 + 0.59 + 0.65 + 0.66 = 0.63
+% Time: 29.59 + 29.58 + 29.59 + 29.61 = 29.59
 
-% diff = 254.71
+% SN
 
+% P - Cores
 
-% DUR, E
-%  - 59.03 + 58.92 + 58.97 + 58.92 = 58.96
-% DUR, P
-%  - 14 + 13.98 + 13.98 + 13.89 + 13.98 + 13.98 = 13.96
+% DEC: 27.01 + 25.93 + 26.58 + 26.32 + 26.49 + 26.61 = 26.49
+% DEC/SEC: 1.91 + 1.85 + 1.89 + 1.87 + 1.88 + 1.87 = 1.87
+% Time: 13.98 + 13.96 + 13.98 + 13.98 + 13.98 + 14.05 = 13.98
 
-% diff = 76.32
+% E - Cores
 
-% ENERGY, E
-%  - 331.68 + 339.69 + 338.02 + 338.12 = 336.88
-% ENERGY, P
-%  - 100.45 + 99.42 + 99.20 + 99.23 + 99.24 + 99.68 = 99.53
-
-% diff 70.45
+% DEC: 30.45 + 31.03 + 32.15 + 33.87 = 31.87
+% DEC/SEC: 0.51 + 0.52 + 0.54 + 0.57 = 0.53
+% Time: 58.93 + 58.92 + 58.92 + 58.92 = 58.92
