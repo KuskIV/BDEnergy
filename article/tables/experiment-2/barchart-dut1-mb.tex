@@ -3,12 +3,12 @@
     \begin{tikzpicture}
         \pgfplotsset{
             width=0.4\textwidth,
-            height=0.5\textheight
+            height=0.4\textheight
         }
         \begin{axis}
             [
-                xbar,
-                legend style={at={(0.5,-0.1)}, anchor=north,legend columns=-1},
+                xbar=2pt,
+                legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
                 bar width = 5pt,
                 xlabel= DEC (Joules),
                 xmin=0,xmax=1100,
@@ -22,6 +22,8 @@
                     RAPL,
                     {Clamp (L)},
                     {Plug (L)}},
+                    ytick={IPG,LHM,SCAP,SCAPI,{Clamp (W)},{Plug (W)},RAPL,{Clamp (L)},{Plug (L)}},
+                    % xbar=1pt
             ]
             \addplot coordinates { 
                 (484,IPG)
