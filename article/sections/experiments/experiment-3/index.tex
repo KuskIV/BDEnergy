@@ -1,11 +1,12 @@
 \input{tables/dut-2-exp-3-nb.tex}
 \subsection{Experiment Three}\label[subsec]{subsec:exp_three}
 
-The third experiment investigated \cref{RQ:RQ3,RQ:RQ4}, by taking a look at the per-core performance. In this experiment only IPG and the Clamp were used to conduct measurements, as a result of the findings in \cref{subsec:exp_two}. This experiment explored what benefit macrobenchmarks gained from additional allocated cores, by executing PCM and 3DM on an increasing number of cores. Before this is done, an analysis on the per-core performance of both CPUs was conducted, where the single-core benchmarks introduced in \cref{subsec:test_cases} were used. This allowed a comparison between the energy consumption of the P- and E-cores on DUT 2 and the P-cores on DUT 1. When the measurements were performed, the limit of $1.000$ measurements set in \cref{subsec:exp_two} was still used.
+The third experiment investigated \cref{RQ:RQ3,RQ:RQ4}, by taking a loot at what benefit macrobenchmarks gained from additional allocated cores, by executing PCM and 3DM on an increasing number of cores, measured by IPG only. Before this was done, an analysis on the per-core performance of both CPUs was conducted, where the single-core benchmarks introduced in \cref{subsec:test_cases} were used. This allowed a comparison between the energy consumption of the P- and E-cores on DUT 2 and the P-cores on DUT 1. When the measurements were performed, the limit of $1.000$ measurements set in \cref{subsec:exp_two} was still used.
 
 %The benchmark used in this experiment was the single-core benchmarks introduced in \cref{subsec:test_cases}, by running each benchmark on one core at a time, while measuring the energy consumption using IPG and Clamp. This will show how the performance is between P- and E-cores, and how the performance is between cores with the same specifications.
 
 \input{tables/dut-2-exp-3.tex}
+
 \paragraph{Per-Core Initial Measurements:} An initial $250$ measurements were made for each benchmark on each core. After, Cochran's formula was applied to the result to determine if more measurements were required. The results from this can be found in \cref{app:exp_three_coch}.
 
 %The first measurements were made, will be in order to compare the per-core performance, where $250$ measurements will be made for each benchmark on each core. After $250$ measurements, more measurements were made where it was required, as can be found in \cref{app:exp_three_coch}, with an upper limit of $1000$ measurements.
