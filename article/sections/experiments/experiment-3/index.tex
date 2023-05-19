@@ -5,16 +5,16 @@ The third experiment investigated \cref{RQ:RQ3,RQ:RQ4}, by taking a loot at what
 
 %The benchmark used in this experiment was the single-core benchmarks introduced in \cref{subsec:test_cases}, by running each benchmark on one core at a time, while measuring the energy consumption using IPG and Clamp. This will show how the performance is between P- and E-cores, and how the performance is between cores with the same specifications.
 
-\input{tables/dut-2-exp-3.tex}
 
 \paragraph{Per-Core Initial Measurements:} An initial $250$ measurements were made for each benchmark on each core, on both DUTs. After, Cochran's formula was applied to the result to determine if more measurements were required. The results from this can be found in \cref{app:exp_three_coch}, where additional measurements were made accordingly.
+\input{tables/dut-2-exp-3.tex}
 
 %The first measurements were made, will be in order to compare the per-core performance, where $250$ measurements will be made for each benchmark on each core. After $250$ measurements, more measurements were made where it was required, as can be found in \cref{app:exp_three_coch}, with an upper limit of $1000$ measurements.
 
 
-\input{tables/dut-2-exp-3-nb.tex}
 
 \paragraph{Per-Core Results:} For the per-core results, the analysis was based on DUT 2, with results from DUT 1 in \cref{app:exp_three}. When comparing the difference in performance between P- and E cores, the results were illustrated in \cref{tab:dut-2-exp-3-sn}. Through \cref{tab:dut-2-exp-3-sn} E cores were observed to have a higher execution time and lower DEC per second for both benchmarks. Despite a higher execution time on E cores compared to P cores, E cores were for NB found to have a lower DEC compared to P cores, where the opposite was the case for SN.
+\input{tables/dut-2-exp-3-nb.tex}
 
 When comparing how much performance could differ between cores of the same type, on the same CPU, a table illustrating the average energy consumption and how much it deviated was illustrated in \cref{tab:dut-2-exp-3-std-and-avg}. \cref{tab:dut-2-exp-3-std-and-avg} illustrated DUT 1 deviates more, with the highest deviation for NB, while the lowest was for DUT 2, on P cores.
 
@@ -33,25 +33,25 @@ When comparing how much performance could differ between cores of the same type,
 % dut 1, SN: 2.5
 % dut 2, NB: E:3.38, P: 1.17
 % dut 2, SN: E: 1.26, P:2.35
-\input{tables/experiment-3/app-3-x-axis-dut-2-3dm.tex}
 
 \paragraph*{Macrobenchmark Initial Measurements:} following the analysis of the per-core performance, the two macrobenchmarks introduced in \cref{subsec:test_cases} was executed on an increasing number of cores, starting from the most efficient one. An initial $30$ measurements were made, as the per-core experiment illustrated how $250$ were too much for DUT 2, illustrated in \cref{app:exp_three_coch}. The initial idea was to start at one core, which was done for 3DM on both DUTs and PCM on DUT 1. On DUT 2, PCM could not execute web browsing on a single core, and was unable to execute spreadsheet and photo editing for unknown reasons. Because of this, DUT 2 will start at 2 cores to include web browsing. For DUT 1, web browsing was unable to execute, so this scenario was excluded for this DUT. Despite attempts, we were unable to figure out why PCM had were unable to run certain scenarios on few cores, as no error logs were created when the error occurred and the error was presented as an unknown error by PCM. After the initial $30$ measurements, Cochran's formula was applied to the data, to ensure enough measurements were made. The amount of required measurements can be found in \cref{app:exp_three_coch_app}.
 
 
 \paragraph*{Macrobenchmark Results:} The results for DUT 1 can be seen in \cref{fig:exp_3_dut_2_3dm_result} and \cref{fig:exp_3_dut_2_pcm_result} for 3DM and PCM respectively, and for DUT 1 in \cref{app:app_exp_three}.
+\input{tables/experiment-3/app-3-x-axis-dut-2-3dm.tex}
 
-\input{tables/experiment-3/app-3-x-axis-dut-2-pcm.tex}
 
 For both DUTs and macrobenchmarks, a similar observation was made, where the execution time decreased and the DEC per second increased, as more cores were allocated, while the DEC remained the same. A difference between 3DM and PCM was how the execution time decreased more for 3DM than for PCM, which was because PCM include scenarios only utilizing a single thread. This meant that only a part of the benchmarks could benefit from the additional allocated cores. For 3DM, the benchmark itself was embarrassingly parallel, but the measurements included a startup and shutdown period which was not. This meant the numbers reported in \cref{fig:exp_3_dut_2_3dm_result} would be even higher if the parallel part were isolated. The diminishing return gained from allocating more resources to PCM is also illustrated, discussed and compared to 3DM in \cref{app:timeseries}.
 
-\input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/CPU_DEC.tex}
+\input{tables/experiment-3/app-3-x-axis-dut-2-pcm.tex}
 
 \paragraph{P vs. E Initial Measurements:} when executing macrobenchmarks on an increasing number of cores, it was difficult to illustrate how P cores perform against E cores. This experiment therefore explores how P and E cores compares, when running macrobenchmarks. This was achieved by running PCM on four cores, either with four P cores (4P), four E cores (4E) or two of each (2P2E). This was because PCM would not utilize the entire CPU, meaning that the P and E cores could be used when the OS sees it fit. For this experiment, $30$ initial measurements were made, and additional were made after Cochran's formula was applied to the results, if required. This can be found in \cref{app:p-vs-e}.
 
-\input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
+\input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/CPU_DEC.tex}
 
 \paragraph{P vs. E Results:} The results for the execution time and DEC are illustrated in \cref{fig:3-compare-p-and-e-cores-on-pcmark-without-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-runtime-duration} and  \cref{fig:3-compare-p-and-e-cores-on-pcmark-without-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-dec} respectively, while the DEC per second could be found in \cref{app:bonus-results}. For the DEC, 4E was found the use the least energy, while 4P and 2P2E used $17.40\%$ and $13.28\%$ more energy respectively. For execution time, the order was the opposite, where 4P had the lowest execution time, where 2P2E and 4E executed $3.74\%$ and $29.52\%$ slower respectively. This illustrated the use case of E cores, where a lower energy consumption could be achieved, given a higher execution time.  
 
+\input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
 % When looking at the DEC and execution time, 4E had a higher execution time and DEC, while 4P has the lowest. When combining P- and E cores, the execution time was $3.8\%$ higher and the DEC was $0.23\%$ higher compared to 4P. While this still showed that P cores performed best, it also showed an almost equivalent performance despite two cores having a lower frequency.
 
 

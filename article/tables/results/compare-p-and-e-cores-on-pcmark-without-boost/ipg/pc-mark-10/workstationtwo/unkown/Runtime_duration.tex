@@ -2,17 +2,17 @@
     \centering
     \begin{tikzpicture}[]
         \pgfplotsset{
-            width=0.9\textwidth,
+            width=0.4\textwidth,
             height=0.16\textheight
         }
         \begin{axis}[
-            xlabel={Average Runtime (s)}, 
-            title={The average duration}, 
+            xlabel={Average Execution Time (s)}, 
+            title={The Execution Time}, 
             ytick={1, 2, 3},
         yticklabels={
-             4, 3, 2, 1,  8, 7, 4, 3,  8, 7, 6, 9
+            4P, 2P2E, 4E
             },
-            xmin=0,xmax=50,
+            xmin=0,xmax=1100,
             ]
         
         
@@ -46,5 +46,5 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{Runtime measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-without-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-runtime-duration}
+\caption{Execution time measurements by IPG on DUT 2 for test case(s) PCM} \label{fig:3-compare-p-and-e-cores-on-pcmark-without-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-runtime-duration}
 \end{figure}
