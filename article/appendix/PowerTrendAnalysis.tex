@@ -2,9 +2,10 @@
 
 In order to explore if reactive energy consumption caused a decreasing DEC, two hypotheses were constructed. The first hypothesis (\textbf{H1}) was about how noise on the electrical network could interfere with the phase synchronization. This could be due to many machines being connected to the same electrical network and disrupting the harmonics of the network\cite{kullarkar2017power}. However, if the PSU generated reactive energy because it was out of phase with the electrical network, a reduction in noise could help synchronize again. Therefore, the observed changes in energy consumption may be related to the time of the day and week where the measurements were taken, with consumption decreasing when there was less devices connected to the electrical network, during the night and weekends.
 
-The second hypothesis (\textbf{H2}) was how the the DUTs' PSU may be correcting the phase over time, with a Power Factor Correction circuit. According to \cite{mcdonald2020power} there were two main types ofPower Factor Correction: passive and active. The behavior observed in the results could be a result of an active Power Factor Correction circuit. 
+The second hypothesis (\textbf{H2}) was how the the DUTs' PSU may be correcting the phase over time, with a Power Factor Correction circuit. According to \cite{mcdonald2020power} there were two main types ofPower Factor Correction: passive and active. The behavior observed in the results could be a result of an active Power Factor Correction circuit. In order to explore \textbf{H2}, and email was sent to the manufactures of both PSUs, where Cougar did not respond, while Corsair confirmed the PSU had Power Factor Correction, but would not give any more details. Therefore we could not determine which type of Power Factor Correction was used.
 
-In order to explore \textbf{H2}, and email was sent to the manufactures of both PSUs, where Cougar did not respond, while Corsair confirmed the PSU had Power Factor Correction, but would not give any more details. Therefore we could not determine which type of Power Factor Correction was used.
+\input{figures/NightDay}
+
 
 % In order to confirm or reject the hypotheses made, additional measurements were made during the day and night, to compare if similar trends would be observed. In \cref{subsec:trendAnalysis}, an analysis was conducted where it was found an increasing trend during working hours, and a decreasing trend the rest of the day. The analysis also found the same trend to occur during the weekend, but to a lesser degree, as the energy consumption is lower throughout the day. The same trend was  present on Linux, but generally consumes a bit less energy.(UPDATE WITH LINUX AND DUT1 measurements later)  
 
@@ -27,7 +28,6 @@ Through this analysis, it was found there is a relationship between the energy c
 
 
 
-\include{figures/NightDay}
 
 
 

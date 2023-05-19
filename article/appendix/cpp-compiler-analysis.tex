@@ -4,6 +4,8 @@ In the first experiment in \cref{subsec:exp_one}, different compilers were compa
 
 When comparing the Assembly code structure between the main functions from the compilers, the oneAPI used several function calls unique for intel process such as \texttt{\_\_\_intel\_new\_feature\_proc\_init} and \texttt{\_\_intel\_fast\_memset}, where both functions are part of Intel's default C++ libraries\cite{Intelassembly}. The MinGW used general purpose registers more and utilizes C++ Standard Library, in the assembly more than oneAPI.
 
+\input{appendix/assemblyListing}
+
 % The minGw compiled code seem to make more use of purpose made registers and operations in the setup, such as movaps and xmm regs for floating point operations, where intel seems to have a preference for general purpose registers. 
 % In terms of of libraries used it seems to utilities std much more.
 %  The mvsc instead makes more use of general functions that are part of C runtime on windows\cite{SCRTassembly}, it also utilizes locks, system calls more frequently seemingly for thread synchronization. Another thing seemingly more common in the microsoft c++ compiled assembly is error handling. 
