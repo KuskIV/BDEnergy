@@ -4,24 +4,24 @@
         style=csharp_style,
         language={[x86masm]Assembler},
         basicstyle=\footnotesize\ttfamily]
-    push    r15 {__saved_r15}
-    push    r14 {__saved_r14}
-    push    r13 {__saved_r13}
-    push    r12 {__saved_r12}
-    push    rbp {__saved_rbp}
-    push    rdi {__saved_rdi}
-    push    rsi {__saved_rsi}
-    push    rbx {__saved_rbx}
-    sub     rsp, 0x228
-    movaps  xmmword [rsp+0x200 {__saved_zmm6}], xmm6
-    movaps  xmmword [rsp+0x210 {__saved_zmm7}], xmm7
-    mov     r13, rcx
-    mov     rcx, qword [rcx+0x20]
-    mov     rax, qword [rcx+0x8]
-    movsd   xmm7, qword [r13+0x10]
-    subsd   xmm7, qword [r13]
-    test    rax, rax
-    js      0x140003a75
+  push    r15 {__saved_r15}
+  push    r14 {__saved_r14}
+  push    r13 {__saved_r13}
+  push    r12 {__saved_r12}
+  push    rbp {__saved_rbp}
+  push    rdi {__saved_rdi}
+  push    rsi {__saved_rsi}
+  push    rbx {__saved_rbx}
+  sub     rsp, 0x228
+  movaps  xmmword [rsp+0x200 {__saved_zmm6}], xmm6
+  movaps  xmmword [rsp+0x210 {__saved_zmm7}], xmm7
+  mov     r13, rcx
+  mov     rcx, qword [rcx+0x20]
+  mov     rax, qword [rcx+0x8]
+  movsd   xmm7, qword [r13+0x10]
+  subsd   xmm7, qword [r13]
+  test    rax, rax
+  js      0x140003a75
         
 
 
@@ -40,27 +40,27 @@
         style=csharp_style,
         language={[x86masm]Assembler},
         basicstyle=\small\ttfamily]
-    push    ebp {__saved_ebp}
-    mov     ebp, esp {__saved_ebp}
-    push    ebx {__saved_ebx}
-    push    edi {__saved_edi}
-    push    esi {__saved_esi}
-    and     esp, 0xffffffe0
-    sub     esp, 0x320
-    mov     eax, dword [ebp+0x8 {_RawVals}]
-    vmovsd  xmm0, qword [eax+0x10]
-    vmovsd  xmm1, qword [eax+0x18]
-    vsubsd  xmm2, xmm0, qword [eax]
-    vsubsd  xmm0, xmm1, qword [eax+0x8]
-    vmovsd  qword [esp+0x1f8 {var_148}], xmm0
-    mov     eax, dword [eax+0x20]
-    mov     ecx, dword [eax+0x4]
-    vmovss  xmm3, dword [eax+0x4]
-    vmovss  xmm0, dword [eax+0x8]
-    xor     edi, edi  {0x0}
-    cmp     ecx, 0x8
-    xmmword [esp+0xa0 {var_2a0}], xmm0
-    jae     0x408fcb
+  push    ebp {__saved_ebp}
+  mov     ebp, esp {__saved_ebp}
+  push    ebx {__saved_ebx}
+  push    edi {__saved_edi}
+  push    esi {__saved_esi}
+  and     esp, 0xffffffe0
+  sub     esp, 0x320
+  mov     eax, dword [ebp+0x8 {_RawVals}]
+  vmovsd  xmm0, qword [eax+0x10]
+  vmovsd  xmm1, qword [eax+0x18]
+  vsubsd  xmm2, xmm0, qword [eax]
+  vsubsd  xmm0, xmm1, qword [eax+0x8]
+  vmovsd  qword [esp+0x1f8 {var_148}], xmm0
+  mov     eax, dword [eax+0x20]
+  mov     ecx, dword [eax+0x4]
+  vmovss  xmm3, dword [eax+0x4]
+  vmovss  xmm0, dword [eax+0x8]
+  xor     edi, edi  {0x0}
+  cmp     ecx, 0x8
+  xmmword [esp+0xa0 {var_2a0}], xmm0
+  jae     0x408fcb
         
     \end{lstlisting}
     \caption{oneAPI assembly showing the setup for the mandelbrot function}
