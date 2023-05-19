@@ -1,0 +1,50 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.16\textheight
+        }
+        \begin{axis}[
+            xlabel={Average DEC (Joules)}, 
+            title={The DEC of the CPU}, 
+            ytick={1, 2, 3},
+        yticklabels={
+             4, 3, 2, 1,  8, 7, 4, 3,  8, 7, 6, 9
+            },
+            xmin=0,xmax=1000,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=2983.7206098846536,
+                lower quartile=2989.1178979723873,
+                median=3003.6672919535213,
+                upper quartile=3025.862906317827,
+                upper whisker=3059.656489684875
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=2853.6835121715667,
+                lower quartile=2903.162858925168,
+                median=2932.308357389288,
+                upper quartile=2956.527085690635,
+                upper whisker=3002.8163686152866
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=2305.8443060975433,
+                lower quartile=2409.059294748344,
+                median=2449.3483251211346,
+                upper quartile=2519.0555287868933,
+                upper whisker=2541.6670961867094
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-with-boost-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-dec}
+\end{figure}
