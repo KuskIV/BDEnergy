@@ -1,10 +1,10 @@
 \section{The Framework}\label{app:framework}
 
-The framework used in this work was an extension to \cite{biksbois}. The framework was called Biks Diagnostics Energy (BDE) and was a command line tool which could be executed in two ways, as illustrated in \cref{lst:bde_start}, where one was with a configuration, and one was with a path to an executable file.
+The framework was called Biks Diagnostic Energy (BDE) and was a command line tool. It was an extension of \cite{biksbois}. It could be executed in two ways, as illustrated in \cref{lst:bde_start}, where one was with a configuration, and one was with a path to an executable file.
 
 \input{listings/start-bde.tex}
 
-When using \texttt{--config}, the user specified a path to a valid json file formatted like \cref{lst:bde_json}. Through \cref{lst:bde_json}, it was possible to specify paths to executable files and assign each executable file with a parameter in \texttt{BenchmarkPaths} and \texttt{BenchmarkParameter} respectively. Information like the \texttt{compiler}, \texttt{language}, etc could also be specified the configuration. It was also possible to specify the affinity of the benchmark through \texttt{AllocatedCores}, where an empty list represented the use of all cores and the list \texttt{1,2} stated core $1$ and $2$ was be used. When multiple affinities are specified, each benchmark would be run on both. Limits for the temperature the benchmarks should be executed within could also be specified, and lastly, \texttt{AdditionalMetadata} could be used to specify relevant aspects about the experiment, which could not already be specified through the configuration.
+When using \texttt{--config}, the user specified a path to a valid JSON file formatted like \cref{lst:bde_json}. Through \cref{lst:bde_json}, it was possible to specify paths to executable files and assign each executable file with a parameter in \texttt{BenchmarkPaths} and \texttt{BenchmarkParameter} respectively. The configuration could also specify information like the \texttt{compiler}, \texttt{language}, etc. It was also possible to specify the affinity of the benchmark through \texttt{AllocatedCores}, where an empty list represented the use of all cores and the list \texttt{1,2} stated core $1$ and $2$ was used. When multiple affinities were specified, each benchmark was run on both. Limits for the temperature the benchmarks should be executed within could also be specified. Lastly, \texttt{AdditionalMetadata} could specify relevant aspects of the experiment that could not already be specified through the configuration.
 
 \input{listings/valid_json.tex}
 
@@ -14,7 +14,7 @@ When using the parameters \texttt{--path}, the \texttt{--parameter} was an optio
 
 \input{listings/dut_service.tex}
 
-Both Windows and Linux were supported on BDE. This was supported through the \texttt{IDutService} seen in \cref{lst:dut_service}, where all OS dependent operations were located. This included the ability to enable and disable the Wi-Fi, stop background processes, ect.
+Both Windows and Linux were supported on BDE. This was supported through the \texttt{IDutService} seen in \cref{lst:dut_service}, where all OS dependent operations were located. This included the ability to enable and disable the Wi-Fi, stop background processes, etc.
 
 \input{listings/measuring_instrument.tex}
 
