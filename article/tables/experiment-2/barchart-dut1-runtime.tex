@@ -3,14 +3,14 @@
     \begin{tikzpicture}
         \pgfplotsset{
             width=0.4\textwidth,
-            height=0.4\textheight
+            height=0.33\textheight
         }
         \begin{axis}
             [
                 xbar=2pt,
                 legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
                 bar width = 5pt,
-                xlabel= DEC (Joules),
+                xlabel= Execution Time (s),
                 xmin=0,xmax=60,
                 symbolic y coords = {
                     IPG, 
@@ -50,5 +50,5 @@
             \legend{FR, MB}
             \end{axis}
         \end{tikzpicture}
-    \caption{The average execution time for DUT 1, where both benchmarks are compiled on oneAPI}
+    \caption{The execution time for DUT 1, where both benchmarks are compiled on oneAPI}
 \end{figure}
