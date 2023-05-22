@@ -53,10 +53,8 @@ For both DUTs and macrobenchmarks, a similar observation was made, where the exe
 
 \input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
 
-\paragraph*{Estimated speedup and actual speedup:}
-Additionally we calculated the estimated speedup of using 1 to 10 cores with Amdahl's law and compared it with the actual speedup. We found that the estimation follows closely with actual speedup until the E-cores are used. The actual speedup showed that the E-cores do not contribute with a speedup of the 3DM benchmark.
-
-because the E-cores did not speed up the execution and Amdahl's law does not account for the lower performance of E-cores in its estimate. Further analysis can be found in \cref{app:Amdahls}
+\paragraph{Estimated speedup and actual speedup:}
+Additionally we calculated the estimated speedup of using 1 to 10 cores with Amdahl's law and compared it with the actual speedup. We found that the estimation follows closely with actual speedup until the E-cores are used. The actual speedup showed that the E-cores do not contribute with a speedup of the 3DM benchmark. Further analysis can be found in \cref{app:Amdahls}
 % When looking at the DEC and execution time, 4E had a higher execution time and DEC, while 4P has the lowest. When combining P- and E cores, the execution time was $3.8\%$ higher and the DEC was $0.23\%$ higher compared to 4P. While this still showed that P cores performed best, it also showed an almost equivalent performance despite two cores having a lower frequency.
 
 
