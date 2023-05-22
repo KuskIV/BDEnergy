@@ -1,0 +1,54 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \pgfplotsset{
+            width=0.4\textwidth,
+            height=0.4\textheight
+        }
+        \begin{axis}
+            [
+                xbar=2pt,
+                legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
+                bar width = 5pt,
+                xlabel= DEC (Joules),
+                xmin=0,xmax=60,
+                symbolic y coords = {
+                    IPG, 
+                    LHM, 
+                    SCAP, 
+                    SCAPI, 
+                    {Clamp (W)}, 
+                    {Plug (W)},
+                    RAPL,
+                    {Clamp (L)},
+                    {Plug (L)}},
+                    ytick={IPG,LHM,SCAP,SCAPI,{Clamp (W)},{Plug (W)},RAPL,{Clamp (L)},{Plug (L)}},
+                    % xbar=1pt
+            ]
+            \addplot coordinates { 
+                (28.684,IPG)
+                (28.651,LHM)
+                (28.568,SCAP)
+                (28.568,SCAPI)
+                (28.6154,{Clamp (W)})
+                (28.532,{Plug (W)})
+                (25.526,RAPL)
+                (27.186,{Clamp (L)})
+                (27.241,{Plug (L)})
+                };
+            \addplot coordinates { 
+                (21.466,IPG)
+                (21.176,LHM)
+                (21.561,SCAP)
+                (21.561,SCAPI)
+                (21.61,{Clamp (W)})
+                (21.561,{Plug (W)})
+                (23.4565,RAPL)
+                (27.418,{Clamp (L)})
+                (27.3265,{Plug (L)})
+                };
+            \legend{FR, MB}
+            \end{axis}
+        \end{tikzpicture}
+    \caption{The average execution time for DUT 2, where both benchmarks are compiled on oneAPI}
+\end{figure}

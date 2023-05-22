@@ -1,0 +1,50 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.16\textheight
+        }
+        \begin{axis}[
+            xlabel={Average Runtime (s)}, 
+            title={The average duration}, 
+            ytick={1, 2, 3},
+        yticklabels={
+            4P, 2P2E, 4E
+            },
+            xmin=0,xmax=50,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=613.588,
+                lower quartile=618.02875,
+                median=623.0215000000001,
+                upper quartile=626.0327500000001,
+                upper whisker=634.575
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=631.173,
+                lower quartile=633.8982500000001,
+                median=634.9935,
+                upper quartile=644.271,
+                upper whisker=652.624
+                }, color = red
+                ] coordinates{(1,661.144)(1,673.507)(1,663.737)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=810.782,
+                lower quartile=886.446,
+                median=903.6065000000001,
+                upper quartile=937.44425,
+                upper whisker=998.43
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{Runtime measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-with-boost-update-ipg-pc-mark-10.exe-unkown-workstationtwo-runtime-duration}
+\end{figure}

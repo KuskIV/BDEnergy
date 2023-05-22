@@ -1,0 +1,50 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.16\textheight
+        }
+        \begin{axis}[
+            xlabel={Average DEC (Watts)}, 
+            title={The DEC per second of the CPU}, 
+            ytick={1, 2, 3},
+        yticklabels={
+            4P, 2P2E, 4E
+            },
+            xmin=0,xmax=40,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=10.671605366503087,
+                lower quartile=10.730546680429896,
+                median=10.954517981815592,
+                upper quartile=11.247343683143054,
+                upper whisker=11.629649606713528
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=10.17680511910757,
+                lower quartile=10.387650909009807,
+                median=10.724524908893784,
+                upper quartile=10.9821932806906,
+                upper whisker=11.384805550927801
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=8.54327013763375,
+                lower quartile=8.758313958165665,
+                median=8.908665760055072,
+                upper quartile=9.188428176095846,
+                upper whisker=9.556653219389585
+                }, color = red
+                ] coordinates{};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-with-boost-update-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-dec_per_second}
+\end{figure}

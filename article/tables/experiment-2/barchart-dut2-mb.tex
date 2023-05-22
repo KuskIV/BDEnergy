@@ -1,0 +1,54 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \pgfplotsset{
+            width=0.4\textwidth,
+            height=0.4\textheight
+        }
+        \begin{axis}
+            [
+                xbar=2pt,
+                legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
+                bar width = 5pt,
+                xlabel= DEC (Joules),
+                xmin=0,xmax=600,
+                symbolic y coords = {
+                    IPG, 
+                    LHM, 
+                    SCAP, 
+                    SCAPI, 
+                    {Clamp (W)}, 
+                    {Plug (W)},
+                    RAPL,
+                    {Clamp (L)},
+                    {Plug (L)}},
+                    ytick={IPG,LHM,SCAP,SCAPI,{Clamp (W)},{Plug (W)},RAPL,{Clamp (L)},{Plug (L)}},
+                    % xbar=1pt
+            ]
+            \addplot coordinates { 
+                (286,IPG)
+                (286,LHM)
+                (295,SCAP)
+                (405,SCAPI)
+                (280,{Clamp (W)})
+                (400,{Plug (W)})
+                (171,RAPL)
+                (178,{Clamp (L)})
+                (231,{Plug (L)})
+                };
+            \addplot coordinates { 
+                (304,IPG)
+                (303,LHM)
+                (316,SCAP)
+                (380,SCAPI)
+                (209,{Clamp (W)})
+                (453,{Plug (W)})
+                (204,RAPL)
+                (223,{Clamp (L)})
+                (260,{Plug (L)})
+                };
+            \legend{FR, MB}
+            \end{axis}
+        \end{tikzpicture}
+    \caption{The average DEC for DUT 2, where both benchmarks are compiled on oneAPI}
+\end{figure}
