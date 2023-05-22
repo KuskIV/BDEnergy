@@ -1,13 +1,20 @@
 \subsection{Estimated Speedup Factor}
+
+USE NEW PERF/W becuase I think that should be our correct numbers, but check if IDLE should be removed basec on what Amdahls Law represents!!!!
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 We computed and estimation of Amdahl's Law on the 3DM benchmark on DUT 2. To compute Amdahl's law we are required to know the paralizable part of the benchmark. Because we do not have the source code for the benchmark this has to be estimated. Each measurements starts with a time period where the system is essential idle, then 3DM executes, which is followed by another period of the DUT being idle. We assume that the period where 3DM is being executed is the paralizable part of the whole measurement, while the periods before and after are serial. Based on this assumption we gathered estimates of the paralizable and serial parts of the measurement. Then we computed estimated speedup and compared it with the actual speedup.
 
 \input{tables/SpeedupFactor.tex}
 
-On \cref{fig:amdahls} we can see that at after 6 cores Amdahl's estimated speedup factor continuous to increase, while the actual speedup factor stagnates. On this figure the first 6 cores are the P-cores and the last 4 cores are the E-cores. The results show that the E-cores are unable to contribute in speeding up the benchmark. It should be noted that Amdahl's law is intended for processors with identical cores and therefore not the P- and E-core setup. Another factor which may contribute to the stagnation is that the GPU could be the bottleneck. (Perhaps test this by using our GPU).
+On \cref{fig:amdahls} we can see that at after 6 cores Amdahl's estimated speedup factor continuous to increase, while the actual speedup factor stagnates. On this figure the first 6 cores are the P-cores and the last 4 cores are the E-cores. The results show that the E-cores are unable to contribute in speeding up the benchmark. It should be noted that Amdahl's law is intended for processors with identical cores and therefore not the P- and E-core setup. %Another factor which may contribute to the stagnation is that the GPU could be the bottleneck. (Perhaps test this by using our GPU).
 
+%\input{tables/AmdahlExtended.tex}
+%\input{tables/AmdahlsExtPerfW.tex}
 
-
-There is an extension of Amdahl's law to estimate energy consumption by using a fraction for the power the processer uses in idle. We take the average energy consumption in of the whole CPU when idle, and divide 
+% The extension of Amdahl's Law as described in \cref{woo2008extending} estimates average power consumption of each core by using a fraction for the power the processor uses in idle. 
 
 
 
@@ -18,9 +25,9 @@ There is an extension of Amdahl's law to estimate energy consumption by using a 
 %\input{tables/results/same-one-api-compiler-different-measuring-instruments-post-update-and-watt/clamp-ipg-lhm-plug-rapl-rapl-scaphandre/mandelbrot/workstationtwo/intel-one-api/CPU_energy_consumption.tex}
 %\input{tables/results/same-one-api-compiler-different-measuring-instruments-post-update-and-watt/clamp-ipg-lhm-plug-rapl-rapl-scaphandre/mandelbrot/workstationtwo/intel-one-api/Runtime_duration.tex}
 
-\input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/CPU_energy_consumption.tex}
-\input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/Runtime_duration.tex}
-\input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/CPU_DEC.tex}
+% \input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/CPU_energy_consumption.tex}
+% \input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/Runtime_duration.tex}
+% \input{tables/results/same-mi-different-application-post-config-update/ipg/3d-mark/workstationtwo/unkown/CPU_DEC.tex}
 
 
 
@@ -32,146 +39,225 @@ There is an extension of Amdahl's law to estimate energy consumption by using a 
 %C:\Github\BDEnergy\article\tables\results\same-mi-different-application-post-config-update\ipg\3d-mark\workstationtwo\unkown\CPU_energy_consumption.tex
 
 %%%%%%% NEW CALCULATIONS BASED ON AVERAGE %%%%%%%%%%%%%%%%%%
-Amdahls law
-S(n) = 1/ ((1-p)+p/n)
+% Amdahls law
+% S(n) = 1/ ((1-p)+p/n)
 
 
-Parallel start on 1 core = 15 sec
-Parallel end on 1 core = 130,86 sec
-Benchmark end on1 core: 143.28 sec
+% Parallel start on 1 core = 15 sec
+% Parallel end on 1 core = 130,86 sec
+% Benchmark end on1 core: 143.28 sec
 
-Parallel time : 130,86 - 15 = 115,86
+% Parallel time : 130,86 - 15 = 115,86
 
-Fraction of parallel portion
-p = 115,86/ 143,28 = 0,8086264657
+% Fraction of parallel portion
+% p = 115,86/ 143,28 = 0,8086264657
 
 
-AMDAHLS LAW ESTIMATES
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 2)) = 1,6787346222
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 3)) = 2,1695941855
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 4)) = 2,5411013569
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 5)) = 2,8320683114
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 6)) = 3,0661245456
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 7)) = 3,2584795325
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 8)) = 3,4193663866
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 9)) = 3,5559232301
-S(n) 1/ ((1-0,8086264657)+ (0,8086264657 / 10)) = 3,6732810342
+% AMDAHLS LAW ESTIMATES
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 2)) = 1,6787346222
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 3)) = 2,1695941855
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 4)) = 2,5411013569
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 5)) = 2,8320683114
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 6)) = 3,0661245456
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 7)) = 3,2584795325
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 8)) = 3,4193663866
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 9)) = 3,5559232301
+% S(n) = 1/ ((1-0,8086264657)+ (0,8086264657 / 10)) = 3,6732810342
 
-End times for 2 cores = 90.24
-End times for 3 cores = 66.14
-End times for 4 cores = 59.45
-End times for 5 cores = 51.54
-End times for 6 cores = 49.17
-End times for 7 cores = 50.84
-End times for 8 cores = 48.75
-End times for 9 cores = 48.05
-End times for 10 cores = 49.17
+% End times for 2 cores = 90.24
+% End times for 3 cores = 66.14
+% End times for 4 cores = 59.45
+% End times for 5 cores = 51.54
+% End times for 6 cores = 49.17
+% End times for 7 cores = 50.84
+% End times for 8 cores = 48.75
+% End times for 9 cores = 48.05
+% End times for 10 cores = 49.17
 
-Actual Speedup
-AS for 2 cores = 143,28 / 90,24 = 1,5877659574
-AS for 3 cores = 143,28 / 66,14 = 2,1663138796
-AS for 4 cores = 143,28 / 59,45 = 2,4100925147
-AS for 5 cores = 143,28 / 51,54 = 2,7799767171
-AS for 6 cores = 143,28 / 49,17 = 2,9139719341
-AS for 7 cores = 143,28 / 50,84 = 2,8182533438
-AS for 8 cores = 143,28 / 48,75 = 2,9390769231
-AS for 9 cores = 143,28 / 48,05 = 2,9818938606 
-AS for 10 cores = 143,28 / 49,17 = 2,9139719341
+% Actual Speedup
+% AS for 2 cores = 143,28 / 90,24 = 1,5877659574
+% AS for 3 cores = 143,28 / 66,14 = 2,1663138796
+% AS for 4 cores = 143,28 / 59,45 = 2,4100925147
+% AS for 5 cores = 143,28 / 51,54 = 2,7799767171
+% AS for 6 cores = 143,28 / 49,17 = 2,9139719341
+% AS for 7 cores = 143,28 / 50,84 = 2,8182533438
+% AS for 8 cores = 143,28 / 48,75 = 2,9390769231
+% AS for 9 cores = 143,28 / 48,05 = 2,9818938606 
+% AS for 10 cores = 143,28 / 49,17 = 2,9139719341
 
-36,9 j average idle on DUT 2
-In watts = 5.5206430099 W
+% 36,9 j average idle on DUT 2
+% In watts = 5.5206430099 W
 
-433.51 j average full load FR on DUT 2.
-run time 28.6845
-In watts 20.2 W
+% 433.51 j average full load FR on DUT 2.
+% run time 28.6845
+% In watts 20.2 W
 
-fraction of power consumption of processer in idle k
-k = 5,5206430099 / 20,2 = 0,273
+% fraction of power consumption of processer in idle k
+% k = 5,5206430099 / 20,2 = 0,273
 
-Extension formulas
+% Amdahls law extension
+% W = (1 + (n-1)k(1-p)) / ((1 - p) + p/n)
+% W = (1 + (2-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/2) = 1,7664400703
+% W = (1 + (3-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/3) = 2,3962949728
+% W = (1 + (4-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/4) = 2,9393806865
+% W = (1 + (5-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/5) = 3,4239136624
+% W = (1 + (6-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/6) = 3,8670725446
+% W = (1 + (7-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/7) = 4,2799146201
+% W = (1 + (8-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/8) = 4,6698793631
+% W = (1 + (9-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/9) = 5,0421561883
+% W = (1 + (10-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/10) = 5,4004753118
 
-W = (1 + (n-1)k(1-p)) / ((1 - p) + p/n)
-W = (1 + (2-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/2) = 1,7664400703
-W = (1 + (3-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/3) = 2,3962949728
-W = (1 + (4-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/4) = 2,9393806865
-W = (1 + (5-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/5) = 3,4239136624
-W = (1 + (6-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/6) = 3,8670725446
-W = (1 + (7-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/7) = 4,2799146201
-W = (1 + (8-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/8) = 4,6698793631
-W = (1 + (9-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/9) = 5,0421561883
-W = (1 + (10-1)0,273(1-0,8086264657)) / ((1 - 0,8086264657) + 0,8086264657/10) = 5,4004753118
 
-Actual energy consumption in Joules to Watt for DUT 2 on 3DM
-1 core 1458.66
-Run time = 164,63
-8,8602320355 W
-Idle = 909,1406800494 j
+% Actual energy consumption in Joules to Watt for DUT 2 on 3DM
 
-Idle W = 5,5223269152 W
+% 1 core
+% Total energy consumption = 1458.66
+% DEC = 549,83
+% Run time = 164,63
+% Total in Watt = 8,8602320355 W
+% Idle consumption = TE - DEC = 1458,66 - 549,83 = 908,83 j
+% Idle consumption in W = Idle consumption / Run time = 5,5204397740 W
 
-337 j over 61.025 s
-1462 1 core for 164
-5,5223269152 W 
+% 2 core 
+% Total energy consumption = 1145.49
+% Run time = 107,221
+% DEC = 557,07
+% Total in Watt = 10,6834482051 W
+% Idle consumption = TE - DEC = 1145,49 - 557,07 = 588,42 j
+% Idle consumption in W = Idle consumption / Run time = 588,42 / 107,221 = 5,4879174789W
 
-2 core 1145.49
-Run time = 107,221
-10,6834482051 W
-Idle W = (Total - DEC) / Run time
-Idle = (1145,49 - 814,39) = 331,1  j / / 107,221 =
-Idle W = 3,0880144748 W
-NEW IDLE: 592,1094141747 J
 
-3 core 1037.39
-Run time = 88,115
-11,7731373773 W
-Idle = 1037,39 - 700,51 = 336,88 j
-Idle W = 3,8231856097 W
+% 3 core 
+% Total energy consumption = 1037.39
+% Run time = 88,115
+% DEC = 551,66
+% Total in Watt = 11,7731373773 W
+% Idle consumption = TE - DEC = 1037,39 - 551,66 = 485,73 j
+% Idle consumption in W = Idle consumption / Run time = 485,73 / 88,115 = 5,5124553141 W
 
-4 core 989.38
-Run time = 79
-12,5237974684 W
-Idle = 999,3 - 660,22 = 339,08 j
-Idle W = 4,2921518987 W
+% 4 core
+% Total energy consumption = 989.38
+% Run time = 79
+% DEC = 556,34
+% Total in Watt = 12,5237974684 W
+% Idle consumption = TE - DEC = 989,38 - 556,34 = 433,04 j
+% Idle consumption in W = Idle consumption / Run time = 433,04 / 79 = 5,4815189873 W
 
-5 core 954.17
-Run time = 73,11
-13,0511557926 W
-Idle = 954,17 - 619,43 = 334,74 j
-Idle W = 4,5785802216
+% 5 core
+% Total energy consumption = 954.17
+% Run time = 73,11
+% DEC = 553,63
+% Total in Watt = 13,0511557926 W
+% Idle consumption = TE - DEC = 954,17 - 553,63 = 400,54 j
+% Idle consumption in W = Idle consumption / Run time = 400,54 / 73,11 = 5,4785938996 W
 
-6 core 952.83
-Run time = 71,13
-13,3956136651 W
-Idle = 952,83 - 614,37 = 338,46 j
-Idle W = 4,7583298186 W
+% 6 core
+% Total energy consumption = 952.83
+% Run time = 71,13
+% DEC = 556,17
+% Total in Watt = 13,3956136651 W
+% Idle consumption = TE - DEC = 952,83 - 556,17 = 396,66 j
+% Idle consumption in W = Idle consumption / Run time = 396,66 / 71,13 = 5,5765499789 W
 
-7 core 938.86
-Run time = 69,2
-13,5673410405 W
-Idle = 938,86 - 604,06 = 334,8 j
-Idle W = 4,8381502890 W
+% 7 core
+% Total energy consumption = 938.86
+% Run time = 69,2
+% DEC = 556,74
+% Total in Watt = 13,5673410405 W
+% Idle consumption = TE - DEC = 938,86 - 556,74 = 382,12 j
+% Idle consumption in W = Idle consumption / Run time = 382,12 / 69,2 = 5,5219653179 W
 
-8 core 925.63
-Run time = 67,75
-13,6624354244 W
-Idle = 925,63 - 593,52 = 332,11 j
-Idle W = 4,9019926199 W
+% 8 core
+% Total energy consumption = 925.63
+% Run time = 67,75
+% DEC = 551,81
+% Total in Watt = 13,6624354244 W
+% Idle consumption = TE - DEC = 925,63 - 551,81 = 373,82 j
+% Idle consumption in W = Idle consumption / Run time = 373,82 / 67,75 = 5,5176383764 W
 
-9 core 911.19
-Run time = 66,64
-13,6733193277 W
-Idle = 911,19 - 577,7 = 333,49 j
-Idle W = 5,0043517407 W
+% 9 core
+% Total energy consumption = 911.19
+% Run time = 66,64
+% DEC = 543,16
+% Total in Watt = 13,6733193277 W
+% Idle consumption = TE - DEC = 911,19 - 543,16 = 368,03 j
+% Idle consumption in W = Idle consumption / Run time = 368,03 / 66,64 = 5,5226590636 W
 
-10 core 916.23
-Run time = 68,013
-13,4713951745 W
-Idle 916,23 - 583,56 = 332,67 j 
-Idle W = 4,8912707865 W
+% 10 core
+% Total energy consumption = 916.23
+% Run time = 68,013
+% DEC = 538,54
+% Total in Watt = 13,4713951745 W
+% Idle consumption = TE - DEC = 916,23 - 538,54 = 377,69 j
+% Idle consumption in W = Idle consumption / Run time = 377,69 / 68,013 = 5,5532030641 W
 
-(Power usage with n cores - idle power usage) / (Power usage with 1 core - idle power usage)
-for 2 cores: (10,68 - idle) / (8,86 - idle) =
+% %% NOTE
+% Not sure what estimaed W and actual raw W is comparable since for estimed on core we have 1 W while raw would 8. So it should probability be some kind of ratio.
 
+
+% Estimated Perf/Watt
+% 1,6787346222 /  1,7664400703 = 0,9503490384
+% 2,1695941855 /  2,3962949728 = 0,9053952915
+% 2,5411013569 /  2,9393806865 = 0,8645022976
+% 2,8320683114 /  3,4239136624 = 0,8271436113
+% 3,0661245456 /  3,8670725446 = 0,7928800172 
+% 3,2584795325 /  4,2799146201 = 0,7613421813
+% 3,4193663866 /  4,6698793631 = 0,7322172846
+% 3,5559232301 /  5,0421561883 = 0,7052386117
+% 3,6732810342 /  5,4004753118 = 0,6801773589
+
+
+% New ACtual Perf/Watt
+% 1,5877659574 /  10,6834482051  = 0,1486192404
+% 2,1663138796 /  11,7731373773  = 0,1840048077
+% 2,4100925147 /  12,5237974684  = 0,1924410324
+% 2,7799767171 /  13,0511557926  = 0,2130061706
+% 2,9139719341 /  13,3956136651  = 0,2175317986
+% 2,8182533438 /  13,5673410405  = 0,2077233362
+% 2,9390769231 /  13,6624354244  = 0,2151210111
+% 2,9818938606 /  13,6733193277  = 0,2180811981
+% 2,9139719341 /  13,4713951745  = 0,2163081029
+
+
+%%%%% OLD OLD OLD OLD %%%%%%%%%%%%%%%
+
+% % Don't thing this equations is right
+% W_actual = P_single / P_n
+
+% W_actual = 8,8602320355 / 10,6834482051 = 0,8293419751
+% W_actual = 8,8602320355 / 11,7731373773 = 0,7525803659
+% W_actual = 8,8602320355 / 12,5237974684 = 0,7074716800
+% W_actual = 8,8602320355 / 13,0511557926 = 0,6788848571
+% W_actual = 8,8602320355 / 13,3956136651 = 0,6614278567
+% W_actual = 8,8602320355 / 13,5673410405 = 0,6530558942
+% W_actual = 8,8602320355 / 13,6624354244 = 0,6485104420
+% W_actual = 8,8602320355 / 13,6733193277 = 0,6479942305
+% W_actual = 8,8602320355 / 13,4713951745 = 0,6577070838
+
+
+% %% Don't think is equations is correct.
+% (Power usage with n cores - idle power usage) / (Power usage with 1 core - idle power usage)
+% 2 cores: (10,68 - 5,4879174789) / (8,86 - 5,5204397740) =         1,5547204332
+% 3 cores: (11,7731373773 - 5,5124553141) / (8,86 - 5,5204397740) = 1,8747025475
+% 4 cores: (12,5237974684 - 5,4815189873) / (8,86 - 5,5204397740) = 2,1087442671
+% 5 cores: (13,0511557926 - 5,4785938996) / (8,86 - 5,5204397740) = 2,2675326631
+% 6 cores: (13,3956136651 - 5,5765499789) / (8,86 - 5,5204397740) = 2,3413453141
+% 7 cores: (13,5673410405 - 5,5219653179) / (8,86 - 5,5204397740) = 2,4091123316
+% 8 cores: (13,6624354244 - 5,5176383764) / (8,86 - 5,5204397740) = 2,4388831154
+% 9 cores: (13,6733193277 - 5,5226590636) / (8,86 - 5,5204397740) = 2,4406388005
+% 10 cores: (13,4713951745 - 5,5532030641) / (8,86 - 5,5204397740) = 2,3710283913
+
+
+% Actual Perf/Watt
+% 1,5877659574 /  1,5547204332  = 1,0212549623
+% 2,1663138796 /  1,8747025475  = 1,1555507206
+% 2,4100925147 /  2,1087442671  = 1,1429041218
+% 2,7799767171 /  2,2675326631  = 1,2259919173
+% 2,9139719341 /  2,3413453141  = 1,2445716215
+% 2,8182533438 /  2,4091123316  = 1,1698306081
+% 2,9390769231 /  2,4388831154  = 1,2050913406
+% 2,9818938606 /  2,4406388005  = 1,2217677847
+% 2,9139719341 /  2,3710283913  = 1,2289907387
 
 
 
