@@ -1,0 +1,39 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|| c | c | c | c ||}
+    \hline
+    \multicolumn{4}{||c||}{Performance Between Cores} \\ [0.5ex] \hline\hline
+    DUT & Benchmark & Average & STD \\\hline
+    DUT 1 & SN & $79.16$ j & $1.75$ j\\
+    DUT 1 & NB & $47.88$ j & $5.67$ j\\
+    DUT 2, P & SN & $26.00$ j & $0.27$ j\\
+    DUT 2, E & SN & $19.02$ j & $0.78$ j\\
+    DUT 2, P & NB & $26.49$ j & $0.32$ j\\
+    DUT 2, E & NB & $31.87$ j & $1.30$ j\\\hline
+    \end{tabular}
+    \caption{The performance difference between cores of the same type}
+    \label{tab:dut-2-exp-3-std-and-avg}
+\end{table}
+
+
+% DUT 1, SN: 83.59 + 78.515 + 77.67 + 78.76 + 79.09 + 78.73 + 79.28 + 77.71:
+% - STD: 1.75
+
+% DUT 1, NB: 44.99 + 44.89 + 44.92 + 44.93 + 44.98 + 45.02 + 61.75 + 51.59
+% - STD: 5.67
+
+% DUT 2, NB
+
+% - P: 26.29 + 25.47 + 25.97 + 25.92 + 26.29 + 26.07
+% - STD: 0.27
+
+% - E: 19.47 + 17.67 + 19.39 + 19.58
+% - STD: 0.78
+
+% DUT 2, SN
+
+% - P: 27.01 + 25.93 + 26.58 + 26.32 + 26.49 + 26.61
+% - STD: 0.32
+
+% - E: 30.45 + 31.03 + 32.15 + 33.87
+% - STD: 1.30

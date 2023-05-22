@@ -3,12 +3,12 @@
     \begin{tikzpicture}
         \pgfplotsset{
             width=0.4\textwidth,
-            height=0.5\textheight
+            height=0.4\textheight
         }
         \begin{axis}
             [
-                xbar,
-                legend style={at={(0.5,-0.1)}, anchor=north,legend columns=-1},
+                xbar=2pt,
+                legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
                 bar width = 5pt,
                 xlabel= DEC (Joules),
                 xmin=0,xmax=1100,
@@ -22,28 +22,30 @@
                     RAPL,
                     {Clamp (L)},
                     {Plug (L)}},
+                    ytick={IPG,LHM,SCAP,SCAPI,{Clamp (W)},{Plug (W)},RAPL,{Clamp (L)},{Plug (L)}},
+                    % xbar=1pt
             ]
             \addplot coordinates { 
-                (524.49,IPG)
-                (517.275,LHM)
-                (524.18,SCAP)
-                (659.47,SCAPI)
-                (677.93,{Clamp (W)})
-                (758.63,{Plug (W)})
-                (325.89,RAPL)
-                (1058,{Clamp (L)})
-                (836.47,{Plug (L)})
+                (484,IPG)
+                (479,LHM)
+                (482,SCAP)
+                (659,SCAPI)
+                (377,{Clamp (W)})
+                (549,{Plug (W)})
+                (253,RAPL)
+                (166,{Clamp (L)})
+                (289,{Plug (L)})
                 };
             \addplot coordinates { 
-                (415.05,IPG)
-                (426.03,LHM)
-                (451.05,SCAP)
-                (565.55,SCAPI)
-                (327.41,{Clamp (W)})
-                (448.67,{Plug (W)})
-                (557.63,RAPL)
-                (651,{Clamp (L)})
-                (752.80,{Plug (L)})
+                (420,IPG)
+                (431,LHM)
+                (455,SCAP)
+                (565,SCAPI)
+                (345,{Clamp (W)})
+                (482,{Plug (W)})
+                (536,RAPL)
+                (457,{Clamp (L)})
+                (635,{Plug (L)})
                 };
             \legend{FR, MB}
             \end{axis}

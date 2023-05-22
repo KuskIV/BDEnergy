@@ -1,10 +1,33 @@
 \section{Energy usage trends analysis} \label[subsec]{subsec:trendAnalysis}
-To explore our hypothesis regarding electrical network noise interfering with phase synchronization, we categorized the data into \texttt{working hours} (7:00 to 16:00) and \texttt{non-working hours} (16:00 to 7:00). We found no significant variation in power consumption peaks between the two categories. 
-However, periods of low energy usage were higher during \texttt{working hours}, suggesting that they did not affect benchmark measurements but did impact idle case measurements. This observation aligns with the results presented in \cref{fig:evolution_of_medians}, which represent the DEC values. To better understand this, consider that the 3,000 DEC measurements, each consist of the total energy consumption during benchmark execution and a corresponding idle case measurement as explained in \cref{subsec:DEC}.
 
-Power supplies are typically less efficient at lower loads\cite{PowerSupply}, causing reactive energy to contribute more to overall usage. To test this hypothesis we conducted another experiment where we measured the computer during weekdays, when the computer was during nothing to see the effects.
-The results can be seen in \cref{tab:RainBowGraph}, where there are clear difference between the energy consumption from night to day, the cross over is not at the same time each day but the trend is the same. Another interesting thing to note is the usage pattern that there are spikes and valleys approximately once every 2 hours. The exact cause of this is not known, but we hypothesis that they are scheduled jobs on windows, some of these can be found using the Task Scheduler, but it is hard to say exactly what would execute at a given peak. This could potentially be determined with further analysis, but the exact jobs are not interesting for this study, but could be a subject for Future work, so this will not be looked into further.
-\include{figures/NightDay}
+In order to explore if reactive energy consumption caused a decreasing DEC, two hypotheses were constructed. The first hypothesis (\textbf{H1}) was about how noise on the electrical network could interfere with the phase synchronization. This could be due to many machines being connected to the same electrical network and disrupting the harmonics of the network\cite{kullarkar2017power}. However, if the PSU generated reactive energy because it was out of phase with the electrical network, a reduction in noise could help synchronize again. Therefore, the observed changes in energy consumption may be related to the time of the day and week where the measurements were taken, with consumption decreasing when there was less devices connected to the electrical network, during the night and weekends.
+
+The second hypothesis (\textbf{H2}) was how the the DUTs' PSU may be correcting the phase over time, with a Power Factor Correction circuit. According to \cite{mcdonald2020power} there were two main types ofPower Factor Correction: passive and active. The behavior observed in the results could be a result of an active Power Factor Correction circuit. In order to explore \textbf{H2}, and email was sent to the manufactures of both PSUs, where Cougar did not respond, while Corsair confirmed the PSU had Power Factor Correction, but would not give any more details. Therefore we could not determine which type of Power Factor Correction was used.
+
+\input{figures/NightDay}
+
+
+% In order to confirm or reject the hypotheses made, additional measurements were made during the day and night, to compare if similar trends would be observed. In \cref{subsec:trendAnalysis}, an analysis was conducted where it was found an increasing trend during working hours, and a decreasing trend the rest of the day. The analysis also found the same trend to occur during the weekend, but to a lesser degree, as the energy consumption is lower throughout the day. The same trend was  present on Linux, but generally consumes a bit less energy.(UPDATE WITH LINUX AND DUT1 measurements later)  
+
+
+% For the second hypothesis, a mail was writing to one of the producers of the power Supplies specifically Corsair in the DUTs for further details. They confirmed that the power supplies did contain some form of PFC, but would not go into more details due to trade secrets. We are unable to determine the exact cause of the changes in energy consumption.
+
+% Previous research in this field, which also utilizes hardware measurements, has not addressed this phenomenon. For example, \cite{georgiou2020energy}, \cite{Koedijk2022diff}, and \cite{khan2018rapl} did not report similar findings, although their studies might have had a similar environmental setting to ours. While these studies are not directly comparable, we would have anticipated some resemblance, indicating that previous research utilizing hardware measurements might not have been extensive enough, as this trend has not been revealed previously to our knowledge.
+
+To explore \textbf{H1-2} regarding electrical network noise interfering with phase synchronization, idle measurements were made for both DUTs and OSs for 24 hours at time. The data was then categorized into working hours ($7:00$ to $16:00$) and non-working hours ($16:00$ to $7:00$), where no significant variation in power consumption peaks between the two categories were found. Periods of low energy usage were however higher during \texttt{working hours}, which suggested that they did not effect benchmark measurements but did impact idle case measurements. This observation aligned with the results presented in \cref{fig:evolution_of_medians}, which represent the DEC values.
+
+\cite{PowerSupply} found PSUs to be less efficient at low loads, which would caused reactive energy to contribute more to overall usage. To test the contributions of reactive power on low loads, idle measurements were made on both DUTs during weekdays, with the results presented in  \cref{tab:RainBowGraph}. \cref{tab:RainBowGraph} showed there were clear differences between the energy consumption during working and non-working hours. 
+
+When comparing between OSs, Windows had a larger difference between peaks and valleys, occurring approximately once every 2 hours. The reason why these spikes occur was most likely scheduling jobs, as they are only observed on Windows, but would require more analysis in a future work.
+
+In existing works with similar setups and hardware measurements, the phenomenon observed in this work, has not been addressed.\cite{georgiou2020energy,Koedijk2022diff, khan2018rapl}. While these studies were not directly comparable, we would have anticipated some resemblance, indicating that previous research utilizing hardware measurements might not have been extensive enough, as this trend has not been revealed previously to our knowledge.
+
+Through this analysis, it was found there is a relationship between the energy consumption and the time of day, and that it seemed to be effected by the amount of people on the electrical network, as suggested by \textbf{H1}. These observations were made on multiple different DUTs and across different OSs over multiple days, all showing the same pattern. When comparing between day and night, the energy consumption was higher during the working hours compared to weekends and nights, but whether the cause is reactive energy or some other unaccounted for factor is a subject for future work.
+
+
+
+
+
 
 
 
