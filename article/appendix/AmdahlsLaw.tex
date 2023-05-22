@@ -4,24 +4,24 @@
 
 We computed and estimation of Amdahl's Law on the 3DM benchmark on DUT 2. To compute Amdahl's law we are required to know the paralizable part of the benchmark. Because we do not have the source code for the benchmark this has to be estimated. Each measurements starts with a time period where the system is essential idle, then 3DM executes, which is followed by another period of the DUT being idle. We assume that the period where 3DM is being executed is the paralizable part of the whole measurement, while the periods before and after are serial. Based on this assumption we gathered estimates of the paralizable and serial parts of the measurement. Then we computed estimated speedup and compared it with the actual speedup.
 
-% \begin{figure}[H]
-%     \centering
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \input{tables/SpeedupFactor.tex}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}[b]{0.4\textwidth}
-%         \centering
-%         \input{tables/SpeedupActW.tex}
-%     \end{subfigure}
-%     \caption{Speedup up and Average Watts for DUT2 on 3DM}
-%     % \label{fig:sidebyside}
-% \end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \input{tables/SpeedupFactor.tex}
+    \end{subfigure}
+    %\hfill
+    \hspace{2cm}
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \input{tables/SpeedupActW.tex}
+    \end{subfigure}
+    \caption{Speedup up and Average Watts for DUT2 on 3DM}
+\end{figure}
 %\input{tables/SpeedupFactor.tex}
 %\input{tables/SpeedupActW.tex}
 
-On \cref{fig:amdahls} we see the estimated and actual speedup at different amounts of cores. From using 1-6 cores the benchmark was executed using P-cores. From 7-10 progressively more E-cores are also utilized. We can see that the estimated speedup follows the Actual speedup closely, until the DUT start to use the E-cores. It should be noted that Amdahl's law is not mean for heterogenous CPU's and as such does not account for the difference in computational power for the E-cores. This can be seen as for 7-10 cores the estimated speedup does not follow the actual speedup. The results for the actual speedup shows that the E-cores are unable to contribute in speeding up the benchmark. 
+On \cref{fig:amdahls} we see the estimated and actual speedup at different amounts of cores. From using 1-6 cores the benchmark was executed using P-cores. From 7-10 progressively more E-cores are also utilized. We can see that the estimated speedup follows the Actual speedup closely, until the DUT start to use the E-cores. It should be noted that Amdahl's law is not mean for heterogenous CPU's and as such does not account for the difference in computational power for the E-cores. This can be seen as for 7-10 cores the estimated speedup does not follow the actual speedup. The results for the actual speedup shows that the E-cores are unable to contribute in speeding up the benchmark. On \cref{sub@fig:amdahlsAveWat} we can see that after 6 cores the average watts increases slower than from 1 to 6 cores. Showing that while the e-cores do not provide a speedup on the benchmark, they also do not increase the energy consumption by as much as the P-cores. 
 
 %Another factor which may contribute to the stagnation is that the GPU could be the bottleneck. (Perhaps test this by using our GPU).
 
