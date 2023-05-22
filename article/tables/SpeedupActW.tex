@@ -1,0 +1,28 @@
+\begin{figure}[H]
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={Average Watts},
+        xlabel={Number of Cores Used},
+        ylabel={Watts},
+        xmin=1, xmax=10,
+        ymin=0, ymax=15,
+        xtick={1,2,3,4,5,6,7,8,9,10},
+        ytick={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},
+        legend pos=south east,
+        ymajorgrids=true,
+        grid style=dashed,
+    ]
+    
+    \addplot[
+        color=red,
+        mark=triangle,
+        ]
+        coordinates {
+        (1,8.8602320355)(2,10.6834482051)(3,11.7731373773)(4,12.5237974684)(5,13.0511557926)(6,13.3956136651)(7,13.5673410405)(8,13.6624354244)(9,13.6733193277)(10,13.4713951745)
+        };
+        \addlegendentry{Average Watts}
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Average watts for 3DM on DUT 2}\label{fig:amdahlsAveWat}
+\end{figure}
