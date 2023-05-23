@@ -1,10 +1,13 @@
 \subsection{Open Multi-Processing}\label[subsec]{subsec:openmp}
 
-Open Multi-Processing (OpenMP) is a parallel programming API consisting of a set of compiler directives and runtime library routines, with support for multiple OSs and compilers.\cite{openmp} %platforms like Linux, macOS, and Windows as well as multiple compilers like GCC, LLVM/Clan, and Intel's OpenApi. It enables writing parallel code for multi-core CPUs and GPUs.\cite{openmp}
+Open Multi-Processing (OpenMP) is a parallel programming API consisting of a set of compiler directives and runtime library routines, supporting multiple OSs and compilers.\cite{openmp} The directives provide a method to specify parallelism among multiple threads of execution within a single program without having to deal with low-level details, while the library provides mechanisms for managing threads and data synchronization.\cite{openmp} 
+
+
+%Open Multi-Processing (OpenMP) is a parallel programming API consisting of a set of compiler directives and runtime library routines, with support for multiple OSs and compilers.\cite{openmp} %platforms like Linux, macOS, and Windows as well as multiple compilers like GCC, LLVM/Clan, and Intel's OpenApi. It enables writing parallel code for multi-core CPUs and GPUs.\cite{openmp}
 The directives provide a method to specify parallelism among multiple threads of execution within a single program without having to deal with low-level details, while the library provides mechanisms for managing threads and data synchronization.\cite{openmp}
 % OpenMP allows writing parallel code and taking advantage of multiple processors without having to deal with low-level details.\cite{openmp}
 
-When executing using OpenMP, the parallel mode used is the Fork-Join Execution Model. This model begins with executing the program with a single thread, called the master thread. This thread is executed serially until parallel regions are encountered, in which case a thread group is created, consisting of the master thread, and additional worker threads. After splitting up, each thread will execute until an implicit barrier at the end of the parallel region. When all threads have reached this barrier, only the master thread continues.\cite{openmp}
+When executing using OpenMP, the parallel mode used is the Fork-Join Execution Model. This model begins with executing the program with a single thread called the master thread. This thread is executed serially until parallel regions are encountered, in which case a thread group is created consisting of the master thread and additional worker threads. After splitting up, each thread will execute until an implicit barrier at the end of the parallel region. When all threads have reached this barrier, only the master thread continues.\cite{openmp}
 
 \input{listings/parallel_regions.tex}
 
