@@ -1,15 +1,15 @@
 \begin{table}[H]
     \centering
-    \begin{tabular}{|| c | c | c | c ||}
+\begin{tabular}{|| c | c | c | c | c ||}
     \hline
-    \multicolumn{4}{||c||}{Performance Between Cores} \\ [0.5ex] \hline\hline
-    DUT & Benchmark & Average & STD \\\hline
-    DUT 1 & SN & $79.16$ j & $1.75$ j\\
-    DUT 1 & NB & $47.88$ j & $5.67$ j\\
-    DUT 2, P & SN & $26.00$ j & $0.27$ j\\
-    DUT 2, E & SN & $19.02$ j & $0.78$ j\\
-    DUT 2, P & NB & $26.49$ j & $0.32$ j\\
-    DUT 2, E & NB & $31.87$ j & $1.30$ j\\\hline
+    \multicolumn{5}{||c||}{Performance Between Cores} \\ [0.5ex] \hline\hline
+    DUT & Core & Benchmark & Average & STD \\\hline
+    1 & & SN & $79.16$ j & $1.75$ j\\
+    1 & & NB & $47.88$ j & $5.67$ j\\
+    2 & P & SN & $26.00$ j & $0.27$ j\\
+    2 & E & SN & $19.02$ j & $0.78$ j\\
+    2 & P & NB & $26.49$ j & $0.32$ j\\
+    2 & E & NB & $31.87$ j & $1.30$ j\\\hline
     \end{tabular}
     \caption{The performance difference between cores of the same type}
     \label{tab:dut-2-exp-3-std-and-avg}
