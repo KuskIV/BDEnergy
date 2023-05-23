@@ -1,13 +1,15 @@
 \subsection{Processor Affinity}\label[type]{subsec:affinity}
 
-
-
-% Affinity is a feature enabling processes to be bound to specific cores.
-% Jobs and threads are constantly rescheduled for optimal system performance on an OS, meaning that the same process can be assigned to different cores on the CPU. 
-Processor affinity allows applications to bind or unbind a process to a specific set of cores. When a process is pinned to a core, the OS ensures the process only executes on the assigned core(s) each time it is scheduled.\cite{affinity} 
-
-% Processor affinity is useful for scaling performance on multi-core processor architectures sharing the same global memory and have local caches referred to as the Uniform memory access architecture.\cite{affinity} 
-
-When setting the affinity for a process in C\#, it is done through a bitmask, where each bit represents a CPU core. An example was illustrated in \cref{lst:affinity}, where the process was allowed to execute on core $\#0$ and $\#1$.
+Processor affinity allows applications to bind or unbind a process to a specific set of cores. When a process is pinned to a core, the OS ensures that the process only executes on the assigned core(s) each time it is scheduled.\cite{affinity} When setting the affinity for a process in C\#, it is done through a bitmask, where each bit represents a CPU core. An example was illustrated in \cref{lst:affinity}, where the process was allowed to execute on core $\#0$ and $\#1$.
 
 \input{listings/affinity.tex}
+
+% % Affinity is a feature enabling processes to be bound to specific cores.
+% % Jobs and threads are constantly rescheduled for optimal system performance on an OS, meaning that the same process can be assigned to different cores on the CPU. 
+% Processor affinity allows applications to bind or unbind a process to a specific set of cores. When a process is pinned to a core, the OS ensures the process only executes on the assigned core(s) each time it is scheduled.\cite{affinity} 
+
+% % Processor affinity is useful for scaling performance on multi-core processor architectures sharing the same global memory and have local caches referred to as the Uniform memory access architecture.\cite{affinity} 
+
+% When setting the affinity for a process in C\#, it is done through a bitmask, where each bit represents a CPU core. An example was illustrated in \cref{lst:affinity}, where the process was allowed to execute on core $\#0$ and $\#1$.
+
+% \input{listings/affinity.tex}
