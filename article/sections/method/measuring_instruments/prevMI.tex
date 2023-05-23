@@ -1,4 +1,4 @@
-\noindent\textbf{Intel's Running Average Power Limit (RAPL):} is a Mac and Linux exclusive software-based measuring instrument most frequently used in the litterature.\cite{biksbois}. RAPL uses model-specific-registers (MSRs) and Hardware performance counters to calculate how much energy the CPU uses. The MSRs used by RAPL are those for the power domains PKG, DRAM, PP0, and PP1, covered in \cite{biksbois}. 
+\noindent\textbf{Intel's Running Average Power Limit (RAPL):} is a Mac and Linux exclusive software-based measuring instrument most frequently used in the litterature.\cite{biksbois}. RAPL uses model-specific-registers (MSRs) and Hardware performance counters to calculate the energy consumption of the CPU. The MSRs used by RAPL are those for the power domains PKG, DRAM, PP0, and PP1, covered in \cite{biksbois}. 
 
 % The MSRs RAPL uses include \textit{MSR\_PKG\_ENERGY\_STATUS}, \textit{MSR\_DRAM\_ENERGY\_STATUS}, \textit{MSR\_PP0\_ENERGY\_STATUS} and \textit{MSR\_PP1\_ENERGY\_STATUS}. %Which corresponds to the power domains, PKG, DRAM, PP0, and PP1 which are explained in \cite{biksbois}. 
 In \cite{biksbois} RAPL was found to have a correlation of $0.81$ with the ground truth.\cite{biksbois}\newline
@@ -16,7 +16,7 @@ IPG uses the same hardware counters and MSRs as RAPL\cite{FireFox}, and is there
 
 % also chatgpt
 
-\noindent\textbf{Libre Hardware Monitor (LHM):} is a fork of Open Hardware Monitor, without a GUI, and is supported on Windows and Linux.\cite{LHM} Both projects are open source and LHM uses the same hardware counters and MSRs as RAPL and IPG. % and as such can measure the power domains PKG, DRAM, PP0, and PP1. 
+\noindent\textbf{Libre Hardware Monitor (LHM):} is a fork of Open Hardware Monitor, and is supported on Windows and Linux.\cite{LHM} LHM is open source and uses the same hardware counters and MSRs as RAPL and IPG. % and as such can measure the power domains PKG, DRAM, PP0, and PP1. 
 In \cite{biksbois} LHM on Windows was found to have a correlation of $0.76$ with the ground truth on Windows and a correlation of $0.85$ with IPG.\newline
 
 \noindent\textbf{MN60 AC Current Clamp (Clamp):} is a current clamp connected to the phase of the wire going into the power supply unit (PSU), which serves as the ground truth. The clamp is connected to an Analog Discovery 2, where the Analog Discovery 2 is connected to a Raspberry Pi 4 in order to measure and log measurements continuously.\cite{biksbois} The intrinsic error is reported to be $2\%$\cite{ClampDoc}.\newline

@@ -8,6 +8,6 @@ Processor affinity allows applications to bind or unbind a process to a specific
 
 % Processor affinity is useful for scaling performance on multi-core processor architectures sharing the same global memory and have local caches referred to as the Uniform memory access architecture.\cite{affinity} 
 
-When setting the affinity for a process in C\#, it is done through a bitmask, where each bit represents a CPU core. An example is found in \cref{lst:affinity}, where the process is allowed to execute on core \#0 and \#1.
+When setting the affinity for a process in C\#, it is done through a bitmask, where each bit represents a CPU core. An example was illustrated in \cref{lst:affinity}, where the process was allowed to execute on core $\#0$ and $\#1$.
 
 \input{listings/affinity.tex}
