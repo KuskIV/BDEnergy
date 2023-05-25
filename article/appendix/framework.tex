@@ -1,10 +1,10 @@
 \section{The Framework}\label{app:framework}
 
-The framework was called Biks Diagnostic Energy (BDE) and was a command line tool. It was an extension of \cite{biksbois}. It could be executed in two ways, as illustrated in \cref{lst:bde_start}, where one was with a configuration, and one was with a path to an executable file.
+The framework introduced for the experiments in this work, was called Biks Diagnostic Energy (BDE) and was a command line tool. It was an extension of the work presented in \cite{biksbois}. BDE could be executed in two ways, as illustrated in \cref{lst:bde_start}, where one was with a configuration, and one was with a path to an executable file.
 
 \input{listings/start-bde.tex}
 
-When using \texttt{--config}, the user specified a path to a valid JSON file formatted like \cref{lst:bde_json}. Through \cref{lst:bde_json}, it was possible to specify paths to executable files and assign each executable file with a parameter in \texttt{BenchmarkPaths} and \texttt{BenchmarkParameter} respectively. The configuration could also specify information like the \texttt{compiler}, \texttt{language}, etc. It was also possible to specify the affinity of the benchmark through \texttt{AllocatedCores}, where an empty list represented the use of all cores and the list \texttt{1,2} stated core $1$ and $2$ was used. When multiple affinities were specified, each benchmark was run on both. Limits for the temperature the benchmarks should be executed within could also be specified. Lastly, \texttt{AdditionalMetadata} could specify relevant aspects of the experiment that could not already be specified through the configuration.
+When using \texttt{--config}, the user specified a path to a valid JSON file formatted like \cref{lst:bde_json}. Through \cref{lst:bde_json}, it was possible to specify paths to executable files and assign each executable file with a parameter in \texttt{BenchmarkPaths} and \texttt{BenchmarkParameter} respectively. It was also possible to specify the affinity of the benchmark through \texttt{AllocatedCores}, where an empty list represented the use of all cores and the list \texttt{1,2} stated core $1$ and $2$ were used. When multiple affinities were specified, each benchmark was executed on both. Lastly, \texttt{AdditionalMetadata} could specify relevant aspects of the experiment that could not already be specified through the configuration.
 
 \input{listings/valid_json.tex}
 
@@ -14,12 +14,12 @@ When using the parameters \texttt{--path}, the \texttt{--parameter} was an optio
 
 \input{listings/dut_service.tex}
 
-Both Windows and Linux were supported on BDE. This was supported through the \texttt{IDutService} seen in \cref{lst:dut_service}, where all OS dependent operations were located. This included the ability to enable and disable the Wi-Fi, stop background processes, etc.
+Both Windows and Linux were supported on BDE. This was supported through the \texttt{IDutService} seen in \cref{lst:dut_service}, where all OS dependent operations were located.
 
 \input{listings/measuring_instrument.tex}
 
 \paragraph*{}
-BDE also supported multiple measuring instruments, through a parent class \texttt{MeasuringInstrument} in \cref{lst:measuring_instrument} the measuring instruments could inherit from. \texttt{MeasuringInstrument} implemented a start (line $10$) and stop (line $19$) method, and a method which retrieved the data measured between the start and stop. The virtual methods were measuring instrument specific, which was why they could be overwritten. This included a start (line $34$) and stop (line $32$) method, a method to parse the measurement data in line $30$ and a method in line $36$ which performed a measurement by default every 100ms. The method in line $36$ was made for measuring instruments like RAPL, where an action is required to read the energy consumption.
+BDE also supported multiple measuring instruments, through a parent class \texttt{MeasuringInstrument} in \cref{lst:measuring_instrument} the measuring instruments could inherit from. \texttt{MeasuringInstrument} implemented a start (line $10$) and stop (line $19$) method, and a method which retrieved the data measured between the start and stop. The virtual methods were measuring instrument specific, an could be overwritten by the specific measuring instrument. This included a start (line $34$) and stop (line $32$) method, a method to parse the measurement data in line $30$ and a method in line $36$ which performed a measurement by default every 100ms. The method in line $36$ was made for measuring instruments like RAPL, where an action is required to read the energy consumption.
 \newpage
 
 \input{listings/perform_measurement.tex}
