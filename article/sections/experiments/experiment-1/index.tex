@@ -1,16 +1,18 @@
-\input{tables/experiment-1/initial-measurements-compilers.tex}
+\input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/CPU_DEC.tex}
+
 \subsection{Experiment One}\label[subsec]{subsec:exp_one}
 
 The first experiment investigated \cref{RQ:RQ1} and employed both multi-core microbenchmarks presented in \cref{subsec:test_cases}, and the measurements were performed using IPG on DUT 1. IPG was chosen based on its performance in \cite{biksbois}. This experiment was conducted based on a hypothesis that the different compilers would produce assembly code with varying energy consumption and execution time, as was found in \cite{hassan2017}.
 
-\input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/CPU_DEC.tex}
 
-\paragraph{Compiler Initial Measurements:} As was presented in \cref{subsec:Statistics}, Cochran's formula was used to ensure there was confidence in the measurements made. The initial measurements were taken to gain insight into the number of measurements required, and then making additional measurements if required. The number chosen for the initial measurements was $30$, as the central limit theorem suggests that a sample size of at least $30$ is usually sufficient to ensure that the sampling distribution of the sample mean approximates normality, regardless of the underlying distribution of the population\cite{central-limit-theorem}.
+\paragraph{Compiler Initial Measurements:} As was presented in \cref{subsec:Statistics}, Cochran's formula was used to ensure there was confidence in the measurements made. The initial measurements were taken to gain insight into the number of measurements required, and then making additional measurements if required. The number chosen for the initial measurements was $30$, as the central limit theorem suggests that a sample size of at least $30$ is usually sufficient to ensure that the sampling distribution of the sample mean approximates normality, regardless of the underlying distribution of the population\cite{central-limit-theorem}. After the initial $30$ measurements, Cochran's formula was applied to the measurements, and the required measurements was illustrated in \cref{tab:initial-measurements}, where it was evident that the required samples varied between compilers and benchmarks. 
 
 \input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/runtime_duration.tex}
 
-After the initial $30$ measurements, Cochran's formula was applied to the measurements, and the required measurements was illustrated in \cref{tab:initial-measurements}, where it was evident that the required samples varied between compilers and benchmarks. When the benchmarks were analyzed it was found that MB deviates less than FR, with MB requiring as little as $3$ measurements with MinGW, while FR requires up to $61.086$ samples with Clang. When the compilers were analyzed, oneAPI had the lowest required samples for FR, but the highest for MB. $550$ additional measurements were conducted for the next step.
 
+When the benchmarks were analyzed it was found that MB deviates less than FR, with MB requiring as little as $3$ measurements with MinGW, while FR requires up to $61.086$ samples with Clang. When the compilers were analyzed, oneAPI had the lowest required samples for FR, but the highest for MB. $550$ additional measurements were conducted for the next step.
+
+\input{tables/experiment-1/initial-measurements-compilers.tex}
 % \input{tables/results/same-cpp-multi-core-micro-benchmark-different-compiler/ipg/fannkuch-redux/workstationone/clang-intel-one-api-min-gw-msvc/cpu_dynamic_energy_consumption.tex}
 
 \paragraph{Compiler Results:} After $550$ measurements were obtained, the reported measurements required by Cochran's formula still indicated that MSVC, MinGW, and Clang needed more measurements compared to oneAPI. Between the different compilers, Clang stood out where $61.086$ measurements were required. Because this number was so much higher than other compilers, additional measurements were taken using this compiler. After $10.000$ measurements, Cochran's formula now indicated that $1.289$ measurements were required, which is more in line with other compilers.
