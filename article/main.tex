@@ -164,22 +164,93 @@ Mads Hjuler Kusk*, Jeppe Jon Holt*\\ and Jamie Baldwin Pedersen*\\
 \date{{\Large June, 2023}}
 
 \thispagestyle{empty}
-\input{sections/resume/index.tex}
-\newpage
-\leavevmode\thispagestyle{empty}\newpage
-\maketitle
 
-\setcounter{page}{1}
 
-\input{sections/index.tex}
 
-\newpage
-\begin{multicols}{2}[\printbibheading]
-\printbibliography[heading=none]
-\end{multicols}
+% \begin{figure}[H]
+%   \centering
+%   \begin{subfigure}[b]{0.3\textwidth}
+%     \centering
+%     \input{tables/experiment-3/initial-measurements-bonus-with-boost.tex}
+%   \end{subfigure}
+%   \hfill
+%   \begin{subfigure}[b]{0.3\textwidth}
+%     \centering
+%     \input{tables/experiment-3/initial-measurements-bonus.tex}
+%   \end{subfigure}
+%   \caption*{The required samples to gain confidence in the measurements made on DUT 2 with and without Turbo Boost enabled}
+%   % \label{fig:sidebyside}
+% \end{figure}
 
-\appendix
-\input{appendix/index.tex}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    % \input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/CPU_energy_consumption.tex}
+    \input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/CPU_DEC.tex}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \input{tables/results/compare-p-and-e-cores-on-pcmark-without-boost/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
+  \end{subfigure}
+  % \caption*{DUT 2 without Turbo Boost and C-states}
+  \caption*{DUT 2 without Turbo Boost}
+  % \label{fig:sidebyside}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    % \input{tables/results/compare-p-and-e-cores-on-pcmark-with-boost-update/ipg/pc-mark-10/workstationtwo/unkown/CPU_energy_consumption.tex}
+    \input{tables/results/compare-p-and-e-cores-on-pcmark-with-boost-update/ipg/pc-mark-10/workstationtwo/unkown/CPU_DEC.tex}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \input{tables/results/compare-p-and-e-cores-on-pcmark-with-boost-update/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
+  \end{subfigure}
+  \caption*{DUT 2 with Turbo Boost}
+  % \caption*{DUT 2 with Turbo Boost but no C-states}
+  % \label{fig:sidebyside}
+\end{figure}
+
+% \begin{figure}[H]
+%   \centering
+%   \begin{subfigure}[b]{0.45\textwidth}
+%     \centering
+%     \input{tables/results/compare-p-and-e-cores-on-pcmark-with-c-states/ipg/pc-mark-10/workstationtwo/unkown/CPU_energy_consumption.tex}
+%   \end{subfigure}
+%   \hfill
+%   \begin{subfigure}[b]{0.45\textwidth}
+%     \centering
+%     \input{tables/results/compare-p-and-e-cores-on-pcmark-with-c-states/ipg/pc-mark-10/workstationtwo/unkown/Runtime_duration.tex}
+%   \end{subfigure}
+%   \caption*{DUT 2 with Turbo Boost and no C-states}
+%   % \label{fig:sidebyside}
+% \end{figure}
+
+
+
+
+
+% \input{sections/resume/index.tex}
+% \newpage
+% \leavevmode\thispagestyle{empty}\newpage
+% \maketitle
+
+% \setcounter{page}{1}
+
+% \input{sections/index.tex}
+
+% \newpage
+% \begin{multicols}{2}[\printbibheading]
+% \printbibliography[heading=none]
+% \end{multicols}
+
+% \appendix
+% \input{appendix/index.tex}
 
 \end{document}
 

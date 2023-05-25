@@ -6,13 +6,15 @@
             height=0.16\textheight
         }
         \begin{axis}[
-            xlabel={Average Energy Consumption (Joules)}, 
-            title={The energy consumption of the CPU}, 
+            xlabel={Energy Consumption (Joules)}, 
+            % title={The energy consumption of the CPU}, 
             ytick={1, 2, 3},
+            xtick={5000, 10000, 15000},
+            scaled x ticks=false,
         yticklabels={
             4P, 2P2E, 4E
             },
-            xmin=0,xmax=2000,
+            xmin=5000,xmax=16000,
             ]
         
         
@@ -46,5 +48,4 @@
         
         \end{axis}
     \end{tikzpicture}
-\caption{CPU measurements by IPG on DUT 2 for test case(s) PCM compiled on } \label{fig:3-compare-p-and-e-cores-on-pcmark-with-boost-update-ipg-pc-mark-10.exe-unkown-workstationtwo-cpu-energy_consumption}
 \end{figure}

@@ -1,0 +1,51 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[]
+        \pgfplotsset{
+            width=0.9\textwidth,
+            height=0.16\textheight
+        }
+        \begin{axis}[
+            xlabel={Energy Consumption (Joules)}, 
+            % title={The energy consumption of the CPU}, 
+            ytick={1, 2, 3},
+            scaled x ticks=false,
+        yticklabels={
+            4P, 2P2E, 4E
+            },
+            xtick={5000, 10000, 15000},
+            xmin=5000,xmax=16000,
+            ]
+        
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=9161.9296875,
+                lower quartile=9230.85400390625,
+                median=9442.01953125,
+                upper quartile=9562.623046875,
+                upper whisker=9727.9326171875
+                }, color = red
+                ] coordinates{(0,10593.8759765625)(0,10839.03125)(0,10941.4541015625)};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=9118.92578125,
+                lower quartile=9271.07177734375,
+                median=9479.29296875,
+                upper quartile=9757.7490234375,
+                upper whisker=10269.3642578125
+                }, color = red
+                ] coordinates{};
+        
+        \addplot+ [boxplot prepared={
+                lower whisker=8594.4814453125,
+                lower quartile=9031.0400390625,
+                median=9150.8857421875,
+                upper quartile=9373.77685546875,
+                upper whisker=9811.8466796875
+                }, color = red
+                ] coordinates{(2,8346.4521484375)};
+        
+        
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
