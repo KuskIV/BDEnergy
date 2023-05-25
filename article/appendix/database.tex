@@ -1,12 +1,8 @@
 \section{The Database}\label{app:database}
 
-In \cite{biksbois}, a MySQL database was used to store the measurements made by the different measuring instruments. In this work, a similar database was also used, but with some modifications to accommodate the different focus compared to \cite{biksbois}. The design of the database was illustrated in \cref{fig:uml_diagram}, where the \texttt{MeasurementCollection} table defines under which circumstances the measurements were made. This includes which measuring instrument was used, which benchmark was running, which DUT the measurements were made on, whether or not there was a burn-in period, etc.
+In \cite{biksbois}, a MySQL database was used to store the measurements made by the different measuring instruments. In this work, a similar database was used with some modifications to accommodate the different focus compared to \cite{biksbois}. The design of the database was illustrated in \cref{fig:uml_diagram}, where the \texttt{MeasurementCollection} table defines under which circumstances the measurements were made. This includes which measuring instrument was used, which benchmark was running, which DUT the measurements were made on, whether or not there was a burn-in period, etc.
 
 \input{figures/uml.tex}
 
-In the \texttt{MeasurementCollection}, the columns \texttt{CollectionNumber} and \texttt{Name} represented which experiment the measurement was from, and the name of the experiment respectively.
-
-
-
-The \texttt{Measurement} contained values for the energy consumption during the entire execution time of one benchmark, while the \texttt{Sample} represented samples taken during the execution of the benchmark. This meant for one row in the \texttt{MeasurementCollection} table, there could exist one to many rows in \texttt{Measurement}. Each row in \texttt{Measurement} was associated with multiple rows in the \texttt{Sample} table, where the samples would be a time-series illustrating the energy consumption over time.
+In the \texttt{MeasurementCollection}, the columns \texttt{CollectionNumber} and \texttt{Name} represented which experiment the measurement was from, and the name of the experiment. The \texttt{Measurement} contained values for the entire energy consumption during the entire execution of one benchmark, while the \texttt{Sample} represented samples taken during the execution of the benchmark. This meant for one row in the \texttt{MeasurementCollection} table, there could exist one to many rows in \texttt{Measurement}. Each row in \texttt{Measurement} was associated with multiple rows in the \texttt{Sample} table, where the samples would be a time-series illustrating the energy consumption over time.
 
